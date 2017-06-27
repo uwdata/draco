@@ -1,0 +1,16 @@
+language: python
+python:
+  - "3.6"
+install:
+  - sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
+  - sudo ln -s /usr/bin/g++-6 /usr/local/bin/g++
+  - "pip install -r requirements.txt"
+  - ./install_z3.sh
+script: pytest
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-6
+    - g++-6
