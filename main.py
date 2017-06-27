@@ -41,69 +41,55 @@ class Column(object):
 class Encoding(object):
 
     meta_spec = {
+        # column from the table
         "column_reference" : NumericalAttr([0, 10]),
+        # type: quantitative, ordinal, nominal
         "data_type": CategoricalAttr(["quantitative", "ordinal", "nominal"]),
+        # aggregation type
         "aggregation": CategoricalAttr(["count", "max", "min", "avg"])
     }
     
-    def __init__(self, column_reference, data_type, aggregation):
-        # column from the table
-        self.column_reference = column_reference
-
-        # type: quantitative, ordinal, nominal
-        self.data_type = data_type
-
-        # aggregation type
-        self.aggregation = aggregation
-    
-    def gen_spec():
-        # TODO: generate a json spec from an instance
-        pass
-
+    def __init__(self):
+        self.spec = {
+            "column_reference" : None
+            "data_type": None
+            "aggregation": None
+        }
 
 
 class Query(object):
 
     meta_spec = {
+        # type of the mark: point, bar, line, area, text
         "mark_type" : CategoricalAttr(["point", "bar", "line", "area", "text"]),
+        # x position
         "x": StructuralAttr("Encoding"),
+        # y position
         "y": StructuralAttr("Encoding"),
+        # color of the mark
         "color": StructuralAttr("Encoding"),
+        # size of the mark
         "size": NumericalAttr([1, 100]),
+        # shape of the mark, only for point
+        "shape": CategoricalAttr(["circle", "triangle"]),
+        # text of the mark, only for text mark
         "text": StringAttr(),
+        # add columns to the group-by clause
         "detail": StringAttr()
     }
 
     def __init__(self):
-        # type of the mark: point, bar, line, area, text
-        self.mark_type = None
 
-        # === encoding definition ===
-
-        # x position
-        self.x = None
-
-        # y position
-        self.y = None
-
-        # color of the mark
-        self.color = None
-
-        # size of the mark
-        self.size = None
-
-        # shape of the mark, only for point
-        self.shape = None
-
-        # text of the mark, only for text mark
-        self.text = None
-
-        # add columns to the group-by clause
-        self.detail = None
-
-    def gen_spec():
-        # TODO: generate a json spec from an instance
-        pass
+        self.spec = {
+            "mark_type" : None,
+            "x": None,
+            "y": None,
+            "color": None,
+            "size": None,
+            "shape": None,
+            "text": None,
+            "detail": None
+        }
 
 
 
