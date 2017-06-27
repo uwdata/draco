@@ -2,15 +2,24 @@
 
 from meta import *
 
-################ Table ############################
+################ Task ###########################################
+
+class Task(object):
+    def __init__(self, table, query):
+        self.table = table
+        self.query = query
 
 
-class Table:
+################ Viszualization Spec ############################
+
+
+class Table(object):
     def __init__(self, columns):
         self.columns = columns
 
-class Column:
-   
+
+class Column(object):
+
     def __init__(self, name, raw_type, cardinality):
         # name of the field
         self.name = name
@@ -29,17 +38,17 @@ class Column:
 ################ Viszualization Spec ############################
 
 
-class Encoding:
+class Encoding(object):
 
     meta_spec = {
-        "column_id" : NumericalAttr([0, 10]),
+        "column_reference" : NumericalAttr([0, 10]),
         "data_type": CategoricalAttr(["quantitative", "ordinal", "nominal"]),
         "aggregation": CategoricalAttr(["count", "max", "min", "avg"])
     }
     
-    def __init__(self, column_id, data_type, aggregation):
+    def __init__(self, column_reference, data_type, aggregation):
         # column from the table
-        self.column_id = column_id
+        self.column_reference = column_reference
 
         # type: quantitative, ordinal, nominal
         self.data_type = data_type
@@ -52,7 +61,8 @@ class Encoding:
         pass
 
 
-class Query:
+
+class Query(object):
 
     meta_spec = {
         "mark_type" : CategoricalAttr(["point", "bar", "line", "area", "text"]),
