@@ -30,10 +30,6 @@ class Column(object):
         # cardinality
         self.cardinality = cardinality
 
-    def gen_spec():
-        # TODO: generate a json spec from an instance
-        pass
-
 
 ################ Viszualization Spec ############################
 
@@ -51,8 +47,8 @@ class Encoding(object):
     
     def __init__(self):
         self.spec = {
-            "column_reference" : None
-            "data_type": None
+            "column_reference" : None,
+            "data_type": None,
             "aggregation": None
         }
 
@@ -82,9 +78,9 @@ class Query(object):
 
         self.spec = {
             "mark_type" : None,
-            "x": None,
-            "y": None,
-            "color": None,
+            "x": Encoding(),
+            "y": Encoding(),
+            "color": Encoding(),
             "size": None,
             "shape": None,
             "text": None,
@@ -92,10 +88,8 @@ class Query(object):
         }
 
 
-
 def main():
     pass
-
 
 
 if __name__ == '__main__':
