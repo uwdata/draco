@@ -1,60 +1,105 @@
 #!/usr/bin/env python3
 
+from meta import *
+
+################ Table ############################
+
+
+class Table:
+    def __init__(self, columns):
+        self.columns = columns
 
 class Column:
-    # name of the field
-    name = None
+   
+    def __init__(self, name, raw_type, cardinality):
+        # name of the field
+        self.name = name
 
-    # raw data type
-    raw_type = None
+        # raw data type
+        self.raw_type = raw_type
+        
+        # cardinality
+        self.cardinality = cardinality
 
-    # === simple stats ====
-    
-    # cardinality
-    cardinality = None
+    def gen_spec():
+        # TODO: generate a json spec from an instance
+        pass
+
+
+################ Viszualization Spec ############################
 
 
 class Encoding:
-    # column from the table
-    column = None
 
-    # type: quantitative, ordinal, nominal
-    data_type = None
+    meta_spec = {
+        "column_id" : NumericalAttr([0, 10]),
+        "data_type": CategoricalAttr(["quantitative", "ordinal", "nominal"]),
+        "aggregation": CategoricalAttr(["count", "max", "min", "avg"])
+    }
+    
+    def __init__(self, column_id, data_type, aggregation):
+        # column from the table
+        self.column_id = column_id
 
-    # aggregation type
-    aggregation = None
+        # type: quantitative, ordinal, nominal
+        self.data_type = data_type
+
+        # aggregation type
+        self.aggregation = aggregation
+    
+    def gen_spec():
+        # TODO: generate a json spec from an instance
+        pass
 
 
 class Query:
-    # type of the mark: point, bar, line, area, text
-    mark_type = None
 
-    # === encoding definition ===
-    
-    # x position
-    x = None
+    meta_spec = {
+        "mark_type" : CategoricalAttr(["point", "bar", "line", "area", "text"]),
+        "x": StructuralAttr("Encoding"),
+        "y": StructuralAttr("Encoding"),
+        "color": StructuralAttr("Encoding"),
+        "size": NumericalAttr([1, 100]),
+        "text": StringAttr(),
+        "detail": StringAttr()
+    }
 
-    # y position
-    y = None
+    def __init__(self):
+        # type of the mark: point, bar, line, area, text
+        self.mark_type = None
 
-    # color of the mark
-    color = None
+        # === encoding definition ===
 
-    # size of the mark
-    size = None
+        # x position
+        self.x = None
 
-    # shape of the mark, only for point
-    shape = None
+        # y position
+        self.y = None
 
-    # text of the mark, only for text mark
-    text = None
+        # color of the mark
+        self.color = None
 
-    # add columns to the group-by clause
-    detail = None
+        # size of the mark
+        self.size = None
+
+        # shape of the mark, only for point
+        self.shape = None
+
+        # text of the mark, only for text mark
+        self.text = None
+
+        # add columns to the group-by clause
+        self.detail = None
+
+    def gen_spec():
+        # TODO: generate a json spec from an instance
+        pass
+
 
 
 def main():
     pass
+
 
 
 if __name__ == '__main__':
