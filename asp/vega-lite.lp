@@ -103,14 +103,17 @@ orientation(vertical) :- mark(bar;tick), encode(y,_,(o;n)).
 :- is_q_q, not mark(point), not mark(text).
 
 % supported channels
+
 supported_channel(q,(x;y)).
 supported_channel(q,size).
 supported_channel(q,color).
 supported_channel(q,text).
+
 supported_channel((o;n),(x;y)).
 supported_channel((o;n),(column;row)).
 supported_channel((o;n),(column;row)).
 supported_channel((o;n),color).
+
 supported_channel(o,size).
 supported_channel(n,shape).
 
@@ -121,25 +124,34 @@ supported_channel(n,shape).
 
 % channel preferences
 
-#const channel_weight = 1.
+% channel weight
+#const cw = 1.
 
-penalty("size penalty",1 * channel_weight) :- encode(size,F,q).
-penalty("color penalty",2) :- encode(color,F,q).
-penalty("text penalty",3) :- encode(text,F,q).
+:~ encode(size,_,q). [1*cw@1]
+:~ encode(color,_,q). [2*cw@1]
+:~ encode(text,_,q). [3*cw@1]
 
-penalty("facet penalty",1) :- encode(column,F,(o;n)), encode(row,F,(o;n)).
-penalty("color penalty",2) :- encode(color,F,(o;n)).
-penalty("size penalty",3) :- encode(size,F,o).
-penalty("shape penalty",3) :- encode(shape,F,n).
+:~ encode(facet,_,(o;n)). [1*cw@1]
+:~ encode(color,_,(o;n)). [2*cw@1]
+
+:~ encode(size,_,o). [3*cw@1]
+:~ encode(shape,_,n). [3*cw@1]
+
 
 % prefer quantitative > ordinal > nominal
-penalty("prefer Q over O",1) :- encode(C,F,o).
-penalty("prefer O over N",2) :- encode(C,F,n).
+
+% type weight
+#const tw = 1.
+
+:~ encode(_,_,o). [1*tw@1]
+:~ encode(_,_,n). [2*tw@1]
 
 % don't use aggregation if possible
-penalty("minimize aggregations",1) :- aggregate(C,F).
 
-#minimize { P: penalty(_,P) }.
+% aggregation weight
+#const aw = 1.
+
+:~ aggregate(_,_). [aw@1]
 
 % ====== Output ======
 #show mark/1.
