@@ -1,10 +1,16 @@
 % ====== Definitions ======
 
 marktype(point;bar;line;area;rule;symbol;text;tick).
-channel(x;y;color;size;shape;text;detail).
 type(q;o;n).
 primitive_type(string;number;boolean).
-agg_func(count;mean;median;min;max).
+aggregate(null;count;mean;median;min;max).
+binning(null;3;5;10;100;200).
+
+% channels
+single_channel(x;y;color;size;shape;text).
+multi_channel(detail).
+channel(C) :- single_channel(C).
+channel(C) :- multi_channel(C).
 
 % ====== Data definitions ======
 
@@ -22,9 +28,12 @@ field(F) :- fieldtype(F,_).
 { mark(M) : marktype(M) } = 1.
 
 % we can encode fields with channels
-1 { encode(C,F,T) : channel(C), field(F), type(T) }.
+0 { encode(C,F,T,A,B) : field(F), type(T), aggregate(A), binning(B) } 1 :- single_channel(C).
+{ encode(C,F,T,A,B) : field(F), type(T), aggregate(A), binning(B) } :- multi_channel(C).
 
-0 { aggregate(C,F): agg_func(F) } 1 :- encode(C,_,_).
+% projections of encoding
+encode(C,F,T) :- encode(C,F,T,_,_).
+encode(C) :- encode(C,_,_,_,_).
 
 % ====== Query constraints ======
 
@@ -42,25 +51,21 @@ field(F) :- fieldtype(F,_).
 % cannot use string for quantitative
 :- encode(_,F,q), fieldtype(F,string).
 
-% cannot encode with the same channel twice
-:- encode(C,F,_), encode(C,FF,_), F != FF.
-:- encode(C,_,T), encode(C,_,TT), T != TT.
-
 % encoding number as ordinal or nominal requires binning
-bin(C) :- encode(C,F,o), fieldtype(F,number).
-bin(C) :- encode(C,F,n), fieldtype(F,number).
+:- encode(C,F,o,_,B), fieldtype(F,number), B != null.
+:- encode(C,F,n,_,B), fieldtype(F,number), B != null.
 
 % text mark requires text channel
-:- mark(text), not encode(text,_,_).
+:- mark(text), not encode(text).
 % and row or column
-:- mark(text), not encode(row,_,_), not encode(column,_,_).
+:- mark(text), not encode(row), not encode(column).
 
 % point, tick, and bar require x or y channel
-:- mark(point;tick;bar), not encode(x,_,_), not encode(y,_,_).
+:- mark(point;tick;bar), not encode(x), not encode(y).
 
 % line and area require x and y channel
-:- mark(line;area), not encode(x,_,_).
-:- mark(line;area), not encode(y,_,_).
+:- mark(line;area), not encode(x).
+:- mark(line;area), not encode(y).
 
 % bar and tick requires quantitative (x or y)
 :- mark(bar;tick), not encode(x,_,q), not encode(y,_,q).
@@ -68,17 +73,17 @@ bin(C) :- encode(C,F,n), fieldtype(F,number).
 :- mark(bar;tick), encode(x,_,q), encode(y,_,q).
 
 % supported encoding channels
-:- mark(point), encode(text,_,_).
-:- mark(tick;bar), encode((shape;size;detail;text),_,_).
-:- mark(line;area), encode((shape;size;text),_,_).
-:- mark(text), encode((x;y;shape;size;detail),_,_).
+:- mark(point), encode(text).
+:- mark(tick;bar), encode((shape;size;detail;text)).
+:- mark(line;area), encode((shape;size;text)).
+:- mark(text), encode((x;y;shape;size;detail)).
 
 % cannot bin and aggregate
-:- bin(C), aggregate(C,_).
+:- encode(_,_,_,A,B), A != null, B != null.
 
 % viz type
-is_q :- encode(x,_,q), not encode(y,_,_).
-is_q :- encode(y,_,q), not encode(x,_,_).
+is_q :- encode(x,_,q), not encode(y).
+is_q :- encode(y,_,q), not encode(x).
 
 is_o_o_or_n_n :- encode(x,_,o), encode(y,_,o).
 is_o_o_or_n_n :- encode(x,_,n), encode(y,_,n).
@@ -151,11 +156,9 @@ supported_channel(n,shape).
 % aggregation weight
 #const aw = 1.
 
-:~ aggregate(_,_). [aw@1]
+:~ encode(_,_,_,A,_), A != null. [aw@1]
 
 % ====== Output ======
 #show mark/1.
 #show encode/3.
-#show bin/1.
 #show orientation/1.
-#show aggregate/2.
