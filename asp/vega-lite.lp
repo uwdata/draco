@@ -13,6 +13,11 @@ multi_channel(detail).
 channel(C) :- single_channel(C).
 channel(C) :- multi_channel(C).
 
+% ====== Data definitions ======
+
+% special field for count
+fieldtype(one,row).
+
 % ====== Generate ======
 
 % pick one marktype
@@ -58,6 +63,8 @@ dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), B != null.
 
 % ====== Constraints ======
 
+% === Within encodings === 
+
 % primitive type has to support data type
 :- encode(_,F,q), fieldtype(F,string).
 :- encode(_,F,q), fieldtype(F,boolean).
@@ -70,6 +77,22 @@ dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), B != null.
 
 % do not use log scale with dimension
 :- dimension(encode(C,F,T,A,B,log)).
+
+% cannot bin and aggregate
+:- encode(_,_,_,A,B), A != null, B != null.
+
+% mean and sum only works for quantitative
+:- encode(_,_,T,(sum;mean),_), T != q.
+
+% min, max, and median only work for ordinal and quantitative
+:- encode(_,_,T,(min;max;median),_), T != q, T != o.
+
+% count field (*) requires count (and vice versa) (and field has to be quantitative)
+:- encode(_,F,_,count,_,_), F != row.
+:- encode(_,row,_,A,_,_), A != count.
+:- encode(_,_,T,count,_,_), T != q.
+
+% === Across encodings ===
 
 % text mark requires text channel
 :- mark(text), not encode(text).
@@ -93,9 +116,6 @@ dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), B != null.
 :- mark(tick;bar), encode((shape;size;detail;text)).
 :- mark(line;area), encode((shape;size;text)).
 :- mark(text), encode((x;y;shape;size;detail)).
-
-% cannot bin and aggregate
-:- encode(_,_,_,A,B), A != null, B != null.
 
 % only use supported mark types
 :- is_q, not mark(tick), not mark(point), not mark(text).
