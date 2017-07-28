@@ -5,6 +5,7 @@ type(q;o;n).
 primitive_type(string;number;boolean).
 aggregate(null;count;mean;median;min;max).
 binning(null;3;5;10;100;200).
+scale(null;zero;log).
 
 % channels
 single_channel(x;y;color;size;shape;text).
@@ -20,20 +21,48 @@ fieldtype(s2,string).
 fieldtype(n1,number).
 fieldtype(n2,number).
 
-field(F) :- fieldtype(F,_).
-
 % ====== Generate ======
 
 % pick one marktype
 { mark(M) : marktype(M) } = 1.
 
 % we can encode fields with channels
-0 { encode(C,F,T,A,B) : field(F), type(T), aggregate(A), binning(B) } 1 :- single_channel(C).
-{ encode(C,F,T,A,B) : field(F), type(T), aggregate(A), binning(B) } :- multi_channel(C).
+0 { encode(C,F,T,A,B,S) : field(F), type(T), aggregate(A), binning(B), scale(S) } 1 :- single_channel(C).
+{ encode(C,F,T,A,B,S) : field(F), type(T), aggregate(A), binning(B), scale(S) } :- multi_channel(C).
+
+% ====== Helpers ======
 
 % projections of encoding
-encode(C,F,T) :- encode(C,F,T,_,_).
-encode(C) :- encode(C,_,_,_,_).
+encode(C,F,T,A,B) :- encode(C,F,T,A,B,_).
+encode(C,F,T) :- encode(C,F,T,_,_,_).
+encode(C) :- encode(C,_,_,_,_,_).
+
+% field projection
+field(F) :- fieldtype(F,_).
+
+% visualization type
+is_q :- encode(x,_,q), not encode(y).
+is_q :- encode(y,_,q), not encode(x).
+
+is_o_o_or_n_n :- encode(x,_,o), encode(y,_,o).
+is_o_o_or_n_n :- encode(x,_,n), encode(y,_,n).
+
+is_q_n :- encode(x,_,q), encode(y,_,n).
+is_q_n :- encode(y,_,q), encode(x,_,n).
+
+is_q_o :- encode(x,_,q), encode(y,_,o).
+is_q_o :- encode(y,_,q), encode(x,_,o).
+
+is_q_q :- encode(y,_,q), encode(x,_,q).
+
+% orientation for bars and ticks
+orientation(horizontal) :- mark(bar;tick), encode(x,_,(o;n)).
+orientation(vertical) :- mark(bar;tick), encode(y,_,(o;n)).
+
+% encoding is a dimension
+dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), T = o.
+dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), T = n.
+dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), B != null.
 
 % ====== Query constraints ======
 
@@ -48,12 +77,18 @@ encode(C) :- encode(C,_,_,_,_).
 
 % ====== Constraints ======
 
-% cannot use string for quantitative
+% primitive type has to support data type
 :- encode(_,F,q), fieldtype(F,string).
+:- encode(_,F,q), fieldtype(F,boolean).
 
-% encoding number as ordinal or nominal requires binning
-:- encode(C,F,o,_,B), fieldtype(F,number), B != null.
-:- encode(C,F,n,_,B), fieldtype(F,number), B != null.
+% can only bin quantitative
+:- encode(_,_,T,_,B), B != null, T != q.
+
+% do not use scale zero with dimension
+:- dimension(encode(C,F,T,A,B,zero)).
+
+% do not use log scale with dimension
+:- dimension(encode(C,F,T,A,B,log)).
 
 % text mark requires text channel
 :- mark(text), not encode(text).
@@ -80,25 +115,6 @@ encode(C) :- encode(C,_,_,_,_).
 
 % cannot bin and aggregate
 :- encode(_,_,_,A,B), A != null, B != null.
-
-% viz type
-is_q :- encode(x,_,q), not encode(y).
-is_q :- encode(y,_,q), not encode(x).
-
-is_o_o_or_n_n :- encode(x,_,o), encode(y,_,o).
-is_o_o_or_n_n :- encode(x,_,n), encode(y,_,n).
-
-is_q_n :- encode(x,_,q), encode(y,_,n).
-is_q_n :- encode(y,_,q), encode(x,_,n).
-
-is_q_o :- encode(x,_,q), encode(y,_,o).
-is_q_o :- encode(y,_,q), encode(x,_,o).
-
-is_q_q :- encode(y,_,q), encode(x,_,q).
-
-% orientation for bars and ticks
-orientation(horizontal) :- mark(bar;tick), encode(x,_,(o;n)).
-orientation(vertical) :- mark(bar;tick), encode(y,_,(o;n)).
 
 % only use supported mark types
 :- is_q, not mark(tick), not mark(point), not mark(text).
