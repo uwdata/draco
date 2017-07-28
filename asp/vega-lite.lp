@@ -13,14 +13,6 @@ multi_channel(detail).
 channel(C) :- single_channel(C).
 channel(C) :- multi_channel(C).
 
-% ====== Data definitions ======
-
-fieldtype(s1,string).
-fieldtype(s2,string).
-
-fieldtype(n1,number).
-fieldtype(n2,number).
-
 % ====== Generate ======
 
 % pick one marktype
@@ -60,20 +52,9 @@ orientation(horizontal) :- mark(bar;tick), encode(x,_,(o;n)).
 orientation(vertical) :- mark(bar;tick), encode(y,_,(o;n)).
 
 % encoding is a dimension
-dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), T = o.
 dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), T = n.
+dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), T = o.
 dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), B != null.
-
-% ====== Query constraints ======
-
-% use certain mark
-:- not mark(bar).
-
-% want to use number as ordinal
-%% :- not encode(_,n1,o).
-
-:- not encode(_,n1,_).
-:- not encode(_,n2,_).
 
 % ====== Constraints ======
 
@@ -176,5 +157,4 @@ supported_channel(n,shape).
 
 % ====== Output ======
 #show mark/1.
-#show encode/3.
-#show orientation/1.
+#show encode/6.

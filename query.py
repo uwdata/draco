@@ -1,16 +1,38 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.6
 
 from datatype import *
+import csv
+
+def asp_prop(s):
+    return s or '_'
 
 class Task(object):
-    def __init__(self, table, query):
-        self.table = table
+    
+    def __init__(self, data, query):
+        self.data = data
         self.query = query
 
+    def to_vegalite_obj(self):
+        result = self.query.to_vegalite_obj()
+        result["data"] = self.data.to_vegalite_obj()
+        #result["$schema"] = "https://vega.github.io/schema/vega-lite/v2.0.json"
+        return result
 
-class Table(object):
-    def __init__(self, columns):
+    def to_asp(self):
+        return self.query.to_asp()
+
+
+class Data(object):
+    def __init__(self, columns=None, file_name=None):
         self.columns = columns
+        self.file_name = file_name
+
+    def to_vegalite_obj(self):
+        data = {}
+        #data["url"] = self.url
+        reader = csv.DictReader(open(self.file_name))
+        data["values"] = [v for v in reader]
+        return data
 
 
 class Column(object):
@@ -23,64 +45,79 @@ class Column(object):
         self.cardinality = cardinality
 
 
-class ChannelDef(object):
-
-    meta_spec = {
-        # column from the table
-        "field" : NumericalAttr([0, 10]),
-        # type: quantitative, ordinal, nominal
-        "datatype": CategoricalAttr(["quantitative", "ordinal", "nominal"], nullable=False),
-        # aggregation type
-        "aggregation": CategoricalAttr(["count", "max", "min", "avg"]),
-        # whether to bin or not
-        "binning": BooleanAttr(nullable=False)
-    }
-
-    channel_def_cnt = 0
+class Encoding(object):
     
-    def __init__(self, field, datatype, aggr=None, binning=None):
-      self.field = field
-      self.datatype = datatype
-      self.aggr = aggr
-      self.binning = binning
+    def __init__(self, channel, field, ty, aggregate=None, binning=None):
+        """ Create a channel:
+            Args:
+                field: a string refering to a column in the table
+                ty: type of the channel, one of "quantitative", "ordinal", "nominal"
+                aggregate: what aggregation function to use on the channel
+                binning: binning or not
+        """
+        self.channel = channel
+        self.field = field 
+        self.ty = ty
+        self.aggregate = aggregate
+        self.binning = binning
+
+    def to_vegalite_obj(self):
+        encoding = {}
+        encoding["field"] = self.field
+        encoding["type"] = self.ty
+        if self.aggregate is not None:
+            encoding["aggregate"] = self.aggregate
+        if self.binning is not None:
+            encoding["bin"] = self.binning
+        return encoding
+
+    def to_asp(self):
+        ty_to_asp_type = {
+            "quantitative": "q",
+            "ordinal": "o",
+            "nominal": "n"
+        }
+        props = [self.channel, self.field, ty_to_asp_type[self.ty]]
+        return f":- not encoding({','.join(map(asp_prop, props))}).\n"
 
 
 class Query(object):
 
-    meta_spec = {
-        # type of the mark: point, bar, line, area, text
-        "mark_type" : CategoricalAttr(["point", "bar", "line", "area", "text"], nullable=False),
-        # x position
-        "x": ClassAttr(ChannelDef),
-        # y position
-        "y": ClassAttr(ChannelDef),
-        # color of the mark
-        "color": ClassAttr(ChannelDef),
-        # size of the mark
-        "size": ClassAttr(ChannelDef),
-        # shape of the mark, only for point
-        "shape": ClassAttr(ChannelDef),
-        # text of the mark, only for text mark
-        "text": ClassAttr(ChannelDef),
-        # add columns to the group-by clause
-        "detail": ClassAttr(ChannelDef)
-    }
+    def __init__(self, mark=None, encoding=[]):
+        # channels include "x", "y", "color", "size", "shape", "text", "detail"
+        self.mark = mark
+        self.encoding = encoding
 
-    def __init__(self, 
-                 mark_type = None, 
-                 x = None, 
-                 y = None, 
-                 color = None, 
-                 size = None,
-                 shape = None,
-                 text = None,
-                 detail = None):
+    def to_vegalite_obj(self):
+        query = {}
+        query["mark"] = self.mark
+        query["encoding"] = {}
+        for e in self.encoding:
+            query["encoding"][e.channel] = e.to_vegalite_obj()
+        return query
 
-        self.mark_type = mark_type
-        self.x = x
-        self.y = y
-        self.color = color
-        self.size = size
-        self.shape = shape
-        self.text = text
-        self.detail = detail
+    def to_asp(self):
+        prog = ""
+
+        if self.mark:
+            prog += f":- mark({self.mark}).\n"
+
+
+        for e in self.encoding:
+            prog += e.to_asp()
+
+        return prog
+
+
+
+
+
+
+
+
+
+
+
+
+
+
