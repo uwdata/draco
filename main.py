@@ -10,9 +10,9 @@ def main():
                                     Encoding(channel="y", field="b", ty="quantitative", aggregate="max")])
     task = Task(data, bar_char_spec)
 
-    print(task.to_asp())
+    #print(task.to_asp())
 
-    # print(json.dumps(task.to_vegalite_obj(), sort_keys=True, indent=4))
+    print(json.dumps(task.to_vegalite_obj(), sort_keys=True, indent=4))
 
 if __name__ == '__main__':
     main()
