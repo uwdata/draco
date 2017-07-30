@@ -117,7 +117,7 @@ class Field(object):
         self.cardinality = cardinality
 
     def to_asp(self):
-        return f"field_type({self.name}, {self.ty})"
+        return f"fieldtype({self.name}, {self.ty}).\ncardinality({self.name}, {self.cardinality})."
 
 
 class Encoding(object):
