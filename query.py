@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.6
 
-from datatype import *
 import csv
+import agate
 
 def asp_prop(s):
     return s or '_'
@@ -19,31 +19,71 @@ class Task(object):
         return result
 
     def to_asp(self):
-        return self.query.to_asp()
+        asp_str = "% ====== Data definitions ======\n" 
+        asp_str += self.data.to_asp() + "\n\n"
+        asp_str += "% ====== Query constraints ======\n" 
+        asp_str += self.query.to_asp() 
+        return asp_str
 
 
 class Data(object):
-    def __init__(self, columns=None, file_name=None):
-        self.columns = columns
-        self.file_name = file_name
 
-    def to_vegalite_obj(self):
-        data = {}
-        #data["url"] = self.url
-        reader = csv.DictReader(open(self.file_name))
-        data["values"] = [v for v in reader]
+    @staticmethod
+    def load_from_file(file_name):
+        data = Data()
+        table = agate.Table.from_csv(file_name)
+
+        # infer data types using agate library
+        data.fields = []
+        for i in range(len(table.column_names)):
+            name = table.column_names[i]
+            agate_type = table.column_types[i]
+            type_name = "string"
+            if isinstance(agate_type, agate.Text):
+                type_name = "string"
+            elif isinstance(agate_type, agate.Number):
+                type_name = "number"
+            elif isinstance(agate_type, agate.Boolean):
+                type_name = "boolean"
+            elif isinstance(agate_type, agate.Date):
+                type_name = "date"
+            elif isinstance(agate_type, agate.Datetime):
+                type_name = "datetime"
+            cardinality = len(set(table.columns.get(name)))
+            data.fields.append(Field(name, type_name, cardinality))
+
+        # store the table into a dict
+        data.content = []
+        for row in table.rows:
+            row_obj = {}
+            for j in range(len(row)):
+                row_obj[data.fields[j].name] = str(row[j])
+            data.content.append(row_obj)
         return data
 
 
-class Column(object):
-    def __init__(self, name, raw_type, cardinality):
+    def __init__(self, fields=None, content=None):
+        self.fields = fields
+        self.content = content
+
+    def to_vegalite_obj(self):
+        return self.content
+
+    def to_asp(self):
+        return "\n".join([x.to_asp() for x in self.fields])
+
+class Field(object):
+    def __init__(self, name, ty, cardinality):
         # name of the field
         self.name = name
-        # raw data type
-        self.raw_type = raw_type
+        # column data type, should be a string represented type, 
+        # one of ("string", "number", "datetime", "date", "boolean")
+        self.ty = ty
         # cardinality
         self.cardinality = cardinality
 
+    def to_asp(self):
+        return f"field_type({self.name}, {self.ty})"
 
 class Encoding(object):
     
@@ -101,7 +141,6 @@ class Query(object):
 
         if self.mark:
             prog += f":- mark({self.mark}).\n"
-
 
         for e in self.encoding:
             prog += e.to_asp()
