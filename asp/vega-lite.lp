@@ -92,7 +92,22 @@ dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), B != null.
 :- encode(_,row,_,A,_,_), A != count.
 :- encode(_,_,T,count,_,_), T != q.
 
-% === Across encodings ===
+% shape requires dimension
+:- encode(shape), not dimension(encode(shape,_,_,_,_,_)).
+
+% size or text require measure
+:- dimension(encode((size;text),_,_,_,_,_)).
+
+% categorical color channel should not have too high cardinality
+:- encode(color,F,_), cardinality(F,C), C > 20.
+
+% shape channel should not have too high cardinality
+:- encode(shape,F,_), cardinality(F,C), C > 6.
+
+% aggregate implies quantitative
+:- encode(_,_,T,A,_), A != null, T != q.
+
+% === Across encodings and between encodings and marks ===
 
 % text mark requires text channel
 :- mark(text), not encode(text).
@@ -110,6 +125,18 @@ dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), B != null.
 :- mark(bar;tick), not encode(x,_,q), not encode(y,_,q).
 % and optional ordinal/nominal (x or y); not two quantitative
 :- mark(bar;tick), encode(x,_,q), encode(y,_,q).
+
+% bar mark requires scale to start at zero
+:- mark(bar), encode((x;y),_,q,_,_,S), S != zero.
+
+% shape channel requires point mark
+:- encode(shape), not mark(bar).
+
+% size only works with some marks
+:- encode(size), not mark(point), not mark(rule), not mark(text), not mark(line).
+
+% bar and tick should not use size
+:~ mark(bar;tick), encode(size). [1@1]
 
 % supported encoding channels
 :- mark(point), encode(text).
@@ -168,7 +195,7 @@ supported_channel(n,shape).
 :~ encode(_,_,o). [1*tw@1]
 :~ encode(_,_,n). [2*tw@1]
 
-% don't use aggregation if possible
+% prefer to use raw (no aggregation)
 
 % aggregation weight
 #const aw = 1.
