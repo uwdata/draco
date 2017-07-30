@@ -188,7 +188,7 @@ supported_channel(n,shape).
 
 
 % prefer quantitative > ordinal > nominal
-
+ 
 % type weight
 #const tw = 1.
 

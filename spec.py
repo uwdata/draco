@@ -5,24 +5,35 @@ import agate
 import json
 import os
 
+from enum import Enum
 from pprint import pprint
 
-Hole = "??"
+
+# special token used by the spec
+_null = "_null_"
+_hole = "_??_"
 
 class Task(object):
     
-    def __init__(self, data=None, query=None):
+    def __init__(self, data, query):
         self.data = data
         self.query = query
 
     @staticmethod
-    def load_from_vl_json(filename):
+    def load_from_vl_json(filename, place_holder=_hole):
         """ load a task from a vegalite spec """
         with open(filename) as f:    
             raw_vl_obj = json.load(f)
-            data = Data.load_from_vl_obj(raw_vl_obj["data"], path_prefix=os.path.dirname(filename))
-            query = Query.load_from_vl_obj(raw_vl_obj["encoding"], raw_vl_obj["mark"])
-            return Task(data, query)
+            
+        # load data from the file
+        data = Data.load_from_vl_obj(raw_vl_obj["data"], path_prefix=os.path.dirname(filename))
+
+        # load query from the file
+        mark = raw_vl_obj["mark"] if "mark" in raw_vl_obj else place_holder
+        encodings_obj = raw_vl_obj["encoding"] if "encoding" in raw_vl_obj else {}
+        query = Query.load_from_vl_obj(encodings_obj, mark)
+
+        return Task(data, query)
 
     def to_vegalite_obj(self):
         """ generate a vegalite spec from a task object """
@@ -117,26 +128,27 @@ class Field(object):
         self.cardinality = cardinality
 
     def to_asp(self):
-        return f"fieldtype({self.name}, {self.ty}).\ncardinality({self.name}, {self.cardinality})."
+        return f"fieldtype({self.name},{self.ty}).\ncardinality({self.name},{self.cardinality})."
 
 
 class Encoding(object):
 
     @staticmethod
-    def load_from_vl_obj(channel, vl_obj):
+    def load_from_vl_obj(channel, vl_obj, place_holder=_hole):
         """ load encoding from a vl_obj
             Args: 
                 channel: the name of a channel
                 vl_obj: a dict object representing channel encoding
+                place_holder: values to the 
             Returns:
                 an encoding object
         """
-        return Encoding(channel, vl_obj["field"], vl_obj["type"], 
-                        aggregate=vl_obj["aggregate"] if "aggregate" in vl_obj else None,
-                        binning=vl_obj["bin"] if "bin" in vl_obj else None)
+        _get_field = lambda f: vl_obj[f] if f in vl_obj else place_holder
+        return Encoding(channel, _get_field("field"), _get_field("type"), 
+                        _get_field("aggregate"), _get_field("bin"), _get_field("scale"))
 
     
-    def __init__(self, channel, field, ty, aggregate=None, binning=None):
+    def __init__(self, channel, field, ty, aggregate, binning, scale):
         """ Create a channel:
             Args:
                 field: a string refering to a column in the table
@@ -149,15 +161,21 @@ class Encoding(object):
         self.ty = ty
         self.aggregate = aggregate
         self.binning = binning
+        self.scale = scale
 
     def to_vegalite_obj(self):
+        assert self.field is not _null
+        assert self.ty is not _null 
+
         encoding = {}
         encoding["field"] = self.field
         encoding["type"] = self.ty
-        if self.aggregate is not None:
+        if self.aggregate is not _null:
             encoding["aggregate"] = self.aggregate
-        if self.binning is not None:
+        if self.binning is not _null:
             encoding["bin"] = self.binning
+        if self.scale is not _null:
+            encoding["scale"] = self.scale
         return encoding
 
     def to_asp(self):
@@ -166,17 +184,24 @@ class Encoding(object):
             "ordinal": "o",
             "nominal": "n"
         }
-        props = [self.channel, self.field, ty_to_asp_type[self.ty]]
-        return f":- not encoding({','.join(map(lambda s: s or '_', props))}).\n"
+
+        _wrap_props = lambda p: p if p is not _hole else "_"
+
+        props = [self.channel, 
+                 self.field, 
+                 ty_to_asp_type[self.ty],
+                 self.aggregate,
+                 self.binning,
+                 self.scale]
+        return f":- not encoding({','.join(map(_wrap_props, props))}).\n"
 
 
 class Query(object):
 
-    def __init__(self, mark=None, encodings=[]):
+    def __init__(self, mark, encodings=[]):
         # channels include "x", "y", "color", "size", "shape", "text", "detail"
         self.mark = mark
         self.encodings = encodings
-
 
     @staticmethod
     def load_from_vl_obj(vl_obj, mark):
@@ -184,7 +209,6 @@ class Query(object):
         for channel, encoding_obj in vl_obj.items():
             encodings.append(Encoding.load_from_vl_obj(channel, encoding_obj))
         return Query(mark, encodings)
-
 
     def to_vegalite_obj(self):
         query = {}
