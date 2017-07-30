@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
 
-from query import *
+from spec import *
 import json
+import argparse
+
 
 def main():
-    data = Data.load_from_file(file_name="data/ab.csv")
-    bar_char_spec = Query(mark="bar", 
-                          encoding=[Encoding(channel="x", field="a", ty="ordinal"), 
-                                    Encoding(channel="y", field="b", ty="quantitative", aggregate="max")])
-    task = Task(data, bar_char_spec)
-    
+    task = Task.load_from_vl_json("examples/ab.vl.json")
     print(task.to_asp())
-
-    print(json.dumps(task.to_vegalite_obj(), sort_keys=True, indent=4))
-
+    print(task.to_vl_json())
+    
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.parse_args()
     main()
