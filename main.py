@@ -21,6 +21,8 @@ if not os.path.exists(CONFIG["tmp_dir"]):
 
 
 def main(partial_vl_spec):
+    """ Given a partial vegalite spec, recommand a completion of the spec
+    """
     tmp_asp_file = os.path.join(CONFIG["tmp_dir"], os.path.basename(partial_vl_spec).split(".")[0] + ".lp")
     
     # load a task from a spec provided by the user
@@ -30,12 +32,13 @@ def main(partial_vl_spec):
         print(f"[OK] Temp asp specification written into: {tmp_asp_file} .")
         f.write(task.to_asp())
 
-    r = subprocess.run([CONFIG["clingcon"], CONFIG["vega_lite_lp"], tmp_asp_file], stdout=subprocess.PIPE, stderr=None)
+    r = subprocess.run([CONFIG["clingcon"], CONFIG["vega_lite_lp"], tmp_asp_file], 
+                       stdout=subprocess.PIPE, stderr=None)
     
     print("[Solver Output]")
     print(r.stdout.decode('utf-8'))
     
-    
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()

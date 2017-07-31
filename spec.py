@@ -5,13 +5,17 @@ import agate
 import json
 import os
 
-from enum import Enum
 from pprint import pprint
-
 
 # special token used by the spec
 _null = "_null_"
 _hole = "_??_"
+
+def handle_special_value(v):
+    # return a hole if the given value is not "??", else return the value.
+    # this function is used in the parsing phase to convert "??" "null" 
+    #   into special symbol used by spec objects.
+    return _hole if v == "??" else (_null if v == "null" else v)
 
 class Task(object):
     
@@ -21,31 +25,41 @@ class Task(object):
 
     @staticmethod
     def load_from_vl_json(filename, place_holder=_hole):
-        """ load a task from a vegalite spec """
+        """ load a task from a vegalite spec 
+            Args:
+                filename: a vegalite json file
+                place_holder: whether unprovided spec are reprented as holes or null values
+                    (this determine whether the solver would infer missing parts 
+                        or only infer properties specified by question marks)
+            Returns:
+                a Task object
+        """
         with open(filename) as f:    
             raw_vl_obj = json.load(f)
             
         # load data from the file
         data = Data.load_from_vl_obj(raw_vl_obj["data"], path_prefix=os.path.dirname(filename))
-
+    
         # load query from the file
-        mark = raw_vl_obj["mark"] if "mark" in raw_vl_obj else place_holder
+        mark = handle_special_value(raw_vl_obj["mark"]) if "mark" in raw_vl_obj else place_holder
         encodings_obj = raw_vl_obj["encoding"] if "encoding" in raw_vl_obj else {}
         query = Query.load_from_vl_obj(encodings_obj, mark)
 
         return Task(data, query)
 
     def to_vegalite_obj(self):
-        """ generate a vegalite spec from a task object """
+        """ generate a vegalite spec from the object """
         result = self.query.to_vegalite_obj()
         result["data"] = self.data.to_vegalite_obj()
         #result["$schema"] = "https://vega.github.io/schema/vega-lite/v2.0.json"
         return result
 
     def to_vl_json(self):
+        """ generate a vegalite json file form the object """
         return json.dumps(self.to_vegalite_obj(), sort_keys=True, indent=4)
 
     def to_asp(self):
+        """ generate asp constraints from the object """
         asp_str = "% ====== Data definitions ======\n" 
         asp_str += self.data.to_asp() + "\n\n"
         asp_str += "% ====== Query constraints ======\n" 
@@ -57,6 +71,7 @@ class Data(object):
 
     @staticmethod
     def load_from_vl_obj(vl_obj, path_prefix=None):
+        """ Build a data object from a dict-represented vegalite object represting data"""
         if "url" in vl_obj:
             # load data from url
             file_path = vl_obj["url"]
@@ -75,8 +90,9 @@ class Data(object):
 
     @staticmethod
     def from_agate_table(agate_table):
-        # from an agate table, prepare data content as well as datatype
-        # infer data types using agate library
+        """ Create a Data object from an agate table, 
+            data content and datatypes are based on how agate interprets them 
+        """
         data = Data()
         data.fields = []
         for i in range(len(agate_table.column_names)):
@@ -128,7 +144,9 @@ class Field(object):
         self.cardinality = cardinality
 
     def to_asp(self):
-        return f"fieldtype({self.name},{self.ty}).\ncardinality({self.name},{self.cardinality})."
+        asp_str = f"fieldtype({self.name},{self.ty})."
+        asp_str += f"cardinality({self.name},{self.cardinality})."
+        return asp_str
 
 
 class Encoding(object):
@@ -143,7 +161,9 @@ class Encoding(object):
             Returns:
                 an encoding object
         """
-        _get_field = lambda f: vl_obj[f] if f in vl_obj else place_holder
+        # get the field if it is in the object, otherwise generate a place holder symbol
+        _get_field = lambda f: handle_special_value(vl_obj[f]) if f in vl_obj else place_holder 
+
         return Encoding(channel, _get_field("field"), _get_field("type"), 
                         _get_field("aggregate"), _get_field("bin"), _get_field("scale"))
 
@@ -164,6 +184,8 @@ class Encoding(object):
         self.scale = scale
 
     def to_vegalite_obj(self):
+
+        # we do not allow field and ty to be null
         assert self.field is not _null
         assert self.ty is not _null 
 
@@ -179,12 +201,13 @@ class Encoding(object):
         return encoding
 
     def to_asp(self):
+        # map an encoding type to a type name used in asp 
         ty_to_asp_type = {
             "quantitative": "q",
             "ordinal": "o",
             "nominal": "n"
         }
-
+        # if a property is a hole, generate a placeholder
         _wrap_props = lambda p: p if p is not _hole else "_"
 
         props = [self.channel, 
@@ -193,7 +216,8 @@ class Encoding(object):
                  self.aggregate,
                  self.binning,
                  self.scale]
-        return f":- not encoding({','.join(map(_wrap_props, props))}).\n"
+
+        return f":- not encode({','.join(map(_wrap_props, props))})."
 
 
 class Query(object):
@@ -219,14 +243,9 @@ class Query(object):
         return query
 
     def to_asp(self):
-        prog = ""
-
-        if self.mark:
-            prog += f":- mark({self.mark}).\n"
-
-        for e in self.encodings:
-            prog += e.to_asp()
-
+        # the asp constrain comes from both mark and encodings
+        prog = f":- mark({self.mark}).\n"
+        prog += "\n".join(map(lambda e: e.to_asp(), self.encodings))
         return prog
 
 
