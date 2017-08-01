@@ -36,13 +36,13 @@ def main(partial_vl_spec):
                        stdout=subprocess.PIPE, stderr=None)
     
     print("[Solver Output]")
-    print(r.stdout.decode('utf-8'))
+    print(r.stdout.decode("utf-8"))
     
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('vegalite_spec', nargs='?', default=os.path.join("examples", "ab.vl.json"), 
+    parser.add_argument("vegalite_spec", nargs="?", default=os.path.join("examples", "ab.vl.json"), 
                         help="The partial vegalite spec for completion")
     args = parser.parse_args()
 

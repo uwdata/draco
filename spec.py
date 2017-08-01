@@ -144,7 +144,7 @@ class Field(object):
         self.cardinality = cardinality
 
     def to_asp(self):
-        asp_str = f"fieldtype({self.name},{self.ty})."
+        asp_str = f"fieldtype({self.name},{self.ty}).\n"
         asp_str += f"cardinality({self.name},{self.cardinality})."
         return asp_str
 
@@ -247,12 +247,3 @@ class Query(object):
         prog = f":- mark({self.mark}).\n"
         prog += "\n".join(map(lambda e: e.to_asp(), self.encodings))
         return prog
-
-
-
-
-
-
-
-
-
