@@ -1,17 +1,17 @@
 % ====== Definitions ======
 
 marktype(point;bar;line;area;rule;symbol;text;tick).
-type(q;o;n).
+types(q;o;n).
 primitive_type(string;number;boolean).
-aggregate(null;count;mean;median;min;max).
+aggregates(null;count;mean;median;min;max).
 binning(null;3;5;10;100;200).
-scale(null;zero;log).
+scales(null;zero;log).
 
 % channels
-single_channel(x;y;color;size;shape;text).
-multi_channel(detail).
-channel(C) :- single_channel(C).
-channel(C) :- multi_channel(C).
+single_channels(x;y;color;size;shape;text).
+multi_channels(detail).
+channels(C) :- single_channels(C).
+channels(C) :- multi_channels(C).
 
 % ====== Data definitions ======
 
@@ -24,8 +24,8 @@ fieldtype(one,row).
 { mark(M) : marktype(M) } = 1.
 
 % we can encode fields with channels
-0 { encode(C,F,T,A,B,S) : field(F), type(T), aggregate(A), binning(B), scale(S) } 1 :- single_channel(C).
-{ encode(C,F,T,A,B,S) : field(F), type(T), aggregate(A), binning(B), scale(S) } :- multi_channel(C).
+0 { encode(C,F,T,A,B,S) : fields(F), types(T), aggregates(A), binning(B), scales(S) } 1 :- single_channels(C).
+{ encode(C,F,T,A,B,S) : fields(F), types(T), aggregates(A), binning(B), scales(S) } :- multi_channels(C).
 
 % ====== Helpers ======
 
@@ -34,8 +34,16 @@ encode(C,F,T,A,B) :- encode(C,F,T,A,B,_).
 encode(C,F,T) :- encode(C,F,T,_,_,_).
 encode(C) :- encode(C,_,_,_,_,_).
 
+% extractors
+channel(encode(C,F,T,A,B,S), C) :- encode(C,F,T,A,B,S).
+field(encode(C,F,T,A,B,S), F) :- encode(C,F,T,A,B,S).
+type(encode(C,F,T,A,B,S), T) :- encode(C,F,T,A,B,S).
+aggregate(encode(C,F,T,A,B,S), A) :- encode(C,F,T,A,B,S).
+bin(encode(C,F,T,A,B,S), B) :- encode(C,F,T,A,B,S).
+scale(encode(C,F,T,A,B,S), S) :- encode(C,F,T,A,B,S).
+
 % field projection
-field(F) :- fieldtype(F,_).
+fields(F) :- fieldtype(F,_).
 
 % visualization type
 is_q :- encode(x,_,q), not encode(y).
@@ -57,29 +65,32 @@ orientation(horizontal) :- mark(bar;tick), encode(x,_,(o;n)).
 orientation(vertical) :- mark(bar;tick), encode(y,_,(o;n)).
 
 % encoding is a dimension
-dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), T = n.
-dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), T = o.
-dimension(encode(C,F,T,A,B,S)) :- encode(C,F,T,A,B,S), B != null.
+dimension(E) :- type(E,(n;o)).
+dimension(E) :- bin(E,B), B != null.
 
 % ====== Constraints ======
 
-% === Within encodings === 
+% === Within encodings ===
 
 % primitive type has to support data type
 :- encode(_,F,q), fieldtype(F,string).
 :- encode(_,F,q), fieldtype(F,boolean).
 
 % can only bin quantitative
-:- encode(_,_,T,_,B), B != null, T != q.
+% :- encode(_,_,T,_,B), B != null, T != q.
+:- type(E,T), bin(E,B), B != null, T != q.
 
 % do not use scale zero with dimension
-:- dimension(encode(C,F,T,A,B,zero)).
+% :- dimension(encode(C,F,T,A,B,zero)).
+:- scale(E,zero), dimension(E).
 
 % do not use log scale with dimension
-:- dimension(encode(C,F,T,A,B,log)).
+%:- dimension(encode(C,F,T,A,B,log)).
+:- scale(E,log), dimension(E).
 
 % cannot bin and aggregate
-:- encode(_,_,_,A,B), A != null, B != null.
+% :- encode(_,_,_,A,B), A != null, B != null.
+:- bin(E,B), aggregate(E,A), A != null, B != null.
 
 % mean and sum only works for quantitative
 :- encode(_,_,T,(sum;mean),_), T != q.
@@ -188,7 +199,7 @@ supported_channel(n,shape).
 
 
 % prefer quantitative > ordinal > nominal
- 
+
 % type weight
 #const tw = 1.
 
