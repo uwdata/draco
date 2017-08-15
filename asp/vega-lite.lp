@@ -11,41 +11,6 @@ def min_preds(c,pred):
 
 #end.
 
-
-% ====== Data definitions ======
-
-fieldtype(s1,string).
-cardinality(s1,10).
-
-fieldtype(s2,string).
-cardinality(s2,3).
-
-fieldtype(n1,number).
-cardinality(n1,12).
-
-fieldtype(n2,number).
-cardinality(n2,100).
-
-fieldtype(n3,number).
-cardinality(n3,50).
-
-fieldtype(n4,number).
-cardinality(n4,10).
-
-fieldtype(n5,number).
-cardinality(n5,50).
-
-fieldtype(n6,number).
-cardinality(n6,10).
-
-% ====== Query constraints ======
-
-% use certain mark
-% :- not mark(bar).
-
-:- not field(_,n1).
-:- not field(_,n2).
-
 % ====== Definitions ======
 
 marktype(point;bar;line;area;rule;symbol;text;tick).
