@@ -76,7 +76,9 @@ fields(F) :- fieldtype(F,_).
 
 obj_cnt(0..@min_preds(max_encs,F)) :- F = {fields(_)}.
 
-0 { unique_encoding(C,C) } 1 :- single_channels(C).
+% here we generate encodings and by splitting channels for which there can only be one encoding and for which there can be multiple
+% this reduces the size of the grounded program
+0 { unique_encoding(C) } 1 :- single_channels(C).
 { multi_encoding(C,Cnt): obj_cnt(Cnt) } :- multi_channels(C).
 
 multi_encoding(C,Cnt-1) :- multi_encoding(C,Cnt), obj_cnt(Cnt), Cnt > 0, multi_channels(C).
@@ -84,7 +86,7 @@ multi_encoding(C,Cnt-1) :- multi_encoding(C,Cnt), obj_cnt(Cnt), Cnt > 0, multi_c
 % properties of encodings
 
 % get the channel from unique_encoding and multi_encoding
-channel(E,C) :- unique_encoding(E,C).
+channel(C,C) :- unique_encoding(C).
 channel(@concat(C,Cnt),C) :- multi_encoding(C,Cnt).
 
 encoding(E) :- channel(E,_).
