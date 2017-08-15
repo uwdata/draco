@@ -49,19 +49,19 @@ cardinality(n6,10).
 % ====== Definitions ======
 
 marktype(point;bar;line;area;rule;symbol;text;tick).
-types(q;o;n).
-primitive_types(string;number;boolean).
-aggregates(count;mean;median;min;max).
+type(q;o;n).
+primitive_type(string;number;boolean).
+aggregate(count;mean;median;min;max).
 binning(3;5;10;100;200).
-scales(zero;log).
+scale(zero;log).
 
 % channels
-single_channels(x;y;color;size;shape;text).
-multi_channels(detail).
-channels(C) :- single_channels(C).
-channels(C) :- multi_channels(C).
+single_channel(x;y;color;size;shape;text).
+multi_channel(detail).
+channel(C) :- single_channel(C).
+channel(C) :- multi_channel(C).
 
-fields(F) :- fieldtype(F,_).
+field(F) :- fieldtype(F,_).
 
 
 % ====== Generate ======
@@ -74,14 +74,14 @@ fields(F) :- fieldtype(F,_).
 % maximum number for each multi channel encoding
 #const max_encs = 5.
 
-obj_cnt(0..@min_preds(max_encs,F)) :- F = {fields(_)}.
+obj_cnt(0..@min_preds(max_encs,F)) :- F = {field(_)}.
 
 % here we generate encodings and by splitting channels for which there can only be one encoding and for which there can be multiple
 % this reduces the size of the grounded program
-0 { unique_encoding(C) } 1 :- single_channels(C).
-{ multi_encoding(C,Cnt): obj_cnt(Cnt) } :- multi_channels(C).
+0 { unique_encoding(C) } 1 :- single_channel(C).
+{ multi_encoding(C,Cnt): obj_cnt(Cnt) } :- multi_channel(C).
 
-multi_encoding(C,Cnt-1) :- multi_encoding(C,Cnt), obj_cnt(Cnt), Cnt > 0, multi_channels(C).
+multi_encoding(C,Cnt-1) :- multi_encoding(C,Cnt), obj_cnt(Cnt), Cnt > 0, multi_channel(C).
 
 % properties of encodings
 
@@ -92,13 +92,13 @@ channel(@concat(C,Cnt),C) :- multi_encoding(C,Cnt).
 encoding(E) :- channel(E,_).
 
 % field and type have to be present
-{ field(E,F): fields(F) } = 1 :- encoding(E).
-{ type(E,T): types(T) } = 1 :- encoding(E).
+{ field(E,F): field(F) } = 1 :- encoding(E).
+{ type(E,T): type(T) } = 1 :- encoding(E).
 
 % other properties that are not required
-0 { agg(E,A): aggregates(A) } 1 :- encoding(E).
+0 { agg(E,A): aggregate(A) } 1 :- encoding(E).
 0 { bin(E,B): binning(B) } 1 :- encoding(E).
-0 { scale(E,S): types(S) } 1 :- encoding(E).
+0 { scale(E,S): scale(S) } 1 :- encoding(E).
 
 
 % ====== Helpers ======
