@@ -126,7 +126,7 @@ class Data(object):
         self.content = content
 
     def to_vegalite_obj(self):
-        return self.content
+        return {"values": self.content}
 
     def to_asp(self):
         return "\n".join([x.to_asp() for x in self.fields])
@@ -167,7 +167,13 @@ class Encoding(object):
         return Encoding(channel, _get_field("field"), _get_field("type"), 
                         _get_field("aggregate"), _get_field("bin"), _get_field("scale"))
 
-    
+    @staticmethod
+    def parse_from_clingcon_result(raw_str):
+        content = raw_str[raw_str.index("(") + 1: raw_str.index(")")].split(",")
+        content = map(lambda x: _null if x == "null" else x, content)
+        return Encoding(*content)
+
+
     def __init__(self, channel, field, ty, aggregate, binning, scale):
         """ Create a channel:
             Args:
@@ -232,6 +238,17 @@ class Query(object):
         encodings = []
         for channel, encoding_obj in vl_obj.items():
             encodings.append(Encoding.load_from_vl_obj(channel, encoding_obj))
+        return Query(mark, encodings)
+
+    @staticmethod
+    def parse_from_clingcon_result(raw_str_list):
+        encodings = []
+        mark = None
+        for s in raw_str_list:
+            if s.startswith("mark"):
+                mark = s[s.index("(") + 1 : s.index(")")]
+            elif s.startswith("encode"):
+                encodings.append(Encoding.parse_from_clingcon_result(s))
         return Query(mark, encodings)
 
     def to_vegalite_obj(self):

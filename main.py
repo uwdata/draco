@@ -5,6 +5,8 @@ import json
 import argparse
 import subprocess
 
+from pprint import pprint
+
 CONFIG = {
     # the clingcon bin file
     "clingcon": os.path.join("bin", "clingcon-mac"),
@@ -32,11 +34,21 @@ def main(partial_vl_spec):
         print(f"[OK] Temp asp specification written into: {tmp_asp_file} .")
         f.write(task.to_asp())
 
-    r = subprocess.run([CONFIG["clingcon"], CONFIG["vega_lite_lp"], tmp_asp_file],
+    r = subprocess.run([CONFIG["clingcon"], CONFIG["vega_lite_lp"], tmp_asp_file, "--outf=2"],
                        stdout=subprocess.PIPE, stderr=None)
 
     print("[Solver Output]")
-    print(r.stdout.decode("utf-8"))
+
+    json_result = json.loads(r.stdout.decode("utf-8"))
+
+    #pprint(json_result)
+    raw_str_list = json_result['Call'][0]['Witnesses'][0]['Value']
+    #print(raw_str_list)
+
+    query = Query.parse_from_clingcon_result(raw_str_list)
+    new_task = Task(task.data, query)
+
+    print(json.dumps(new_task.to_vegalite_obj()))
 
 
 if __name__ == "__main__":
