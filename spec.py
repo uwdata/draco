@@ -13,33 +13,33 @@ _hole = "_??_"
 
 def handle_special_value(v):
     # return a hole if the given value is not "??", else return the value.
-    # this function is used in the parsing phase to convert "??" "null" 
+    # this function is used in the parsing phase to convert "??" "null"
     #   into special symbol used by spec objects.
     return _hole if v == "??" else (_null if v == "null" else v)
 
 class Task(object):
-    
+
     def __init__(self, data, query):
         self.data = data
         self.query = query
 
     @staticmethod
     def load_from_vl_json(filename, place_holder=_hole):
-        """ load a task from a vegalite spec 
+        """ load a task from a vegalite spec
             Args:
                 filename: a vegalite json file
                 place_holder: whether unprovided spec are reprented as holes or null values
-                    (this determine whether the solver would infer missing parts 
+                    (this determine whether the solver would infer missing parts
                         or only infer properties specified by question marks)
             Returns:
                 a Task object
         """
-        with open(filename) as f:    
+        with open(filename) as f:
             raw_vl_obj = json.load(f)
-            
+
         # load data from the file
         data = Data.load_from_vl_obj(raw_vl_obj["data"], path_prefix=os.path.dirname(filename))
-    
+
         # load query from the file
         mark = handle_special_value(raw_vl_obj["mark"]) if "mark" in raw_vl_obj else place_holder
         encodings_obj = raw_vl_obj["encoding"] if "encoding" in raw_vl_obj else {}
@@ -60,10 +60,10 @@ class Task(object):
 
     def to_asp(self):
         """ generate asp constraints from the object """
-        asp_str = "% ====== Data definitions ======\n" 
+        asp_str = "% ====== Data definitions ======\n"
         asp_str += self.data.to_asp() + "\n\n"
-        asp_str += "% ====== Query constraints ======\n" 
-        asp_str += self.query.to_asp() 
+        asp_str += "% ====== Query constraints ======\n"
+        asp_str += self.query.to_asp()
         return asp_str
 
 
@@ -90,8 +90,8 @@ class Data(object):
 
     @staticmethod
     def from_agate_table(agate_table):
-        """ Create a Data object from an agate table, 
-            data content and datatypes are based on how agate interprets them 
+        """ Create a Data object from an agate table,
+            data content and datatypes are based on how agate interprets them
         """
         data = Data()
         data.fields = []
@@ -137,7 +137,7 @@ class Field(object):
     def __init__(self, name, ty, cardinality):
         # name of the field
         self.name = name
-        # column data type, should be a string represented type, 
+        # column data type, should be a string represented type,
         # one of ("string", "number", "datetime", "date", "boolean")
         self.ty = ty
         # cardinality
@@ -154,21 +154,21 @@ class Encoding(object):
     @staticmethod
     def load_from_vl_obj(channel, vl_obj, place_holder=_hole):
         """ load encoding from a vl_obj
-            Args: 
+            Args:
                 channel: the name of a channel
                 vl_obj: a dict object representing channel encoding
-                place_holder: values to the 
+                place_holder: values to the
             Returns:
                 an encoding object
         """
         # get the field if it is in the object, otherwise generate a place holder symbol
-        _get_field = lambda f: handle_special_value(vl_obj[f]) if f in vl_obj else place_holder 
+        _get_field = lambda f: handle_special_value(vl_obj[f]) if f in vl_obj else place_holder
 
-        return Encoding(channel, _get_field("field"), _get_field("type"), 
+        return Encoding(channel, _get_field("field"), _get_field("type"),
                         _get_field("aggregate"), _get_field("bin"), _get_field("scale"))
 
     @staticmethod
-    def parse_from_clingcon_result(raw_str):
+    def parse_from_asp_result(raw_str):
         content = raw_str[raw_str.index("(") + 1: raw_str.index(")")].split(",")
         content = map(lambda x: _null if x == "null" else x, content)
         return Encoding(*content)
@@ -183,7 +183,7 @@ class Encoding(object):
                 binning: binning or not
         """
         self.channel = channel
-        self.field = field 
+        self.field = field
         self.ty = ty
         self.aggregate = aggregate
         self.binning = binning
@@ -193,7 +193,7 @@ class Encoding(object):
 
         # we do not allow field and ty to be null
         assert self.field is not _null
-        assert self.ty is not _null 
+        assert self.ty is not _null
 
         encoding = {}
         encoding["field"] = self.field
@@ -207,7 +207,7 @@ class Encoding(object):
         return encoding
 
     def to_asp(self):
-        # map an encoding type to a type name used in asp 
+        # map an encoding type to a type name used in asp
         ty_to_asp_type = {
             "quantitative": "q",
             "ordinal": "o",
@@ -216,8 +216,8 @@ class Encoding(object):
         # if a property is a hole, generate a placeholder
         _wrap_props = lambda p: p if p is not _hole else "_"
 
-        props = [self.channel, 
-                 self.field, 
+        props = [self.channel,
+                 self.field,
                  ty_to_asp_type[self.ty],
                  self.aggregate,
                  self.binning,
@@ -241,14 +241,14 @@ class Query(object):
         return Query(mark, encodings)
 
     @staticmethod
-    def parse_from_clingcon_result(raw_str_list):
+    def parse_from_asp_result(raw_str_list):
         encodings = []
         mark = None
         for s in raw_str_list:
             if s.startswith("mark"):
                 mark = s[s.index("(") + 1 : s.index(")")]
             elif s.startswith("encode"):
-                encodings.append(Encoding.parse_from_clingcon_result(s))
+                encodings.append(Encoding.parse_from_asp_result(s))
         return Query(mark, encodings)
 
     def to_vegalite_obj(self):
