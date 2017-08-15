@@ -2,8 +2,12 @@
 
 from clingo import parse_term
 
-def concat(a, b):
-    return parse_term("{}_{}".format(a.name, b.name))
+def concat(*args):
+    return parse_term("_".join(map(str, args)))
+
+def min_preds(c,pred):
+    """ Get the minimum of a constrant and the number of predicates. """
+    return min([c.number,pred.number])
 
 #end.
 
@@ -22,6 +26,18 @@ cardinality(n1,12).
 fieldtype(n2,number).
 cardinality(n2,100).
 
+fieldtype(n3,number).
+cardinality(n3,50).
+
+fieldtype(n4,number).
+cardinality(n4,10).
+
+fieldtype(n5,number).
+cardinality(n5,50).
+
+fieldtype(n6,number).
+cardinality(n6,10).
+
 % ====== Query constraints ======
 
 % use certain mark
@@ -32,18 +48,18 @@ cardinality(n2,100).
 
 % ====== Definitions ======
 
-marktypes(point;bar;line;area;rule;symbol;text;tick).
+marktype(point;bar;line;area;rule;symbol;text;tick).
 types(q;o;n).
 primitive_types(string;number;boolean).
-aggregates(null;count;mean;median;min;max).
-binning(null;3;5;10;100;200).
-scales(null;zero;log).
+aggregates(count;mean;median;min;max).
+binning(3;5;10;100;200).
+scales(zero;log).
 
 % channels
 single_channels(x;y;color;size;shape;text).
 multi_channels(detail).
-channel(C) :- single_channels(C).
-channel(C) :- multi_channels(C).
+channels(C) :- single_channels(C).
+channels(C) :- multi_channels(C).
 
 fields(F) :- fieldtype(F,_).
 
@@ -51,21 +67,36 @@ fields(F) :- fieldtype(F,_).
 % ====== Generate ======
 
 % pick one marktype
-{ mark(M) : marktypes(M) } = 1.
+{ mark(M) : marktype(M) } = 1.
 
 % encodings
-0 { encoding(C,C,F): fields(F) } 1 :- single_channels(C).
-{ encoding(@concat(C,F),C,F): fields(F) } :- multi_channels(C).
 
-encoding(E) :- encoding(E,_,_).
+% maximum number for each multi channel encoding
+#const max_encs = 5.
 
-% properties
-field(E,F) :- encoding(E,_,F).
-channel(E,C) :- encoding(E,C,_).
+obj_cnt(0..@min_preds(max_encs,F)) :- F = {fields(_)}.
+
+0 { unique_encoding(C,C) } 1 :- single_channels(C).
+{ multi_encoding(C,Cnt): obj_cnt(Cnt) } :- multi_channels(C).
+
+multi_encoding(C,Cnt-1) :- multi_encoding(C,Cnt), obj_cnt(Cnt), Cnt > 0, multi_channels(C).
+
+% properties of encodings
+
+% get the channel from unique_encoding and multi_encoding
+channel(E,C) :- unique_encoding(E,C).
+channel(@concat(C,Cnt),C) :- multi_encoding(C,Cnt).
+
+encoding(E) :- channel(E,_).
+
+% field and type have to be present
+{ field(E,F): fields(F) } = 1 :- encoding(E).
 { type(E,T): types(T) } = 1 :- encoding(E).
-{ agg(E,A): aggregates(A) } = 1 :- encoding(E).
-{ bin(E,B): binning(B) } = 1 :- encoding(E).
-{ scale(E,S): types(S) } = 1 :- encoding(E).
+
+% other properties that are not required
+0 { agg(E,A): aggregates(A) } 1 :- encoding(E).
+0 { bin(E,B): binning(B) } 1 :- encoding(E).
+0 { scale(E,S): types(S) } 1 :- encoding(E).
 
 
 % ====== Helpers ======
