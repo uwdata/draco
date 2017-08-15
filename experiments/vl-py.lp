@@ -7,7 +7,7 @@ def concat(*args):
 
 def min_preds(c,pred):
     """ Get the minimum of a constrant and the number of predicates. """
-    return min([c.number,pred.number])
+    return min([c.number, pred.number])
 
 #end.
 
@@ -104,7 +104,7 @@ encoding(E) :- channel(E,_).
 % ====== Helpers ======
 
 dimension(E) :- type(E,(n;o)).
-dimension(E) :- bin(E,B), B != null.
+dimension(E) :- bin(E,_).
 
 % orientation for bars and ticks
 orientation(horizontal) :- mark(bar;tick), type(E,(o;n)), channel(E,x).
@@ -118,7 +118,7 @@ orientation(vertical) :- mark(bar;tick), type(E,(o;n)), channel(E,y).
 :- type(E,q), field(E,F), fieldtype(F,(string;boolean)).
 
 % can only bin quantitative
-:- type(E,T), bin(E,B), B != null, T != q.
+:- type(E,T), bin(E,_), T != q.
 
 % do not use scale zero with dimension
 :- scale(E,zero), dimension(E).
@@ -127,7 +127,7 @@ orientation(vertical) :- mark(bar;tick), type(E,(o;n)), channel(E,y).
 :- scale(E,log), dimension(E).
 
 % cannot bin and aggregate
-:- bin(E,B), agg(E,A), A != null, B != null.
+:- bin(E,_), agg(E,_).
 
 % mean and sum only works for quantitative
 :- agg(E,(sum;mean)), type(E,T), T != q.
