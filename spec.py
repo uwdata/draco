@@ -156,7 +156,7 @@ class Encoding(object):
     @staticmethod
     def gen_encoding_id():
         Encoding.encoding_cnt += 1
-        return f"e_{Encoding.encoding_cnt}"
+        return f"e{Encoding.encoding_cnt}"
 
     @staticmethod
     def load_from_vl_obj(vl_obj, place_holder=_hole):
@@ -229,7 +229,7 @@ class Encoding(object):
             "channel": self.channel,
             "field": self.field,
             "type": ty_to_asp_type[self.ty],
-            "agg": self.aggregate,
+            "aggregate": self.aggregate,
             "bin": self.binning,
             "scale": self.scale
         }
@@ -238,13 +238,12 @@ class Encoding(object):
         for k, v in props.items():
             if v is not _null:
                 if v is not _hole:
-                    s = f":- not {k}({self.id},{v})"
+                    s = f":- not {k}({self.id},{v})."
                 else:
-                    s = f"0 {{ {k}({self.id},{_wrap_props(v)}): {k}({_wrap_props(v)}) }} 1."
+                    s = f"0 {{ {k}({self.id},B) : {k}(B) }} 1."
                 constraints.append(s)
 
-
-        return f"encoding({self.id})\n" + "\n".join(constraints)
+        return f"encoding({self.id}).\n" + "\n".join(constraints)
         #return f":- not 1 = { encoding(E) {", ".join(constraint) if len(constraint) else ""} }."
 
 
