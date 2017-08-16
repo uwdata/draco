@@ -57,9 +57,12 @@ encoding(Id-1) :- encoding(Id), obj_id(Id), Id > 0.
 dimension(E) :- type(E,(n;o)).
 dimension(E) :- bin(E,_).
 
+channel_dim(C) :- dimension(E), channel(E,C).
+channel_meas(C) :- not dimension(E), channel(E,C).
+
 % orientation for bars and ticks
-orientation(horizontal) :- mark(bar;tick), type(E,(o;n)), channel(E,x).
-orientation(vertical) :- mark(bar;tick), type(E,(o;n)), channel(E,y).
+orientation(horizontal) :- mark(bar;tick), channel_dim(x).
+orientation(vertical) :- mark(bar;tick), channel_dim(y).
 
 cardinality(E,C) :- field(E,F), cardinality(F,C).
 
@@ -94,10 +97,10 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 :- aggregate(E,count), not type(E,q).
 
 % shape requires dimension
-:- channel(E,shape), not dimension(E).
+:- channel_meas(shape).
 
 % size or text require measure
-:- channel(E,(size;text)), dimension(E).
+:- channel_meas(size;text).
 
 % categorical color channel should not have too high cardinality
 :- channel(E,color), cardinality(E,C), C > 20.
@@ -107,6 +110,7 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 
 % aggregate implies quantitative
 :- aggregate(E,_), not type(E,q).
+
 
 % === Across encodings and between encodings and marks ===
 
@@ -118,10 +122,6 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % and row or column
 :- mark(text), not channel(_,row), not channel(_,column).
 
-
-
-
-
 % point, tick, and bar require x or y channel
 :- mark(point;tick;bar), not channel(_,x), not channel(_,y).
 
@@ -129,10 +129,8 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 :- mark(line;area), not channel(_,x).
 :- mark(line;area), not channel(_,y).
 
-% bar and tick requires quantitative (x or y)
-% :- mark(bar;tick), not encode(x,_,q), not encode(y,_,q).
-% and optional ordinal/nominal (x or y); not two quantitative
-:- mark(bar;tick), channel(E,x), type(E,q), channel(E2,y), type(E2,q).
+% bar and tick requires exactly one measure (x or y)
+:- mark(bar;tick), not 1 = {channel_meas(x); channel_meas(y)}.
 
 % bar mark requires scale to start at zero
 :- mark(bar), type(E,(x;y)), type(E,q), not scale(E,zero).
