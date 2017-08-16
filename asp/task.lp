@@ -17,8 +17,8 @@ cardinality(n2,100).
 % use certain mark
 % :- not mark(bar).
 
-% want to use number as ordinal
-%% :- not encode(_,n1,o).
+:- not 1 = { encoding(E): channel(E,x), type(E,q) }.
+:- not 1 = { encoding(E): channel(E,y), type(E,q), bin(E,_) }.
 
-:- not encode(_,n1,_).
-:- not encode(_,n2,_).
+% :- not field(_,n1).
+% :- not field(_,n2).
