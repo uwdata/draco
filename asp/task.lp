@@ -15,7 +15,7 @@ cardinality(n2,100).
 % ====== Query constraints ======
 
 % use certain mark
-% :- not mark(bar).
+:- not mark(bar).
 
 % encoding with field set and maybe with binning
 encoding(e1).

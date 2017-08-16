@@ -23,7 +23,6 @@ channel(C) :- multi_channel(C).
 
 field(F) :- fieldtype(F,_).
 
-
 % ====== Generate ======
 
 % pick one marktype
@@ -62,6 +61,8 @@ dimension(E) :- bin(E,_).
 orientation(horizontal) :- mark(bar;tick), type(E,(o;n)), channel(E,x).
 orientation(vertical) :- mark(bar;tick), type(E,(o;n)), channel(E,y).
 
+cardinality(E,C) :- field(E,F), cardinality(F,C).
+
 
 % ====== Constraints ======
 
@@ -88,12 +89,62 @@ orientation(vertical) :- mark(bar;tick), type(E,(o;n)), channel(E,y).
 % min, max, and median only work for ordinal and quantitative
 :- aggregate(E,(min;max;median)), type(E,T), T != q, T != o.
 
+% count field (*) requires count (and vice versa) (and field has to be quantitative)
+:- aggregate(E,count), not field(E,_).
+:- aggregate(E,count), not type(E,q).
+
+% shape requires dimension
+:- channel(E,shape), not dimension(E).
+
+% size or text require measure
+:- channel(E,(size;text)), dimension(E).
+
+% categorical color channel should not have too high cardinality
+:- channel(E,color), cardinality(E,C), C > 20.
+
+% shape channel should not have too high cardinality
+:- channel(E,shape), cardinality(E,C), C > 6.
+
+% aggregate implies quantitative
+:- aggregate(E,_), not type(E,q).
 
 % === Across encodings and between encodings and marks ===
 
 % cannot use single channels twice
 :- channel(E1, C), channel(E2, C), E1 != E2, single_channel(C).
 
+% text mark requires text channel
+:- mark(text), not channel(_,text).
+% and row or column
+:- mark(text), not channel(_,row), not channel(_,column).
+
+
+
+
+
+% point, tick, and bar require x or y channel
+:- mark(point;tick;bar), not channel(_,x), not channel(_,y).
+
+% line and area require x and y channel
+:- mark(line;area), not channel(_,x).
+:- mark(line;area), not channel(_,y).
+
+% bar and tick requires quantitative (x or y)
+% :- mark(bar;tick), not encode(x,_,q), not encode(y,_,q).
+% and optional ordinal/nominal (x or y); not two quantitative
+:- mark(bar;tick), channel(E,x), type(E,q), channel(E2,y), type(E2,q).
+
+% bar mark requires scale to start at zero
+:- mark(bar), type(E,(x;y)), type(E,q), not scale(E,zero).
+
+% shape channel requires point mark
+:- channel(_,shape), not mark(point).
+
+% size only works with some marks
+:- channel(_,size), not mark(point), not mark(rule), not mark(text), not mark(line).
+
+% bar and tick should not use size
+:~ mark(bar;tick), channel(_,size). [1@1]
 
 % === Type checks ===
 
@@ -119,9 +170,9 @@ orientation(vertical) :- mark(bar;tick), type(E,(o;n)), channel(E,y).
 :~ type(_,o). [1*tw@1]
 :~ type(_,n). [2*tw@1]
 
-% prefer to use raw (no aggregation)
+% prefer to use raw (no aggregate)
 
-% aggregation weight
+% aggregate weight
 #const aw = 1.
 
 :~ aggregate(_,A), A != null. [aw@1]
