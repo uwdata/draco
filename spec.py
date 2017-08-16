@@ -151,8 +151,15 @@ class Field(object):
 
 class Encoding(object):
 
+    encoding_cnt = -1
+
     @staticmethod
-    def load_from_vl_obj(channel, vl_obj, place_holder=_hole):
+    def gen_encoding_id():
+        Encoding.encoding_cnt += 1
+        return f"e_{Encoding.encoding_cnt}"
+
+    @staticmethod
+    def load_from_vl_obj(vl_obj, place_holder=_hole):
         """ load encoding from a vl_obj
             Args:
                 channel: the name of a channel
@@ -164,7 +171,7 @@ class Encoding(object):
         # get the field if it is in the object, otherwise generate a place holder symbol
         _get_field = lambda f: handle_special_value(vl_obj[f]) if f in vl_obj else place_holder
 
-        return Encoding(channel, _get_field("field"), _get_field("type"),
+        return Encoding(_get_field("channel"), _get_field("field"), _get_field("type"),
                         _get_field("aggregate"), _get_field("bin"), _get_field("scale"))
 
     @staticmethod
@@ -188,6 +195,8 @@ class Encoding(object):
         self.aggregate = aggregate
         self.binning = binning
         self.scale = scale
+        self.id = Encoding.gen_encoding_id()
+
 
     def to_vegalite_obj(self):
 
@@ -214,16 +223,29 @@ class Encoding(object):
             "nominal": "n"
         }
         # if a property is a hole, generate a placeholder
-        _wrap_props = lambda p: p if p is not _hole else "_"
+        _wrap_props = lambda v: v if v is not _hole else "_"
 
-        props = [self.channel,
-                 self.field,
-                 ty_to_asp_type[self.ty],
-                 self.aggregate,
-                 self.binning,
-                 self.scale]
+        props = {
+            "channel": self.channel,
+            "field": self.field,
+            "type": ty_to_asp_type[self.ty],
+            "agg": self.aggregate,
+            "bin": self.binning,
+            "scale": self.scale
+        }
 
-        return f":- not encode({','.join(map(_wrap_props, props))})."
+        constraints = []
+        for k, v in props.items():
+            if v is not _null:
+                if v is not _hole:
+                    s = f":- not {k}({self.id},{v})"
+                else:
+                    s = f"0 {{ {k}({self.id},{_wrap_props(v)}): {k}({_wrap_props(v)}) }} 1."
+                constraints.append(s)
+
+
+        return f"encoding({self.id})\n" + "\n".join(constraints)
+        #return f":- not 1 = { encoding(E) {", ".join(constraint) if len(constraint) else ""} }."
 
 
 class Query(object):
@@ -236,8 +258,8 @@ class Query(object):
     @staticmethod
     def load_from_vl_obj(vl_obj, mark):
         encodings = []
-        for channel, encoding_obj in vl_obj.items():
-            encodings.append(Encoding.load_from_vl_obj(channel, encoding_obj))
+        for encoding_obj in vl_obj:
+            encodings.append(Encoding.load_from_vl_obj(encoding_obj))
         return Query(mark, encodings)
 
     @staticmethod
