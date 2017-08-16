@@ -115,7 +115,7 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % === Across encodings and between encodings and marks ===
 
 % cannot use single channels twice
-:- channel(E1, C), channel(E2, C), E1 != E2, single_channel(C).
+:- single_channel(C), 2 {channel(_,C)}.
 
 % text mark requires text channel
 :- mark(text), not channel(_,text).
