@@ -1,10 +1,5 @@
 #script (python)
 
-from clingo import parse_term
-
-def concat(*args):
-    return parse_term("_".join(map(str, args)))
-
 def min_preds(c,pred):
     """ Get the minimum of a constrant and the number of predicates. """
     return min([c.number, pred.number])
@@ -17,7 +12,7 @@ marktype(point;bar;line;area;rule;symbol;text;tick).
 type(q;o;n).
 primitive_type(string;number;boolean).
 aggregate(count;mean;median;min;max).
-binning(3;5;10;100;200).
+bin(3;5;10;100;200).
 scale(zero;log).
 
 % channels
@@ -39,30 +34,22 @@ field(F) :- fieldtype(F,_).
 % maximum number for each multi channel encoding
 #const max_encs = 5.
 
-obj_cnt(0..@min_preds(max_encs,F)) :- F = {field(_)}.
+obj_id(0..@min_preds(max_encs,F)) :- F = {field(_)}.
 
-% here we generate encodings and by splitting channels for which there can only be one encoding and for which there can be multiple
-% this reduces the size of the grounded program
-0 { unique_encoding(C) } 1 :- single_channel(C).
-{ multi_encoding(C,Cnt): obj_cnt(Cnt) } :- multi_channel(C).
+1 { encoding(E): obj_id(E) }.
 
-multi_encoding(C,Cnt-1) :- multi_encoding(C,Cnt), obj_cnt(Cnt), Cnt > 0, multi_channel(C).
+encoding(Id-1) :- encoding(Id), obj_id(Id), Id > 0.
 
 % properties of encodings
 
-% get the channel from unique_encoding and multi_encoding
-channel(C,C) :- unique_encoding(C).
-channel(@concat(C,Cnt),C) :- multi_encoding(C,Cnt).
-
-encoding(E) :- channel(E,_).
-
-% field and type have to be present
+% channel, field and type have to be present
+{ channel(E,C): channel(C) } = 1 :- encoding(E).
 { field(E,F): field(F) } = 1 :- encoding(E).
 { type(E,T): type(T) } = 1 :- encoding(E).
 
 % other properties that are not required
-0 { agg(E,A): aggregate(A) } 1 :- encoding(E).
-0 { bin(E,B): binning(B) } 1 :- encoding(E).
+0 { aggregate(E,A): aggregate(A) } 1 :- encoding(E).
+0 { bin(E,B): bin(B) } 1 :- encoding(E).
 0 { scale(E,S): scale(S) } 1 :- encoding(E).
 
 
@@ -74,6 +61,7 @@ dimension(E) :- bin(E,_).
 % orientation for bars and ticks
 orientation(horizontal) :- mark(bar;tick), type(E,(o;n)), channel(E,x).
 orientation(vertical) :- mark(bar;tick), type(E,(o;n)), channel(E,y).
+
 
 % ====== Constraints ======
 
@@ -92,15 +80,33 @@ orientation(vertical) :- mark(bar;tick), type(E,(o;n)), channel(E,y).
 :- scale(E,log), dimension(E).
 
 % cannot bin and aggregate
-:- bin(E,_), agg(E,_).
+:- bin(E,_), aggregate(E,_).
 
 % mean and sum only works for quantitative
-:- agg(E,(sum;mean)), type(E,T), T != q.
+:- aggregate(E,(sum;mean)), type(E,T), T != q.
 
 % min, max, and median only work for ordinal and quantitative
-:- agg(E,(min;max;median)), type(E,T), T != q, T != o.
+:- aggregate(E,(min;max;median)), type(E,T), T != q, T != o.
+
 
 % === Across encodings and between encodings and marks ===
+
+% cannot use single channels twice
+:- channel(E1, C), channel(E2, C), E1 != E2, single_channel(C).
+
+
+% === Type checks ===
+
+% fieldtype has to be primitive type
+:- fieldtype(_,T), not primitive_type(T).
+
+% check types of encoding properties
+:- channel(_,C), not channel(C).
+:- field(_,F), not field(F).
+:- type(_,T), not type(T).
+:- aggregate(_,A), not aggregate(A).
+:- bin(_,B), not bin(B).
+:- scale(_,S), not scale(S).
 
 
 % ====== Preferences ======
@@ -118,7 +124,8 @@ orientation(vertical) :- mark(bar;tick), type(E,(o;n)), channel(E,y).
 % aggregation weight
 #const aw = 1.
 
-:~ agg(_,A), A != null. [aw@1]
+:~ aggregate(_,A), A != null. [aw@1]
+
 
 % ====== Output ======
 #show mark/1.
@@ -126,6 +133,6 @@ orientation(vertical) :- mark(bar;tick), type(E,(o;n)), channel(E,y).
 #show type/2.
 #show channel/2.
 #show field/2.
-#show agg/2.
+#show aggregate/2.
 #show bin/2.
 #show scale/2.

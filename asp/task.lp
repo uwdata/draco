@@ -17,8 +17,10 @@ cardinality(n2,100).
 % use certain mark
 % :- not mark(bar).
 
-:- not 1 = { encoding(E): channel(E,x), type(E,q) }.
-:- not 1 = { encoding(E): channel(E,y), type(E,q), bin(E,_) }.
+% encoding with field set and maybe with binning
+encoding(e1).
+:- not field(e1,n1).
+0 {bin(e1,B): bin(B)} 1.
 
-% :- not field(_,n1).
-% :- not field(_,n2).
+encoding(e2).
+:- not field(e2,n2).
