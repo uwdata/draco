@@ -5,8 +5,4 @@ install:
   - "pip install -r requirements.txt"
 script:
   - pytest
-  - ansunit tests.yaml
-addons:
-  apt:
-    packages:
-    - gringo
+  - ansunit --solver=bin/clingo-linux tests.yaml
