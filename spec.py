@@ -235,7 +235,7 @@ class Encoding(object):
         props = {
             "channel": self.channel,
             "field": self.field,
-            "type": ty_to_asp_type[self.ty],
+            "type": ty_to_asp_type[self.ty] if self.ty in ty_to_asp_type else _hole,
             "aggregate": self.aggregate,
             "bin": self.binning,
             "scale": self.scale
