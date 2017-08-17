@@ -45,7 +45,6 @@ def main(partial_vl_spec, out):
 
     json_result = json.loads(r.stdout.decode("utf-8"))
 
-    #pprint(json_result)
     raw_str_list = json_result['Call'][0]['Witnesses'][0]['Value']
 
     query = Query.parse_from_asp_result(raw_str_list)
@@ -55,9 +54,10 @@ def main(partial_vl_spec, out):
     logger.info(f"Wrote Vega-Lite spec to {out.name}.")
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser(description="Visualization recommendation system.",
         epilog="There is a moment in every dawn when light floats, there is the possibility of magic. Creation holds its breath.")
-
+    
     parser.add_argument("query", nargs="?", type=argparse.FileType('r'), default=sys.stdin,
                         help="The CompassQL query (partial Vega-Lite spec).")
     parser.add_argument("--out", nargs="?", type=argparse.FileType('w'), default=sys.stdout,

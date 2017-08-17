@@ -235,6 +235,7 @@ class Encoding(object):
         props = {
             "channel": self.channel,
             "field": self.field,
+            # its type may be a _hole requesting for synthesis
             "type": ty_to_asp_type[self.ty] if self.ty in ty_to_asp_type else _hole,
             "aggregate": self.aggregate,
             "bin": self.binning,
@@ -288,6 +289,7 @@ class Query(object):
                     raw_encoding_props[encoding_id] = {}
                 raw_encoding_props[encoding_id][head] = body[1]
 
+        # generate encoding objects from each collected encodings
         for k, v in raw_encoding_props.items():
             encodings.append(Encoding.parse_from_asp_result(k, v))
                 
