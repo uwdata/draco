@@ -10,7 +10,7 @@ def min_preds(c,pred):
 
 marktype(point;bar;line;area;rule;symbol;text;tick).
 type(q;o;n).
-primitive_type(string;number;boolean).
+primitive_type(string;number;boolean;date).
 aggregate(count;mean;median;min;max).
 bin(3;5;10;100;200).
 scale(zero;log).
