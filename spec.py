@@ -7,9 +7,9 @@ import os
 
 from pprint import pprint
 
-# special token used by the spec
-_null = "_null_"
-_hole = "_??_"
+_null = "_null_"    # I don't want this property
+_hole = "_??_"      # I want a value for this property
+# Use `None` for "I didn't specify this and don't care"
 
 def handle_special_value(v):
     # return a hole if the given value is not "??", else return the value.
@@ -158,7 +158,7 @@ class Encoding(object):
         return f"e{Encoding.encoding_cnt}"
 
     @staticmethod
-    def load_from_vl_obj(vl_obj, place_holder=_null):
+    def load_from_vl_obj(vl_obj):
         """ load encoding from a vl_obj
             Args:
                 channel: the name of a channel
@@ -170,8 +170,12 @@ class Encoding(object):
         # get the field if it is in the object, otherwise generate a place holder symbol
         def _get_field(f):
             if f in vl_obj:
+                # for fields specified by the user, we want to add to the encoding
                 return handle_special_value(vl_obj[f])
-            return place_holder
+            else:
+                # if the user didn't a field for the encoding, 
+                # we use None (See comment in the front of the file)
+                return None
 
         return Encoding(_get_field("channel"), _get_field("field"), _get_field("type"),
                         _get_field("aggregate"), _get_field("bin"), _get_field("scale"))
@@ -230,7 +234,8 @@ class Encoding(object):
         ty_to_asp_type = {
             "quantitative": "q",
             "ordinal": "o",
-            "nominal": "n"
+            "nominal": "n",
+            _hole: _hole
         }
         # if a property is a hole, generate a placeholder
         _wrap_props = lambda v: v if v is not _hole else "_"
@@ -239,7 +244,7 @@ class Encoding(object):
             "channel": self.channel,
             "field": self.field,
             # its type may be a _null requesting for synthesis
-            "type": ty_to_asp_type[self.ty] if self.ty in ty_to_asp_type else _null,
+            "type": ty_to_asp_type[self.ty],
             "aggregate": self.aggregate,
             "bin": self.binning,
             "scale": self.scale
@@ -247,12 +252,16 @@ class Encoding(object):
 
         constraints = []
         for k, v in props.items():
-            if v is not _null:
-                if v is not _hole:
-                    s = f":- not {k}({self.id},{v})."
-                else:
-                    s = f"0 {{ {k}({self.id},B) : {k}(B) }} 1."
-                constraints.append(s)
+            if v is _null:
+                s = f":- {k}({self.id},_)."
+            elif v is _hole:
+                s = f":- not {k}({self.id},_)."
+            elif v is None:
+                s = f"% 0 {{ {k}({self.id},B) : {k}(B) }} 1."
+            else:
+                s = f"{k}({self.id},{v})."
+  
+            constraints.append(s)
 
         return f"encoding({self.id}).\n" + "\n".join(constraints) + "\n"
         #return f":- not 1 = { encoding(E) {", ".join(constraint) if len(constraint) else ""} }."
@@ -312,7 +321,7 @@ class Query(object):
         prog = ""
 
         if self.mark != _hole and self.mark != _null:
-            prog += f":- not mark({self.mark}).\n\n"
+            prog += f"mark({self.mark}).\n\n"
 
         prog += "\n".join(map(lambda e: e.to_asp(), self.encodings))
         return prog
