@@ -3,13 +3,13 @@ fieldtype(horsepower,number).
 cardinality(horsepower,94).
 
 % ====== Query constraints ======
-:- not mark(bar).
+mark(bar).
 
 encoding(e0).
-:- not channel(e0,x).
-:- not field(e0,horsepower).
-0 { bin(e0,B) : bin(B) } 1.
+channel(e0,x).
+field(e0,horsepower).
+:- not bin(e0,_).
 
 encoding(e1).
-:- not channel(e1,y).
-:- not aggregate(e1,count).
+channel(e1,y).
+aggregate(e1,count).
