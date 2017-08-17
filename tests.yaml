@@ -25,3 +25,11 @@ Test invalid channel:
     Program: |
         :- not channel(_,foo).
     Expect: UNSAT
+
+Test binning and aggregation together:
+    Modules: both
+    Program: |
+        encoding(e1).
+        :- not bin(e1,_).
+        :- not aggregate(e1,_).
+    Expect: UNSAT
