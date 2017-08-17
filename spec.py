@@ -85,7 +85,9 @@ class Data(object):
     def load_from_csv(filename):
         """ load data form a csv file """
         table = agate.Table.from_csv(filename)
-        return Data.from_agate_table(table)
+        dt = Data.from_agate_table(table)
+        dt.url = filename
+        return dt
 
     @staticmethod
     def from_agate_table(agate_table):
@@ -107,7 +109,7 @@ class Data(object):
             elif isinstance(agate_type, agate.Date):
                 type_name = "date"
             elif isinstance(agate_type, agate.Datetime):
-                type_name = "datetime"
+                type_name = "date" # take care!
             cardinality = len(set(agate_table.columns.get(name)))
             data.fields.append(Field(name, type_name, cardinality))
 
@@ -120,12 +122,17 @@ class Data(object):
             data.content.append(row_obj)
         return data
 
-    def __init__(self, fields=None, content=None):
+    def __init__(self, fields=None, content=None, url=None):
         self.fields = fields
         self.content = content
+        self.url = url
 
     def to_vegalite_obj(self):
-        return {"values": self.content}
+        if self.url :
+            return {"url": self.url}
+        else:
+            return {"values": self.content}
+            
 
     def to_asp(self):
         return "\n".join([x.to_asp() for x in self.fields])
@@ -244,7 +251,7 @@ class Encoding(object):
             "channel": self.channel,
             "field": self.field,
             # its type may be a _null requesting for synthesis
-            "type": ty_to_asp_type[self.ty],
+            "type": ty_to_asp_type[self.ty] if self.ty is not None else None,
             "aggregate": self.aggregate,
             "bin": self.binning,
             "scale": self.scale
