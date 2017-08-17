@@ -35,7 +35,7 @@ field(F) :- fieldtype(F,_).
 
 obj_id(0..@min_preds(max_encs,F)) :- F = {field(_)}.
 
-1 { encoding(E): obj_id(E) }.
+{ encoding(E): obj_id(E) }.
 
 encoding(Id-1) :- encoding(Id), obj_id(Id), Id > 0.
 
@@ -92,8 +92,8 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % min, max, and median only work for ordinal and quantitative
 :- aggregate(E,(min;max;median)), type(E,T), T != q, T != o.
 
-% count field (*) requires count (and vice versa) (and field has to be quantitative)
-:- aggregate(E,count), not field(E,_).
+% count has to be quantitative and not use a field
+:- aggregate(E,count), field(E,_).
 :- aggregate(E,count), not type(E,q).
 
 % shape requires dimension
@@ -183,6 +183,10 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 
 :~ aggregate(_,A), A != null. [aw@1]
 
+% encoding weight
+
+#const ew = 1.
+:~ encoding(_).  [ew@1]
 
 % ====== Output ======
 #show mark/1.
