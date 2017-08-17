@@ -183,9 +183,11 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 
 :~ aggregate(_,A), A != null. [aw@1]
 
-% encoding weight
+% prefer to use fewer encodings
 
+% encoding weight
 #const ew = 1.
+
 :~ encoding(_).  [ew@1]
 
 % ====== Output ======
