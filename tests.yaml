@@ -33,3 +33,11 @@ Test binning and aggregation together:
         :- not bin(e1,_).
         :- not aggregate(e1,_).
     Expect: UNSAT
+
+Test cannot use field with count:
+    Modules: both
+    Program: |
+        encoding(e1).
+        aggregate(e1,count).
+        field(e1,n1).
+    Expect: UNSAT

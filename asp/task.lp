@@ -15,12 +15,12 @@ cardinality(n2,100).
 % ====== Query constraints ======
 
 % use certain mark
-:- not mark(bar).
+mark(bar).
 
 % encoding with field set and maybe with binning
 encoding(e1).
-:- not field(e1,n1).
-0 {bin(e1,B): bin(B)} 1.
+field(e1,n1).
+:- not bin(e1,_).
 
 encoding(e2).
-:- not field(e2,n2).
+field(e2,n2).

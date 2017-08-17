@@ -7,7 +7,7 @@ cardinality(acceleration,96).
 
 % ====== Query constraints ======
 encoding(e0).
-:- not field(e0,acceleration).
+field(e0,acceleration).
 
 encoding(e1).
-:- not field(e1,horsepower).
+field(e1,horsepower).
