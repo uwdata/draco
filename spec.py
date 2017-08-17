@@ -24,21 +24,20 @@ class Task(object):
         self.query = query
 
     @staticmethod
-    def load_from_vl_json(filename, place_holder=_hole):
-        """ load a task from a vegalite spec
+    def load_from_vl_json(query_file, place_holder=_hole):
+        """ load a task from a query spec
             Args:
-                filename: a vegalite json file
+                query_file: a CompassQL json file
                 place_holder: whether unprovided spec are reprented as holes or null values
                     (this determine whether the solver would infer missing parts
                         or only infer properties specified by question marks)
             Returns:
                 a Task object
         """
-        with open(filename) as f:
-            raw_vl_obj = json.load(f)
+        raw_vl_obj = json.load(query_file)
 
         # load data from the file
-        data = Data.load_from_vl_obj(raw_vl_obj["data"], path_prefix=os.path.dirname(filename))
+        data = Data.load_from_vl_obj(raw_vl_obj["data"], path_prefix=os.path.dirname(query_file.name))
 
         # load query from the file
         mark = handle_special_value(raw_vl_obj["mark"]) if "mark" in raw_vl_obj else place_holder
@@ -51,7 +50,7 @@ class Task(object):
         """ generate a vegalite spec from the object """
         result = self.query.to_vegalite_obj()
         result["data"] = self.data.to_vegalite_obj()
-        #result["$schema"] = "https://vega.github.io/schema/vega-lite/v2.0.json"
+        result["$schema"] = "https://vega.github.io/schema/vega-lite/v2.0.json"
         return result
 
     def to_vl_json(self):

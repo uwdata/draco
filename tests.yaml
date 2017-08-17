@@ -1,0 +1,14 @@
+Definitions:
+    vl: {filename: asp/vega-lite.lp}
+
+Test a implies b:
+    Program: |
+        b :- a.
+        a.
+        :- not b.
+    Expect: SAT
+
+Test program works:
+    Definitions:
+        encoding: {reference: vl}
+    Expect: SAT
