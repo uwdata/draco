@@ -117,6 +117,9 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % cannot use single channels twice
 :- single_channel(C), 2 {channel(_,C)}.
 
+% there has to be at least one encoding
+:- not encoding(_).
+
 % all encodings (if they have a channel) require field except if we have a count aggregate
 :- not field(E,_), not aggregate(E,count), encoding(E).
 % count should not have a field

@@ -1,5 +1,7 @@
 Definitions:
     vl: {filename: asp/vega-lite.lp}
+    data: {filename: asp/data.lp}
+    both: {group: [vl, data]}
 
 Test a implies b:
     Program: |
@@ -9,6 +11,11 @@ Test a implies b:
     Expect: SAT
 
 Test program works:
-    Definitions:
-        encoding: {reference: vl}
+    Modules: both
     Expect: SAT
+
+Test invalid channel:
+    Modules: vl
+    Program: |
+        :- channel(_,x).
+    Expect: UNSAT
