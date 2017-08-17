@@ -175,13 +175,21 @@ class Encoding(object):
                         _get_field("aggregate"), _get_field("bin"), _get_field("scale"))
 
     @staticmethod
-    def parse_from_asp_result(raw_str):
-        content = raw_str[raw_str.index("(") + 1: raw_str.index(")")].split(",")
-        content = map(lambda x: _null if x == "null" else x, content)
-        return Encoding(*content)
+    def parse_from_asp_result(encoding_id, encoding_props):
+
+        _get_field = lambda props, target: props[target] if target in props else _null
+
+        content = [_get_field(encoding_props, "channel"), 
+                   _get_field(encoding_props, "field"), 
+                   _get_field(encoding_props, "type"),
+                   _get_field(encoding_props, "aggregate"),
+                   _get_field(encoding_props, "bin"),
+                   _get_field(encoding_props, "scale")]
+
+        return Encoding(*content, encoding_id)
 
 
-    def __init__(self, channel, field, ty, aggregate, binning, scale):
+    def __init__(self, channel, field, ty, aggregate, binning, scale, idx=None):
         """ Create a channel:
             Args:
                 field: a string refering to a column in the table
@@ -195,7 +203,7 @@ class Encoding(object):
         self.aggregate = aggregate
         self.binning = binning
         self.scale = scale
-        self.id = Encoding.gen_encoding_id()
+        self.id = idx if idx is not None else Encoding.gen_encoding_id()
 
 
     def to_vegalite_obj(self):
@@ -265,11 +273,25 @@ class Query(object):
     def parse_from_asp_result(raw_str_list):
         encodings = []
         mark = None
+
+        raw_encoding_props = {}
+
         for s in raw_str_list:
             if s.startswith("mark"):
                 mark = s[s.index("(") + 1 : s.index(")")]
-            elif s.startswith("encode"):
-                encodings.append(Encoding.parse_from_asp_result(s))
+            else:
+                head = s[:s.index("(")]
+                body = s[s.index("(") + 1: s.index(")")].split(",")
+                encoding_id = body[0]
+
+                # collect encoding properties
+                if encoding_id not in raw_encoding_props:
+                    raw_encoding_props[encoding_id] = {}
+                raw_encoding_props[encoding_id][head] = body[1]
+
+        for k, v in raw_encoding_props.items():
+            encodings.append(Encoding.parse_from_asp_result(k, v))
+                
         return Query(mark, encodings)
 
     def to_vegalite_obj(self):
@@ -282,6 +304,6 @@ class Query(object):
 
     def to_asp(self):
         # the asp constrain comes from both mark and encodings
-        prog = f":- mark({self.mark}).\n"
+        prog = f":- not mark({self.mark}).\n"
         prog += "\n".join(map(lambda e: e.to_asp(), self.encodings))
         return prog

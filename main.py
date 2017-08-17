@@ -43,12 +43,11 @@ def main(partial_vl_spec):
 
     #pprint(json_result)
     raw_str_list = json_result['Call'][0]['Witnesses'][0]['Value']
-    #print(raw_str_list)
 
     query = Query.parse_from_asp_result(raw_str_list)
     new_task = Task(task.data, query)
 
-    print(json.dumps(new_task.to_vegalite_obj()))
+    print(new_task.to_vl_json())
 
 
 if __name__ == "__main__":
