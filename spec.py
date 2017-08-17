@@ -178,8 +178,8 @@ class Encoding(object):
 
         _get_field = lambda props, target: props[target] if target in props else _null
 
-        content = [_get_field(encoding_props, "channel"), 
-                   _get_field(encoding_props, "field"), 
+        content = [_get_field(encoding_props, "channel"),
+                   _get_field(encoding_props, "field"),
                    _get_field(encoding_props, "type"),
                    _get_field(encoding_props, "aggregate"),
                    _get_field(encoding_props, "bin"),
@@ -292,7 +292,7 @@ class Query(object):
         # generate encoding objects from each collected encodings
         for k, v in raw_encoding_props.items():
             encodings.append(Encoding.parse_from_asp_result(k, v))
-                
+
         return Query(mark, encodings)
 
     def to_vegalite_obj(self):
@@ -305,6 +305,9 @@ class Query(object):
 
     def to_asp(self):
         # the asp constrain comes from both mark and encodings
+        if self.mark == _hole or self.mark == _null:
+            return ""
+
         prog = f":- not mark({self.mark}).\n"
         prog += "\n".join(map(lambda e: e.to_asp(), self.encodings))
         return prog
