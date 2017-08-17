@@ -158,7 +158,7 @@ class Encoding(object):
         return f"e{Encoding.encoding_cnt}"
 
     @staticmethod
-    def load_from_vl_obj(vl_obj, place_holder=_hole):
+    def load_from_vl_obj(vl_obj, place_holder=_null):
         """ load encoding from a vl_obj
             Args:
                 channel: the name of a channel
@@ -168,7 +168,10 @@ class Encoding(object):
                 an encoding object
         """
         # get the field if it is in the object, otherwise generate a place holder symbol
-        _get_field = lambda f: handle_special_value(vl_obj[f]) if f in vl_obj else place_holder
+        def _get_field(f):
+            if f in vl_obj:
+                return handle_special_value(vl_obj[f])
+            return place_holder
 
         return Encoding(_get_field("channel"), _get_field("field"), _get_field("type"),
                         _get_field("aggregate"), _get_field("bin"), _get_field("scale"))
@@ -235,8 +238,8 @@ class Encoding(object):
         props = {
             "channel": self.channel,
             "field": self.field,
-            # its type may be a _hole requesting for synthesis
-            "type": ty_to_asp_type[self.ty] if self.ty in ty_to_asp_type else _hole,
+            # its type may be a _null requesting for synthesis
+            "type": ty_to_asp_type[self.ty] if self.ty in ty_to_asp_type else _null,
             "aggregate": self.aggregate,
             "bin": self.binning,
             "scale": self.scale
@@ -304,10 +307,12 @@ class Query(object):
         return query
 
     def to_asp(self):
-        # the asp constrain comes from both mark and encodings
-        if self.mark == _hole or self.mark == _null:
-            return ""
+        # the asp constraint comes from both mark and encodings
 
-        prog = f":- not mark({self.mark}).\n"
+        prog = ""
+
+        if self.mark != _hole and self.mark != _null:
+            prog += f":- not mark({self.mark}).\n"
+
         prog += "\n".join(map(lambda e: e.to_asp(), self.encodings))
         return prog
