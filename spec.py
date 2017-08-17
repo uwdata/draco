@@ -190,7 +190,7 @@ class Encoding(object):
     @staticmethod
     def parse_from_asp_result(encoding_id, encoding_props):
 
-        _get_field = lambda props, target: props[target] if target in props else _null
+        _get_field = lambda props, target: props[target] if target in props else None
 
         content = [_get_field(encoding_props, "channel"),
                    _get_field(encoding_props, "field"),
@@ -221,18 +221,16 @@ class Encoding(object):
 
     def to_vegalite_obj(self):
 
-        # we do not allow field and ty to be null
-        assert self.field is not _null
-        assert self.ty is not _null
-
         encoding = {}
-        encoding["field"] = self.field
-        encoding["type"] = self.ty
-        if self.aggregate is not _null:
+        if self.field:
+            encoding["field"] = self.field
+        if self.ty:
+            encoding["type"] = self.ty
+        if self.aggregate:
             encoding["aggregate"] = self.aggregate
-        if self.binning is not _null:
+        if self.binning:
             encoding["bin"] = self.binning
-        if self.scale is not _null:
+        if self.scale:
             encoding["scale"] = self.scale
         return encoding
 
