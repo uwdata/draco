@@ -14,8 +14,14 @@ Test program works:
     Modules: both
     Expect: SAT
 
-Test invalid channel:
-    Modules: vl
+Test valid channel:
+    Modules: both
     Program: |
-        :- channel(_,x).
+        :- not channel(_,x).
+    Expect: SAT
+
+Test invalid channel:
+    Modules: both
+    Program: |
+        :- not channel(_,foo).
     Expect: UNSAT
