@@ -144,7 +144,7 @@ class Field(object):
 
     def to_asp(self):
         asp_str = f"fieldtype({self.name},{self.ty}).\n"
-        asp_str += f"cardinality({self.name},{self.cardinality})."
+        asp_str += f"cardinality({self.name},{self.cardinality}).\n"
         return asp_str
 
 
@@ -254,7 +254,7 @@ class Encoding(object):
                     s = f"0 {{ {k}({self.id},B) : {k}(B) }} 1."
                 constraints.append(s)
 
-        return f"encoding({self.id}).\n" + "\n".join(constraints)
+        return f"encoding({self.id}).\n" + "\n".join(constraints) + "\n"
         #return f":- not 1 = { encoding(E) {", ".join(constraint) if len(constraint) else ""} }."
 
 
@@ -312,7 +312,7 @@ class Query(object):
         prog = ""
 
         if self.mark != _hole and self.mark != _null:
-            prog += f":- not mark({self.mark}).\n"
+            prog += f":- not mark({self.mark}).\n\n"
 
         prog += "\n".join(map(lambda e: e.to_asp(), self.encodings))
         return prog
