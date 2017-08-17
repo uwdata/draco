@@ -132,7 +132,7 @@ class Data(object):
             return {"url": self.url}
         else:
             return {"values": self.content}
-            
+
 
     def to_asp(self):
         return "\n".join([x.to_asp() for x in self.fields])
@@ -180,7 +180,7 @@ class Encoding(object):
                 # for fields specified by the user, we want to add to the encoding
                 return handle_special_value(vl_obj[f])
             else:
-                # if the user didn't a field for the encoding, 
+                # if the user didn't a field for the encoding,
                 # we use None (See comment in the front of the file)
                 return None
 
@@ -265,7 +265,7 @@ class Encoding(object):
                 s = f"% 0 {{ {k}({self.id},B) : {k}(B) }} 1."
             else:
                 s = f"{k}({self.id},{v})."
-  
+
             constraints.append(s)
 
         return f"encoding({self.id}).\n" + "\n".join(constraints) + "\n"
