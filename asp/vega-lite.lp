@@ -54,7 +54,7 @@ encoding(Id-1) :- encoding(Id), obj_id(Id), Id > 0.
 
 % ====== Helpers ======
 
-dimension(E) :- type(E,(n;o)).
+dimension(E) :- type(E,(n;o)), not aggregate(E,_).
 dimension(E) :- bin(E,_).
 
 channel_dim(C) :- dimension(E), channel(E,C).
@@ -111,6 +111,9 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % aggregate implies quantitative
 :- aggregate(E,_), not type(E,q).
 
+% numbers should not be nominal
+:~ type(E,n), field(E,F), fieldtype(F,number). [2@1]
+
 
 % === Across encodings and between encodings and marks ===
 
@@ -130,6 +133,9 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % and row or column
 :- mark(text), not channel(_,row), not channel(_,column).
 
+% text channel requires text mark
+:- channel(_,text), not mark(text).
+
 % point, tick, and bar require x or y channel
 :- mark(point;tick;bar), not channel(_,x), not channel(_,y).
 
@@ -140,8 +146,8 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % bar and tick requires exactly one measure (x or y)
 :- mark(bar;tick), not 1 = {channel_meas(x); channel_meas(y)}.
 
-% bar mark requires scale to start at zero
-:- mark(bar), type(E,(x;y)), type(E,q), not scale(E,zero).
+% bar mark requires scale of measure to start at zero
+:- mark(bar), type(E,(x;y)), not dimension(E), not scale(E,zero).
 
 % shape channel requires point mark
 :- channel(_,shape), not mark(point).
@@ -150,7 +156,21 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 :- channel(_,size), not mark(point), not mark(rule), not mark(text), not mark(line).
 
 % bar and tick should not use size
-:~ mark(bar;tick), channel(_,size). [1@1]
+:~ mark(bar;tick), channel(_,size). [10@1]
+
+% area and line require x and y
+:- mark(area;line), not channel(_,x).
+:- mark(area;line), not channel(_,y).
+
+% aggregate should also have a dimension
+:~ aggregate(_,_), not dimension(_). [2@1]
+
+% detail requires aggregation
+:- channel(_,detail), not aggregate(_,_).
+
+% do not use log for bar chart's measure
+:- mark(bar), not dimension(E), scale(E,log), channel(E,(x;y)).
+
 
 % === Type checks ===
 
@@ -186,7 +206,7 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % prefer to use fewer encodings
 
 % encoding weight
-#const ew = 1.
+#const ew = 6.
 
 :~ encoding(_).  [ew@1]
 
