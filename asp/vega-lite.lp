@@ -9,7 +9,7 @@ type(q;o;n).
 primitive_type(string;number;boolean;date).
 aggregate(count;mean;median;min;max).
 bin(3;5;10;100;200).
-scale(zero;log).
+scale(linear;log).
 
 % channels
 single_channel(x;y;color;size;shape;text).
@@ -40,12 +40,13 @@ encoding(Id-1) :- encoding(Id), obj_id(Id), Id > 0.
 % channel and type have to be present
 { channel(E,C): channel(C) } = 1 :- encoding(E).
 { type(E,T): type(T) } = 1 :- encoding(E).
+{ scale(E,S): scale(S) } = 1 :- encoding(E).
 
 % other properties that are not required
 0 { field(E,F): field(F) } 1 :- encoding(E).
 0 { aggregate(E,A): aggregate(A) } 1 :- encoding(E).
 0 { bin(E,B): bin(B) } 1 :- encoding(E).
-0 { scale(E,S): scale(S) } 1 :- encoding(E).
+0 { zero(E) } 1 :- encoding(E).
 
 
 % ====== Helpers ======
@@ -74,7 +75,7 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 :- type(E,T), bin(E,_), T != q.
 
 % do not use scale zero with dimension
-:- scale(E,zero), dimension(E).
+:- zero(E), dimension(E).
 
 % do not use log scale with dimension
 :- scale(E,log), dimension(E).
@@ -143,7 +144,7 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 :- mark(bar;tick), not 1 = {channel_meas(x); channel_meas(y)}.
 
 % bar mark requires scale of measure to start at zero
-:- mark(bar), type(E,(x;y)), not dimension(E), not scale(E,zero).
+:- mark(bar), type(E,(x;y)), not dimension(E), not zero(E).
 
 % shape channel requires point mark
 :- channel(_,shape), not mark(point).
@@ -185,26 +186,25 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % ====== Preferences ======
 
 % prefer quantitative > ordinal > nominal
+#const type_weight_q = 0.
+#const type_weight_o = 1.
+#const type_weight_n = 2.
 
-% type weight
-#const tw = 1.
-
-:~ type(_,o). [1*tw@1]
-:~ type(_,n). [2*tw@1]
+:~ type(_,q). [type_weight_q@1]
+:~ type(_,o). [type_weight_o@1]
+:~ type(_,n). [type_weight_n@1]
 
 % prefer to use raw (no aggregate)
-
-% aggregate weight
-#const aw = 1.
-
-:~ aggregate(_,A), A != null. [aw@1]
+#const agg_weight = 1.
+:~ aggregate(_,A), A != null. [agg_weight@1]
 
 % prefer to use fewer encodings
+#const encoding_weight = 6.
+:~ encoding(_).  [encoding_weight@1]
 
-% encoding weight
-#const ew = 6.
-
-:~ encoding(_).  [ew@1]
+% prefer not to use the same field twice
+#const twice_weight = 10.
+:~ field(E1,F), field(E2,F), E1 != E2. [twice_weight@1]
 
 % ====== Output ======
 #show mark/1.
@@ -215,3 +215,4 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 #show aggregate/2.
 #show bin/2.
 #show scale/2.
+#show zero/1.
