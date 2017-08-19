@@ -1,9 +1,5 @@
 #script (python)
 
-def min_preds(c,pred):
-    """ Get the minimum of a constrant and the number of predicates. """
-    return min([c.number, pred.number])
-
 #end.
 
 % ====== Definitions ======
@@ -31,9 +27,9 @@ field(F) :- fieldtype(F,_).
 % encodings
 
 % maximum number for each multi channel encoding
-#const max_encs = 5.
+#const max_extra_encs = 5.
 
-obj_id(0..@min_preds(max_encs,F)) :- F = {field(_)}.
+obj_id(0..max_extra_encs).
 
 { encoding(E): obj_id(E) }.
 
