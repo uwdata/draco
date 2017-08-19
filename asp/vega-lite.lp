@@ -4,18 +4,20 @@
 
 % ====== Definitions ======
 
-marktype(point;bar;line;area;rule;symbol;text;tick).
-type(q;o;n).
-primitive_type(string;number;boolean;date).
+marktype(point;bar;line;area;rule;text;tick).
+type(q;o;n;t).
+primitive_type(string;number;integer;boolean;date).
 aggregate(count;mean;median;min;max).
 bin(3;5;10;100;200).
-scale(linear;log).
+scale(ordinal;linear;log;time).
 
 % channels
-single_channel(x;y;color;size;shape;text).
+single_channel(x;y;color;opacity;size;shape;text).
 multi_channel(detail).
 channel(C) :- single_channel(C).
 channel(C) :- multi_channel(C).
+
+non_positional(color;opacity;size;shape;text;detail).
 
 field(F) :- fieldtype(F,_).
 
@@ -62,6 +64,7 @@ orientation(horizontal) :- mark(bar;tick), channel_dim(x).
 orientation(vertical) :- mark(bar;tick), channel_dim(y).
 
 cardinality(E,C) :- field(E,F), cardinality(F,C).
+fieldtype(E,T) :- field(E,F), fieldtype(F,T).
 
 
 % ====== Constraints ======
@@ -69,12 +72,24 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % === Within Encodings ===
 
 % primitive type has to support data type
-:- type(E,q), field(E,F), fieldtype(F,(string;boolean)).
+:- type(E,(q;t)), fieldtype(E,(string;boolean)).
+
+% only use temporal type with dates
+:- type(E,t), not fieldtype(E,date).
 
 % can only bin quantitative
 :- type(E,T), bin(E,_), T != q.
 
-% do not use scale zero with dimension
+% can only use time scale if type is temporal
+:- scale(E,time), not type(E,t).
+
+% can not use linear or log with ordinal or nominal
+:- scale(E,(linear;log)), type(E,(o;n)).
+
+% bin requires linear or ordinal scale
+:- bin(E,_), not scale(E,linear), not scale(E,ordinal).
+
+% do not use scale zero with dimension (which includes binned)
 :- zero(E), dimension(E).
 
 % do not use log scale with dimension
@@ -99,17 +114,8 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % size or text require measure
 :- channel_meas(size;text).
 
-% categorical color channel should not have too high cardinality
-:- channel(E,color), cardinality(E,C), C > 20.
-
-% shape channel should not have too high cardinality
-:- channel(E,shape), cardinality(E,C), C > 6.
-
 % aggregate implies quantitative
 :- aggregate(E,_), not type(E,q).
-
-% numbers should not be nominal
-:~ type(E,n), field(E,F), fieldtype(F,number). [2@1]
 
 
 % === Across encodings and between encodings and marks ===
@@ -125,6 +131,8 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % count should not have a field
 :- aggregate(E,count), field(E,_).
 
+% TODO: check channelPermittedByMarkType
+
 % text mark requires text channel
 :- mark(text), not channel(_,text).
 % and row or column
@@ -134,7 +142,10 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 :- channel(_,text), not mark(text).
 
 % point, tick, and bar require x or y channel
-:- mark(point;tick;bar), not channel(_,x), not channel(_,y).
+:- mark(point;tick;bar;rule), not channel(_,x), not channel(_,y).
+
+% do not use ruleif we have x and y
+:- mark(rule), channel(_,x), channel(_,y).
 
 % line and area require x and y channel
 :- mark(line;area), not channel(_,x).
@@ -152,21 +163,14 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 % size only works with some marks
 :- channel(_,size), not mark(point), not mark(rule), not mark(text), not mark(line).
 
-% bar and tick should not use size
-:~ mark(bar;tick), channel(_,size). [10@1]
-
 % area and line require x and y
-:- mark(area;line), not channel(_,x).
-:- mark(area;line), not channel(_,y).
-
-% aggregate should also have a dimension
-:~ aggregate(_,_), not dimension(_). [2@1]
+:- mark(area;line), not channel(_,(x;y)).
 
 % detail requires aggregation
 :- channel(_,detail), not aggregate(_,_).
 
-% do not use log for bar chart's measure
-:- mark(bar), not dimension(E), scale(E,log), channel(E,(x;y)).
+% do not use log for bar or area mark
+:- mark(bar;area), scale(E,log), channel(E,(x;y)).
 
 
 % === Type checks ===
@@ -200,11 +204,59 @@ cardinality(E,C) :- field(E,F), cardinality(F,C).
 
 % prefer to use fewer encodings
 #const encoding_weight = 6.
-:~ encoding(_).  [encoding_weight@1]
+#minimize {encoding_weight@1,E: encoding(E)}.
 
 % prefer not to use the same field twice
 #const twice_weight = 10.
 :~ field(E1,F), field(E2,F), E1 != E2. [twice_weight@1]
+
+% categorical color channel should not have too high cardinality
+:~ channel(E,color), type(E,n), cardinality(E,C), C > 20. [5@1]
+
+% shape channel should not have too high cardinality
+:~ channel(E,shape), cardinality(E,C), C > 6. [5@1]
+
+% numbers should not be nominal
+:~ type(E,n), field(E,F), fieldtype(F,number). [2@1]
+
+% bar and tick should not use size
+:~ mark(bar;tick), channel(_,size). [5@1]
+
+% binned quantitative field should not have too low cardinality
+:~ type(E,q), bin(E,_), cardinality(E,C), C < 15. [5@1]
+
+% prefer linear scale for bin
+:~ bin(E,_), scale(E,ordinal). [1@1]
+
+% aggregate should also have a dimension
+:~ aggregate(_,_), not dimension(_). [2@1]
+
+% plots with only ordinal, binned q, or t with time unit should add count
+:~ not not dimension(_), not aggregate(_,count). [20@1]
+
+% don't use bar, line, or area for raw data as it leads to occulusion
+:~ mark(bar;line;area), not aggregate(_,_). [2@1]
+
+% prefer not to use multiple non-positional encoding channels
+#const multiple_non_pos_weight = 3.
+:~ {channel(_,C): non_positional(C)} > 1. [multiple_non_pos_weight@1]
+
+% prefer not to use non-positional channels until all positional channels are used
+#const non_positional_pref_weight = 10.
+:~ channel(_,C), non_positional(C), not channel(_,(x;y)). [non_positional_pref_weight@1]
+
+% aggregate plots should not use raw continuous as group by
+:~ aggregate(_,_), type(E,q), not aggregate(E,_). [1@1]
+
+% prefer not to use vertical for dot plot
+:~ channel(_,y), not channel(_,C), C != y, channel(C), not mark(bar). [5@1]
+
+% prefer not to use plot with both x and y dimension and no aggregate
+:~ channel(EX,x), dimension(EX), channel(EY,y), dimension(EY), not aggregate(_,_). [2@1]
+
+% prefer not to use log scale
+:~ scale(E,log), encoding(E). [1@1]
+
 
 % ====== Output ======
 #show mark/1.
