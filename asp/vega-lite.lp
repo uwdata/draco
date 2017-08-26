@@ -4,7 +4,7 @@
 
 % ====== Definitions ======
 
-marktype(point;bar;line;area;rule;text;tick).
+marktype(point;bar;line;area;rule;text;tick;rect).
 type(q;o;n;t).
 primitive_type(string;number;integer;boolean;date).
 aggregate(count;mean;median;min;max).
@@ -172,6 +172,9 @@ fieldtype(E,T) :- field(E,F), fieldtype(F,T).
 % do not use log for bar or area mark
 :- mark(bar;area), scale(E,log), channel(E,(x;y)).
 
+% rect mark needs dimension x and y
+:- mark(rect), not channel_dim(x).
+:- mark(rect), not channel_dim(y).
 
 % === Type checks ===
 
@@ -200,7 +203,7 @@ fieldtype(E,T) :- field(E,F), fieldtype(F,T).
 
 % prefer to use raw (no aggregate)
 #const agg_weight = 1.
-:~ aggregate(_,A), A != null. [agg_weight@1]
+:~ aggregate(_,_). [agg_weight@1]
 
 % prefer to use fewer encodings
 #const encoding_weight = 6.
@@ -208,7 +211,7 @@ fieldtype(E,T) :- field(E,F), fieldtype(F,T).
 
 % prefer not to use the same field twice
 #const twice_weight = 10.
-:~ field(E1,F), field(E2,F), E1 != E2. [twice_weight@1]
+:~ 2 { field(E,_) }, encoding(E). [twice_weight@1]
 
 % categorical color channel should not have too high cardinality
 :~ channel(E,color), type(E,n), cardinality(E,C), C > 20. [5@1]
@@ -257,6 +260,45 @@ fieldtype(E,T) :- field(E,F), fieldtype(F,T).
 % prefer not to use log scale
 :~ scale(E,log), encoding(E). [1@1]
 
+
+% ====== Rankings ======
+
+% measure by measure
+is_m_m :- channel_meas(x), channel_meas(y).
+
+:~ is_m_m, mark(point). [0@1]
+:~ is_m_m, mark(bar). [20@1]
+:~ is_m_m, mark(line). [20@1]
+:~ is_m_m, mark(area). [20@1]
+:~ is_m_m, mark(rule). [25@1]
+:~ is_m_m, mark(text). [2@1]
+:~ is_m_m, mark(tick). [5@1]
+:~ is_m_m, mark(rect). [10@1]
+
+% measure by dimension
+is_m_d :- channel_meas(x), channel_dim(y).
+is_m_d :- channel_meas(y), channel_dim(x).
+
+:~ is_m_d, mark(point). [0@1]
+:~ is_m_d, mark(bar). [20@1]
+:~ is_m_d, mark(line). [20@1]
+:~ is_m_d, mark(area). [20@1]
+:~ is_m_d, mark(rule). [25@1]
+:~ is_m_d, mark(text). [50@1]
+:~ is_m_d, mark(tick). [10@1]
+:~ is_m_d, mark(rect). [20@1]
+
+% dimension by dimension
+is_d_d :- channel_dim(x), channel_dim(y).
+
+:~ is_m_d, mark(point). [0@1]
+:~ is_m_d, mark(bar). [20@1]
+:~ is_m_d, mark(line). [20@1]
+:~ is_m_d, mark(area). [20@1]
+:~ is_m_d, mark(rule). [25@1]
+:~ is_m_d, mark(text). [1@1]
+:~ is_m_d, mark(tick). [10@1]
+:~ is_m_d, mark(rect). [0@1]
 
 % ====== Output ======
 #show mark/1.
