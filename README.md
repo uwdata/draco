@@ -4,6 +4,14 @@ Related repos:
 * https://github.com/domoritz/vis-csp
 * https://github.com/domoritz/vis-constraints
 
-## Install dependencies
+## Dev setup
 
 `pip install -r requirements.txt`
+
+Install draco in editable mode
+
+`pip install -e .`
+
+Now you should be able to run the tests
+
+`pytest .`

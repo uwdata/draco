@@ -61,7 +61,6 @@ def main(partial_vl_spec, out):
         logger.info(f"Wrote Vega-Lite spec to {out.name}.")
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(description="Visualization recommendation system.",
         epilog="There is a moment in every dawn when light floats, there is the possibility of magic. Creation holds its breath.")
 
