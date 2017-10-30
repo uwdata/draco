@@ -1,4 +1,4 @@
-from spec import Field
+from draco.spec import Field
 
 class TestField():
     def test_to_asp(self):

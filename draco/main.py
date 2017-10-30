@@ -8,7 +8,7 @@ import subprocess
 import logging
 from pprint import pprint
 
-from spec import *
+from draco.spec import Task, Query
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

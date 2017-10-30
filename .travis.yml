@@ -5,7 +5,7 @@ install:
   - "pip install -r requirements.txt"
 script:
   - pytest
-  - ansunit tests.yaml
+  - ansunit asp/tests.yaml
 addons:
   apt:
     packages:
