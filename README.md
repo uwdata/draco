@@ -1,4 +1,4 @@
-# Visualization constraints [![Build Status](https://travis-ci.org/domoritz/small-vis-constraints.svg?branch=master)](https://travis-ci.org/domoritz/small-vis-constraints)
+# Visualization constraints [![Build Status](https://travis-ci.org/domoritz/draco.svg?branch=master)](https://travis-ci.org/domoritz/draco)
 
 Related repos:
 * https://github.com/domoritz/vis-csp
