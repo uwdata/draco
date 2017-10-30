@@ -51,7 +51,7 @@ def main(partial_vl_spec, out):
         logger.info("Constraints are unsatisfiable.")
     elif result == "OPTIMUM FOUND":
         raw_str_list = json_result["Call"][0]["Witnesses"][0]["Value"]
-    
+
         logger.info(raw_str_list)
 
         query = Query.parse_from_asp_result(raw_str_list)

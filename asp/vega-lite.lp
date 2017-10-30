@@ -1,7 +1,3 @@
-#script (python)
-
-#end.
-
 % ====== Definitions ======
 
 marktype(point;bar;line;area;rule;text;tick;rect).

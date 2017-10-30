@@ -3,3 +3,7 @@
 Related repos:
 * https://github.com/domoritz/vis-csp
 * https://github.com/domoritz/vis-constraints
+
+## Install dependencies
+
+`pip install -r requirements.txt`
