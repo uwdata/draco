@@ -10,4 +10,7 @@ setup(name='Draco',
       license='BSD-3',
       url='https://github.com/domoritz/draco',
       packages=['draco'],
+      entry_points={
+        'console_scripts':['draco=main:main'],
+      }
      )
