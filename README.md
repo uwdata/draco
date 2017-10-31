@@ -14,4 +14,4 @@ Install draco in editable mode
 
 Now you should be able to run the tests
 
-`pytest .`
+`python setup.py test` or `pytest`

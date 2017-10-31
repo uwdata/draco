@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='Draco',
       version='0.1',
@@ -12,5 +12,7 @@ setup(name='Draco',
       packages=['draco'],
       entry_points={
         'console_scripts':['draco=main:main'],
-      }
+      },
+      setup_requires=['pytest-runner'],
+      tests_require=['pytest'],
      )
