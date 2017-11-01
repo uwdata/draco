@@ -12,20 +12,17 @@
 % can only bin quantitative or ordinal
 :- type(E,T), bin(E,_), T != q, T != o.
 
-% can only use time scale if type is temporal
-:- scale(E,time), not type(E,t).
+% cannot use log with ordinal or nominal
+:- log(E), type(E,(o;n)).
 
-% can not use linear or log with ordinal or nominal
-:- scale(E,(linear;log)), type(E,(o;n)).
-
-% bin requires linear or ordinal scale
-:- bin(E,_), not scale(E,linear), not scale(E,ordinal).
+% cannot use log with binned data
+:- bin(E,_), log(E).
 
 % do not use scale zero with dimension (which includes binned)
 :- zero(E), dimension(E).
 
-% do not use log scale with dimension
-:- scale(E,log), dimension(E).
+% cannot use log scale with dimension
+:- log(E), dimension(E).
 
 % cannot bin and aggregate
 :- bin(E,_), aggregate(E,_).
@@ -102,7 +99,7 @@
 :- channel(_,detail), not aggregate(_,_).
 
 % do not use log for bar or area mark
-:- mark(bar;area), scale(E,log), channel(E,(x;y)).
+:- mark(bar;area), log(E), channel(E,(x;y)).
 
 % rect mark needs dimension x and y
 :- mark(rect), not channel_dim(x).
@@ -117,7 +114,6 @@
 :- type(_,T), not type(T).
 :- aggregate(_,A), not aggregate(A).
 :- bin(_,B), not bin(B).
-:- scale(_,S), not scale(S).
 
 % fieldtype has to be primitive type
 :- fieldtype(_,T), not primitive_type(T).

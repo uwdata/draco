@@ -46,10 +46,6 @@ Test valid values:
         Program: |
             :- not bin(_,10).
 
-    Test scale type:
-        Program: |
-            :- not scale(_,linear).
-
     Test fieldtype:
         Program: |
             :- not fieldtype(_,string).
@@ -77,10 +73,6 @@ Test invalid values:
     Test bin:
         Program: |
             :- not bin(_,-1).
-
-    Test scale type:
-        Program: |
-            :- not scale(_,foo).
 
     Test fieldtype:
         Program: |
@@ -144,3 +136,17 @@ Test constraints:
             :- not type(e1,t).
             :- not bin(e1,_).
         Expect: UNSAT
+
+    Test cannot use log with string:
+        Program: |
+            encoding(e1).
+            field(e1,s1).
+            :- not log(e1).
+        Expect: UNSAT
+
+    Test cal log with number:
+        Program: |
+            encoding(e1).
+            field(e1,n1).
+            :- not log(e1).
+        Expect: SAT

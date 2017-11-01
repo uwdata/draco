@@ -10,8 +10,6 @@ primitive_type(string;number;integer;boolean;date).
 aggregate(count;mean;median;min;max).
 % possible numebrs of bins
 bin(3;5;10;100;200).
-% scale type
-scale(ordinal;linear;log;time).
 
 % encoding channels
 single_channel(x;y;color;opacity;size;shape;text).

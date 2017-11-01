@@ -66,7 +66,7 @@
 :~ channel(EX,x), dimension(EX), channel(EY,y), dimension(EY), not aggregate(_,_). [2@1]
 
 % prefer not to use log scale
-:~ scale(E,log), encoding(E). [1@1]
+:~ log(E), encoding(E). [1@1]
 
 
 % ====== Rankings ======
