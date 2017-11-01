@@ -33,7 +33,7 @@ def run(partial_vl_spec, out):
         logger.info(f"Temp asp specification written into: {tmp_asp_file}.")
         f.write(task.to_asp())
 
-    r = subprocess.run([clingo, CONFIG["vega_lite_lp"], tmp_asp_file, "--outf=2"],
+    r = subprocess.run(["clingo", CONFIG["vega_lite_lp"], tmp_asp_file, "--outf=2"],
                        stdout=subprocess.PIPE, stderr=None)
 
     json_result = json.loads(r.stdout.decode("utf-8"))

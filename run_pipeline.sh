@@ -3,5 +3,7 @@
 set -e
 set -x
 
-draco examples/scatter.json --out scatter.vl.json
-npm run vl2png --silent -- scatter.vl.json > scatter.png
+temp="__tmp__"
+
+draco examples/scatter.json --out "$temp/scatter.vl.json"
+npm run vl2png --silent -- "$temp/scatter.vl.json" > "$temp/scatter.png"
