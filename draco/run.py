@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 CONFIG = {
-    "vega_lite_lp": os.path.join("asp", "vega-lite.lp"),
+    "draco_lp": list(map(lambda f: os.path.join("asp", f), ["define.lp", "generate.lp", "test.lp", "optimize.lp", "output.lp"])),
     # the directory storing temporary files
     # (e.g., lp files compiled from partial spec)
     "tmp_dir": "__tmp__"
@@ -33,7 +33,7 @@ def run(partial_vl_spec, out):
         logger.info(f"Temp asp specification written into: {tmp_asp_file}.")
         f.write(task.to_asp())
 
-    r = subprocess.run(["clingo", CONFIG["vega_lite_lp"], tmp_asp_file, "--outf=2"],
+    r = subprocess.run(["clingo"] + CONFIG["draco_lp"] + [tmp_asp_file, "--outf=2"],
                        stdout=subprocess.PIPE, stderr=None)
 
     json_result = json.loads(r.stdout.decode("utf-8"))

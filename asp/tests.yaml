@@ -1,7 +1,15 @@
 Definitions:
-    vl: {filename: asp/vega-lite.lp}
-    data: {filename: asp/data.lp}
-    both: {group: [vl, data]}
+    # test data
+    data: {filename: asp/examples/data.lp}
+
+    define: {filename: asp/define.lp}
+    generate: {filename: asp/generate.lp}
+    test: {filename: asp/test.lp}
+    optimize: {filename: asp/optimize.lp}
+
+    # program to test constraints
+    no_opt: {group: [data, define, generate, test]}
+    draco: {group: [data, define, generate, test, optimize]}
 
 Test a implies b:
     Program: |
@@ -11,31 +19,89 @@ Test a implies b:
     Expect: SAT
 
 Test program works:
-    Modules: both
+    Modules: no_opt
     Expect: SAT
 
-Test valid channel:
-    Modules: both
-    Program: |
-        :- not channel(_,x).
+Test valid values:
+    Modules: no_opt
     Expect: SAT
 
-Test invalid channel:
-    Modules: both
-    Program: |
-        :- not channel(_,foo).
+    Test channel:
+        Program: |
+            :- not channel(_,x).
+
+    Test field:
+        Program: |
+            :- not field(_,s1).
+
+    Test type:
+        Program: |
+            :- not type(_,q).
+
+    Test aggregate:
+        Program: |
+            :- not aggregate(_,mean).
+
+    Test bin:
+        Program: |
+            :- not bin(_,10).
+
+    Test scale type:
+        Program: |
+            :- not scale(_,linear).
+
+    Test fieldtype:
+        Program: |
+            :- not fieldtype(_,string).
+
+Test invalid values:
+    Modules: no_opt
     Expect: UNSAT
 
-Test binning and aggregation together:
-    Modules: both
+    Test channel:
+        Program: |
+            :- not channel(_,foo).
+
+    Test field:
+        Program: |
+            :- not field(_,foo).
+
+    Test type:
+        Program: |
+            :- not type(_,foo).
+
+    Test aggregate:
+        Program: |
+            :- not aggregate(_,foo).
+
+    Test bin:
+        Program: |
+            :- not bin(_,-1).
+
+    Test scale type:
+        Program: |
+            :- not scale(_,foo).
+
+    Test fieldtype:
+        Program: |
+            :- not fieldtype(_,foo).
+
+Test binning:
+    Modules: no_opt
     Program: |
         encoding(e1).
         :- not bin(e1,_).
+    Expect: SAT
+
+Test aggregation:
+    Modules: no_opt
+    Program: |
+        encoding(e1).
         :- not aggregate(e1,_).
-    Expect: UNSAT
+    Expect: SAT
 
 Test cannot use field with count:
-    Modules: both
+    Modules: no_opt
     Program: |
         encoding(e1).
         aggregate(e1,count).

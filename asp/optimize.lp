@@ -1,0 +1,109 @@
+% ====== Preferences ======
+
+% prefer quantitative > ordinal > nominal
+#const type_weight_q = 0.
+#const type_weight_o = 1.
+#const type_weight_n = 2.
+
+:~ type(_,q). [type_weight_q@1]
+:~ type(_,o). [type_weight_o@1]
+:~ type(_,n). [type_weight_n@1]
+
+% prefer to use raw (no aggregate)
+#const agg_weight = 1.
+:~ aggregate(_,_). [agg_weight@1]
+
+% prefer to use fewer encodings
+#const encoding_weight = 6.
+#minimize {encoding_weight@1,E: encoding(E)}.
+
+% prefer not to use the same field twice
+#const twice_weight = 10.
+:~ 2 { field(E,_) }, encoding(E). [twice_weight@1]
+
+% categorical color channel should not have too high cardinality
+:~ channel(E,color), type(E,n), cardinality(E,C), C > 20. [5@1]
+
+% shape channel should not have too high cardinality
+:~ channel(E,shape), cardinality(E,C), C > 6. [5@1]
+
+% numbers should not be nominal
+:~ type(E,n), field(E,F), fieldtype(F,number). [2@1]
+
+% bar and tick should not use size
+:~ mark(bar;tick), channel(_,size). [5@1]
+
+% binned quantitative field should not have too low cardinality
+:~ type(E,q), bin(E,_), cardinality(E,C), C < 15. [5@1]
+
+% prefer linear scale for bin
+:~ bin(E,_), scale(E,ordinal). [1@1]
+
+% aggregate should also have a dimension
+:~ aggregate(_,_), not dimension(_). [2@1]
+
+% plots with only ordinal, binned q, or t with time unit should add count
+:~ not not dimension(_), not aggregate(_,count). [20@1]
+
+% don't use bar, line, or area for raw data as it leads to occulusion
+:~ mark(bar;line;area), not aggregate(_,_). [2@1]
+
+% prefer not to use multiple non-positional encoding channels
+#const multiple_non_pos_weight = 3.
+:~ {channel(_,C): non_positional(C)} > 1. [multiple_non_pos_weight@1]
+
+% prefer not to use non-positional channels until all positional channels are used
+#const non_positional_pref_weight = 10.
+:~ channel(_,C), non_positional(C), not channel(_,(x;y)). [non_positional_pref_weight@1]
+
+% aggregate plots should not use raw continuous as group by
+:~ aggregate(_,_), type(E,q), not aggregate(E,_). [1@1]
+
+% prefer not to use vertical for dot plot
+:~ channel(_,y), not channel(_,C), C != y, channel(C), not mark(bar). [5@1]
+
+% prefer not to use plot with both x and y dimension and no aggregate
+:~ channel(EX,x), dimension(EX), channel(EY,y), dimension(EY), not aggregate(_,_). [2@1]
+
+% prefer not to use log scale
+:~ scale(E,log), encoding(E). [1@1]
+
+
+% ====== Rankings ======
+
+% measure by measure
+is_m_m :- channel_meas(x), channel_meas(y).
+
+:~ is_m_m, mark(point). [0@1]
+:~ is_m_m, mark(bar). [20@1]
+:~ is_m_m, mark(line). [20@1]
+:~ is_m_m, mark(area). [20@1]
+:~ is_m_m, mark(rule). [25@1]
+:~ is_m_m, mark(text). [2@1]
+:~ is_m_m, mark(tick). [5@1]
+:~ is_m_m, mark(rect). [10@1]
+
+% measure by dimension
+is_m_d :- channel_meas(x), channel_dim(y).
+is_m_d :- channel_meas(y), channel_dim(x).
+
+:~ is_m_d, mark(point). [0@1]
+:~ is_m_d, mark(bar). [20@1]
+:~ is_m_d, mark(line). [20@1]
+:~ is_m_d, mark(area). [20@1]
+:~ is_m_d, mark(rule). [25@1]
+:~ is_m_d, mark(text). [50@1]
+:~ is_m_d, mark(tick). [10@1]
+:~ is_m_d, mark(rect). [20@1]
+
+% dimension by dimension
+is_d_d :- channel_dim(x), channel_dim(y).
+
+:~ is_m_d, mark(point). [0@1]
+:~ is_m_d, mark(bar). [20@1]
+:~ is_m_d, mark(line). [20@1]
+:~ is_m_d, mark(area). [20@1]
+:~ is_m_d, mark(rule). [25@1]
+:~ is_m_d, mark(text). [1@1]
+:~ is_m_d, mark(tick). [10@1]
+:~ is_m_d, mark(rect). [0@1]
