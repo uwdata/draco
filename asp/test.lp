@@ -15,13 +15,10 @@
 % cannot use log with ordinal or nominal
 :- log(E), type(E,(o;n)).
 
-% cannot use log with binned data
-:- bin(E,_), log(E).
-
 % do not use scale zero with dimension (which includes binned)
 :- zero(E), dimension(E).
 
-% cannot use log scale with dimension
+% cannot use log scale with dimension (which includes binned)
 :- log(E), dimension(E).
 
 % cannot bin and aggregate
@@ -45,6 +42,9 @@
 
 % aggregate implies quantitative
 :- aggregate(E,_), not type(E,q).
+
+% can only aggregate measures
+:- aggergate(E,_), dimension(E).
 
 
 % === Across encodings and between encodings and marks ===

@@ -83,70 +83,125 @@ Test constraints:
 
     Test can use binning:
         Program: |
-            encoding(e1).
-            :- not bin(e1,_).
+            encoding(e).
+            :- not bin(e,_).
         Expect: SAT
 
     Test can use aggregation:
         Program: |
-            encoding(e1).
-            :- not aggregate(e1,_).
+            encoding(e).
+            :- not aggregate(e,_).
         Expect: SAT
 
     Test can use aggregation and binning:
         Program: |
-            encoding(e1).
-            :- not aggregate(e1,_).
-            :- not bin(e1,_).
+            encoding(e).
+            :- not aggregate(e,_).
+            :- not bin(e,_).
         Expect: UNSAT
 
     Test cannot use field with count:
         Program: |
-            encoding(e1).
-            :- not aggregate(e1,count).
-            :- not field(e1,n1).
+            encoding(e).
+            :- not aggregate(e,count).
+            :- not field(e,n1).
         Expect: UNSAT
 
     Test can use string as o:
         Program: |
-            encoding(e1).
-            :- not field(e1,s1).
-            :- not type(e1,o).
+            encoding(e).
+            :- not field(e,s1).
+            :- not type(e,o).
         Expect: SAT
 
     Test cannot use string as q:
         Program: |
-            encoding(e1).
-            :- not field(e1,s1).
-            :- not type(e1,q).
+            encoding(e).
+            :- not field(e,s1).
+            :- not type(e,q).
         Expect: UNSAT
 
     Test cannot use temporal with string:
         Program: |
-            encoding(e1).
-            field(e1,s1).
-            :- not type(e1,t).
+            encoding(e).
+            field(e,s1).
+            :- not type(e,t).
         Expect: UNSAT
 
     Test cannot bin temporal:
         Program: |
             fieldtype(d,date).
-            encoding(e1).
-            field(e1,d).
-            :- not type(e1,t).
-            :- not bin(e1,_).
+            encoding(e).
+            field(e,d).
+            :- not type(e,t).
+            :- not bin(e,_).
         Expect: UNSAT
 
     Test cannot use log with string:
         Program: |
-            encoding(e1).
-            field(e1,s1).
-            :- not log(e1).
+            encoding(e).
+            field(e,s1).
+            :- not log(e).
         Expect: UNSAT
 
-    Test cal log with number:
+    Test can log number:
         Program: |
-            encoding(e1).
-            field(e1,n1).
-            :- not log(e1).
+            encoding(e).
+            field(e,n1).
+            :- not log(e).
+        Expect: SAT
+
+    Test cannot use log with binned data because becomes a dimension:
+        Program: |
+            encoding(e).
+            :- not log(e).
+            :- not bin(e).
+        Expect: UNSAT
+
+    Test cannot use zero with string:
+        Program: |
+            encoding(e).
+            field(e,s1).
+            :- not zero(e).
+        Expect: UNSAT
+
+    Test can zero number:
+        Program: |
+            encoding(e).
+            field(e,n1).
+            :- not zero(e).
+        Expect: SAT
+
+    Test cannot use zero with binned data because becomes a dimension:
+        Program: |
+            encoding(e).
+            :- not zero(e).
+            :- not bin(e).
+        Expect: UNSAT
+
+    Test can compute average of a number:
+        Program: |
+            encoding(e).
+            field(e,n1).
+            :- not aggregate(e,mean).
+        Expect: SAT
+
+    Test cannot compute average of a string:
+        Program: |
+            encoding(e).
+            field(e,s1).
+            :- not aggregate(e,mean).
+        Expect: UNSAT
+
+    Test cannot aggregate dimension:
+        Program: |
+            encoding(e).
+            :- not aggregate(e,_).
+            :- not dimensions(e).
+        Expect: UNSAT
+
+    Test can aggregate measure:
+        Program: |
+            encoding(e).
+            :- not aggregate(e,_).
         Expect: SAT
