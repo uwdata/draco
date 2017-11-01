@@ -9,8 +9,8 @@
 % only use temporal type with dates
 :- type(E,t), not fieldtype(E,date).
 
-% can only bin quantitative
-:- type(E,T), bin(E,_), T != q.
+% can only bin quantitative or ordinal
+:- type(E,T), bin(E,_), T != q, T != o.
 
 % can only use time scale if type is temporal
 :- scale(E,time), not type(E,t).

@@ -86,24 +86,61 @@ Test invalid values:
         Program: |
             :- not fieldtype(_,foo).
 
-Test binning:
+Test constraints:
     Modules: no_opt
-    Program: |
-        encoding(e1).
-        :- not bin(e1,_).
-    Expect: SAT
 
-Test aggregation:
-    Modules: no_opt
-    Program: |
-        encoding(e1).
-        :- not aggregate(e1,_).
-    Expect: SAT
+    Test can use binning:
+        Program: |
+            encoding(e1).
+            :- not bin(e1,_).
+        Expect: SAT
 
-Test cannot use field with count:
-    Modules: no_opt
-    Program: |
-        encoding(e1).
-        aggregate(e1,count).
-        field(e1,n1).
-    Expect: UNSAT
+    Test can use aggregation:
+        Program: |
+            encoding(e1).
+            :- not aggregate(e1,_).
+        Expect: SAT
+
+    Test can use aggregation and binning:
+        Program: |
+            encoding(e1).
+            :- not aggregate(e1,_).
+            :- not bin(e1,_).
+        Expect: UNSAT
+
+    Test cannot use field with count:
+        Program: |
+            encoding(e1).
+            :- not aggregate(e1,count).
+            :- not field(e1,n1).
+        Expect: UNSAT
+
+    Test can use string as o:
+        Program: |
+            encoding(e1).
+            :- not field(e1,s1).
+            :- not type(e1,o).
+        Expect: SAT
+
+    Test cannot use string as q:
+        Program: |
+            encoding(e1).
+            :- not field(e1,s1).
+            :- not type(e1,q).
+        Expect: UNSAT
+
+    Test cannot use temporal with string:
+        Program: |
+            encoding(e1).
+            field(e1,s1).
+            :- not type(e1,t).
+        Expect: UNSAT
+
+    Test cannot bin temporal:
+        Program: |
+            fieldtype(d,date).
+            encoding(e1).
+            field(e1,d).
+            :- not type(e1,t).
+            :- not bin(e1,_).
+        Expect: UNSAT
