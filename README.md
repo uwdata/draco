@@ -4,7 +4,13 @@ Related repos:
 * https://github.com/domoritz/vis-csp
 * https://github.com/domoritz/vis-constraints
 
-## Dev setup
+## Developer setup
+
+## First, install clingo.
+
+On Linux, run `apt get install gringo`. On MacOS, you can run `brew install gringo`.
+
+## Python setup
 
 `pip install -r requirements.txt`
 
@@ -12,6 +18,8 @@ Install draco in editable mode
 
 `pip install -e .`
 
-Now you should be able to run the tests
+Now you can call the command line tool `draco`. For example `draco --version` or `draco --help`.
 
-`python setup.py test` or `pytest`
+You should also be able to run the tests (and coverage report)
+
+`python setup.py test`
