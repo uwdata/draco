@@ -3,11 +3,14 @@ python:
   - "3.6"
 install:
   - "pip install -r requirements.txt"
+  - "pip install coveralls"
   - "pip install ."
 script:
-  - pytest
+  - pytest --cov=draco
   - ansunit asp/tests.yaml
 addons:
   apt:
     packages:
     - gringo
+after_success:
+    - coveralls
