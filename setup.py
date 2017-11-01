@@ -26,8 +26,14 @@ class RunTests(Command):
 
     def run(self):
         """Run all tests!"""
-        errno = call(["pytest", "--cov=draco", "--cov-report=term-missing"])
-        raise SystemExit(errno)
+
+        print("=> Running Ansunit Tests:")
+
+        errno_ansunit = call(["ansunit", "asp/tests.yaml"])
+
+        print("\n\n=> Running Python Tests:")
+        errno_pytest = call(["pytest", "--cov=draco", "--cov-report=term-missing"])
+        raise SystemExit(errno_ansunit + errno_pytest)
 
 
 setup(name="Draco",
