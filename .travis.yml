@@ -4,10 +4,10 @@ python:
 install:
   - "pip install -r requirements.txt"
   - "pip install coveralls"
-  - "pip install ."
+  - "pip install -e ."
 script:
-  - pytest --cov=draco
   - ansunit asp/tests.yaml
+  - pytest --cov=draco
 addons:
   apt:
     packages:
