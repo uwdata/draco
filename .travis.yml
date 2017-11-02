@@ -2,15 +2,14 @@ language: python
 python:
   - "3.6"
 install:
-  - "pip install -r requirements.txt"
-  - "pip install coveralls"
-  - "pip install -e ."
+  - wget https://github.com/potassco/clingo/releases/download/v5.2.1/clingo-5.2.1-linux-x86_64.tar.gz -O /tmp/clingo-5.2.1-linux-x86_64.tar.gz
+  - tar -xzf /tmp/clingo-5.2.1-linux-x86_64.tar.gz
+  - export PATH=$PATH:$PWD/clingo-5.2.1-linux-x86_64
+  - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install -e .
 script:
   - ansunit asp/tests.yaml
   - pytest --cov=draco
-addons:
-  apt:
-    packages:
-    - gringo
 after_success:
     - coveralls
