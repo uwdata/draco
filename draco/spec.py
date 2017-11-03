@@ -22,7 +22,7 @@ class Task(object):
         self.query = query
 
     @staticmethod
-    def load_from_vl_json(query_file, place_holder=_hole):
+    def load_from_json(query_file, place_holder=_hole):
         """ load a task from a query spec
             Args:
                 query_file: a CompassQL json file
@@ -35,12 +35,13 @@ class Task(object):
         raw_vl_obj = json.load(query_file)
 
         # load data from the file
-        data = Data.load_from_vl_obj(raw_vl_obj["data"], path_prefix=os.path.dirname(query_file.name))
+        data = Data.load_from_obj(raw_vl_obj["data"], path_prefix=os.path.dirname(query_file.name))
 
         # load query from the file
         mark = handle_special_value(raw_vl_obj["mark"]) if "mark" in raw_vl_obj else place_holder
-        encodings_obj = raw_vl_obj["encoding"] if "encoding" in raw_vl_obj else {}
-        query = Query.load_from_vl_obj(encodings_obj, mark)
+        encodings_obj = raw_vl_obj["encoding"] if "encoding" in raw_vl_obj else []
+
+        query = Query.load_from_obj(encodings_obj, mark)
 
         return Task(data, query)
 
@@ -51,7 +52,7 @@ class Task(object):
         result["$schema"] = "https://vega.github.io/schema/vega-lite/v2.0.json"
         return result
 
-    def to_vl_json(self):
+    def to_vegalite_json(self):
         """ generate a vegalite json file form the object """
         return json.dumps(self.to_vegalite_obj(), sort_keys=True, indent=4)
 
@@ -67,17 +68,18 @@ class Task(object):
 class Data(object):
 
     @staticmethod
-    def load_from_vl_obj(vl_obj, path_prefix=None):
-        """ Build a data object from a dict-represented vegalite object represting data"""
-        if "url" in vl_obj:
+    def load_from_obj(obj, path_prefix=None):
+        """ Build a data object from a dict-represented 
+            vegalite object represting data"""
+        if "url" in obj:
             # load data from url
-            file_path = vl_obj["url"]
+            file_path = obj["url"]
             if path_prefix is not None:
                 file_path = os.path.join(path_prefix, file_path)
             return Data.load_from_csv(file_path)
         else:
             # a dict represented data already included in the file
-            return Data.from_agate_table(agate.Table.from_object(vl_obj["values"]))
+            return Data.from_agate_table(agate.Table.from_object(obj["values"]))
 
     @staticmethod
     def load_from_csv(filename):
@@ -131,7 +133,6 @@ class Data(object):
         else:
             return {"values": self.content}
 
-
     def to_asp(self):
         return "\n".join([x.to_asp() for x in self.fields])
 
@@ -163,20 +164,18 @@ class Encoding(object):
         return f"e{Encoding.encoding_cnt}"
 
     @staticmethod
-    def load_from_vl_obj(vl_obj):
-        """ load encoding from a vl_obj
+    def load_from_obj(obj):
+        """ load encoding from a dict object representing the spec content
             Args:
-                channel: the name of a channel
-                vl_obj: a dict object representing channel encoding
-                place_holder: values to the
+                obj: a dict object representing channel encoding
             Returns:
                 an encoding object
         """
         # get the field if it is in the object, otherwise generate a place holder symbol
         def _get_field(f):
-            if f in vl_obj:
+            if f in obj:
                 # for fields specified by the user, we want to add to the encoding
-                return handle_special_value(vl_obj[f])
+                return handle_special_value(obj[f])
             else:
                 # if the user didn't a field for the encoding,
                 # we use None (See comment in the front of the file)
@@ -278,10 +277,10 @@ class Query(object):
         self.encodings = encodings
 
     @staticmethod
-    def load_from_vl_obj(vl_obj, mark):
+    def load_from_obj(vl_obj, mark):
         encodings = []
         for encoding_obj in vl_obj:
-            encodings.append(Encoding.load_from_vl_obj(encoding_obj))
+            encodings.append(Encoding.load_from_obj(encoding_obj))
         return Query(mark, encodings)
 
     @staticmethod

@@ -27,7 +27,7 @@ def run(partial_vl_spec, out):
     tmp_asp_file = os.path.join(CONFIG["tmp_dir"], os.path.basename(partial_vl_spec.name).split(".")[0] + ".lp")
 
     # load a task from a spec provided by the user
-    task = Task.load_from_vl_json(partial_vl_spec)
+    task = Task.load_from_json(partial_vl_spec)
 
     with open(tmp_asp_file, "w") as f:
         logger.info(f"Temp asp specification written into: {tmp_asp_file}.")
@@ -50,5 +50,5 @@ def run(partial_vl_spec, out):
         query = Query.parse_from_asp_result(raw_str_list)
         new_task = Task(task.data, query)
 
-        print(new_task.to_vl_json(), file=out)
+        print(new_task.to_vegalite_json(), file=out)
         logger.info(f"Wrote Vega-Lite spec to {out.name}.")

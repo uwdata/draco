@@ -23,3 +23,11 @@ Now you can call the command line tool `draco`. For example `draco --version` or
 You should also be able to run the tests (and coverage report)
 
 `python setup.py test`
+
+## Running Draco
+
+To run draco on a partial spec
+
+`sh run_pipeline.sh spec`
+
+The output would be a .vl.json file (for Vega-Lite spec) and a .png file to preview the visualization (by default, outputs would be in folder `__tmp__`).
