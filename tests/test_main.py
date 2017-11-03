@@ -13,6 +13,6 @@ class TestFull():
         json_files = [os.path.join(EXAMPLES_DIR, fname)
                       for fname in os.listdir(EXAMPLES_DIR) if fname.endswith(".json")]
         for fname in json_files:
-            with open(fname, "r") as f:
-                # run(f, out, tmp_dir="__tmp__", draco_lp_dir="asp")
-                subprocess.check_call(["npm", "run", "ajv", "--", "-s", "node_modules/vega-lite/build/vega-lite-schema.json", "-d", TMP_FILE])
+            with open(fname, "r") as f, open(TMP_FILE, "w+") as out:
+                run(f, out, tmp_dir="__tmp__", draco_lp_dir="asp")
+            subprocess.check_call(["npm", "run", "ajv", "--", "-s", "node_modules/vega-lite/build/vega-lite-schema.json", "-d", TMP_FILE])

@@ -233,7 +233,7 @@ class Encoding(object):
         if self.aggregate:
             encoding["aggregate"] = self.aggregate
         if self.binning:
-            encoding["bin"] = {"maxbins" : self.binning}
+            encoding["bin"] = {"maxbins" : int(self.binning)}
         if self.scale:
             encoding["scale"] = {"type" : self.scale}
 
