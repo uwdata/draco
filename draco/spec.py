@@ -228,9 +228,7 @@ class Encoding(object):
         if self.binning:
             encoding["bin"] = {"maxbins" : self.binning}
         if self.scale:
-            encoding["scale"] = self.scale
-
-        pprint(encoding)
+            encoding["scale"] = {"type" : self.scale}
 
         return encoding
 
