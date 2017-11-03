@@ -226,9 +226,12 @@ class Encoding(object):
         if self.aggregate:
             encoding["aggregate"] = self.aggregate
         if self.binning:
-            encoding["bin"] = self.binning
+            encoding["bin"] = {"maxbins" : self.binning}
         if self.scale:
             encoding["scale"] = self.scale
+
+        pprint(encoding)
+
         return encoding
 
     def to_asp(self):
