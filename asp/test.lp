@@ -44,7 +44,7 @@
 :- aggregate(E,_), not type(E,q).
 
 % can only aggregate measures
-:- aggergate(E,_), dimension(E).
+:- aggregate(E,_), dimension(E).
 
 
 % === Across encodings and between encodings and marks ===

@@ -69,7 +69,7 @@ class Data(object):
 
     @staticmethod
     def load_from_obj(obj, path_prefix=None):
-        """ Build a data object from a dict-represented 
+        """ Build a data object from a dict-represented
             vegalite object represting data"""
         if "url" in obj:
             # load data from url
@@ -218,11 +218,18 @@ class Encoding(object):
 
     def to_vegalite_obj(self):
 
+        asp_type_to_ty = {
+            "q": "quantitative",
+            "o": "ordinal",
+            "n": "nominal",
+            "t": "temporal"
+        }
+
         encoding = {}
         if self.field:
             encoding["field"] = self.field
         if self.ty:
-            encoding["type"] = self.ty
+            encoding["type"] = asp_type_to_ty[self.ty]
         if self.aggregate:
             encoding["aggregate"] = self.aggregate
         if self.binning:
@@ -238,6 +245,7 @@ class Encoding(object):
             "quantitative": "q",
             "ordinal": "o",
             "nominal": "n",
+            "temporal": "t",
             _hole: _hole
         }
         # if a property is a hole, generate a placeholder
