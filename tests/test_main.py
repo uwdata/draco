@@ -12,6 +12,8 @@ class TestFull():
     def test_output_schema(self):
         json_files = [os.path.join(EXAMPLES_DIR, fname)
                       for fname in os.listdir(EXAMPLES_DIR) if fname.endswith(".json")]
+        if not os.path.exists("__tmp__"):
+            os.makedirs("__tmp__")
         for fname in json_files:
             with open(fname, "r") as f, open(TMP_FILE, "w+") as out:
                 run(f, out, tmp_dir="__tmp__", draco_lp_dir="asp")
