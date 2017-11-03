@@ -15,15 +15,15 @@ CONFIG = {
     # the directory storing temporary files
     # (e.g., lp files compiled from partial spec)
     "tmp_dir": "__tmp__",
-    "draco_lp_dir": "asp" 
+    "draco_lp_dir": "asp"
 }
 
 
 def run(partial_vl_spec, out, tmp_dir=CONFIG["tmp_dir"], draco_lp_dir=CONFIG["draco_lp_dir"]):
     """ Given a partial vegalite spec, recommand a completion of the spec
     """
+
     # create tmp dir if not exists
-    
     if not os.path.exists(tmp_dir):
         os.makedirs(tmp_dir)
 

@@ -6,9 +6,13 @@ Related repos:
 
 ## Developer setup
 
-## First, install clingo.
+## Install clingo.
 
 On Linux, run `apt get install gringo`. On MacOS, you can run `brew install gringo`.
+
+## Install node dependencies
+
+`yarn` or `npm install`
 
 ## Python setup
 
