@@ -3,6 +3,7 @@
 import sys
 import argparse
 import logging
+import io
 
 from draco.run import run
 from draco import __version__
@@ -31,7 +32,12 @@ def main():  # pragma: no cover
 
     logger.info(f"Processing query: {args.query.name} ...")
 
-    run(args.query, args.out)
+    task = run(args.query)
+
+    if task:
+        print(task.to_vegalite_json(), file=args.out)
+        outname = "stringIO" if isinstance(args.out, io.StringIO) else args.out.name
+        logger.info(f"Wrote Vega-Lite spec to {outname}.")
 
     # close open files
     if args.query is not sys.stdin:
