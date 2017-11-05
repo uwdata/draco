@@ -10,16 +10,12 @@ from draco.spec import Task, Query
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-CONFIG = {
-    "draco_lp": ["define.lp", "generate.lp", "test.lp", "optimize.lp", "output.lp"],
-    # the directory storing temporary files
-    # (e.g., lp files compiled from partial spec)
-    "tmp_dir": "__tmp__",
-    "draco_lp_dir": "asp"
-}
+DRACO_LP = ["define.lp", "generate.lp", "test.lp", "optimize.lp", "output.lp"]
+DRACO_LP_DIR = "asp"
+TMP_DIR = "__tmp__"
 
 
-def run(partial_vl_spec, out, tmp_dir=CONFIG["tmp_dir"], draco_lp_dir=CONFIG["draco_lp_dir"]):
+def run(partial_vl_spec, out, tmp_dir=TMP_DIR, draco_lp_dir=DRACO_LP_DIR):
     """ Given a partial vegalite spec, recommand a completion of the spec
     """
 
@@ -36,7 +32,7 @@ def run(partial_vl_spec, out, tmp_dir=CONFIG["tmp_dir"], draco_lp_dir=CONFIG["dr
         logger.info(f"Temp asp specification written into: {tmp_asp_file}.")
         f.write(task.to_asp())
 
-    r = subprocess.run(["clingo"] + [os.path.join(draco_lp_dir, f) for f in CONFIG["draco_lp"]] + [tmp_asp_file, "--outf=2"],
+    r = subprocess.run(["clingo"] + [os.path.join(draco_lp_dir, f) for f in DRACO_LP] + [tmp_asp_file, "--outf=2"],
                        stdout=subprocess.PIPE, stderr=None)
 
     json_result = json.loads(r.stdout.decode("utf-8"))

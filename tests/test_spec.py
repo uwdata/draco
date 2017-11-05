@@ -30,8 +30,10 @@ class TestEncoding():
         assert e.to_asp() == asp
 
     def test_id_creation(self):
-        e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, scale=None)
-        assert e.id == "e0"
+        Encoding.encoding_cnt = 0
 
         e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, scale=None)
         assert e.id == "e1"
+
+        e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, scale=None)
+        assert e.id == "e2"
