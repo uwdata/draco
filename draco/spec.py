@@ -156,12 +156,13 @@ class Field():
 
 class Encoding():
 
-    encoding_cnt = -1
+    encoding_cnt = 0
 
     @staticmethod
     def gen_encoding_id():
+        enc = f"e{Encoding.encoding_cnt}"
         Encoding.encoding_cnt += 1
-        return f"e{Encoding.encoding_cnt}"
+        return enc
 
     @staticmethod
     def load_from_obj(obj):
