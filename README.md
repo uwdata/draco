@@ -36,9 +36,7 @@ You should also be able to run the tests (and coverage report)
 
 ### Run only python tests
 
-`pytest`
-
-Note that this command skips slow tests (such as the schema validation tests).
+`pytest -v`
 
 ## Running Draco
 
