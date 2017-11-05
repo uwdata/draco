@@ -32,7 +32,7 @@ class RunTests(Command):
         errno_ansunit = call(["ansunit", "asp/tests.yaml"])
 
         print("\n\n=> Running Python Tests:")
-        errno_pytest = call(["pytest", "--cov=draco", "--cov-report=term-missing"])
+        errno_pytest = call(["pytest", "--cov=draco", "--cov-report=term-missing", "--runslow"])
         raise SystemExit(errno_ansunit + errno_pytest)
 
 

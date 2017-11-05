@@ -2,12 +2,14 @@ import os
 import io
 import json
 import subprocess
+import pytest
 
 from draco.run import run
 
 EXAMPLES_DIR = os.path.join("examples")
 
 class TestFull():
+    @pytest.mark.slow
     def test_output_schema(self, tmpdir):
         json_files = [os.path.join(EXAMPLES_DIR, fname)
                       for fname in os.listdir(EXAMPLES_DIR) if fname.endswith(".json")]

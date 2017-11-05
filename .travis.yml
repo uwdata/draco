@@ -12,6 +12,6 @@ install:
   - pip install -e .
 script:
   - ansunit asp/tests.yaml
-  - pytest --cov=draco
+  - pytest --cov=draco --runslow
 after_success:
   - coveralls

@@ -33,7 +33,7 @@ class TestEncoding():
         Encoding.encoding_cnt = 0
 
         e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, scale=None)
-        assert e.id == "e1"
+        assert e.id == "e0"
 
         e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, scale=None)
-        assert e.id == "e2"
+        assert e.id == "e1"

@@ -24,9 +24,21 @@ Install draco in editable mode
 
 Now you can call the command line tool `draco`. For example `draco --version` or `draco --help`.
 
+## Tests
+
 You should also be able to run the tests (and coverage report)
 
 `python setup.py test`
+
+### Run only ansunit tests
+
+`ansunit asp/tests.yaml`
+
+### Run only python tests
+
+`pytest`
+
+Note that this command skips slow tests (such as the schema validation tests).
 
 ## Running Draco
 
