@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def main():
+def create_parser():
     parser = argparse.ArgumentParser(description="Draco Visualization recommendation system.",
         epilog="There is a moment in every dawn when light floats, there is the possibility of magic. Creation holds its breath.")
 
@@ -21,6 +21,12 @@ def main():
                         help="specify the Vega-Lite output file")
     parser.add_argument('--version', action='version',
                         version=__version__)
+
+    return parser
+
+
+def main():
+    parser = create_parser()
     args = parser.parse_args()
 
     logger.info(f"Processing query: {args.query.name} ...")
