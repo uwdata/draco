@@ -25,7 +25,7 @@ def create_parser():
     return parser
 
 
-def main():
+def main():  # pragma: no cover
     parser = create_parser()
     args = parser.parse_args()
 
@@ -43,5 +43,5 @@ def main():
     logger.info(f"Complete task.")
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     main()
