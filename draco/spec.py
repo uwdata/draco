@@ -15,7 +15,7 @@ def handle_special_value(v):
     #   into special symbol used by spec objects.
     return _hole if v == "??" else (_null if v == "null" else v)
 
-class Task(object):
+class Task():
 
     def __init__(self, data, query):
         self.data = data
@@ -65,7 +65,7 @@ class Task(object):
         return asp_str
 
 
-class Data(object):
+class Data():
 
     @staticmethod
     def load_from_obj(obj, path_prefix=None):
@@ -137,7 +137,7 @@ class Data(object):
         return "\n".join([x.to_asp() for x in self.fields])
 
 
-class Field(object):
+class Field():
 
     def __init__(self, name, ty, cardinality):
         # name of the field
@@ -154,7 +154,7 @@ class Field(object):
         return asp_str
 
 
-class Encoding(object):
+class Encoding():
 
     encoding_cnt = -1
 
@@ -278,7 +278,7 @@ class Encoding(object):
         #return f":- not 1 = { encoding(E) {", ".join(constraint) if len(constraint) else ""} }."
 
 
-class Query(object):
+class Query():
 
     def __init__(self, mark, encodings=[]):
         # channels include "x", "y", "color", "size", "shape", "text", "detail"
