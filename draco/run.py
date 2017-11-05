@@ -1,3 +1,7 @@
+"""
+Run constraint solver to complete spec.
+"""
+
 import os
 import json
 import subprocess

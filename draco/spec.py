@@ -1,19 +1,22 @@
-import csv
-import agate
+"""
+Tasks, Encoding, and Query helper classes for draco.
+"""
+
 import json
 import os
 
-from pprint import pprint
+import agate
 
-_null = "_null_"    # I don't want this property
-_hole = "_??_"      # I want a value for this property
+
+NULL = "NULL_"    # I don't want this property
+HOLE = "_??_"      # I want a value for this property
 # Use `None` for "I didn't specify this and don't care"
 
 def handle_special_value(v):
     # return a hole if the given value is not "??", else return the value.
     # this function is used in the parsing phase to convert "??" "null"
     #   into special symbol used by spec objects.
-    return _hole if v == "??" else (_null if v == "null" else v)
+    return HOLE if v == "??" else (NULL if v == "null" else v)
 
 class Task():
 
@@ -22,7 +25,7 @@ class Task():
         self.query = query
 
     @staticmethod
-    def load_from_json(query_file, place_holder=_hole):
+    def load_from_json(query_file, place_holder=HOLE):
         """ load a task from a query spec
             Args:
                 query_file: a CompassQL json file
@@ -247,15 +250,15 @@ class Encoding():
             "ordinal": "o",
             "nominal": "n",
             "temporal": "t",
-            _hole: _hole
+            HOLE: HOLE
         }
         # if a property is a hole, generate a placeholder
-        _wrap_props = lambda v: v if v is not _hole else "_"
+        _wrap_props = lambda v: v if v is not HOLE else "_"
 
         props = {
             "channel": self.channel,
             "field": self.field,
-            # its type may be a _null requesting for synthesis
+            # its type may be a NULL requesting for synthesis
             "type": ty_to_asp_type[self.ty] if self.ty is not None else None,
             "aggregate": self.aggregate,
             "bin": self.binning,
@@ -264,9 +267,9 @@ class Encoding():
 
         constraints = []
         for k, v in props.items():
-            if v is _null:
+            if v is NULL:
                 s = f":- {k}({self.id},_)."
-            elif v is _hole:
+            elif v is HOLE:
                 s = f":- not {k}({self.id},_)."
             elif v is None:
                 s = f"% 0 {{ {k}({self.id},B) : {k}(B) }} 1."
@@ -332,7 +335,7 @@ class Query():
 
         prog = ""
 
-        if self.mark != _hole and self.mark != _null:
+        if self.mark != HOLE and self.mark != NULL:
             prog += f"mark({self.mark}).\n\n"
 
         prog += "\n".join(map(lambda e: e.to_asp(), self.encodings))
