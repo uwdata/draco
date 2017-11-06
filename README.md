@@ -4,6 +4,11 @@ Related repos:
 * https://github.com/domoritz/vis-csp
 * https://github.com/domoritz/vis-constraints
 
+Related work:
+* http://www2.parc.com/istl/groups/uir/publications/items/UIR-1986-02-Mackinlay-TOG-Automating.pdf
+* https://arxiv.org/pdf/1507.06566.pdf
+* http://hci.stanford.edu/publications/2011/Bricolage/Bricolage-CHI2011.pdf
+
 ## Developer setup
 
 ## Install clingo.
