@@ -99,11 +99,11 @@ is_m_d :- channel_meas(y), channel_dim(x).
 % dimension by dimension
 is_d_d :- channel_dim(x), channel_dim(y).
 
-:~ is_m_d, mark(point). [0@1]
-:~ is_m_d, mark(bar). [20@1]
-:~ is_m_d, mark(line). [20@1]
-:~ is_m_d, mark(area). [20@1]
-:~ is_m_d, mark(rule). [25@1]
-:~ is_m_d, mark(text). [1@1]
-:~ is_m_d, mark(tick). [10@1]
-:~ is_m_d, mark(rect). [0@1]
+:~ is_d_d, mark(point). [0@1]
+:~ is_d_d, mark(bar). [20@1]
+:~ is_d_d, mark(line). [20@1]
+:~ is_d_d, mark(area). [20@1]
+:~ is_d_d, mark(rule). [25@1]
+:~ is_d_d, mark(text). [1@1]
+:~ is_d_d, mark(tick). [10@1]
+:~ is_d_d, mark(rect). [0@1]
