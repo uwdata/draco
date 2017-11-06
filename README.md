@@ -1,10 +1,14 @@
 # Draco: Visualization Constraints Weight Learning for Visualization Recommendations [![Build Status](https://travis-ci.org/domoritz/draco.svg?branch=master)](https://travis-ci.org/domoritz/draco) [![Coverage Status](https://coveralls.io/repos/github/domoritz/draco/badge.svg?branch=master)](https://coveralls.io/github/domoritz/draco?branch=master)
 
-Related repos:
+## Resources
+
+### Related repos
+
 * https://github.com/domoritz/vis-csp
 * https://github.com/domoritz/vis-constraints
 
-Related work:
+### Related work
+
 * http://www2.parc.com/istl/groups/uir/publications/items/UIR-1986-02-Mackinlay-TOG-Automating.pdf
 * https://arxiv.org/pdf/1507.06566.pdf
 * http://hci.stanford.edu/publications/2011/Bricolage/Bricolage-CHI2011.pdf
@@ -12,17 +16,21 @@ Related work:
 * https://www.cc.gatech.edu/~xzhang36/papers/popl16.pdf
 * https://www.cc.gatech.edu/~xzhang36/papers/fse15a.pdf
 
+### Guides
+
+* https://github.com/potassco/guide/releases/
+
 ## Developer setup
 
-## Install clingo.
+### Install clingo.
 
 On Linux, run `apt get install gringo`. On MacOS, you can run `brew install gringo`.
 
-## Install node dependencies
+### Install node dependencies
 
 `yarn` or `npm install`
 
-## Python setup
+### Python setup
 
 `pip install -r requirements.txt`
 
@@ -32,21 +40,21 @@ Install draco in editable mode
 
 Now you can call the command line tool `draco`. For example `draco --version` or `draco --help`.
 
-## Tests
+### Tests
 
 You should also be able to run the tests (and coverage report)
 
 `python setup.py test`
 
-### Run only ansunit tests
+#### Run only ansunit tests
 
 `ansunit asp/tests.yaml`
 
-### Run only python tests
+#### Run only python tests
 
 `pytest -v`
 
-## Running Draco
+### Running Draco
 
 To run draco on a partial spec
 
