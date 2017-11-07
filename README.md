@@ -18,6 +18,7 @@
 
 ### Guides
 
+* The Algorithm is wirren up in https://hackmd.io/s/H1RYJ5RRW
 * https://github.com/potassco/guide/releases/
 
 ## Developer setup
