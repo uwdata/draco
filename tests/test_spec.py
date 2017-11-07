@@ -15,25 +15,25 @@ class TestField():
 class TestEncoding():
 
     def test_full_to_asp(self):
-        e = Encoding(channel="x", field="xx", ty="quantitative", aggregate="max", binning="3", scale=None, idx="e1")
-        asp = "encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,q).\naggregate(e1,max).\nbin(e1,3).\n% 0 { scale(e1,B) : scale(B) } 1.\n"
+        e = Encoding(channel="x", field="xx", ty="quantitative", aggregate="max", binning="3", idx="e1")
+        asp = "encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,q).\naggregate(e1,max).\nbin(e1,3).\n"
         assert e.to_asp() == asp
 
     def test_channel_idx_to_asp(self):
-        e = Encoding(channel="y", field=None, ty=None, aggregate=None, binning=None, scale=None, idx="e1")
-        asp = "encoding(e1).\nchannel(e1,y).\n% 0 { field(e1,B) : field(B) } 1.\n% 0 { type(e1,B) : type(B) } 1.\n% 0 { aggregate(e1,B) : aggregate(B) } 1.\n% 0 { bin(e1,B) : bin(B) } 1.\n% 0 { scale(e1,B) : scale(B) } 1.\n"
+        e = Encoding(channel="y", field=None, ty=None, aggregate=None, binning=None, idx="e1")
+        asp = "encoding(e1).\nchannel(e1,y).\n% 0 { field(e1,B) : field(B) } 1.\n% 0 { type(e1,B) : type(B) } 1.\n% 0 { aggregate(e1,B) : aggregate(B) } 1.\n% 0 { bin(e1,B) : bin(B) } 1.\n"
         assert e.to_asp() == asp
 
     def test_only_idx_to_asp(self):
-        e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, scale=None, idx="e1")
-        asp = "encoding(e1).\n% 0 { channel(e1,B) : channel(B) } 1.\n% 0 { field(e1,B) : field(B) } 1.\n% 0 { type(e1,B) : type(B) } 1.\n% 0 { aggregate(e1,B) : aggregate(B) } 1.\n% 0 { bin(e1,B) : bin(B) } 1.\n% 0 { scale(e1,B) : scale(B) } 1.\n"
+        e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, idx="e1")
+        asp = "encoding(e1).\n% 0 { channel(e1,B) : channel(B) } 1.\n% 0 { field(e1,B) : field(B) } 1.\n% 0 { type(e1,B) : type(B) } 1.\n% 0 { aggregate(e1,B) : aggregate(B) } 1.\n% 0 { bin(e1,B) : bin(B) } 1.\n"
         assert e.to_asp() == asp
 
     def test_id_creation(self):
         Encoding.encoding_cnt = 0
 
-        e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, scale=None)
+        e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None)
         assert e.id == "e0"
 
-        e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, scale=None)
+        e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None)
         assert e.id == "e1"

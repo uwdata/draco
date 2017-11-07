@@ -186,7 +186,7 @@ class Encoding():
                 return None
 
         return Encoding(_get_field("channel"), _get_field("field"), _get_field("type"),
-                        _get_field("aggregate"), _get_field("bin"), _get_field("scale"))
+                        _get_field("aggregate"), _get_field("bin"))
 
     @staticmethod
     def parse_from_asp_result(encoding_id, encoding_props):
@@ -197,13 +197,12 @@ class Encoding():
                    _get_field(encoding_props, "field"),
                    _get_field(encoding_props, "type"),
                    _get_field(encoding_props, "aggregate"),
-                   _get_field(encoding_props, "bin"),
-                   _get_field(encoding_props, "scale")]
+                   _get_field(encoding_props, "bin")]
 
         return Encoding(*content, encoding_id)
 
 
-    def __init__(self, channel, field, ty, aggregate, binning, scale, idx=None):
+    def __init__(self, channel, field, ty, aggregate, binning, idx=None):
         """ Create a channel:
             Args:
                 field: a string refering to a column in the table
@@ -216,7 +215,6 @@ class Encoding():
         self.ty = ty
         self.aggregate = aggregate
         self.binning = binning
-        self.scale = scale
         self.id = idx if idx is not None else Encoding.gen_encoding_id()
 
 
@@ -238,8 +236,6 @@ class Encoding():
             encoding["aggregate"] = self.aggregate
         if self.binning:
             encoding["bin"] = {"maxbins" : int(self.binning)}
-        if self.scale:
-            encoding["scale"] = {"type" : self.scale}
 
         return encoding
 
@@ -261,8 +257,7 @@ class Encoding():
             # its type may be a NULL requesting for synthesis
             "type": ty_to_asp_type[self.ty] if self.ty is not None else None,
             "aggregate": self.aggregate,
-            "bin": self.binning,
-            "scale": self.scale
+            "bin": self.binning
         }
 
         constraints = []
