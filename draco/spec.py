@@ -4,6 +4,7 @@ Tasks, Encoding, and Query helper classes for draco.
 
 import json
 import os
+from collections import defaultdict
 
 import agate
 
@@ -189,8 +190,7 @@ class Encoding():
                         _get_field("aggregate"), _get_field("bin"))
 
     @staticmethod
-    def parse_from_asp_result(encoding_id, encoding_props):
-
+    def parse_from_answer(encoding_id, encoding_props):
         _get_field = lambda props, target: props[target] if target in props else None
 
         content = [_get_field(encoding_props, "channel"),
@@ -276,28 +276,22 @@ class Query():
         return Query(mark, encodings)
 
     @staticmethod
-    def parse_from_asp_result(raw_str_list):
+    def parse_from_answer(clyngor_answer):
         encodings = []
         mark = None
 
-        raw_encoding_props = {}
+        raw_encoding_props = defaultdict(dict)
 
-        for s in raw_str_list:
-            if s.startswith("mark"):
-                mark = s[s.index("(") + 1 : s.index(")")]
+        for (head, body), in clyngor_answer:
+            if head == "mark":
+                mark = body[0]
             else:
-                head = s[:s.index("(")]
-                body = s[s.index("(") + 1: s.index(")")].split(",")
-                encoding_id = body[0]
-
                 # collect encoding properties
-                if encoding_id not in raw_encoding_props:
-                    raw_encoding_props[encoding_id] = {}
-                raw_encoding_props[encoding_id][head] = body[1]
+                raw_encoding_props[body[0]][head] = body[1] if len(body) > 1 else True
 
         # generate encoding objects from each collected encodings
         for k, v in raw_encoding_props.items():
-            encodings.append(Encoding.parse_from_asp_result(k, v))
+            encodings.append(Encoding.parse_from_answer(k, v))
 
         return Query(mark, encodings)
 

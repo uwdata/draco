@@ -37,6 +37,8 @@ On Linux, run `apt get install gringo`. On MacOS, you can run `brew install grin
 
 `yarn` or `npm install`
 
+You might need to activate a Python 2.7 environment to compile the canvas module.
+
 ### Python setup
 
 `pip install -r requirements.txt`
@@ -63,7 +65,7 @@ You should also be able to run the tests (and coverage report)
 
 ### Running Draco
 
-To run draco on a partial spec
+To run draco on a partial spec.
 
 `sh run_pipeline.sh spec`
 
