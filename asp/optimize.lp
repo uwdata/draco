@@ -18,10 +18,8 @@
 :~ encoding(E). [encoding_weight,E]
 
 % prefer not to use the same field multiple times
-% TODO: there has to be a better way
 #const same_field_weight = 10.
-count_fields(E,K) :- { field(E,_) } = K, encoding(E).
-#minimize { K*same_field_weight, E: count_fields(E,K) }.
+:~ { field(E,_) } = K, P = (K - 1) * same_field_weight, encoding(E), K > 1. [P,E]
 
 % categorical color channel should not have too high cardinality
 :~ channel(E,color), type(E,n), cardinality(E,C), C > 20. [5,E]
@@ -38,8 +36,8 @@ count_fields(E,K) :- { field(E,_) } = K, encoding(E).
 % binned quantitative field should not have too low cardinality
 :~ type(E,q), bin(E,_), cardinality(E,C), C < 15. [5,E]
 
-% prefer linear scale for bin
-:~ bin(E,_), scale(E,ordinal). [1]
+% prefer quantitative for bin
+:~ bin(E,_), type(E,q). [1]
 
 % aggregate should also have a dimension
 :~ aggregate(_,_), not dimension(_). [2]
