@@ -2,10 +2,11 @@
 Run constraint solver to complete spec.
 """
 
-import os
 import json
 import logging
+import os
 import subprocess
+
 import clyngor
 
 from draco.spec import Task, Query
@@ -26,12 +27,16 @@ def run(partial_vl_spec, constants={}):
     # load a task from a spec provided by the user
     task = Task.load_from_json(partial_vl_spec)
 
-    run_command = clyngor.command(files=[os.path.join(DRACO_LP_DIR, f) for f in DRACO_LP], inline=task.to_asp(), constants=constants, options=["--outf=2"])
+    run_command = clyngor.command(
+        files=[os.path.join(DRACO_LP_DIR, f) for f in DRACO_LP],
+        inline=task.to_asp(),
+        constants=constants,
+        options=["--outf=2"])
 
     logger.info("Command: %s", " ".join(run_command))
 
-    r = subprocess.run(run_command, stdout=subprocess.PIPE, stderr=None)
-    json_result = json.loads(r.stdout.decode("utf-8"))
+    clingo = subprocess.run(run_command, stdout=subprocess.PIPE, stderr=None)
+    json_result = json.loads(clingo.stdout.decode("utf-8"))
 
     result = json_result["Result"]
 
