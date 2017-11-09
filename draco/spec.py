@@ -219,19 +219,11 @@ class Encoding():
 
 
     def to_vegalite_obj(self):
-
-        asp_type_to_ty = {
-            "q": "quantitative",
-            "o": "ordinal",
-            "n": "nominal",
-            "t": "temporal"
-        }
-
         encoding = {}
         if self.field:
             encoding["field"] = self.field
         if self.ty:
-            encoding["type"] = asp_type_to_ty[self.ty]
+            encoding["type"] = self.ty
         if self.aggregate:
             encoding["aggregate"] = self.aggregate
         if self.binning:
@@ -240,14 +232,6 @@ class Encoding():
         return encoding
 
     def to_asp(self):
-        # map an encoding type to a type name used in asp
-        ty_to_asp_type = {
-            "quantitative": "q",
-            "ordinal": "o",
-            "nominal": "n",
-            "temporal": "t",
-            HOLE: HOLE
-        }
         # if a property is a hole, generate a placeholder
         _wrap_props = lambda v: v if v is not HOLE else "_"
 
@@ -255,7 +239,7 @@ class Encoding():
             "channel": self.channel,
             "field": self.field,
             # its type may be a NULL requesting for synthesis
-            "type": ty_to_asp_type[self.ty] if self.ty is not None else None,
+            "type": self.ty,
             "aggregate": self.aggregate,
             "bin": self.binning
         }

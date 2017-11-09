@@ -3,7 +3,7 @@
 % types of marks to encode data
 marktype(point;bar;line;area;rule;text;tick;rect).
 % high level data types: quantitative, ordinal, nominal, temporal
-type(q;o;n;t).
+type(quantitative;ordinal;nominal;temporal).
 % basic types of the data
 primitive_type(string;number;integer;boolean;date).
 % supported aggregation functions
@@ -22,7 +22,7 @@ field(F) :- fieldtype(F,_).
 
 % ====== Helpers ======
 
-dimension(E) :- type(E,(n;o)), not aggregate(E,_).
+dimension(E) :- type(E,(nominal;ordinal)), not aggregate(E,_).
 dimension(E) :- bin(E,_).
 
 channel_dim(C) :- dimension(E), channel(E,C).

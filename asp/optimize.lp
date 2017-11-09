@@ -22,22 +22,22 @@
 :~ { field(E,_) } = K, P = (K - 1) * same_field_weight, encoding(E), K > 1. [P,E]
 
 % categorical color channel should not have too high cardinality
-:~ channel(E,color), type(E,n), cardinality(E,C), C > 20. [5,E]
+:~ channel(E,color), type(E,nominal), cardinality(E,C), C > 20. [5,E]
 
 % shape channel should not have too high cardinality
 :~ channel(E,shape), cardinality(E,C), C > 6. [5,E]
 
 % numbers should not be nominal
-:~ type(E,n), field(E,F), fieldtype(F,number). [2,E]
+:~ type(E,nominal), field(E,F), fieldtype(F,number). [2,E]
 
 % bar and tick should not use size
 :~ mark(bar;tick), channel(_,size). [5]
 
 % binned quantitative field should not have too low cardinality
-:~ type(E,q), bin(E,_), cardinality(E,C), C < 15. [5,E]
+:~ type(E,quantitative), bin(E,_), cardinality(E,C), C < 15. [5,E]
 
 % prefer quantitative for bin
-:~ bin(E,_), type(E,q). [1]
+:~ bin(E,_), type(E,quantitative). [1]
 
 % aggregate should also have a dimension
 :~ aggregate(_,_), not dimension(_). [2]
@@ -57,7 +57,7 @@
 :~ channel(_,C), non_positional(C), not channel(_,(x;y)). [non_positional_pref_weight]
 
 % aggregate plots should not use raw continuous as group by
-:~ aggregate(_,_), type(E,q), not aggregate(E,_). [1]
+:~ aggregate(_,_), type(E,quantitative), not aggregate(E,_). [1]
 
 % prefer not to use vertical for dot plot
 :~ channel(_,y), not channel(_,C), C != y, channel(C), not mark(bar). [5]
@@ -67,6 +67,9 @@
 
 % prefer not to use log scale
 :~ log(E), encoding(E). [1,E]
+
+% prefer to include zero
+:~ zero(E), encoding(E). [-1,E]
 
 
 % ====== Rankings ======

@@ -16,7 +16,7 @@ class TestEncoding():
 
     def test_full_to_asp(self):
         e = Encoding(channel="x", field="xx", ty="quantitative", aggregate="max", binning="3", idx="e1")
-        asp = "encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,q).\naggregate(e1,max).\nbin(e1,3).\n"
+        asp = "encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,quantitative).\naggregate(e1,max).\nbin(e1,3).\n"
         assert e.to_asp() == asp
 
     def test_channel_idx_to_asp(self):

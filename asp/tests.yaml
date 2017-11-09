@@ -36,7 +36,7 @@ Test valid values:
 
     Test type:
         Program: |
-            :- not type(_,q).
+            :- not type(_,quantitative).
 
     Test aggregate:
         Program: |
@@ -111,21 +111,21 @@ Test constraints:
         Program: |
             encoding(e).
             :- not field(e,s1).
-            :- not type(e,o).
+            :- not type(e,ordinal).
         Expect: SAT
 
     Test cannot use string as q:
         Program: |
             encoding(e).
             :- not field(e,s1).
-            :- not type(e,q).
+            :- not type(e,quantitative).
         Expect: UNSAT
 
     Test cannot use temporal with string:
         Program: |
             encoding(e).
             field(e,s1).
-            :- not type(e,t).
+            :- not type(e,temporal).
         Expect: UNSAT
 
     Test cannot bin temporal:
@@ -133,7 +133,7 @@ Test constraints:
             fieldtype(d,date).
             encoding(e).
             field(e,d).
-            :- not type(e,t).
+            :- not type(e,temporal).
             :- not bin(e,_).
         Expect: UNSAT
 

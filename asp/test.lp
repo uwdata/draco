@@ -4,16 +4,16 @@
 % === Within Encodings ===
 
 % primitive type has to support data type
-:- type(E,(q;t)), fieldtype(E,(string;boolean)).
+:- type(E,(quantitative;temporal)), fieldtype(E,(string;boolean)).
 
 % only use temporal type with dates
-:- type(E,t), not fieldtype(E,date).
+:- type(E,temporal), not fieldtype(E,date).
 
 % can only bin quantitative or ordinal
-:- type(E,T), bin(E,_), T != q, T != o.
+:- type(E,T), bin(E,_), T != quantitative, T != ordinal.
 
 % cannot use log with ordinal or nominal
-:- log(E), type(E,(o;n)).
+:- log(E), type(E,(ordinal;nominal)).
 
 % do not use scale zero with dimension (which includes binned)
 :- zero(E), dimension(E).
@@ -25,14 +25,14 @@
 :- bin(E,_), aggregate(E,_).
 
 % mean and sum only works for quantitative
-:- aggregate(E,(sum;mean)), type(E,T), T != q.
+:- aggregate(E,(sum;mean)), type(E,T), T != quantitative.
 
 % min, max, and median only work for ordinal and quantitative
-:- aggregate(E,(min;max;median)), type(E,T), T != q, T != o.
+:- aggregate(E,(min;max;median)), type(E,T), T != quantitative, T != ordinal.
 
 % count has to be quantitative and not use a field
 :- aggregate(E,count), field(E,_).
-:- aggregate(E,count), not type(E,q).
+:- aggregate(E,count), not type(E,quantitative).
 
 % shape requires dimension
 :- channel_meas(shape).
@@ -41,7 +41,7 @@
 :- channel_meas(size;text).
 
 % aggregate implies quantitative
-:- aggregate(E,_), not type(E,q).
+:- aggregate(E,_), not type(E,quantitative).
 
 % can only aggregate measures
 :- aggregate(E,_), dimension(E).
@@ -84,7 +84,7 @@
 :- mark(bar;tick), not 1 = {channel_meas(x); channel_meas(y)}.
 
 % bar mark requires scale of measure to start at zero
-:- mark(bar), type(E,(x;y)), not dimension(E), not zero(E).
+:- mark(bar), channel(E,(x;y)), not dimension(E), not zero(E).
 
 % shape channel requires point mark
 :- channel(_,shape), not mark(point).
