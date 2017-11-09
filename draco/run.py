@@ -22,8 +22,6 @@ def run(partial_vl_spec, constants={}):
     """ Given a partial vegalite spec, recommand a completion of the spec
     """
 
-    logger.info(f"Using clingo version {clyngor.clingo_version()['clingo version']}")
-
     # load a task from a spec provided by the user
     task = Task.load_from_json(partial_vl_spec)
 
