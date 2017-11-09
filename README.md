@@ -20,6 +20,7 @@
 * [Efficient Weight Learning for Markov Logic Networks](https://homes.cs.washington.edu/~pedrod/papers/pkdd07.pdf)
 * [Combining Relational Learning with SMT
 Solvers using CEGAR](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/main-25.pdf)
+* [Convert ASP to MLN](http://reasoning.eas.asu.edu/lpmln/Tutorial.html)
 
 ### Guides
 
