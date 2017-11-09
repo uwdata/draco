@@ -57,7 +57,7 @@
 :~ channel(_,C), non_positional(C), not channel(_,(x;y)). [non_positional_pref_weight]
 
 % aggregate plots should not use raw continuous as group by
-:~ aggregate(_,_), type(E,quantitative), not aggregate(E,_). [1]
+:~ aggregate(_,_), type(E,quantitative), not bin(E,_), not aggregate(E,_). [1,E]
 
 % prefer not to use vertical for dot plot
 :~ channel(_,y), not channel(_,C), C != y, channel(C), not mark(bar). [5]
