@@ -15,6 +15,11 @@
 * https://www.cc.gatech.edu/~xzhang36/papers/mapl17.pdf
 * https://www.cc.gatech.edu/~xzhang36/papers/popl16.pdf
 * https://www.cc.gatech.edu/~xzhang36/papers/fse15a.pdf
+* [Discriminative Training of Markov Logic Networks](https://homes.cs.washington.edu/~pedrod/papers/aaai05.pdf)
+* [Markov Logic Network](https://homes.cs.washington.edu/~pedrod/papers/pilp.pdf)
+* [Efficient Weight Learning for Markov Logic Networks](https://homes.cs.washington.edu/~pedrod/papers/pkdd07.pdf)
+* [Combining Relational Learning with SMT
+Solvers using CEGAR](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/main-25.pdf)
 
 ### Guides
 
