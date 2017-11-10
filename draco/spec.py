@@ -186,23 +186,28 @@ class Encoding():
                 # we use None (See comment in the front of the file)
                 return None
 
-        return Encoding(_get_field("channel"), _get_field("field"), _get_field("type"),
-                        _get_field("aggregate"), _get_field("bin"))
+        return Encoding(_get_field("channel"), _get_field("field"), 
+                        _get_field("type"), _get_field("aggregate"), 
+                        _get_field("bin"), _get_field("log_scale"), 
+                        _get_field("zero"))
 
     @staticmethod
     def parse_from_answer(encoding_id, encoding_props):
+
         _get_field = lambda props, target: props[target] if target in props else None
 
         content = [_get_field(encoding_props, "channel"),
                    _get_field(encoding_props, "field"),
                    _get_field(encoding_props, "type"),
                    _get_field(encoding_props, "aggregate"),
-                   _get_field(encoding_props, "bin")]
+                   _get_field(encoding_props, "bin"),
+                   _get_field(encoding_props, "log_scale"),
+                   _get_field(encoding_props, "zero")]
 
         return Encoding(*content, encoding_id)
 
 
-    def __init__(self, channel, field, ty, aggregate, binning, idx=None):
+    def __init__(self, channel, field, ty, aggregate, binning, log_scale, zero, idx=None):
         """ Create a channel:
             Args:
                 field: a string refering to a column in the table
@@ -215,11 +220,15 @@ class Encoding():
         self.ty = ty
         self.aggregate = aggregate
         self.binning = binning
+        self.log_scale = log_scale
+        self.zero = zero
         self.id = idx if idx is not None else Encoding.gen_encoding_id()
 
 
     def to_vegalite_obj(self):
+
         encoding = {}
+        
         if self.field:
             encoding["field"] = self.field
         if self.ty:
@@ -228,10 +237,16 @@ class Encoding():
             encoding["aggregate"] = self.aggregate
         if self.binning:
             encoding["bin"] = {"maxbins" : int(self.binning)}
+        if self.log_scale:
+            encoding["scale"] = {"type" : "log"}
+        if self.zero:
+            encoding["scale"] = {"zero" : True} 
 
         return encoding
 
+
     def to_asp(self):
+
         # if a property is a hole, generate a placeholder
         _wrap_props = lambda v: v if v is not HOLE else "_"
 
@@ -241,19 +256,34 @@ class Encoding():
             # its type may be a NULL requesting for synthesis
             "type": self.ty,
             "aggregate": self.aggregate,
-            "bin": self.binning
+            "bin": self.binning,
+            "log": self.log_scale,
+            "zero": self.zero
         }
 
         constraints = []
         for k, v in props.items():
-            if v is NULL:
-                s = f":- {k}({self.id},_)."
-            elif v is HOLE:
-                s = f":- not {k}({self.id},_)."
-            elif v is None:
-                s = f"% 0 {{ {k}({self.id},B) : {k}(B) }} 1."
+
+            # binary operator this case
+            if k in ["log", "zero"]:
+                if v is NULL:
+                    s = f":- {k}({self.id})."
+                elif v in [HOLE, None]:
+                    s = f"%0 {{ {k}({self.id}) }} 1."
+                elif v is False:
+                    s = f":- {k}({self.id})."
+                elif v is True:
+                    s = f"{k}({self.id})."
             else:
-                s = f"{k}({self.id},{v})."
+                if v is NULL:
+                    s = f":- {k}({self.id},_)."
+                elif v is HOLE:
+                    # this means the user want this fill to be filled something that is not null
+                    s = f":- not {k}({self.id},_)."
+                elif v is None:
+                    continue
+                else:
+                    s = f"{k}({self.id},{v})."
 
             constraints.append(s)
 
