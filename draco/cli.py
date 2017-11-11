@@ -37,7 +37,7 @@ def main():  # pragma: no cover
     if task:
         print(task.to_vegalite_json(), file=args.out)
         outname = "stringIO" if isinstance(args.out, io.StringIO) else args.out.name
-        logger.info(f"Wrote Vega-Lite spec to {outname}.")
+        logger.info(f"Wrote Vega-Lite spec to {outname}")
 
     # close open files
     if args.query is not sys.stdin:
@@ -45,8 +45,6 @@ def main():  # pragma: no cover
 
     if args.out is not sys.stdout:
         args.out.close()
-
-    logger.info(f"Complete task.")
 
 
 if __name__ == '__main__':  # pragma: no cover
