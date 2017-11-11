@@ -33,4 +33,3 @@ orientation(horizontal) :- mark(bar;tick), channel_dim(x).
 orientation(vertical) :- mark(bar;tick), channel_dim(y).
 
 cardinality(E,C) :- field(E,F), cardinality(F,C).
-fieldtype(E,T) :- field(E,F), fieldtype(F,T).

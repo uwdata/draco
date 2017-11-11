@@ -4,10 +4,10 @@
 % === Within Encodings ===
 
 % primitive type has to support data type
-:- type(E,(quantitative;temporal)), fieldtype(E,(string;boolean)).
+:- type(E,(quantitative;temporal)), field(E,F), fieldtype(F,(string;boolean)).
 
 % only use temporal type with dates
-:- type(E,temporal), not fieldtype(E,date).
+:- type(E,temporal), field(E,F), not fieldtype(F,date).
 
 % can only bin quantitative or ordinal
 :- type(E,T), bin(E,_), T != quantitative, T != ordinal.
