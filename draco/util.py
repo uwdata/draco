@@ -1,13 +1,15 @@
+import JSON
+
+from draco.run import run
+
 def list_weights():
-	# list ids of all soft constraint and their weights
-	# a dict of {
-	#   id : weight
-	#}
-	pass
+	with open(os.path.join(os.path.dirname(__file__), "../data/weights.json")) as f:
+        return JSON.load(f)
 
 def count_violations(soft_constraints, full_spec):
-	# returns a diction
-	pass
+    # TODO: finish
+	task = run(soft_constraints)
+	return task.violations
 
 def count_cost(full_spec, weights):
 	# count the cost of the current full spec given weights
@@ -31,6 +33,6 @@ def get_soft_constraint(constraint_id):
 	pass
 
 def sample_full_spec(partial_spec, extra_hard_constraints):
-	# sample a solution by solving partial_spec 
+	# sample a solution by solving partial_spec
 	# using original hard_constraints plus extra ones (extra_hard_constraints)
 	pass

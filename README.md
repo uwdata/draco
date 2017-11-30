@@ -24,14 +24,14 @@ Solvers using CEGAR](https://www.microsoft.com/en-us/research/wp-content/uploads
 
 ### Guides
 
-* The Algorithm is wirren up in https://hackmd.io/s/H1RYJ5RRW
+* The Algorithm is written up in https://hackmd.io/s/H1RYJ5RRW
 * https://github.com/potassco/guide/releases/
 
 ## Developer setup
 
 ### Install clingo.
 
-On Linux, run `apt get install gringo`. On MacOS, you can run `brew install gringo`.
+On Linux, run `apt get install gringo`. On MacOS, you can run `brew install clingo`.
 
 ### Install node dependencies
 

@@ -14,7 +14,7 @@ from draco.spec import Task, Query
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DRACO_LP = ["define.lp", "generate.lp", "test.lp", "optimize.lp", "output.lp"]
+DRACO_LP = ["define.lp", "generate.lp", "test.lp", "optimize.lp", "output.lp", "count.lp"]
 DRACO_LP_DIR = "asp"
 
 
@@ -33,8 +33,10 @@ def run(partial_vl_spec, constants={}):
 
     logger.info("Command: %s", " ".join(run_command))
 
-    clingo = subprocess.run(run_command, stdout=subprocess.PIPE, stderr=None)
+    clingo = subprocess.run(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     json_result = json.loads(clingo.stdout.decode("utf-8"))
+
+    violations = json.loads(clingo.stderr.decode("utf-8"))
 
     result = json_result["Result"]
 
@@ -48,4 +50,4 @@ def run(partial_vl_spec, constants={}):
         logger.info(answers)
 
         query = Query.parse_from_answer(clyngor.Answers(answers).sorted)
-        return Task(task.data, query)
+        return Task(task.data, query, violations)

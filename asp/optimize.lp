@@ -10,8 +10,8 @@
 :~ type(_,n). [type_weight_n]
 
 % prefer to use raw (no aggregate)
-#const agg_weight = 1.
-:~ aggregate(E,_). [agg_weight,E]
+#const aggregate_weight = 1.
+:~ aggregate(E,_). [aggregate_weight,E]
 
 % prefer to use fewer encodings
 #const encoding_weight = 6.
@@ -27,7 +27,8 @@
 
 % shape channel should not have too high cardinality
 #const shape_cardinality_weight = 5.
-:~ channel(E,shape), cardinality(E,C), C > 6. [shape_cardinality_weight,E]
+shape_cardinality_violated(E) :- channel(E,shape), cardinality(E,C), C > 6.
+:~ shape_cardinality_violated(E). [shape_cardinality_weight,E]
 
 % numbers should not be nominal
 #const number_nominal_weight = 2.

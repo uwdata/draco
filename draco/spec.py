@@ -21,9 +21,10 @@ def handle_special_value(v):
 
 class Task():
 
-    def __init__(self, data, query):
+    def __init__(self, data, query, violations=None):
         self.data = data
         self.query = query
+        self.violations = violations
 
     @staticmethod
     def load_from_json(query_file, place_holder=HOLE):
@@ -186,9 +187,9 @@ class Encoding():
                 # we use None (See comment in the front of the file)
                 return None
 
-        return Encoding(_get_field("channel"), _get_field("field"), 
-                        _get_field("type"), _get_field("aggregate"), 
-                        _get_field("bin"), _get_field("log_scale"), 
+        return Encoding(_get_field("channel"), _get_field("field"),
+                        _get_field("type"), _get_field("aggregate"),
+                        _get_field("bin"), _get_field("log_scale"),
                         _get_field("zero"))
 
     @staticmethod
@@ -228,7 +229,7 @@ class Encoding():
     def to_vegalite_obj(self):
 
         encoding = {}
-        
+
         if self.field:
             encoding["field"] = self.field
         if self.ty:
@@ -240,7 +241,7 @@ class Encoding():
         if self.log_scale:
             encoding["scale"] = {"type" : "log"}
         if self.zero:
-            encoding["scale"] = {"zero" : True} 
+            encoding["scale"] = {"zero" : True}
 
         return encoding
 
