@@ -17,9 +17,13 @@ counts = {value.name: 0 for value in collect.values()}
 
 def main(prg):
     prg.ground([('base', [])])
+
+    model = None
     for m in prg.solve(yield_=True):
-        s = 0
-        for atom in m.symbols(atoms=True):
+        model = m
+
+    if model:
+        for atom in model.symbols(atoms=True):
             if atom.name in collect and len(atom.arguments) == collect[atom.name].args:
                 counts[collect[atom.name].name] += 1
         print >> sys.stderr, json.dumps(counts)

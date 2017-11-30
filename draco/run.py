@@ -14,11 +14,11 @@ from draco.spec import Task, Query
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DRACO_LP = ["define.lp", "generate.lp", "test.lp", "optimize.lp", "output.lp", "count.lp"]
+DRACO_LP = ["define.lp", "generate.lp", "test.lp", "optimize.lp", "output.lp"]
 DRACO_LP_DIR = "asp"
 
 
-def run(partial_vl_spec, constants={}):
+def run(partial_vl_spec, constants={}, files=DRACO_LP):
     """ Given a partial vegalite spec, recommand a completion of the spec
     """
 
@@ -36,7 +36,8 @@ def run(partial_vl_spec, constants={}):
     clingo = subprocess.run(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     json_result = json.loads(clingo.stdout.decode("utf-8"))
 
-    violations = json.loads(clingo.stderr.decode("utf-8"))
+    stderr = clingo.stderr.decode("utf-8")
+    violations = json.loads(stderr) if stderr else {}
 
     result = json_result["Result"]
 
