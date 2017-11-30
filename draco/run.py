@@ -36,7 +36,8 @@ def run(partial_vl_spec, constants={}):
     clingo = subprocess.run(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     json_result = json.loads(clingo.stdout.decode("utf-8"))
 
-    violations = json.loads(clingo.stderr.decode("utf-8"))
+    stderr = clingo.stderr.decode("utf-8")
+    violations = json.loads(stderr) if stderr else {}
 
     result = json_result["Result"]
 

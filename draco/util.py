@@ -6,12 +6,12 @@ def list_weights():
 	with open(os.path.join(os.path.dirname(__file__), "../data/weights.json")) as f:
         return JSON.load(f)
 
-def count_violations(soft_constraints, full_spec):
+def count_violations(full_spec):
     # TODO: finish
-	task = run(soft_constraints)
+	task = run(full_spec)
 	return task.violations
 
-def count_cost(full_spec, weights):
+def count_cost(violations, weights):
 	# count the cost of the current full spec given weights
 	pass
 

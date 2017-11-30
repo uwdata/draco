@@ -32,7 +32,8 @@ shape_cardinality_violated(E) :- channel(E,shape), cardinality(E,C), C > 6.
 
 % numbers should not be nominal
 #const number_nominal_weight = 2.
-:~ type(E,nominal), field(E,F), fieldtype(F,number). [number_nominal_weight,E]
+number_nominal_violated(E) :- type(E,nominal), field(E,F), fieldtype(F,number).
+:~ number_nominal_violated(E). [number_nominal_weight,E]
 
 % bar and tick should not use size
 #const bar_size_weight = 5.
