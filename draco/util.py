@@ -1,6 +1,6 @@
 import JSON
 
-from draco.run import run
+from draco.run import run, DRACO_LP
 
 def list_weights():
 	with open(os.path.join(os.path.dirname(__file__), "../data/weights.json")) as f:
@@ -8,7 +8,7 @@ def list_weights():
 
 def count_violations(full_spec):
     # TODO: finish
-	task = run(full_spec)
+	task = run(full_spec, files=DRACO_LP + ["count.lp"])
 	return task.violations
 
 def count_cost(violations, weights):

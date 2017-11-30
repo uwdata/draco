@@ -14,11 +14,11 @@ from draco.spec import Task, Query
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DRACO_LP = ["define.lp", "generate.lp", "test.lp", "optimize.lp", "output.lp", "count.lp"]
+DRACO_LP = ["define.lp", "generate.lp", "test.lp", "optimize.lp", "output.lp"]
 DRACO_LP_DIR = "asp"
 
 
-def run(partial_vl_spec, constants={}):
+def run(partial_vl_spec, constants={}, files=DRACO_LP):
     """ Given a partial vegalite spec, recommand a completion of the spec
     """
 
