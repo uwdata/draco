@@ -6,6 +6,7 @@ import logging
 import io
 
 from draco.run import run
+from draco.spec import Task
 from draco import __version__
 
 logging.basicConfig(level=logging.INFO)
@@ -32,7 +33,10 @@ def main():  # pragma: no cover
 
     logger.info(f"Processing query: {args.query.name} ...")
 
-    task = run(args.query)
+    # load a task from a spec provided by the user
+    input_task = Task.load_from_json(args.query)
+
+    task = run(input_task)
 
     if task:
         print(task.to_vegalite_json(), file=args.out)

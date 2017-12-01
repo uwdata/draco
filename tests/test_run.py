@@ -3,6 +3,7 @@ import json
 from jsonschema import validate
 
 from draco.run import run
+from draco.spec import Task
 
 EXAMPLES_DIR = os.path.join("examples")
 
@@ -16,5 +17,5 @@ class TestFull():
 
             for fname in json_files:
                 with open(fname, "r") as f:
-                    task = run(f)
+                    task = run(Task.load_from_json(f))
                     validate(task.to_vegalite_obj(), schema)

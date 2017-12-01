@@ -37,14 +37,39 @@ class Task():
             Returns:
                 a Task object
         """
-        raw_vl_obj = json.load(query_file)
 
-        # load data from the file
-        data = Data.load_from_obj(raw_vl_obj["data"], path_prefix=os.path.dirname(query_file.name))
+        # TODO: This method is not really needed. It's easy enough to load a JSON file. Remove it.
 
-        # load query from the file
-        mark = handle_special_value(raw_vl_obj["mark"]) if "mark" in raw_vl_obj else place_holder
-        encodings_obj = raw_vl_obj["encoding"] if "encoding" in raw_vl_obj else []
+        query_spec = json.load(query_file)
+
+        return Task.load_from_obj(query_spec, os.path.dirname(query_file.name), place_holder)
+
+    @staticmethod
+    def load_from_obj(query_spec, data_dir, place_holder=HOLE):
+        # TODO: Refactor so that we don't need the data dir anymore. We shoud have a schema type.
+
+        data = Data.load_from_obj(query_spec["data"], path_prefix=data_dir)
+
+        mark = handle_special_value(query_spec["mark"]) if "mark" in query_spec else place_holder
+        encodings_obj = query_spec["encoding"] if "encoding" in query_spec else []
+
+        query = Query.load_from_obj(encodings_obj, mark)
+
+        return Task(data, query)
+
+    @staticmethod
+    def load_from_vegalite_obj(vl_spec, data_dir, place_holder=HOLE):
+        # TODO: Refactor so that we don't need the data dir anymore. We shoud have a schema type.
+        # TODO: Reafactor with function load_from_obj
+
+        data = Data.load_from_obj(vl_spec["data"], path_prefix=data_dir)
+
+        mark = handle_special_value(vl_spec["mark"]) if "mark" in vl_spec else place_holder
+
+        encodings_obj = []
+        for channel, enc in vl_spec["encoding"].items():
+            enc['channel'] = channel
+            encodings_obj.append(enc)
 
         query = Query.load_from_obj(encodings_obj, mark)
 
@@ -113,7 +138,7 @@ class Data():
                 type_name = "boolean"
             elif isinstance(agate_type, agate.Date):
                 type_name = "date"
-            elif isinstance(agate_type, agate.Datetime):
+            elif isinstance(agate_type, agate.DateTime):
                 type_name = "date" # take care!
             cardinality = len(set(agate_table.columns.get(name)))
             data.fields.append(Field(name, type_name, cardinality))
@@ -122,6 +147,7 @@ class Data():
         data.content = []
         for row in agate_table.rows:
             row_obj = {}
+            # TODO: use enumerate instead of range and len
             for j in range(len(row)):
                 row_obj[data.fields[j].name] = str(row[j])
             data.content.append(row_obj)

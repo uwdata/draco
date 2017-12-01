@@ -124,8 +124,8 @@ log_violated(E) :- log(E).
 :~ log_violated(E). [log_weight,E]
 
 % prefer to include zero
-#const zero_weight = -1.
-zero_violated(E) :- zero(E).
+#const zero_weight = 1.
+zero_violated(E) :- encoding(E), not zero(E).
 :~ zero_violated(E). [zero_weight,E]
 
 
