@@ -32,12 +32,22 @@ def run(task, constants={}, files=DRACO_LP):
 
     clingo = subprocess.run(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    json_result = json.loads(clingo.stdout.decode("utf-8"))
-
     stderr = clingo.stderr.decode("utf-8")
+    stdout = clingo.stdout.decode("utf-8")
+
+    try:
+        json_result = json.loads(stdout)
+    except json.JSONDecodeError:
+        logger.error("stdout: %s", stdout)
+        logger.error("stderr: %s", stderr)
+        raise
+
     violations = {}
     if stderr:
-        violations = json.loads(stderr)
+        try:
+            violations = json.loads(stderr)
+        except json.JSONDecodeError:
+            logger.error(stderr)
 
     result = json_result["Result"]
 
