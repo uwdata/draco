@@ -1,13 +1,16 @@
 % ====== Preferences ======
 
 % prefer quantitative > ordinal > nominal
-#const type_weight_q = 0.
-#const type_weight_o = 1.
-#const type_weight_n = 2.
+#const type_q_weight = 0.
+#const type_o_weight = 1.
+#const type_n_weight = 2.
 
-:~ type(_,q). [type_weight_q]
-:~ type(_,o). [type_weight_o]
-:~ type(_,n). [type_weight_n]
+type_q_violated(E) :- type(E,q).
+:~ type_q_violated(E). [type_q_weight,E]
+type_o_violated(E) :- type(E,o).
+:~ type_o_violated(E). [type_o_weight,E]
+type_n_violated(E) :- type(E,n).
+:~ type_n_violated(E). [type_n_weight,E]
 
 % prefer to use raw (no aggregate)
 #const aggregate_weight = 1.
