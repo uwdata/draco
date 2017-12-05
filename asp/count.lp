@@ -15,8 +15,8 @@ def main(prg):
 
     if model:
         for atom in model.symbols(atoms=True):
-            if atom.name.endswith('_violated'):
-                name = atom.name[:-len('_violated')]
+            if atom.name == 'feature_term':
+                name = atom.arguments[0].string
                 counts[name] += 1
         print >> sys.stderr, json.dumps(counts)
 
