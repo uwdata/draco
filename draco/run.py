@@ -18,15 +18,12 @@ DRACO_LP = ["define.lp", "generate.lp", "test.lp", "optimize.lp", "output.lp"]
 DRACO_LP_DIR = "asp"
 
 
-def run(partial_vl_spec, constants={}, files=DRACO_LP):
-    """ Given a partial vegalite spec, recommand a completion of the spec
+def run(task, constants={}, files=DRACO_LP):
+    """ Run clingo to compute a completion of a partial spec or violations.
     """
 
-    # load a task from a spec provided by the user
-    task = Task.load_from_json(partial_vl_spec)
-
     run_command = clyngor.command(
-        files=[os.path.join(DRACO_LP_DIR, f) for f in DRACO_LP],
+        files=[os.path.join(DRACO_LP_DIR, f) for f in files],
         inline=task.to_asp(),
         constants=constants,
         options=["--outf=2"])
@@ -34,10 +31,23 @@ def run(partial_vl_spec, constants={}, files=DRACO_LP):
     logger.info("Command: %s", " ".join(run_command))
 
     clingo = subprocess.run(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    json_result = json.loads(clingo.stdout.decode("utf-8"))
 
     stderr = clingo.stderr.decode("utf-8")
-    violations = json.loads(stderr) if stderr else {}
+    stdout = clingo.stdout.decode("utf-8")
+
+    try:
+        json_result = json.loads(stdout)
+    except json.JSONDecodeError:
+        logger.error("stdout: %s", stdout)
+        logger.error("stderr: %s", stderr)
+        raise
+
+    violations = {}
+    if stderr:
+        try:
+            violations = json.loads(stderr)
+        except json.JSONDecodeError:
+            logger.error(stderr)
 
     result = json_result["Result"]
 
