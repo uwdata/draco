@@ -27,49 +27,11 @@ class Task():
         self.violations = violations
 
     @staticmethod
-    def load_from_json(query_file, place_holder=HOLE):
-        """ load a task from a query spec
-            Args:
-                query_file: a CompassQL json file
-                place_holder: whether unprovided spec are reprented as holes or null values
-                    (this determine whether the solver would infer missing parts
-                        or only infer properties specified by question marks)
-            Returns:
-                a Task object
-        """
-
-        # TODO: This method is not really needed. It's easy enough to load a JSON file. Remove it.
-
-        query_spec = json.load(query_file)
-
-        return Task.load_from_obj(query_spec, os.path.dirname(query_file.name), place_holder)
-
-    @staticmethod
     def load_from_obj(query_spec, data_dir, place_holder=HOLE):
-        # TODO: Refactor so that we don't need the data dir anymore. We shoud have a schema type.
-
         data = Data.load_from_obj(query_spec["data"], path_prefix=data_dir)
 
-        mark = handle_special_value(query_spec["mark"]) if "mark" in query_spec else place_holder
-        encodings_obj = query_spec["encoding"] if "encoding" in query_spec else []
-
-        query = Query.load_from_obj(encodings_obj, mark)
-
-        return Task(data, query)
-
-    @staticmethod
-    def load_from_vegalite_obj(vl_spec, data_dir, place_holder=HOLE):
-        # TODO: Refactor so that we don't need the data dir anymore. We shoud have a schema type.
-        # TODO: Reafactor with function load_from_obj
-
-        data = Data.load_from_obj(vl_spec["data"], path_prefix=data_dir)
-
-        mark = handle_special_value(vl_spec["mark"]) if "mark" in vl_spec else place_holder
-
-        encodings_obj = []
-        for channel, enc in vl_spec["encoding"].items():
-            enc['channel'] = channel
-            encodings_obj.append(enc)
+        mark = handle_special_value(query_spec.get("mark", place_holder))
+        encodings_obj = query_spec.get("encoding", [])
 
         query = Query.load_from_obj(encodings_obj, mark)
 
@@ -326,9 +288,9 @@ class Query():
         self.encodings = encodings
 
     @staticmethod
-    def load_from_obj(vl_obj, mark):
+    def load_from_obj(enc_object, mark):
         encodings = []
-        for encoding_obj in vl_obj:
+        for encoding_obj in enc_object:
             encodings.append(Encoding.load_from_obj(encoding_obj))
         return Query(mark, encodings)
 

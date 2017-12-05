@@ -4,6 +4,8 @@ import sys
 import argparse
 import logging
 import io
+import json
+import os
 
 from draco.run import run
 from draco.spec import Task
@@ -34,7 +36,8 @@ def main():  # pragma: no cover
     logger.info(f"Processing query: {args.query.name} ...")
 
     # load a task from a spec provided by the user
-    input_task = Task.load_from_json(args.query)
+    query_spec = json.load(args.query)
+    input_task = Task.load_from_obj(query_spec, os.path.dirname(args.query.name))
 
     task = run(input_task)
 

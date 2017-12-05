@@ -6,18 +6,24 @@ import json
 import os
 
 from draco.run import run, DRACO_LP
-from draco.spec import Task
+from draco.spec import Task, Query
 
 def list_weights():
     """ Get the current weights as a dictionary. """
     with open(os.path.join(os.path.dirname(__file__), "../data/weights.json")) as f:
         return json.load(f)
 
-def count_violations(full_spec):
+def count_violations(full_spec, data):
     """ Get a dictionary of violations for a full spec. """
-    # TODO: Think about refactoring. Should this method take a task?
-    # FIXME: The directory is wrong below. Need to refactor Task.
-    input_task = Task.load_from_vegalite_obj(full_spec, os.path.join(os.path.dirname(__file__), "../examples/"))
+
+    encodings_obj = []
+    for channel, enc in full_spec["encoding"].items():
+        enc['channel'] = channel
+        encodings_obj.append(enc)
+
+    query = Query.load_from_obj(encodings_obj, full_spec["mark"])
+    input_task = Task(query, data)
+
     # TODO: we don't relaly need the output but the task parsing crashes if the output is bad
     task = run(input_task, files=DRACO_LP + ["count.lp"])
     return task.violations

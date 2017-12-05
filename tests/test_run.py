@@ -17,5 +17,7 @@ class TestFull():
 
             for fname in json_files:
                 with open(fname, "r") as f:
-                    task = run(Task.load_from_json(f))
+                    query_spec = json.load(f)
+                    input_task = Task.load_from_obj(query_spec, os.path.dirname(f.name))
+                    task = run(input_task)
                     validate(task.to_vegalite_obj(), schema)
