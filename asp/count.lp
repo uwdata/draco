@@ -4,20 +4,18 @@ import sys
 import json
 from collections import defaultdict
 
-counts = defaultdict(int)
-
 def main(prg):
     prg.ground([('base', [])])
 
-    model = None
-    for m in prg.solve(yield_=True):
-        model = m
+    counts = None
 
-    if model:
+    for model in prg.solve(yield_=True):
+        counts = defaultdict(int)
+
         for atom in model.symbols(atoms=True):
             if atom.name == 'feature_term':
                 name = atom.arguments[0].string
                 counts[name] += 1
-        print >> sys.stderr, json.dumps(counts)
+    print >> sys.stderr, json.dumps(counts)
 
 #end.
