@@ -70,7 +70,7 @@ feature_term("x_y_raw"):- channel(EX,x), dimension(EX), channel(EY,y), dimension
 feature_term("log",E) :- log(E).
 
 % prefer to include zero
-feature_term("zero",E) :- encoding(E), not zero(E).
+feature_term("zero",E) :- encoding(E), zero(E).
 
 
 % ====== Rankings ======
