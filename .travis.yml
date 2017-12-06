@@ -1,11 +1,19 @@
 language: python
 python:
   - "3.6"
-cache: pip
+cache:
+  - pip
+  - directories:
+    - clingo-5.2.2
 install:
-  - wget https://github.com/potassco/clingo/releases/download/v5.2.2/clingo-5.2.2-linux-x86_64.tar.gz -O /tmp/clingo-5.2.2-linux-x86_64.tar.gz
-  - tar -xzf /tmp/clingo-5.2.2-linux-x86_64.tar.gz
-  - export PATH=$PATH:$PWD/clingo-5.2.2-linux-x86_64
+  - wget https://github.com/potassco/clingo/archive/v5.2.2.tar.gz -O /tmp/clingo.tar.gz
+  - tar -xzf /tmp/clingo.tar.gz
+  - export CXX="g++-4.9" CC="gcc-4.9"
+  - g++ --version
+  - cmake -Hclingo-5.2.2 -Bclingo-5.2.2 -DCMAKE_BUILD_TYPE=Release
+  - cmake --build $PWD/clingo-5.2.2
+  - export PATH=$PATH:$PWD/clingo-5.2.2/bin
+
   - npm install
   - pip install -r requirements.txt
   - pip install coveralls
@@ -15,3 +23,10 @@ script:
   - pytest --cov=draco
 after_success:
   - coveralls
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
