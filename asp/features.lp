@@ -13,10 +13,10 @@ feature_term("aggregate",E) :- aggregate(E,_).
 feature_term("encoding",E) :- encoding(E).
 
 % prefer not to use the same field multiple times
-feature_term("same_field_2",E) :- encoding(E), { field(E,_) } = 2.
-feature_term("same_field_3",E) :- encoding(E), { field(E,_) } = 3.
-feature_term("same_field_4",E) :- encoding(E), { field(E,_) } = 4.
-feature_term("same_field_gte5",E) :- encoding(E), { field(E,_) } >= 5.
+feature_term("same_field_2",F) :- field(F), { field(_,F) } = 2.
+feature_term("same_field_3",F) :- field(F), { field(_,F) } = 3.
+feature_term("same_field_4",F) :- field(F), { field(_,F) } = 4.
+feature_term("same_field_gte5",F) :- field(F), { field(_,F) } >= 5.
 
 % categorical color channel should not have too high cardinality
 feature_term("categorical_cardinality",E) :- channel(E,color), type(E,nominal), cardinality(E,C), C > 20.
