@@ -16,6 +16,6 @@ def main(prg):
             if atom.name == 'feature_term':
                 name = atom.arguments[0].string
                 counts[name] += 1
-    print >> sys.stderr, json.dumps(counts)
+    print(json.dumps(counts), file=sys.stderr)
 
 #end.
