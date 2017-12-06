@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const cql = require("compassql");
 const dl = require("datalib");
 const fs = require("fs")
@@ -70,6 +72,8 @@ const specs = [{
 let i = 0;
 for (const spec of specs) {
   i++;
+
+  console.info(`Processing "cql_${i}.json"`);
 
   // write the query spec
   fs.writeFileSync(`data/input/cql_${i}.json`, JSON.stringify(spec, null, 2), 'utf8');

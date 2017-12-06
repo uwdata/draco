@@ -73,4 +73,4 @@ The output would be a .vl.json file (for Vega-Lite spec) and a .png file to prev
 
 ### Use CompassQL to generate examples
 
-Run `node data/generate.js`. Then check out the examples named `qcl_*` in `data/input` and `data/output`.
+Run `data/generate.js`. Then check out the examples named `qcl_*` in `data/input` and `data/output`.
