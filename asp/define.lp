@@ -8,7 +8,7 @@ type(quantitative;ordinal;nominal;temporal).
 primitive_type(string;number;integer;boolean;date).
 % supported aggregation functions
 aggregate(count;mean;median;min;max).
-% possible numebrs of bins
+% possible numbers of bins
 bin(3;5;10;100;200).
 
 % encoding channels
