@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import subprocess
+from typing import Dict, List
 
 import clyngor
 
@@ -18,7 +19,7 @@ DRACO_LP = ["define.lp", "generate.lp", "test.lp", "features.lp", "weights.lp", 
 DRACO_LP_DIR = "asp"
 
 
-def run(task, constants={}, files=DRACO_LP):
+def run(task: Task, constants: Dict[str, str] = {}, files: List[str] = DRACO_LP) -> Task:
     """ Run clingo to compute a completion of a partial spec or violations.
     """
 
@@ -42,7 +43,7 @@ def run(task, constants={}, files=DRACO_LP):
         logger.error("stderr: %s", stderr)
         raise
 
-    violations = {}
+    violations: Dict[str, str] = {}
     if stderr:
         try:
             violations = json.loads(stderr)
@@ -62,3 +63,6 @@ def run(task, constants={}, files=DRACO_LP):
 
         query = Query.parse_from_answer(clyngor.Answers(answers).sorted)
         return Task(task.data, query, violations)
+    else:
+        logger.error("Unsupported result: %s", result)
+        return None

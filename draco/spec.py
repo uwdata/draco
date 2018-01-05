@@ -13,7 +13,7 @@ NULL = "NULL_"    # I don't want this property
 HOLE = "_??_"      # I want a value for this property
 # Use `None` for "I didn't specify this and don't care"
 
-def handle_special_value(v):
+def handle_special_value(v: str) -> str:
     # return a hole if the given value is not "??", else return the value.
     # this function is used in the parsing phase to convert "??" "null"
     #   into special symbol used by spec objects.
@@ -21,13 +21,13 @@ def handle_special_value(v):
 
 class Task():
 
-    def __init__(self, data, query, violations=None):
+    def __init__(self, data, query, violations=None) -> None:
         self.data = data
         self.query = query
         self.violations = violations
 
     @staticmethod
-    def load_from_obj(query_spec, data_dir, place_holder=HOLE):
+    def load_from_obj(query_spec, data_dir: str, place_holder=HOLE):
         data = Data.load_from_obj(query_spec["data"], path_prefix=data_dir)
 
         mark = handle_special_value(query_spec.get("mark", place_holder))
@@ -60,7 +60,7 @@ class Task():
 class Data():
 
     @staticmethod
-    def load_from_obj(obj, path_prefix=None):
+    def load_from_obj(obj, path_prefix: str=None):
         """ Build a data object from a dict-represented
             vegalite object represting data"""
         if "url" in obj:
@@ -74,7 +74,7 @@ class Data():
             return Data.from_agate_table(agate.Table.from_object(obj["values"]))
 
     @staticmethod
-    def load_from_csv(filename):
+    def load_from_csv(filename: str):
         """ load data form a csv file """
         table = agate.Table.from_csv(filename)
         dt = Data.from_agate_table(table)
@@ -115,7 +115,7 @@ class Data():
             data.content.append(row_obj)
         return data
 
-    def __init__(self, fields=None, content=None, url=None):
+    def __init__(self, fields=None, content=None, url: str=None) -> None:
         self.fields = fields
         self.content = content
         self.url = url
@@ -132,7 +132,7 @@ class Data():
 
 class Field():
 
-    def __init__(self, name, ty, cardinality):
+    def __init__(self, name, ty, cardinality: int) -> None:
         # name of the field
         self.name = name
         # column data type, should be a string represented type,
@@ -196,7 +196,7 @@ class Encoding():
         return Encoding(*content, encoding_id)
 
 
-    def __init__(self, channel, field, ty, aggregate, binning, log_scale, zero, idx=None):
+    def __init__(self, channel, field: str, ty: str, aggregate: str, binning, log_scale: bool, zero: bool, idx=None) -> None:
         """ Create a channel:
             Args:
                 field: a string refering to a column in the table
@@ -234,7 +234,7 @@ class Encoding():
         return encoding
 
 
-    def to_asp(self):
+    def to_asp(self) -> str:
 
         # if a property is a hole, generate a placeholder
         _wrap_props = lambda v: v if v is not HOLE else "_"
@@ -282,7 +282,7 @@ class Encoding():
 
 class Query():
 
-    def __init__(self, mark, encodings=[]):
+    def __init__(self, mark, encodings=[]) -> None:
         # channels include "x", "y", "color", "size", "shape", "text", "detail"
         self.mark = mark
         self.encodings = encodings
@@ -322,7 +322,7 @@ class Query():
             query["encoding"][e.channel] = e.to_vegalite_obj()
         return query
 
-    def to_asp(self):
+    def to_asp(self) -> str:
         # the asp constraint comes from both mark and encodings
 
         prog = ""
