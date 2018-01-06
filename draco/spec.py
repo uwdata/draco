@@ -5,9 +5,11 @@ Tasks, Encoding, and Query helper classes for draco.
 import json
 import os
 from collections import defaultdict
+from typing import Optional, List, Union, Dict
 
 import agate
-
+from agate.table import Table
+from clyngor.answers import Answers
 
 NULL = "NULL_"    # I don't want this property
 HOLE = "_??_"      # I want a value for this property
@@ -19,48 +21,11 @@ def handle_special_value(v: str) -> str:
     #   into special symbol used by spec objects.
     return HOLE if v == "??" else (NULL if v == "null" else v)
 
-class Task():
-
-    def __init__(self, data, query, violations=None) -> None:
-        self.data = data
-        self.query = query
-        self.violations = violations
-
-    @staticmethod
-    def load_from_obj(query_spec, data_dir: str, place_holder=HOLE):
-        data = Data.load_from_obj(query_spec["data"], path_prefix=data_dir)
-
-        mark = handle_special_value(query_spec.get("mark", place_holder))
-        encodings_obj = query_spec.get("encoding", [])
-
-        query = Query.load_from_obj(encodings_obj, mark)
-
-        return Task(data, query)
-
-    def to_vegalite_obj(self):
-        """ generate a vegalite spec from the object """
-        result = self.query.to_vegalite_obj()
-        result["data"] = self.data.to_vegalite_obj()
-        result["$schema"] = "https://vega.github.io/schema/vega-lite/v2.0.json"
-        return result
-
-    def to_vegalite_json(self):
-        """ generate a vegalite json file form the object """
-        return json.dumps(self.to_vegalite_obj(), sort_keys=True, indent=4)
-
-    def to_asp(self):
-        """ generate asp constraints from the object """
-        asp_str = "% ====== Data definitions ======\n"
-        asp_str += self.data.to_asp() + "\n\n"
-        asp_str += "% ====== Query constraints ======\n"
-        asp_str += self.query.to_asp()
-        return asp_str
-
 
 class Data():
 
     @staticmethod
-    def load_from_obj(obj, path_prefix: str=None):
+    def load_from_obj(obj: Dict[str, str], path_prefix: Optional[str] = None):
         """ Build a data object from a dict-represented
             vegalite object represting data"""
         if "url" in obj:
@@ -82,7 +47,7 @@ class Data():
         return dt
 
     @staticmethod
-    def from_agate_table(agate_table):
+    def from_agate_table(agate_table: Table):
         """ Create a Data object from an agate table,
             data content and datatypes are based on how agate interprets them
         """
@@ -115,24 +80,24 @@ class Data():
             data.content.append(row_obj)
         return data
 
-    def __init__(self, fields=None, content=None, url: str=None) -> None:
+    def __init__(self, fields: None = None, content: None = None, url: Optional[str] = None) -> None:
         self.fields = fields
         self.content = content
         self.url = url
 
-    def to_vegalite_obj(self):
+    def to_vegalite_obj(self) -> Dict[str, str]:
         if self.url :
             return {"url": self.url}
         else:
             return {"values": self.content}
 
-    def to_asp(self):
+    def to_asp(self) -> str:
         return "\n".join([x.to_asp() for x in self.fields])
 
 
 class Field():
 
-    def __init__(self, name, ty, cardinality: int) -> None:
+    def __init__(self, name: str, ty: str, cardinality: int) -> None:
         # name of the field
         self.name = name
         # column data type, should be a string represented type,
@@ -141,7 +106,7 @@ class Field():
         # cardinality
         self.cardinality = cardinality
 
-    def to_asp(self):
+    def to_asp(self) -> str:
         asp_str = f"fieldtype({self.name},{self.ty}).\n"
         asp_str += f"cardinality({self.name},{self.cardinality}).\n"
         return asp_str
@@ -152,13 +117,13 @@ class Encoding():
     encoding_cnt = 0
 
     @staticmethod
-    def gen_encoding_id():
+    def gen_encoding_id() -> str:
         enc = f"e{Encoding.encoding_cnt}"
         Encoding.encoding_cnt += 1
         return enc
 
     @staticmethod
-    def load_from_obj(obj):
+    def load_from_obj(obj: Dict[str, str]):
         """ load encoding from a dict object representing the spec content
             Args:
                 obj: a dict object representing channel encoding
@@ -181,7 +146,7 @@ class Encoding():
                         _get_field("zero"))
 
     @staticmethod
-    def parse_from_answer(encoding_id, encoding_props):
+    def parse_from_answer(encoding_id: str, encoding_props):
 
         _get_field = lambda props, target: props[target] if target in props else None
 
@@ -196,7 +161,7 @@ class Encoding():
         return Encoding(*content, encoding_id)
 
 
-    def __init__(self, channel, field: str, ty: str, aggregate: str, binning, log_scale: bool, zero: bool, idx=None) -> None:
+    def __init__(self, channel: str, field: str, ty: str, aggregate: str, binning, log_scale: bool, zero: bool, idx: Optional[str] = None) -> None:
         """ Create a channel:
             Args:
                 field: a string refering to a column in the table
@@ -282,20 +247,20 @@ class Encoding():
 
 class Query():
 
-    def __init__(self, mark, encodings=[]) -> None:
+    def __init__(self, mark: str, encodings: List[Encoding] = []) -> None:
         # channels include "x", "y", "color", "size", "shape", "text", "detail"
         self.mark = mark
         self.encodings = encodings
 
     @staticmethod
-    def load_from_obj(enc_object, mark):
+    def load_from_obj(enc_object, mark: str):
         encodings = []
         for encoding_obj in enc_object:
             encodings.append(Encoding.load_from_obj(encoding_obj))
         return Query(mark, encodings)
 
     @staticmethod
-    def parse_from_answer(clyngor_answer):
+    def parse_from_answer(clyngor_answer: Answers):
         encodings = []
         mark = None
 
@@ -332,3 +297,41 @@ class Query():
 
         prog += "\n".join(map(lambda e: e.to_asp(), self.encodings))
         return prog
+
+
+class Task():
+
+    def __init__(self, data: Data, query: Query, violations: Dict[str, int] = None) -> None:
+        self.data = data
+        self.query = query
+        self.violations = violations
+
+    @staticmethod
+    def load_from_obj(query_spec, data_dir: str, place_holder: Optional[str] = HOLE):
+        data = Data.load_from_obj(query_spec["data"], path_prefix=data_dir)
+
+        mark = handle_special_value(query_spec.get("mark", place_holder))
+        encodings_obj = query_spec.get("encoding", [])
+
+        query = Query.load_from_obj(encodings_obj, mark)
+
+        return Task(data, query)
+
+    def to_vegalite_obj(self):
+        """ generate a vegalite spec from the object """
+        result = self.query.to_vegalite_obj()
+        result["data"] = self.data.to_vegalite_obj()
+        result["$schema"] = "https://vega.github.io/schema/vega-lite/v2.0.json"
+        return result
+
+    def to_vegalite_json(self) -> str:
+        """ generate a vegalite json file form the object """
+        return json.dumps(self.to_vegalite_obj(), sort_keys=True, indent=4)
+
+    def to_asp(self) -> str:
+        """ generate asp constraints from the object """
+        asp_str = "% ====== Data definitions ======\n"
+        asp_str += self.data.to_asp() + "\n\n"
+        asp_str += "% ====== Query constraints ======\n"
+        asp_str += self.query.to_asp()
+        return asp_str

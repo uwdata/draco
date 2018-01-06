@@ -43,7 +43,7 @@ def run(task: Task, constants: Dict[str, str] = {}, files: List[str] = DRACO_LP)
         logger.error("stderr: %s", stderr)
         raise
 
-    violations: Dict[str, str] = {}
+    violations: Dict[str, int] = {}
     if stderr:
         try:
             violations = json.loads(stderr)
