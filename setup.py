@@ -39,6 +39,7 @@ class RunTests(Command):
 setup(name="Draco",
       version=__version__,
       description="Visualization recommendation using constraints",
+      long_description=long_description,
       author="Dominik Moritz, Chenglong Wang",
       author_email="domoritz@cs.washington.edu, clwang@cs.washington.edu",
       license="BSD-3",
