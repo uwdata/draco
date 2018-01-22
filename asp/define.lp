@@ -24,6 +24,7 @@ field(F) :- fieldtype(F,_).
 
 dimension(E) :- type(E,(nominal;ordinal)), not aggregate(E,_).
 dimension(E) :- bin(E,_).
+measure(E) :- encoding(E), not dimension(E).
 
 channel_dim(C) :- dimension(E), channel(E,C).
 channel_meas(C) :- not dimension(E), channel(E,C).
@@ -33,3 +34,4 @@ orientation(horizontal) :- mark(bar;tick), channel_dim(x).
 orientation(vertical) :- mark(bar;tick), channel_dim(y).
 
 cardinality(E,C) :- field(E,F), cardinality(F,C).
+entropy(E,EN) :- field(E,F), entropy(F,EN).

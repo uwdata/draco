@@ -5,11 +5,13 @@ Definitions:
     define: {filename: asp/define.lp}
     generate: {filename: asp/generate.lp}
     test: {filename: asp/test.lp}
+    features: {filename: asp/features.lp}
     optimize: {filename: asp/optimize.lp}
 
     # program to test constraints
-    no_opt: {group: [data, define, generate, test]}
-    draco: {group: [data, define, generate, test, optimize]}
+    no_opt: {group: [data, define, generate, test, features]}
+    no_gen: {group: [data, define, test, features]}
+    draco: {group: [data, define, generate, test, features, optimize]}
 
 Test a implies b:
     Program: |
@@ -45,6 +47,10 @@ Test valid values:
     Test bin:
         Program: |
             :- not bin(_,10).
+
+    Test zero:
+        Program: |
+            :- not zero(_).
 
     Test fieldtype:
         Program: |
@@ -93,7 +99,7 @@ Test constraints:
             :- not aggregate(e,_).
         Expect: SAT
 
-    Test can use aggregation and binning:
+    Test cannot use aggregation and binning:
         Program: |
             encoding(e).
             :- not aggregate(e,_).
@@ -204,4 +210,23 @@ Test constraints:
         Program: |
             encoding(e).
             :- not aggregate(e,_).
+        Expect: SAT
+
+Test soft constraints:
+    Modules: no_gen
+
+    Test high entropy data:
+        Program: |
+            fieldtype(n3,number).
+            cardinality(n3,200).
+            entropy(n3,1).
+
+            mark(point).
+
+            encoding(e).
+            field(e,n3).
+            channel(e,x).
+            type(e,quantitative).
+
+            :- not feature_term("position_entropy", e).
         Expect: SAT
