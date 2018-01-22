@@ -19,9 +19,13 @@ DRACO_LP = ["define.lp", "generate.lp", "test.lp", "features.lp", "weights.lp", 
 DRACO_LP_DIR = "asp"
 
 
-def run(task: Task, constants: Dict[str, str] = {}, files: List[str] = DRACO_LP) -> Task:
+def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None) -> Task:
     """ Run clingo to compute a completion of a partial spec or violations.
     """
+
+    # default args
+    files = files or DRACO_LP
+    constants = constants or {}
 
     run_command = clyngor.command(
         files=[os.path.join(DRACO_LP_DIR, f) for f in files],

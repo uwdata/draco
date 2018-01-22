@@ -5,7 +5,7 @@ Tasks, Encoding, and Query helper classes for draco.
 import json
 import os
 from collections import defaultdict
-from typing import Optional, List, Union, Dict
+from typing import Optional, List, Dict, Any
 
 import agate
 from agate.table import Table
@@ -53,6 +53,7 @@ class Data():
         """
         data = Data()
         data.fields = []
+
         for i in range(len(agate_table.column_names)):
             name = agate_table.column_names[i]
             agate_type = agate_table.column_types[i]
@@ -75,17 +76,17 @@ class Data():
         for row in agate_table.rows:
             row_obj = {}
             # TODO: use enumerate instead of range and len
-            for j in range(len(row)):
-                row_obj[data.fields[j].name] = str(row[j])
+            for j, c in enumerate(row):
+                row_obj[data.fields[j].name] = str(c)
             data.content.append(row_obj)
         return data
 
-    def __init__(self, fields: None = None, content: None = None, url: Optional[str] = None) -> None:
+    def __init__(self, fields: Optional[List[Any]] = None, content: Optional[List[Any]] = None, url: Optional[str] = None) -> None:
         self.fields = fields
         self.content = content
         self.url = url
 
-    def to_vegalite_obj(self) -> Dict[str, str]:
+    def to_vegalite_obj(self) -> Dict[str, Any]:
         if self.url :
             return {"url": self.url}
         else:
