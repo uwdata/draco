@@ -136,18 +136,21 @@ class Encoding():
                 # for fields specified by the user, we want to add to the encoding
                 return handle_special_value(obj[f])
             else:
-                # if the user didn't a field for the encoding,
-                # we use None (See comment in the front of the file)
+                # if the user didn't set a field for the encoding,
+                # we use None (see comment in the beginning of this file)
                 return None
 
-        return Encoding(_get_field("channel"), _get_field("field"),
-                        _get_field("type"), _get_field("aggregate"),
-                        _get_field("bin"), _get_field("log_scale"),
-                        _get_field("zero"))
+        return Encoding(
+            _get_field("channel"),
+            _get_field("field"),
+            _get_field("type"),
+            _get_field("aggregate"),
+            _get_field("bin"),
+            _get_field("log_scale"),
+            _get_field("zero"))
 
     @staticmethod
     def parse_from_answer(encoding_id: str, encoding_props):
-
         _get_field = lambda props, target: props[target] if target in props else None
 
         content = [_get_field(encoding_props, "channel"),
@@ -180,7 +183,6 @@ class Encoding():
 
 
     def to_vegalite_obj(self):
-
         encoding = {}
 
         if self.field:
@@ -200,7 +202,6 @@ class Encoding():
 
 
     def to_asp(self) -> str:
-
         # if a property is a hole, generate a placeholder
         _wrap_props = lambda v: v if v is not HOLE else "_"
 
@@ -247,10 +248,10 @@ class Encoding():
 
 class Query():
 
-    def __init__(self, mark: str, encodings: List[Encoding] = []) -> None:
+    def __init__(self, mark: str, encodings: List[Encoding] = None) -> None:
         # channels include "x", "y", "color", "size", "shape", "text", "detail"
         self.mark = mark
-        self.encodings = encodings
+        self.encodings = encodings or []
 
     @staticmethod
     def load_from_obj(enc_object, mark: str):
