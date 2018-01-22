@@ -73,7 +73,7 @@ feature_term("log",E) :- log(E).
 feature_term("zero",E) :- zero(E).
 
 % prefer not to use x and y for measures with high cardinality and low entropy without aggregation because the points will overlap
-feature_term("position_entropy", E) :- measure(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 1, not aggregate(E,_).
+feature_term("position_entropy", E) :- channel(E,(x;y)), measure(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 1, not aggregate(E,_).
 
 % ====== Rankings ======
 
