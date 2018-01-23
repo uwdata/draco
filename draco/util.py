@@ -16,12 +16,7 @@ def list_weights():
 def count_violations(full_spec, data):
     """ Get a dictionary of violations for a full spec. """
 
-    encodings_obj = []
-    for channel, enc in full_spec["encoding"].items():
-        enc['channel'] = channel
-        encodings_obj.append(enc)
-
-    query = Query.load_from_obj(encodings_obj, full_spec["mark"])
+    query = Query.from_obj(full_spec)
     input_task = Task(query, data)
 
     # TODO: we don't relaly need the output but the task parsing crashes if the output is bad

@@ -37,7 +37,7 @@ def main():  # pragma: no cover
 
     # load a task from a spec provided by the user
     query_spec = json.load(args.query)
-    input_task = Task.load_from_obj(query_spec, os.path.dirname(args.query.name))
+    input_task = Task.from_obj(query_spec, os.path.dirname(args.query.name))
 
     task = run(input_task)
 

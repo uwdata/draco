@@ -25,7 +25,7 @@ def handle_special_value(v: str) -> str:
 class Data():
 
     @staticmethod
-    def load_from_obj(obj: Dict[str, str], path_prefix: Optional[str] = None):
+    def from_obj(obj: Dict[str, str], path_prefix: Optional[str] = None):
         """ Build a data object from a dict-represented
             vegalite object represting data"""
         if "url" in obj:
@@ -33,13 +33,13 @@ class Data():
             file_path = obj["url"]
             if path_prefix is not None:
                 file_path = os.path.join(path_prefix, file_path)
-            return Data.load_from_csv(file_path)
+            return Data.from_csv(file_path)
         else:
             # a dict represented data already included in the file
             return Data.from_agate_table(agate.Table.from_object(obj["values"]))
 
     @staticmethod
-    def load_from_csv(filename: str):
+    def from_csv(filename: str):
         """ load data form a csv file """
         table = agate.Table.from_csv(filename)
         dt = Data.from_agate_table(table)
@@ -124,7 +124,7 @@ class Encoding():
         return enc
 
     @staticmethod
-    def load_from_obj(obj: Dict[str, str]):
+    def from_obj(obj: Dict[str, str]):
         """ load encoding from a dict object representing the spec content
             Args:
                 obj: a dict object representing channel encoding
@@ -255,10 +255,9 @@ class Query():
         self.encodings = encodings or []
 
     @staticmethod
-    def load_from_obj(enc_object, mark: str):
-        encodings = []
-        for encoding_obj in enc_object:
-            encodings.append(Encoding.load_from_obj(encoding_obj))
+    def from_obj(query_spec, place_holder: Optional[str] = HOLE):
+        mark = handle_special_value(query_spec.get("mark", place_holder))
+        encodings = map(Encoding.from_obj, query_spec.get("encoding", []))
         return Query(mark, encodings)
 
     @staticmethod
@@ -309,13 +308,10 @@ class Task():
         self.violations = violations
 
     @staticmethod
-    def load_from_obj(query_spec, data_dir: str, place_holder: Optional[str] = HOLE):
-        data = Data.load_from_obj(query_spec["data"], path_prefix=data_dir)
+    def from_obj(query_spec, data_dir: Optional[str], place_holder: Optional[str] = HOLE):
+        data = Data.from_obj(query_spec["data"], path_prefix=data_dir)
 
-        mark = handle_special_value(query_spec.get("mark", place_holder))
-        encodings_obj = query_spec.get("encoding", [])
-
-        query = Query.load_from_obj(encodings_obj, mark)
+        query = Query.from_obj(query_spec, place_holder)
 
         return Task(data, query)
 
