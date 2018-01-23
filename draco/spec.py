@@ -5,7 +5,7 @@ Tasks, Encoding, and Query helper classes for draco.
 import json
 import os
 from collections import defaultdict
-from typing import Optional, List, Dict, Any
+from typing import Optional, Iterable, Dict, Any
 
 import agate
 from agate.table import Table
@@ -81,7 +81,7 @@ class Data():
             data.content.append(row_obj)
         return data
 
-    def __init__(self, fields: Optional[List[Any]] = None, content: Optional[List[Any]] = None, url: Optional[str] = None) -> None:
+    def __init__(self, fields: Optional[Iterable[Any]] = None, content: Optional[Iterable[Any]] = None, url: Optional[str] = None) -> None:
         self.fields = fields
         self.content = content
         self.url = url
@@ -115,6 +115,7 @@ class Field():
 
 class Encoding():
 
+    # keep track of what encodings we have already generated
     encoding_cnt = 0
 
     @staticmethod
@@ -249,13 +250,13 @@ class Encoding():
 
 class Query():
 
-    def __init__(self, mark: str, encodings: List[Encoding] = None) -> None:
+    def __init__(self, mark: str, encodings: Iterable[Encoding] = None) -> None:
         # channels include "x", "y", "color", "size", "shape", "text", "detail"
         self.mark = mark
         self.encodings = encodings or []
 
     @staticmethod
-    def from_obj(query_spec, place_holder: Optional[str] = HOLE):
+    def from_obj(query_spec: Dict, place_holder: Optional[str] = HOLE):
         mark = handle_special_value(query_spec.get("mark", place_holder))
         encodings = map(Encoding.from_obj, query_spec.get("encoding", []))
         return Query(mark, encodings)
@@ -265,7 +266,7 @@ class Query():
         encodings = []
         mark = None
 
-        raw_encoding_props = defaultdict(dict)
+        raw_encoding_props: Dict = defaultdict(dict)
 
         for (head, body), in clyngor_answer:
             if head == "mark":
