@@ -75,7 +75,6 @@ class Data():
         data.content = []
         for row in agate_table.rows:
             row_obj = {}
-            # TODO: use enumerate instead of range and len
             for j, c in enumerate(row):
                 row_obj[data.fields[j].name] = str(c)
             data.content.append(row_obj)
