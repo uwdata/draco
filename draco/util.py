@@ -16,7 +16,7 @@ def list_weights():
 def count_violations(full_spec, data):
     ''' Get a dictionary of violations for a full spec. '''
 
-    query = Query.from_obj(full_spec)
+    query = Query.from_vegalite(full_spec)
     input_task = Task(query, data)
 
     task = run(input_task, files=DRACO_LP + ['count.lp'])

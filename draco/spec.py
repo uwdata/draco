@@ -105,7 +105,7 @@ class Data():
         self.content = content
         self.url = url
 
-    def to_vegalite_obj(self) -> Dict[str, Any]:
+    def to_vegalite(self) -> Dict[str, Any]:
         if self.url :
             return {'url': self.url}
         else:
@@ -186,7 +186,7 @@ class Encoding():
         self.id = idx if idx is not None else Encoding.gen_encoding_id()
 
 
-    def to_vegalite_obj(self):
+    def to_vegalite(self):
         encoding = {}
 
         if self.field:
@@ -259,13 +259,25 @@ class Query():
 
     @staticmethod
     def from_obj(query_spec: Dict):
+        ''' Parse from a query object that uses a list for encoding. '''
         mark = handle_special_value(query_spec.get('mark', '_??_'))
         encodings = map(Encoding.from_obj, query_spec.get('encoding', []))
         return Query(mark, encodings)
 
     @staticmethod
+    def from_vegalite(full_spec: Dict):
+        ''' Parse from Vega-Lite spec that uses map for encoding. '''
+        encodings: List[Encoding] = []
+
+        for channel, enc in full_spec.get('encoding', {}).items():
+            enc['channel'] = channel
+            encodings.append(Encoding.from_obj(enc))
+
+        return Query(full_spec['mark'], encodings)
+
+    @staticmethod
     def parse_from_answer(clyngor_answer: Answers):
-        encodings = []
+        encodings: List[Encoding] = []
         mark = None
 
         raw_encoding_props: Dict = defaultdict(dict)
@@ -283,12 +295,12 @@ class Query():
 
         return Query(mark, encodings)
 
-    def to_vegalite_obj(self):
+    def to_vegalite(self):
         query = {}
         query['mark'] = self.mark
         query['encoding'] = {}
         for e in self.encodings:
-            query['encoding'][e.channel] = e.to_vegalite_obj()
+            query['encoding'][e.channel] = e.to_vegalite()
         return query
 
     def to_asp(self) -> str:
@@ -318,16 +330,16 @@ class Task():
 
         return Task(data, query)
 
-    def to_vegalite_obj(self):
+    def to_vegalite(self):
         ''' generate a vegalite spec from the object '''
-        result = self.query.to_vegalite_obj()
-        result['data'] = self.data.to_vegalite_obj()
+        result = self.query.to_vegalite()
+        result['data'] = self.data.to_vegalite()
         result['$schema'] = 'https://vega.github.io/schema/vega-lite/v2.0.json'
         return result
 
     def to_vegalite_json(self) -> str:
         ''' generate a vegalite json file form the object '''
-        return json.dumps(self.to_vegalite_obj(), sort_keys=True, indent=4)
+        return json.dumps(self.to_vegalite(), sort_keys=True, indent=4)
 
     def to_asp(self) -> str:
         ''' generate asp constraints from the object '''
