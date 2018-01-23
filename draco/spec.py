@@ -1,46 +1,67 @@
-"""
+'''
 Tasks, Encoding, and Query helper classes for draco.
-"""
+'''
 
 import json
 import os
 from collections import defaultdict
-from typing import Optional, Iterable, Dict, Any
+from typing import Optional, Iterable, Dict, Any, List
 
 import agate
 from agate.table import Table
 from clyngor.answers import Answers
 
-NULL = "NULL_"    # I don't want this property
-HOLE = "_??_"      # I want a value for this property
-# Use `None` for "I didn't specify this and don't care"
+NULL = 'NULL_'     # I don't want this property
+HOLE = '_??_'      # I want a value for this property
+# Use `None` for 'I didn't specify this and don't care'
 
 def handle_special_value(v: str) -> str:
-    # return a hole if the given value is not "??", else return the value.
-    # this function is used in the parsing phase to convert "??" "null"
+    # return a hole if the given value is not '??', else return the value.
+    # this function is used in the parsing phase to convert '??' 'null'
     #   into special symbol used by spec objects.
-    return HOLE if v == "??" else (NULL if v == "null" else v)
+    return HOLE if v == '??' else (NULL if v == 'null' else v)
+
+
+class Field():
+
+    def __init__(self, name: str, ty: str, cardinality: int, entropy: Optional[float] = None) -> None:
+        self.name = name
+
+        # column data type, should be a string represented type,
+        # one of ('string', 'number', 'datetime', 'date', 'boolean')
+        self.ty = ty
+
+        self.cardinality = cardinality
+        self.entropy = entropy
+
+    def to_asp(self) -> str:
+        asp_str = f'fieldtype({self.name},{self.ty}).\n'
+        asp_str += f'cardinality({self.name},{self.cardinality}).\n'
+        if self.entropy is not None:
+            # asp only supports integers
+            asp_str += f'entropy({self.name},{int(self.entropy * 10)}).\n'
+        return asp_str
 
 
 class Data():
 
     @staticmethod
     def from_obj(obj: Dict[str, str], path_prefix: Optional[str] = None):
-        """ Build a data object from a dict-represented
-            vegalite object represting data"""
-        if "url" in obj:
+        ''' Build a data object from a dict-represented
+            vegalite object represting data'''
+        if 'url' in obj:
             # load data from url
-            file_path = obj["url"]
+            file_path = obj['url']
             if path_prefix is not None:
                 file_path = os.path.join(path_prefix, file_path)
             return Data.from_csv(file_path)
         else:
             # a dict represented data already included in the file
-            return Data.from_agate_table(agate.Table.from_object(obj["values"]))
+            return Data.from_agate_table(agate.Table.from_object(obj['values']))
 
     @staticmethod
     def from_csv(filename: str):
-        """ load data form a csv file """
+        ''' load data form a csv file '''
         table = agate.Table.from_csv(filename)
         dt = Data.from_agate_table(table)
         dt.url = filename
@@ -48,68 +69,50 @@ class Data():
 
     @staticmethod
     def from_agate_table(agate_table: Table):
-        """ Create a Data object from an agate table,
+        ''' Create a Data object from an agate table,
             data content and datatypes are based on how agate interprets them
-        """
-        data = Data()
-        data.fields = []
+        '''
+        fields: List[Field] = []
 
         for i in range(len(agate_table.column_names)):
             name = agate_table.column_names[i]
             agate_type = agate_table.column_types[i]
-            type_name = "string"
+            type_name = 'string'
             if isinstance(agate_type, agate.Text):
-                type_name = "string"
+                type_name = 'string'
             elif isinstance(agate_type, agate.Number):
-                type_name = "number"
+                type_name = 'number'
             elif isinstance(agate_type, agate.Boolean):
-                type_name = "boolean"
+                type_name = 'boolean'
             elif isinstance(agate_type, agate.Date):
-                type_name = "date"
+                type_name = 'date'
             elif isinstance(agate_type, agate.DateTime):
-                type_name = "date" # take care!
+                type_name = 'date' # take care!
             cardinality = len(set(agate_table.columns.get(name)))
-            data.fields.append(Field(name, type_name, cardinality))
+            fields.append(Field(name, type_name, cardinality))
 
         # store the table into a dict
-        data.content = []
+        content = []
         for row in agate_table.rows:
             row_obj = {}
             for j, c in enumerate(row):
-                row_obj[data.fields[j].name] = str(c)
-            data.content.append(row_obj)
-        return data
+                row_obj[fields[j].name] = str(c)
+            content.append(row_obj)
+        return Data(fields, content=content)
 
-    def __init__(self, fields: Optional[Iterable[Any]] = None, content: Optional[Iterable[Any]] = None, url: Optional[str] = None) -> None:
+    def __init__(self, fields: Iterable[Field], content: Optional[Iterable[Any]] = None, url: Optional[str] = None) -> None:
         self.fields = fields
         self.content = content
         self.url = url
 
     def to_vegalite_obj(self) -> Dict[str, Any]:
         if self.url :
-            return {"url": self.url}
+            return {'url': self.url}
         else:
-            return {"values": self.content}
+            return {'values': self.content}
 
     def to_asp(self) -> str:
-        return "\n".join([x.to_asp() for x in self.fields])
-
-
-class Field():
-
-    def __init__(self, name: str, ty: str, cardinality: int) -> None:
-        # name of the field
-        self.name = name
-        # column data type, should be a string represented type,
-        # one of ("string", "number", "datetime", "date", "boolean")
-        self.ty = ty
-        # cardinality
-        self.cardinality = cardinality
-
-    def to_asp(self) -> str:
-        asp_str = f"fieldtype({self.name},{self.ty}).\n"
-        asp_str += f"cardinality({self.name},{self.cardinality}).\n"
-        return asp_str
+        return '\n'.join([x.to_asp() for x in self.fields])
 
 
 class Encoding():
@@ -119,18 +122,18 @@ class Encoding():
 
     @staticmethod
     def gen_encoding_id() -> str:
-        enc = f"e{Encoding.encoding_cnt}"
+        enc = f'e{Encoding.encoding_cnt}'
         Encoding.encoding_cnt += 1
         return enc
 
     @staticmethod
     def from_obj(obj: Dict[str, str]):
-        """ load encoding from a dict object representing the spec content
+        ''' load encoding from a dict object representing the spec content
             Args:
                 obj: a dict object representing channel encoding
             Returns:
                 an encoding object
-        """
+        '''
         # get the field if it is in the object, otherwise generate a place holder symbol
         def _get_field(f):
             if f in obj:
@@ -142,37 +145,37 @@ class Encoding():
                 return None
 
         return Encoding(
-            _get_field("channel"),
-            _get_field("field"),
-            _get_field("type"),
-            _get_field("aggregate"),
-            _get_field("bin"),
-            _get_field("log_scale"),
-            _get_field("zero"))
+            _get_field('channel'),
+            _get_field('field'),
+            _get_field('type'),
+            _get_field('aggregate'),
+            _get_field('bin'),
+            _get_field('log_scale'),
+            _get_field('zero'))
 
     @staticmethod
     def parse_from_answer(encoding_id: str, encoding_props):
         _get_field = lambda props, target: props[target] if target in props else None
 
-        content = [_get_field(encoding_props, "channel"),
-                   _get_field(encoding_props, "field"),
-                   _get_field(encoding_props, "type"),
-                   _get_field(encoding_props, "aggregate"),
-                   _get_field(encoding_props, "bin"),
-                   _get_field(encoding_props, "log_scale"),
-                   _get_field(encoding_props, "zero")]
+        content = [_get_field(encoding_props, 'channel'),
+                   _get_field(encoding_props, 'field'),
+                   _get_field(encoding_props, 'type'),
+                   _get_field(encoding_props, 'aggregate'),
+                   _get_field(encoding_props, 'bin'),
+                   _get_field(encoding_props, 'log_scale'),
+                   _get_field(encoding_props, 'zero')]
 
         return Encoding(*content, encoding_id)
 
 
     def __init__(self, channel: str, field: str, ty: str, aggregate: str, binning, log_scale: bool, zero: bool, idx: Optional[str] = None) -> None:
-        """ Create a channel:
+        ''' Create a channel:
             Args:
                 field: a string refering to a column in the table
-                ty: type of the channel, one of "quantitative", "ordinal", "nominal"
+                ty: type of the channel, one of 'quantitative', 'ordinal', 'nominal'
                 aggregate: what aggregation function to use on the channel
                 binning: binning or not
-        """
+        '''
         self.channel = channel
         self.field = field
         self.ty = ty
@@ -187,77 +190,77 @@ class Encoding():
         encoding = {}
 
         if self.field:
-            encoding["field"] = self.field
+            encoding['field'] = self.field
         if self.ty:
-            encoding["type"] = self.ty
+            encoding['type'] = self.ty
         if self.aggregate:
-            encoding["aggregate"] = self.aggregate
+            encoding['aggregate'] = self.aggregate
         if self.binning:
-            encoding["bin"] = {"maxbins" : int(self.binning)}
+            encoding['bin'] = {'maxbins' : int(self.binning)}
         if self.log_scale:
-            encoding["scale"] = {"type" : "log"}
+            encoding['scale'] = {'type' : 'log'}
         if self.zero:
-            encoding["scale"] = {"zero" : True}
+            encoding['scale'] = {'zero' : True}
 
         return encoding
 
 
     def to_asp(self) -> str:
         # if a property is a hole, generate a placeholder
-        _wrap_props = lambda v: v if v is not HOLE else "_"
+        _wrap_props = lambda v: v if v is not HOLE else '_'
 
         props = {
-            "channel": self.channel,
-            "field": self.field,
+            'channel': self.channel,
+            'field': self.field,
             # its type may be a NULL requesting for synthesis
-            "type": self.ty,
-            "aggregate": self.aggregate,
-            "bin": self.binning,
-            "log": self.log_scale,
-            "zero": self.zero
+            'type': self.ty,
+            'aggregate': self.aggregate,
+            'bin': self.binning,
+            'log': self.log_scale,
+            'zero': self.zero
         }
 
         constraints = []
         for k, v in props.items():
 
             # binary operator this case
-            if k in ["log", "zero"]:
+            if k in ['log', 'zero']:
                 if v is NULL:
-                    s = f":- {k}({self.id})."
+                    s = f':- {k}({self.id}).'
                 elif v in [HOLE, None]:
-                    s = f"%0 {{ {k}({self.id}) }} 1."
+                    s = f'%0 {{ {k}({self.id}) }} 1.'
                 elif v is False:
-                    s = f":- {k}({self.id})."
+                    s = f':- {k}({self.id}).'
                 elif v is True:
-                    s = f"{k}({self.id})."
+                    s = f'{k}({self.id}).'
             else:
                 if v is NULL:
-                    s = f":- {k}({self.id},_)."
+                    s = f':- {k}({self.id},_).'
                 elif v is HOLE:
                     # this means the user want this fill to be filled something that is not null
-                    s = f":- not {k}({self.id},_)."
+                    s = f':- not {k}({self.id},_).'
                 elif v is None:
                     continue
                 else:
-                    s = f"{k}({self.id},{v})."
+                    s = f'{k}({self.id},{v}).'
 
             constraints.append(s)
 
-        return f"encoding({self.id}).\n" + "\n".join(constraints) + "\n"
-        #return f":- not 1 = { encoding(E) {", ".join(constraint) if len(constraint) else ""} }."
+        return f'encoding({self.id}).\n' + '\n'.join(constraints) + '\n'
+        #return f':- not 1 = { encoding(E) {', '.join(constraint) if len(constraint) else ''} }.'
 
 
 class Query():
 
     def __init__(self, mark: str, encodings: Iterable[Encoding] = None) -> None:
-        # channels include "x", "y", "color", "size", "shape", "text", "detail"
+        # channels include 'x', 'y', 'color', 'size', 'shape', 'text', 'detail'
         self.mark = mark
         self.encodings = encodings or []
 
     @staticmethod
-    def from_obj(query_spec: Dict, place_holder: Optional[str] = HOLE):
-        mark = handle_special_value(query_spec.get("mark", place_holder))
-        encodings = map(Encoding.from_obj, query_spec.get("encoding", []))
+    def from_obj(query_spec: Dict):
+        mark = handle_special_value(query_spec.get('mark', '_??_'))
+        encodings = map(Encoding.from_obj, query_spec.get('encoding', []))
         return Query(mark, encodings)
 
     @staticmethod
@@ -268,7 +271,7 @@ class Query():
         raw_encoding_props: Dict = defaultdict(dict)
 
         for (head, body), in clyngor_answer:
-            if head == "mark":
+            if head == 'mark':
                 mark = body[0]
             else:
                 # collect encoding properties
@@ -282,21 +285,21 @@ class Query():
 
     def to_vegalite_obj(self):
         query = {}
-        query["mark"] = self.mark
-        query["encoding"] = {}
+        query['mark'] = self.mark
+        query['encoding'] = {}
         for e in self.encodings:
-            query["encoding"][e.channel] = e.to_vegalite_obj()
+            query['encoding'][e.channel] = e.to_vegalite_obj()
         return query
 
     def to_asp(self) -> str:
         # the asp constraint comes from both mark and encodings
 
-        prog = ""
+        prog = ''
 
         if self.mark != HOLE and self.mark != NULL:
-            prog += f"mark({self.mark}).\n\n"
+            prog += f'mark({self.mark}).\n\n'
 
-        prog += "\n".join(map(lambda e: e.to_asp(), self.encodings))
+        prog += '\n'.join(map(lambda e: e.to_asp(), self.encodings))
         return prog
 
 
@@ -308,28 +311,28 @@ class Task():
         self.violations = violations
 
     @staticmethod
-    def from_obj(query_spec, data_dir: Optional[str], place_holder: Optional[str] = HOLE):
-        data = Data.from_obj(query_spec["data"], path_prefix=data_dir)
+    def from_obj(query_spec, data_dir: Optional[str]):
+        data = Data.from_obj(query_spec['data'], path_prefix=data_dir)
 
-        query = Query.from_obj(query_spec, place_holder)
+        query = Query.from_obj(query_spec)
 
         return Task(data, query)
 
     def to_vegalite_obj(self):
-        """ generate a vegalite spec from the object """
+        ''' generate a vegalite spec from the object '''
         result = self.query.to_vegalite_obj()
-        result["data"] = self.data.to_vegalite_obj()
-        result["$schema"] = "https://vega.github.io/schema/vega-lite/v2.0.json"
+        result['data'] = self.data.to_vegalite_obj()
+        result['$schema'] = 'https://vega.github.io/schema/vega-lite/v2.0.json'
         return result
 
     def to_vegalite_json(self) -> str:
-        """ generate a vegalite json file form the object """
+        ''' generate a vegalite json file form the object '''
         return json.dumps(self.to_vegalite_obj(), sort_keys=True, indent=4)
 
     def to_asp(self) -> str:
-        """ generate asp constraints from the object """
-        asp_str = "% ====== Data definitions ======\n"
-        asp_str += self.data.to_asp() + "\n\n"
-        asp_str += "% ====== Query constraints ======\n"
+        ''' generate asp constraints from the object '''
+        asp_str = '% ====== Data definitions ======\n'
+        asp_str += self.data.to_asp() + '\n\n'
+        asp_str += '% ====== Query constraints ======\n'
         asp_str += self.query.to_asp()
         return asp_str

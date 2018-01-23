@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
-const cql = require("compassql");
-const dl = require("datalib");
-const fs = require("fs")
+const cql = require('compassql');
+const dl = require('datalib');
+const fs = require('fs')
 
 // default schema: cars
-const data = dl.csv("examples/data/cars.csv");
+const data = dl.csv('examples/data/cars.csv');
 const schema = cql.schema.build(data);
 
 // base query (just a shortcut so we don't have to write as much)
 const base = {
-  data: {url: "examples/data/cars.csv"},
-  mark: "?",
+  data: {url: 'examples/data/cars.csv'},
+  mark: '?',
 }
 
 const specs = [{
@@ -19,14 +19,14 @@ const specs = [{
     ...base,
     encodings: [
       {
-        channel: "x",
-        aggregate: "mean",
-        field: "horsepower",
-        type: "quantitative"
+        channel: 'x',
+        aggregate: 'mean',
+        field: 'horsepower',
+        type: 'quantitative'
       }, {
-        channel: "y",
-        field: "cylinders",
-        type: "ordinal"
+        channel: 'y',
+        field: 'cylinders',
+        type: 'ordinal'
       }
     ]
   }, {
@@ -34,35 +34,35 @@ const specs = [{
     ...base,
     encodings: [
       {
-        channel: "?",
-        field: "horsepower"
+        channel: '?',
+        field: 'horsepower'
       }, {
-        channel: "?",
-        field: "acceleration"
+        channel: '?',
+        field: 'acceleration'
       }
     ]
   }, {
     // bar chart with aggregation
     ...base,
-    mark: "?",
+    mark: '?',
     encodings: [
       {
-        channel: "?",
-        aggregate: "mean",
-        field: "horsepower"
+        channel: '?',
+        aggregate: 'mean',
+        field: 'horsepower'
       }, {
-        channel: "?",
-        field: "cylinders"
+        channel: '?',
+        field: 'cylinders'
       }
     ]
   }, {
     // strip plot
     ...base,
-    mark: "?",
+    mark: '?',
     encodings: [
       {
-        channel: "?",
-        field: "horsepower"
+        channel: '?',
+        field: 'horsepower'
       }
     ]
   }
@@ -80,7 +80,7 @@ for (const spec of specs) {
 
   const query = {
     spec,
-    chooseBy: "effectiveness"
+    chooseBy: 'effectiveness'
   };
 
   const recommendation = cql.recommend(query, schema, {

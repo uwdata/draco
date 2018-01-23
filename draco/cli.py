@@ -16,13 +16,13 @@ logger = logging.getLogger(__name__)
 
 
 def create_parser():
-    parser = argparse.ArgumentParser(description="Draco Visualization recommendation system.",
-        epilog="There is a moment in every dawn when light floats, there is the possibility of magic. Creation holds its breath.")
+    parser = argparse.ArgumentParser(description='Draco Visualization recommendation system.',
+        epilog='There is a moment in every dawn when light floats, there is the possibility of magic. Creation holds its breath.')
 
-    parser.add_argument("query", nargs="?", type=argparse.FileType("r"), default=sys.stdin,
-                        help="The CompassQL query (partial Vega-Lite spec).")
-    parser.add_argument("--out", nargs="?", type=argparse.FileType("w"), default=sys.stdout,
-                        help="specify the Vega-Lite output file")
+    parser.add_argument('query', nargs='?', type=argparse.FileType('r'), default=sys.stdin,
+                        help='The CompassQL query (partial Vega-Lite spec).')
+    parser.add_argument('--out', nargs='?', type=argparse.FileType('w'), default=sys.stdout,
+                        help='specify the Vega-Lite output file')
     parser.add_argument('--version', action='version',
                         version=__version__)
 
@@ -33,7 +33,7 @@ def main():  # pragma: no cover
     parser = create_parser()
     args = parser.parse_args()
 
-    logger.info(f"Processing query: {args.query.name} ...")
+    logger.info(f'Processing query: {args.query.name} ...')
 
     # load a task from a spec provided by the user
     query_spec = json.load(args.query)
@@ -43,8 +43,8 @@ def main():  # pragma: no cover
 
     if task:
         print(task.to_vegalite_json(), file=args.out)
-        outname = "stringIO" if isinstance(args.out, io.StringIO) else args.out.name
-        logger.info(f"Wrote Vega-Lite spec to {outname}")
+        outname = 'stringIO' if isinstance(args.out, io.StringIO) else args.out.name
+        logger.info(f'Wrote Vega-Lite spec to {outname}')
 
     # close open files
     if args.query is not sys.stdin:
