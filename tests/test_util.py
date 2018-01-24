@@ -1,8 +1,8 @@
 from draco.spec import Data
-from draco.util import list_weights, count_violations
+from draco.util import current_weights, count_violations
 
-def test_list_weights():
-    assert "encoding_weight" in list_weights()
+def test_current_weights():
+    assert "encoding_weight" in current_weights()
 
 def test_count_violations():
     data = Data.from_csv("examples/data/cars.csv")
