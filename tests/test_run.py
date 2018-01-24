@@ -1,5 +1,6 @@
-import os
 import json
+import os
+
 from jsonschema import validate
 
 from draco.run import run

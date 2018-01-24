@@ -4,11 +4,13 @@ Helper functions for learning algorithm.
 
 import json
 import os
+from typing import Dict
 
-from draco.run import run, DRACO_LP
-from draco.spec import Task, Query
+from draco.run import DRACO_LP, run
+from draco.spec import Query, Task
 
-def list_weights():
+
+def current_weights() -> Dict:
     ''' Get the current weights as a dictionary. '''
     with open(os.path.join(os.path.dirname(__file__), '../data/weights.json')) as f:
         return json.load(f)

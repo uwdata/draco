@@ -10,7 +10,7 @@ from typing import Dict, List
 
 import clyngor
 
-from draco.spec import Task, Query
+from draco.spec import Query, Task
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

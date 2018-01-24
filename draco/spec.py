@@ -5,7 +5,7 @@ Tasks, Encoding, and Query helper classes for draco.
 import json
 import os
 from collections import defaultdict
-from typing import Optional, Iterable, Dict, Any, List
+from typing import Any, Dict, Iterable, List, Optional
 
 import agate
 from agate.table import Table
