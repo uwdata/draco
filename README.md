@@ -78,3 +78,7 @@ Run `data/generate.js`. Then check out the examples named `qcl_*` in `data/input
 ### Test types
 
 `mypy draco --ignore-missing-imports`
+
+## To run the notebook in a conda environment
+
+`conda install nb_conda_kernels`
