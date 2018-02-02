@@ -37,17 +37,25 @@ def learn_weights():
         training_better = training_better.append(count_violations(spec1, data), ignore_index=True)
         training_worse = training_worse.append(count_violations(spec2, data), ignore_index=True)
 
+    # normalize the features by column
     def normalize(df):
         df.fillna(0, inplace=True)
-        scaler = preproc.StandardScaler()
+        # scalers: http://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing
+        scaler = preproc.MinMaxScaler()
         df[df.columns] = scaler.fit_transform(df[df.columns])
         return df
 
-    training_better = normalize(training_better)
-    training_worse = normalize(training_worse)
+    # concat and normalize and then split again
+    normalized = normalize(pd.concat([training_better, training_worse]))
+    loc = int(len(normalized) / 2)
+    training_better = normalized.iloc[:loc]
+    training_worse = normalized.iloc[loc:]
 
     # learn the weights from the feature vectors
+    print("better:")
     print(training_better)
+
+    print("worse:")
     print(training_worse)
 
 if __name__ == '__main__':
