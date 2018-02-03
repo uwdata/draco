@@ -46,7 +46,7 @@ class Field():
 class Data():
 
     @staticmethod
-    def from_obj(obj: Dict[str, str], path_prefix: Optional[str] = None):
+    def from_obj(obj: Dict[str, str], path_prefix: Optional[str] = None) -> 'Data':
         ''' Build a data object from a dict-represented
             vegalite object represting data'''
         if 'url' in obj:
@@ -60,7 +60,7 @@ class Data():
             return Data.from_agate_table(agate.Table.from_object(obj['values']))
 
     @staticmethod
-    def from_csv(filename: str):
+    def from_csv(filename: str) -> 'Data':
         ''' load data form a csv file '''
         table = agate.Table.from_csv(filename)
         dt = Data.from_agate_table(table)
@@ -68,7 +68,7 @@ class Data():
         return dt
 
     @staticmethod
-    def from_agate_table(agate_table: Table):
+    def from_agate_table(agate_table: Table) -> 'Data':
         ''' Create a Data object from an agate table,
             data content and datatypes are based on how agate interprets them
         '''
@@ -127,7 +127,7 @@ class Encoding():
         return enc
 
     @staticmethod
-    def from_obj(obj: Dict[str, str]):
+    def from_obj(obj: Dict[str, str]) -> 'Encoding':
         ''' load encoding from a dict object representing the spec content
             Args:
                 obj: a dict object representing channel encoding
@@ -154,7 +154,7 @@ class Encoding():
             _get_field('zero'))
 
     @staticmethod
-    def parse_from_answer(encoding_id: str, encoding_props):
+    def parse_from_answer(encoding_id: str, encoding_props) -> 'Encoding':
         _get_field = lambda props, target: props[target] if target in props else None
 
         content = [_get_field(encoding_props, 'channel'),
@@ -258,14 +258,14 @@ class Query():
         self.encodings = encodings or []
 
     @staticmethod
-    def from_obj(query_spec: Dict):
+    def from_obj(query_spec: Dict) -> 'Query':
         ''' Parse from a query object that uses a list for encoding. '''
         mark = handle_special_value(query_spec.get('mark', '_??_'))
         encodings = map(Encoding.from_obj, query_spec.get('encoding', []))
         return Query(mark, encodings)
 
     @staticmethod
-    def from_vegalite(full_spec: Dict):
+    def from_vegalite(full_spec: Dict) -> 'Query':
         ''' Parse from Vega-Lite spec that uses map for encoding. '''
         encodings: List[Encoding] = []
 
@@ -276,7 +276,7 @@ class Query():
         return Query(full_spec['mark'], encodings)
 
     @staticmethod
-    def parse_from_answer(clyngor_answer: Answers):
+    def parse_from_answer(clyngor_answer: Answers) -> 'Query':
         encodings: List[Encoding] = []
         mark = None
 
@@ -323,7 +323,7 @@ class Task():
         self.violations = violations
 
     @staticmethod
-    def from_obj(query_spec, data_dir: Optional[str]):
+    def from_obj(query_spec, data_dir: Optional[str]) -> 'Task':
         data = Data.from_obj(query_spec['data'], path_prefix=data_dir)
 
         query = Query.from_obj(query_spec)
