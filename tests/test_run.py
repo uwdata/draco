@@ -6,18 +6,18 @@ from jsonschema import validate
 from draco.run import run
 from draco.spec import Task
 
-EXAMPLES_DIR = os.path.join("examples")
+EXAMPLES_DIR = os.path.join('examples')
 
 class TestFull():
     def test_output_schema(self):
         json_files = [os.path.join(EXAMPLES_DIR, fname)
-                      for fname in os.listdir(EXAMPLES_DIR) if fname.endswith(".json")]
+                      for fname in os.listdir(EXAMPLES_DIR) if fname.endswith('.json')]
 
-        with open("node_modules/vega-lite/build/vega-lite-schema.json") as sf:
+        with open('node_modules/vega-lite/build/vega-lite-schema.json') as sf:
             schema = json.load(sf)
 
             for fname in json_files:
-                with open(fname, "r") as f:
+                with open(fname, 'r') as f:
                     query_spec = json.load(f)
                     input_task = Task.from_obj(query_spec, os.path.dirname(f.name))
                     task = run(input_task)

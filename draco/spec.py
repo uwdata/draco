@@ -98,12 +98,16 @@ class Data():
             for j, c in enumerate(row):
                 row_obj[fields[j].name] = str(c)
             content.append(row_obj)
-        return Data(fields, content=content)
+        return Data(fields, len(agate_table), content=content)
 
-    def __init__(self, fields: Iterable[Field], content: Optional[Iterable[Any]] = None, url: Optional[str] = None) -> None:
+    def __init__(self, fields: Iterable[Field], size: int, content: Optional[Iterable[Any]] = None, url: Optional[str] = None) -> None:
         self.fields = fields
+        self.size = size
         self.content = content
         self.url = url
+
+    def __len__(self):
+        return self.size
 
     def to_vegalite(self) -> Dict[str, Any]:
         if self.url :
@@ -112,7 +116,7 @@ class Data():
             return {'values': self.content}
 
     def to_asp(self) -> str:
-        return '\n'.join([x.to_asp() for x in self.fields])
+        return f'data_size({len(self)}).\n\n' + '\n'.join([x.to_asp() for x in self.fields])
 
 
 class Encoding():

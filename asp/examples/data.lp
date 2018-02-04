@@ -1,5 +1,7 @@
 % ====== Data definitions for tests ======
 
+data_size(100).
+
 fieldtype(s1,string).
 cardinality(s1,10).
 entropy(s1,2).  % entropy is in 0.1 units because asp only supports integers

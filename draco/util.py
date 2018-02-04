@@ -15,7 +15,7 @@ def current_weights() -> Dict:
     with open(os.path.join(os.path.dirname(__file__), '../data/weights.json')) as f:
         return json.load(f)
 
-def count_violations(full_spec, data):
+def count_violations(full_spec, data) -> Dict:
     ''' Get a dictionary of violations for a full spec. '''
 
     query = Query.from_vegalite(full_spec)

@@ -15,7 +15,7 @@ def learn_weights():
             Field('q1', 'number', 100, 1),
             Field('q2', 'number', 100, 1),
             Field('n1', 'string', 5, 1)
-        ], url='weather.csv')
+        ], 100, url='weather.csv')
 
     # data, inferior spec, superior spec
     training_specs = [(data,
