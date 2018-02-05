@@ -113,3 +113,7 @@ feature_term("d_d_rule"):- is_d_d, mark(rule).
 feature_term("d_d_text"):- is_d_d, mark(text).
 feature_term("d_d_tick"):- is_d_d, mark(tick).
 feature_term("d_d_rect"):- is_d_d, mark(rect).
+
+% channel preferences
+
+% TODO

@@ -34,6 +34,11 @@ class Field():
         self.cardinality = cardinality
         self.entropy = entropy
 
+    @staticmethod
+    def from_obj(obj: Dict[str, str]):
+        ''' Build a field from a field represented as a dictionary. '''
+        return Field(obj['name'], obj['type'], int(obj['cardinality']), float(obj.get('entropy')))
+
     def to_asp(self) -> str:
         asp_str = f'fieldtype({self.name},{self.ty}).\n'
         asp_str += f'cardinality({self.name},{self.cardinality}).\n'
@@ -48,7 +53,7 @@ class Data():
     @staticmethod
     def from_obj(obj: Dict[str, str], path_prefix: Optional[str] = None) -> 'Data':
         ''' Build a data object from a dict-represented
-            vegalite object represting data'''
+            Vega-Lite object represting data'''
         if 'url' in obj:
             # load data from url
             file_path = obj['url']

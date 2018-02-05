@@ -12,7 +12,7 @@ aggregate(count;mean;median;min;max).
 bin(3;5;10;100;200).
 
 % encoding channels
-single_channel(x;y;color;opacity;size;shape;text).
+single_channel(x;y;color;opacity;size;shape;text;row;column).
 multi_channel(detail).
 channel(C) :- single_channel(C).
 channel(C) :- multi_channel(C).

@@ -7,7 +7,7 @@ import os
 from typing import Dict
 
 from draco.run import DRACO_LP, run
-from draco.spec import Query, Task
+from draco.spec import Query, Task, Data
 
 
 def current_weights() -> Dict:
@@ -15,11 +15,11 @@ def current_weights() -> Dict:
     with open(os.path.join(os.path.dirname(__file__), '../data/weights.json')) as f:
         return json.load(f)
 
-def count_violations(full_spec, data) -> Dict:
+def count_violations(data: Data, full_spec: Dict) -> Dict:
     ''' Get a dictionary of violations for a full spec. '''
 
     query = Query.from_vegalite(full_spec)
-    input_task = Task(query, data)
+    input_task = Task(data, query)
 
     task = run(input_task, files=DRACO_LP + ['count.lp'])
     return task.violations
