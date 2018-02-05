@@ -166,15 +166,15 @@ class Encoding():
     def parse_from_answer(encoding_id: str, encoding_props) -> 'Encoding':
         _get_field = lambda props, target: props[target] if target in props else None
 
-        content = [_get_field(encoding_props, 'channel'),
-                   _get_field(encoding_props, 'field'),
-                   _get_field(encoding_props, 'type'),
-                   _get_field(encoding_props, 'aggregate'),
-                   _get_field(encoding_props, 'bin'),
-                   _get_field(encoding_props, 'log_scale'),
-                   _get_field(encoding_props, 'zero')]
-
-        return Encoding(*content, encoding_id)
+        return Encoding(
+            _get_field(encoding_props, 'channel'),
+            _get_field(encoding_props, 'field'),
+            _get_field(encoding_props, 'type'),
+            _get_field(encoding_props, 'aggregate'),
+            _get_field(encoding_props, 'bin'),
+            _get_field(encoding_props, 'log_scale'),
+            _get_field(encoding_props, 'zero'),
+            encoding_id)
 
 
     def __init__(self, channel: str, field: str, ty: str, aggregate: str, binning, log_scale: bool, zero: bool, idx: Optional[str] = None) -> None:

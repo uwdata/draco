@@ -6,7 +6,7 @@ def test_current_weights():
 
 def test_count_violations():
     data = Data.from_csv('examples/data/cars.csv')
-    violations = count_violations({
+    violations = count_violations(data, {
         'mark': 'bar',
         'data': {
             'url': 'data/cars.csv'
@@ -22,7 +22,7 @@ def test_count_violations():
                 'aggregate': 'mean'
             }
         }
-    }, data)
+    })
 
     assert 'encoding' in violations
     assert violations['encoding'] == 2

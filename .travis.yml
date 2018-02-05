@@ -20,6 +20,7 @@ install:
   - pip install -e .
 script:
   - ansunit asp/tests.yaml
+  - mypy draco tests --ignore-missing-imports
   - pytest --cov=draco
 after_success:
   - coveralls
