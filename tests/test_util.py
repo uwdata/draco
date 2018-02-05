@@ -24,5 +24,5 @@ def test_count_violations():
         }
     })
 
-    assert 'encoding' in violations
-    assert violations['encoding'] == 2
+    assert 'encoding' in violations.keys()
+    assert violations.get('encoding') == 2
