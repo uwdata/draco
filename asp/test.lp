@@ -38,7 +38,10 @@
 :- channel_meas(shape).
 
 % size or text require measure
-:- channel_meas(size;text).
+:- channel_dim(size;text).
+
+% row and column require dimension
+:- channel_meas(row;column).
 
 % aggregate implies quantitative
 :- aggregate(E,_), not type(E,quantitative).
