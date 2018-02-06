@@ -67,14 +67,10 @@ def load_features():
     features_bad = pd.read_csv(path_bad)
     features_good = pd.read_csv(path_good)
 
-    # learn the weights from the feature vectors
-    print("bad:")
-    print(features_bad)
-
-    print("good:")
-    print(features_good)
+    features_bad.fillna(0, inplace=True)
+    features_good.fillna(0, inplace=True)
 
     return features_bad, features_good
 
 if __name__ == '__main__':
-    generate_and_store_features()
+    load_features()
