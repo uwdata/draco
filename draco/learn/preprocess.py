@@ -13,7 +13,8 @@ from draco.util import count_violations, current_weights
 def absolute_path(p: str) -> str:
     return os.path.join(os.path.dirname(__file__), p)
 
-path = absolute_path('../../__tmp__/data.pickle')
+pickle_path = absolute_path('../../__tmp__/data.pickle')
+user_study_data_path = absolute_path('../../data/training/q_q_n.json')
 
 def get_raw_data():
     spec_schema = Data([
@@ -31,7 +32,7 @@ def get_raw_data():
         {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'color': {'field': 'q2', 'type': 'quantitative'}}}
     )]
 
-    with open(absolute_path('../../data/training/q_q_n.json')) as f:
+    with open(user_study_data_path) as f:
         qqn_data = json.load(f)
         for row in qqn_data:
             fields = list(map(Field.from_obj, row['fields']))
@@ -70,17 +71,16 @@ def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
 
     return df.reset_index()
 
+### generate and store data to default path
+
 def generate_and_store_data():
     raw_data = get_raw_data()
-
     data = process_raw_data(raw_data)
-    data.to_pickle(path)
+    data.to_pickle(pickle_path)
 
 def load_data():
-    data = pd.read_pickle(path)
-
+    data = pd.read_pickle(pickle_path)
     data.fillna(0, inplace=True)
-
     return data
 
 if __name__ == '__main__':

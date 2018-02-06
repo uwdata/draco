@@ -7,112 +7,114 @@ import numpy as np
 import sklearn.preprocessing as preproc
 from sklearn import svm
 import sklearn
+import matplotlib.pyplot as plt
 
 from draco.spec import Data, Field
 from draco.util import count_violations, current_weights
+from draco.learn import preprocess
 
+from sklearn.decomposition import PCA
+import sys
 
-def get_example_specs():
-    data = Data([
-            Field('q1', 'number', 100, 1),
-            Field('q2', 'number', 100, 1),
-            Field('n1', 'string', 5, 1)
-        ], url='weather.csv')
+np.random.seed(1)
 
-    # data, inferior spec, superior spec
-    example_specs = [(data,
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q1', 'type': 'quantitative'}}}
-    ), (data,
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'color': {'field': 'q2', 'type': 'quantitative'}}}
-    ),(data,
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'color': {'field': 'q2', 'type': 'quantitative'}}}
-    ),(data,
-        {'mark': 'point', 'encoding': {'x': {'field': 'q2',' type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
-        {'mark': 'point', 'encoding': {'x': {'field': 'q2',' type': 'quantitative'}, 'color': {'field': 'q2', 'type': 'quantitative'}}}
-    ),(data,
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'color': {'field': 'q2', 'type': 'quantitative'}}}
-    )]
+def prepare_data(data_pos, data_neg):
 
-    return example_specs
-
-
-def extract_features(specs):
-
-    weights = current_weights()
-    features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
-
-    better = pd.DataFrame(columns=features)
-    worse = pd.DataFrame(columns=features)
-
-    # convert the specs to feature vectors
-    for d, spec1, spec2 in specs:
-        better = better.append(count_violations(spec1, d), ignore_index=True)
-        worse = worse.append(count_violations(spec2, d), ignore_index=True)
-
-    # normalize the features by column
-    def normalize(df):
-        df.fillna(0, inplace=True)
-        scaler = preproc.MinMaxScaler()
-        df[df.columns] = scaler.fit_transform(df[df.columns])
-        return df
-
-    # concat and normalize and then split again
-    normalized = normalize(pd.concat([better, worse]))
-    loc = int(len(normalized) / 2)
-    better = normalized.iloc[:loc]
-    worse = normalized.iloc[loc:]
-
-    X1 = better.values
-    X2 = worse.values
-
-    data = []
-    for i in range(len(X1)):
-        data.append((X1[i], X2[i], 1))
-        data.append((X2[i], X1[i], -1))
-
-    return data
-
-
-
-
-def learn_weights(data):
-    
-    num_features = len(data[0][0])
-    N = len(data)
+    N = len(data_pos)
+    num_features = len(data_pos.columns)
 
     X = np.zeros((N, num_features))
     y = np.zeros(N)
 
-    for i in range(len(data)):
-        X[i] = data[i][0] - data[i][1]
-        y[i] = data[i][2]
+    for i in range(N):
 
-    X_train = X[:3]
-    X_test = X[3:]
+        x_pos = data_pos.iloc[i].values
+        x_neg = data_neg.iloc[i].values
 
-    y_train = y[:3]
-    y_test = y[3:]
+        feed_pos = np.random.choice([True, False])
 
-    clf = sklearn.linear_model.LogisticRegression() #svm.LinearSVC()
+        #if feed_pos:
+        X[i] = x_pos - x_neg
+        y[i] = 1 if feed_pos else 0
+        #else:
+        #    X[i] = x_neg - x_pos
+        #    y[i] = 0
+
+    return X, y
+
+def learn_weights(X_train, y_train, X_dev, y_dev):
+
+    #clf = sklearn.linear_model.LogisticRegression() 
+    clf = svm.LinearSVC()
     clf.fit(X_train, y_train)  
 
-    pred = clf.predict(X_test)
-    print(pred)
-    print(y_test)
+    #pred = clf.predict(X_dev)
+    #score = clf.score(X_dev, y_dev)
+    print(clf.score(X_train, y_train))
+    print(clf.score(X_dev, y_dev))
+    #print(y_test)
 
-    print(clf.coef_)
+    #print(clf.coef_)
 
-    # learn the weights from the feature vectors
-    #print("better:")
-    #print(training_better)
+    used_feat_idx = [i for i in range(len(clf.coef_[0])) if clf.coef_[0][i] != 0.]
 
-    #print("worse:")
-    #print(training_worse)
+    return used_feat_idx
+
+def plot_data(X, y):
+    pca = PCA(n_components=2)
+    X2 = pca.fit_transform(X)
+
+    x_11 = [X2[i][0] for i in range(len(X2)) if y[i] == 0]
+    x_12 = [X2[i][1] for i in range(len(X2)) if y[i] == 0]
+
+    x_21 = [X2[i][0] for i in range(len(X2)) if y[i] == 1]
+    x_22 = [X2[i][1] for i in range(len(X2)) if y[i] == 1]
+
+    plt.scatter(x_11, x_12, marker='^', c='r')
+    plt.scatter(x_21, x_22, marker='o', c='b')
+    plt.show()
+
 
 if __name__ == '__main__':
-    data = extract_features(get_example_specs())
-    learn_weights(data)
+
+    data = preprocess.load_data()
+
+
+    print(data["negative"])
+    print(data["positive"])
+    print(len(data))
+
+    sys.exit(-1)
+
+    N = len(data)
+
+    indexes = np.arange(N)
+    np.random.shuffle(indexes)
+    train_split = 0.7
+    dev_split = 0.1
+    test_split = 0.2
+
+    train_indexes = indexes[:int(N * train_split)]
+    dev_indexes = indexes[int(N * train_split): int(N * (train_split + dev_split))]
+    test_indexes = indexes[int(N * (train_split + dev_split)):]
+
+    train_neg = data_neg.iloc[train_indexes]
+    train_pos = data_pos.iloc[train_indexes]
+
+    dev_neg = data_neg.iloc[dev_indexes]
+    dev_pos = data_pos.iloc[dev_indexes]
+    
+    X_train, y_train = prepare_data(train_pos, train_neg)
+    X_dev, y_dev = prepare_data(dev_pos, dev_neg)
+
+    used_features = learn_weights(X_train, y_train, X_dev, y_dev)
+
+    print([data_pos.columns[i] for i in used_features])
+
+    plot_data(X_train, y_train)
+
+    #X = np.zeros()
+    #learn_weights(data)
+
+
+
