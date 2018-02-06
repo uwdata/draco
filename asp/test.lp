@@ -46,8 +46,11 @@
 % aggregate implies quantitative
 :- aggregate(E,_), not type(E,quantitative).
 
-% can only aggregate measures
-:- aggregate(E,_), dimension(E).
+% cannot aggregate nominal
+:- aggregate(E,_), type(E,nominal).
+
+% can only aggregate ordinal with min and max
+:- aggregate(E,A), type(E,ordinal), A != min, A != max.
 
 
 % === Across encodings and between encodings and marks ===
@@ -108,6 +111,8 @@
 :- mark(rect), not channel_dim(x).
 :- mark(rect), not channel_dim(y).
 
+% nominal cannot be measure
+:- type(E,nominal), measure(E).
 
 % === Type checks ===
 

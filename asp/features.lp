@@ -2,9 +2,9 @@
 
 % prefer quantitative > ordinal > nominal
 
-feature_term("type_q",E) :- type(E,q).
-feature_term("type_o",E) :- type(E,o).
-feature_term("type_n",E) :- type(E,n).
+feature_term("type_q",E) :- type(E,quantitative).
+feature_term("type_o",E) :- type(E,ordinal).
+feature_term("type_n",E) :- type(E,nominal).
 
 % prefer to use raw (no aggregate)
 feature_term("aggregate",E) :- aggregate(E,_).
@@ -114,6 +114,34 @@ feature_term("d_d_text"):- is_d_d, mark(text).
 feature_term("d_d_tick"):- is_d_d, mark(tick).
 feature_term("d_d_rect"):- is_d_d, mark(rect).
 
-% channel preferences
+% channel rankings à la APT
 
-% TODO
+feature_term("measure_x") :- channel(E,x), measure(E).
+feature_term("measure_y") :- channel(E,y), measure(E).
+feature_term("measure_color") :- channel(E,color), measure(E).
+feature_term("measure_opacity") :- channel(E,opacity), measure(E).
+feature_term("measure_size") :- channel(E,size), measure(E).
+feature_term("measure_shape") :- channel(E,shape), measure(E).
+feature_term("measure_text") :- channel(E,text), measure(E).
+feature_term("measure_row") :- channel(E,row), measure(E).
+feature_term("measure_column") :- channel(E,column), measure(E).
+
+feature_term("ordered_x") :- channel(E,x), dimension(E), not type(E,nominal).
+feature_term("ordered_y") :- channel(E,y), dimension(E), not type(E,nominal).
+feature_term("ordered_color") :- channel(E,color), dimension(E), not type(E,nominal).
+feature_term("ordered_opacity") :- channel(E,opacity), dimension(E), not type(E,nominal).
+feature_term("ordered_size") :- channel(E,size), dimension(E), not type(E,nominal).
+feature_term("ordered_shape") :- channel(E,shape), dimension(E), not type(E,nominal).
+feature_term("ordered_text") :- channel(E,text), dimension(E), not type(E,nominal).
+feature_term("ordered_row") :- channel(E,row), dimension(E), not type(E,nominal).
+feature_term("ordered_column") :- channel(E,column), dimension(E), not type(E,nominal).
+
+feature_term("nominal_x") :- channel(E,x), type(E,nominal).
+feature_term("nominal_y") :- channel(E,y), type(E,nominal).
+feature_term("nominal_color") :- channel(E,color), type(E,nominal).
+feature_term("nominal_opacity") :- channel(E,opacity), type(E,nominal).
+feature_term("nominal_size") :- channel(E,size), type(E,nominal).
+feature_term("nominal_shape") :- channel(E,shape), type(E,nominal).
+feature_term("nominal_text") :- channel(E,text), type(E,nominal).
+feature_term("nominal_row") :- channel(E,row), type(E,nominal).
+feature_term("nominal_column") :- channel(E,column), type(E,nominal).

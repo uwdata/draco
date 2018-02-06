@@ -1,3 +1,5 @@
+% Weights as constants
+
 #const type_q_weight = 0.
 #const type_o_weight = 1.
 #const type_n_weight = 2.
@@ -27,6 +29,7 @@
 #const log_weight = 1.
 #const zero_weight = -1.
 #const position_entropy_weight = 2.
+
 #const m_m_point_weight = 0.
 #const m_m_bar_weight = 20.
 #const m_m_line_weight = 20.
@@ -35,6 +38,7 @@
 #const m_m_text_weight = 2.
 #const m_m_tick_weight = 5.
 #const m_m_rect_weight = 10.
+
 #const m_d_point_weight = 0.
 #const m_d_bar_weight = 20.
 #const m_d_line_weight = 20.
@@ -43,6 +47,7 @@
 #const m_d_text_weight = 50.
 #const m_d_tick_weight = 10.
 #const m_d_rect_weight = 20.
+
 #const d_d_point_weight = 0.
 #const d_d_bar_weight = 20.
 #const d_d_line_weight = 20.
@@ -51,6 +56,38 @@
 #const d_d_text_weight = 1.
 #const d_d_tick_weight = 10.
 #const d_d_rect_weight = 0.
+
+#const measure_x_weight = 0.
+#const measure_y_weight = 0.
+#const measure_color_weight = 7.
+#const measure_opacity_weight = 30.
+#const measure_size_weight = 5.
+#const measure_shape_weight = 100.
+#const measure_text_weight = 20.
+#const measure_row_weight = 100.
+#const measure_column_weight = 100.
+
+#const ordered_x_weight = 0.
+#const ordered_y_weight = 0.
+#const ordered_color_weight = 7.
+#const ordered_opacity_weight = 30.
+#const ordered_size_weight = 5.
+#const ordered_shape_weight = 31.
+#const ordered_text_weight = 32.
+#const ordered_row_weight = 7.
+#const ordered_column_weight = 7.
+
+#const nominal_x_weight = 0.
+#const nominal_y_weight = 0.
+#const nominal_color_weight = 6.
+#const nominal_opacity_weight = 31.
+#const nominal_size_weight = 30.
+#const nominal_shape_weight = 7.
+#const nominal_text_weight = 8.
+#const nominal_row_weight = 7.
+#const nominal_column_weight = 7.
+
+% Assign weight constants to features
 
 feature_weight("type_q",type_q_weight).
 feature_weight("type_o",type_o_weight).
@@ -105,3 +142,30 @@ feature_weight("d_d_rule",d_d_rule_weight).
 feature_weight("d_d_text",d_d_text_weight).
 feature_weight("d_d_tick",d_d_tick_weight).
 feature_weight("d_d_rect",d_d_rect_weight).
+feature_weight("measure_x",measure_x_weight).
+feature_weight("measure_y",measure_y_weight).
+feature_weight("measure_color",measure_color_weight).
+feature_weight("measure_opacity",measure_opacity_weight).
+feature_weight("measure_size",measure_size_weight).
+feature_weight("measure_shape",measure_shape_weight).
+feature_weight("measure_text",measure_text_weight).
+feature_weight("measure_row",measure_row_weight).
+feature_weight("measure_column",measure_column_weight).
+feature_weight("ordered_x",ordered_x_weight).
+feature_weight("ordered_y",ordered_y_weight).
+feature_weight("ordered_color",ordered_color_weight).
+feature_weight("ordered_opacity",ordered_opacity_weight).
+feature_weight("ordered_size",ordered_size_weight).
+feature_weight("ordered_shape",ordered_shape_weight).
+feature_weight("ordered_text",ordered_text_weight).
+feature_weight("ordered_row",ordered_row_weight).
+feature_weight("ordered_column",ordered_column_weight).
+feature_weight("nominal_x",nominal_x_weight).
+feature_weight("nominal_y",nominal_y_weight).
+feature_weight("nominal_color",nominal_color_weight).
+feature_weight("nominal_opacity",nominal_opacity_weight).
+feature_weight("nominal_size",nominal_size_weight).
+feature_weight("nominal_shape",nominal_shape_weight).
+feature_weight("nominal_text",nominal_text_weight).
+feature_weight("nominal_row",nominal_row_weight).
+feature_weight("nominal_column",nominal_column_weight).
