@@ -10,11 +10,9 @@ import pandas as pd
 from draco.spec import Data, Encoding, Field
 from draco.util import count_violations, current_weights
 
-def absolute_path(path: str) -> str:
-    return os.path.join(os.path.dirname(__file__), path)
+def absolute_path(p: str) -> str:
+    return os.path.join(os.path.dirname(__file__), p)
 
-path_neg = absolute_path('../../__tmp__/data_negative.csv')
-path_pos = absolute_path('../../__tmp__/data_positive.csv')
 path = absolute_path('../../__tmp__/data.pickle')
 
 def get_raw_data():
