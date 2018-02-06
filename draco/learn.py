@@ -4,13 +4,13 @@ Use learn to rank to learn weights for soft constraints.
 import json
 import os
 
-import numpy as np
 import pandas as pd
-import sklearn.preprocessing as preproc
 
 from draco.spec import Data, Encoding, Field
 from draco.util import count_violations, current_weights
 
+path_worse = os.path.join(os.path.dirname(__file__), '../__tmp__/worse')
+path_better = os.path.join(os.path.dirname(__file__), '../__tmp__/better')
 
 def training_data():
     data = Data([
@@ -41,8 +41,8 @@ def data_to_features(training):
     weights = current_weights()
     features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
 
-    training_better = pd.DataFrame(columns=features)
     training_worse = pd.DataFrame(columns=features)
+    training_better = pd.DataFrame(columns=features)
 
     # convert the specs to feature vectors
     for data, spec_worse, spec_better in training:
@@ -52,10 +52,17 @@ def data_to_features(training):
 
     return training_worse, training_better
 
-def learn_weights():
+def generate_and_store_features():
+    # generate
     training = training_data()
-
     training_worse, training_better = data_to_features(training)
+    training_worse.to_pickle(path_worse)
+    training_better.to_pickle(path_better)
+
+def load_features():
+    # loading
+    training_worse = pd.read_pickle(path_worse)
+    training_better = pd.read_pickle(path_better)
 
     # learn the weights from the feature vectors
     print("worse:")
@@ -64,5 +71,7 @@ def learn_weights():
     print("better:")
     print(training_better)
 
+    return training_worse, training_better
+
 if __name__ == '__main__':
-    learn_weights()
+    generate_and_store_features()
