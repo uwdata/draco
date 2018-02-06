@@ -81,4 +81,4 @@ Run `data/generate.js`. Then check out the examples named `qcl_*` in `data/input
 
 ## To run the notebook in a conda environment
 
-`conda install nb_conda_kernels`
+`conda install nb_conda_kernels nb_conda`

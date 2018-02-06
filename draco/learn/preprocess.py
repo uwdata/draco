@@ -4,17 +4,18 @@ Use learn to rank to learn weights for soft constraints.
 import json
 import os
 
-from typing import List
+from typing import List, Dict
 import pandas as pd
 
 from draco.spec import Data, Encoding, Field
 from draco.util import count_violations, current_weights
 
-def absolute_path(path):
+def absolute_path(path: str) -> str:
     return os.path.join(os.path.dirname(__file__), path)
 
 path_neg = absolute_path('../../__tmp__/data_negative.csv')
 path_pos = absolute_path('../../__tmp__/data_positive.csv')
+path = absolute_path('../../__tmp__/data.pickle')
 
 def get_raw_data():
     spec_schema = Data([
@@ -41,36 +42,48 @@ def get_raw_data():
 
     return raw_data
 
-def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
+def get_index():
     weights = current_weights()
     features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
 
-    data_neg = pd.DataFrame(columns=features)
-    data_pos = pd.DataFrame(columns=features)
+    iterables = [['negative', 'positive'], features]
+    index = pd.MultiIndex.from_product(iterables, names=['category', 'feature'])
+
+    return index
+
+def reformat(category: str, raw_data: Dict):
+    '''
+    Reformat the json data so that we can insert it int a multi index data frame.
+    https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
+    '''
+    return {(category, key): values for key, values in raw_data.items()}
+
+def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
+    index = get_index()
+    df = pd.DataFrame(columns=index)
 
     # convert the specs to feature vectors
     for data, spec_neg, spec_pos in raw_data:
-        data_neg = data_neg.append(count_violations(data, spec_neg), ignore_index=True)
-        data_pos = data_pos.append(count_violations(data, spec_pos), ignore_index=True)
         Encoding.encoding_cnt = 0
+        specs = reformat('negative', count_violations(data, spec_neg))
+        specs.update(reformat('positive', count_violations(data, spec_pos)))
 
-    return data_neg, data_pos
+        df = df.append(pd.DataFrame(specs, index=[]))
+
+    return df.reset_index()
 
 def generate_and_store_data():
     raw_data = get_raw_data()
-    data_neg, data_pos = process_raw_data(raw_data)
 
-    data_neg.to_csv(path_neg)
-    data_pos.to_csv(path_pos)
+    data = process_raw_data(raw_data)
+    data.to_pickle(path)
 
 def load_data():
-    data_neg = pd.read_csv(path_neg)
-    data_pos = pd.read_csv(path_pos)
+    data = pd.read_pickle(path)
 
-    data_neg.fillna(0, inplace=True)
-    data_pos.fillna(0, inplace=True)
+    data.fillna(0, inplace=True)
 
-    return data_neg, data_pos
+    return data
 
 if __name__ == '__main__':
     generate_and_store_data()
