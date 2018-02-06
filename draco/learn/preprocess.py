@@ -17,7 +17,7 @@ def training_data():
             Field('q1', 'number', 100, 1),
             Field('q2', 'number', 100, 1),
             Field('n1', 'string', 5, 1)
-        ], 100, url='weather.csv')
+        ], 100)
 
     # data, inferior spec, superior spec
     training_specs = [(data,
@@ -53,14 +53,12 @@ def data_to_features(training):
     return training_worse, training_better
 
 def generate_and_store_features():
-    # generate
     training = training_data()
     training_worse, training_better = data_to_features(training)
     training_worse.to_pickle(path_worse)
     training_better.to_pickle(path_better)
 
 def load_features():
-    # loading
     training_worse = pd.read_pickle(path_worse)
     training_better = pd.read_pickle(path_better)
 
