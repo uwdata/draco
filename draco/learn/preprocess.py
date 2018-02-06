@@ -4,72 +4,77 @@ Use learn to rank to learn weights for soft constraints.
 import json
 import os
 
+from typing import List
 import pandas as pd
 
 from draco.spec import Data, Encoding, Field
 from draco.util import count_violations, current_weights
 
-path_worse = os.path.join(os.path.dirname(__file__), '../__tmp__/worse')
-path_better = os.path.join(os.path.dirname(__file__), '../__tmp__/better')
+def absolute_path(path):
+    return os.path.join(os.path.dirname(__file__), path)
 
-def training_data():
-    data = Data([
+path_bad = absolute_path('../../__tmp__/feat_bad.csv')
+path_good = absolute_path('../../__tmp__/feat_good.csv')
+
+def get_data():
+    spec_schema = Data([
             Field('q1', 'number', 100, 1),
             Field('q2', 'number', 100, 1),
             Field('n1', 'string', 5, 1)
         ], 100)
 
     # data, inferior spec, superior spec
-    training_specs = [(data,
+    examples = [(spec_schema,
         {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
         {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q1', 'type': 'quantitative'}}}
-    ), (data,
+    ), (spec_schema,
         {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
         {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'color': {'field': 'q2', 'type': 'quantitative'}}}
     )]
 
-    with open(os.path.join(os.path.dirname(__file__), '../data/training/q_q_n.json')) as f:
+    with open(absolute_path('../../data/training/q_q_n.json')) as f:
         qqn_data = json.load(f)
         for row in qqn_data:
             fields = list(map(Field.from_obj, row['fields']))
-            data = Data(fields, int(row['num_rows']))
-            training_specs.append((data, row['worse'], row['better']))
+            spec_schema = Data(fields, int(row['num_rows']))
+            examples.append((spec_schema, row['worse'], row['better']))
 
-    return training_specs
+    return examples
 
-def data_to_features(training):
+def examples_to_features(examples: List[tuple]) -> List[pd.DataFrame]:
     weights = current_weights()
     features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
 
-    training_worse = pd.DataFrame(columns=features)
-    training_better = pd.DataFrame(columns=features)
+    features_bad = pd.DataFrame(columns=features)
+    features_good = pd.DataFrame(columns=features)
 
     # convert the specs to feature vectors
-    for data, spec_worse, spec_better in training:
-        training_worse = training_worse.append(count_violations(data, spec_worse), ignore_index=True)
-        training_better = training_better.append(count_violations(data, spec_better), ignore_index=True)
+    for data, spec_bad, spec_good in examples:
+        features_bad = features_bad.append(count_violations(data, spec_bad), ignore_index=True)
+        features_good = features_good.append(count_violations(data, spec_good), ignore_index=True)
         Encoding.encoding_cnt = 0
 
-    return training_worse, training_better
+    return features_bad, features_good
 
 def generate_and_store_features():
-    training = training_data()
-    training_worse, training_better = data_to_features(training)
-    training_worse.to_pickle(path_worse)
-    training_better.to_pickle(path_better)
+    training = get_data()
+    features_bad, features_good = examples_to_features(training)
+
+    features_bad.to_csv(path_bad)
+    features_good.to_csv(path_good)
 
 def load_features():
-    training_worse = pd.read_pickle(path_worse)
-    training_better = pd.read_pickle(path_better)
+    features_bad = pd.read_csv(path_bad)
+    features_good = pd.read_csv(path_good)
 
     # learn the weights from the feature vectors
-    print("worse:")
-    print(training_worse)
+    print("bad:")
+    print(features_bad)
 
-    print("better:")
-    print(training_better)
+    print("good:")
+    print(features_good)
 
-    return training_worse, training_better
+    return features_bad, features_good
 
 if __name__ == '__main__':
     generate_and_store_features()
