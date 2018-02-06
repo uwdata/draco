@@ -10,7 +10,7 @@ import sklearn
 import matplotlib.pyplot as plt
 
 from draco.spec import Data, Field
-from draco.util import count_violations, current_weights
+from draco.learn.helper import count_violations, current_weights
 from draco.learn import preprocess
 
 from sklearn.decomposition import PCA

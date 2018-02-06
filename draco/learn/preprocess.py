@@ -3,12 +3,15 @@ Use learn to rank to learn weights for soft constraints.
 '''
 import json
 import os
+import logging
 
 from typing import List, Dict
 import pandas as pd
 
 from draco.spec import Data, Encoding, Field
-from draco.util import count_violations, current_weights
+from draco.learn.helper import count_violations, current_weights
+
+from draco.util import Capturing
 
 def absolute_path(p: str) -> str:
     return os.path.join(os.path.dirname(__file__), p)
@@ -67,7 +70,8 @@ def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
         specs = reformat('negative', count_violations(data, spec_neg))
         specs.update(reformat('positive', count_violations(data, spec_pos)))
 
-        df = df.append(pd.DataFrame(specs, index=[]))
+        #print(pd.DataFrame(specs, index=[1]))
+        df = df.append(pd.DataFrame(specs, index=[1]))
 
     return df.reset_index()
 
@@ -75,6 +79,7 @@ def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
 
 def generate_and_store_data():
     raw_data = get_raw_data()
+    #logging.disable(logging.CRITICAL)
     data = process_raw_data(raw_data)
     data.to_pickle(pickle_path)
 
