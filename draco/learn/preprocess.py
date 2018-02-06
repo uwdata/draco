@@ -13,10 +13,10 @@ from draco.util import count_violations, current_weights
 def absolute_path(path):
     return os.path.join(os.path.dirname(__file__), path)
 
-path_bad = absolute_path('../../__tmp__/feat_bad.csv')
-path_good = absolute_path('../../__tmp__/feat_good.csv')
+path_neg = absolute_path('../../__tmp__/feat_negative.csv')
+path_pos = absolute_path('../../__tmp__/feat_positive.csv')
 
-def get_data():
+def get_raw_data():
     spec_schema = Data([
             Field('q1', 'number', 100, 1),
             Field('q2', 'number', 100, 1),
@@ -24,7 +24,7 @@ def get_data():
         ], 100)
 
     # data, inferior spec, superior spec
-    examples = [(spec_schema,
+    raw_data = [(spec_schema,
         {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
         {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q1', 'type': 'quantitative'}}}
     ), (spec_schema,
@@ -37,40 +37,40 @@ def get_data():
         for row in qqn_data:
             fields = list(map(Field.from_obj, row['fields']))
             spec_schema = Data(fields, int(row['num_rows']))
-            examples.append((spec_schema, row['worse'], row['better']))
+            raw_data.append((spec_schema, row['worse'], row['better']))
 
-    return examples
+    return raw_data
 
-def examples_to_features(examples: List[tuple]) -> List[pd.DataFrame]:
+def raw_data_to_features(raw_data: List[tuple]) -> List[pd.DataFrame]:
     weights = current_weights()
     features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
 
-    features_bad = pd.DataFrame(columns=features)
-    features_good = pd.DataFrame(columns=features)
+    data_neg = pd.DataFrame(columns=features)
+    data_pos = pd.DataFrame(columns=features)
 
     # convert the specs to feature vectors
-    for data, spec_bad, spec_good in examples:
-        features_bad = features_bad.append(count_violations(data, spec_bad), ignore_index=True)
-        features_good = features_good.append(count_violations(data, spec_good), ignore_index=True)
+    for data, spec_neg, spec_pos in raw_data:
+        data_neg = data_neg.append(count_violations(data, spec_neg), ignore_index=True)
+        data_pos = data_pos.append(count_violations(data, spec_pos), ignore_index=True)
         Encoding.encoding_cnt = 0
 
-    return features_bad, features_good
+    return data_neg, data_pos
 
-def generate_and_store_features():
-    training = get_data()
-    features_bad, features_good = examples_to_features(training)
+def generate_and_store_data():
+    training = get_raw_data()
+    data_neg, data_pos = raw_data_to_features(training)
 
-    features_bad.to_csv(path_bad)
-    features_good.to_csv(path_good)
+    data_neg.to_csv(path_neg)
+    data_pos.to_csv(path_pos)
 
-def load_features():
-    features_bad = pd.read_csv(path_bad)
-    features_good = pd.read_csv(path_good)
+def load_data():
+    data_neg = pd.read_csv(path_neg)
+    data_pos = pd.read_csv(path_pos)
 
-    features_bad.fillna(0, inplace=True)
-    features_good.fillna(0, inplace=True)
+    data_neg.fillna(0, inplace=True)
+    data_pos.fillna(0, inplace=True)
 
-    return features_bad, features_good
+    return data_neg, data_pos
 
 if __name__ == '__main__':
-    load_features()
+    generate_and_store_data()
