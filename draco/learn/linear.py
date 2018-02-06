@@ -18,27 +18,49 @@ import sys
 
 np.random.seed(1)
 
-def prepare_data(data_pos, data_neg):
+def prepare_data(data):
 
-    N = len(data_pos)
-    num_features = len(data_pos.columns)
+    N = len(data)
+    num_features = len(data["positive"].columns)
 
     X = np.zeros((N, num_features))
     y = np.zeros(N)
 
     for i in range(N):
 
-        x_pos = data_pos.iloc[i].values
-        x_neg = data_neg.iloc[i].values
+        x_pos = data["positive"].iloc[i].values
+        x_neg = data["negative"].iloc[i].values
 
         feed_pos = np.random.choice([True, False])
 
-        #if feed_pos:
-        X[i] = x_pos - x_neg
-        y[i] = 1 if feed_pos else 0
-        #else:
-        #    X[i] = x_neg - x_pos
-        #    y[i] = 0
+        if feed_pos:
+            X[i] = x_pos - x_neg
+            y[i] = 1
+        else:
+            X[i] = x_neg - x_pos
+            y[i] = 0
+
+    return X, y
+
+
+def prepare_plot_raw_data(data):
+
+    N = len(data)
+    num_features = len(data["positive"].columns)
+
+    X = np.zeros((N * 2, num_features))
+    y = np.zeros(N * 2)
+
+    for i in range(N):
+
+        x_pos = data["positive"].iloc[i].values
+        x_neg = data["negative"].iloc[i].values
+
+        X[i] = x_pos
+        y[i] = 1
+
+        X[i + N] = x_neg
+        y[i + N] = 0
 
     return X, y
 
@@ -79,14 +101,9 @@ if __name__ == '__main__':
 
     data = preprocess.load_data()
 
-
-    print(data["negative"])
-    print(data["positive"])
-    print(len(data))
-
-    sys.exit(-1)
-
     N = len(data)
+
+    # generate split indexes
 
     indexes = np.arange(N)
     np.random.shuffle(indexes)
@@ -98,20 +115,22 @@ if __name__ == '__main__':
     dev_indexes = indexes[int(N * train_split): int(N * (train_split + dev_split))]
     test_indexes = indexes[int(N * (train_split + dev_split)):]
 
-    train_neg = data_neg.iloc[train_indexes]
-    train_pos = data_pos.iloc[train_indexes]
+    # split data
 
-    dev_neg = data_neg.iloc[dev_indexes]
-    dev_pos = data_pos.iloc[dev_indexes]
+    train_indexes = [0, 1, 2]
+
+    train_data = data.iloc[train_indexes]
+    dev_data = data.iloc[dev_indexes]
     
-    X_train, y_train = prepare_data(train_pos, train_neg)
-    X_dev, y_dev = prepare_data(dev_pos, dev_neg)
+    X_train, y_train = prepare_data(train_data)
+    X_dev, y_dev = prepare_data(dev_data)
 
-    used_features = learn_weights(X_train, y_train, X_dev, y_dev)
+    #used_features = learn_weights(X_train, y_train, X_dev, y_dev)
 
-    print([data_pos.columns[i] for i in used_features])
+    #print([data["positive"].columns[i] for i in used_features])
 
-    plot_data(X_train, y_train)
+    plot_data(*prepare_plot_raw_data(train_data))
+    #plot_data(*prepare_plot_raw_data(dev_data))
 
     #X = np.zeros()
     #learn_weights(data)
