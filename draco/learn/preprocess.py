@@ -13,8 +13,8 @@ from draco.util import count_violations, current_weights
 def absolute_path(path):
     return os.path.join(os.path.dirname(__file__), path)
 
-path_neg = absolute_path('../../__tmp__/feat_negative.csv')
-path_pos = absolute_path('../../__tmp__/feat_positive.csv')
+path_neg = absolute_path('../../__tmp__/data_negative.csv')
+path_pos = absolute_path('../../__tmp__/data_positive.csv')
 
 def get_raw_data():
     spec_schema = Data([
@@ -41,7 +41,7 @@ def get_raw_data():
 
     return raw_data
 
-def raw_data_to_features(raw_data: List[tuple]) -> List[pd.DataFrame]:
+def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
     weights = current_weights()
     features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
 
@@ -57,8 +57,8 @@ def raw_data_to_features(raw_data: List[tuple]) -> List[pd.DataFrame]:
     return data_neg, data_pos
 
 def generate_and_store_data():
-    training = get_raw_data()
-    data_neg, data_pos = raw_data_to_features(training)
+    raw_data = get_raw_data()
+    data_neg, data_pos = process_raw_data(raw_data)
 
     data_neg.to_csv(path_neg)
     data_pos.to_csv(path_pos)
