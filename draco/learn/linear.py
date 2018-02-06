@@ -2,19 +2,17 @@
 Use learn to rank to learn weights for soft constraints.
 '''
 
-import pandas as pd
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+import sklearn
 import sklearn.preprocessing as preproc
 from sklearn import svm
-import sklearn
-import matplotlib.pyplot as plt
-
-from draco.spec import Data, Field
-from draco.learn.helper import count_violations, current_weights
-from draco.learn import preprocess
-
 from sklearn.decomposition import PCA
-import sys
+
+from draco.learn import preprocess
+from draco.learn.helper import count_violations, current_weights
+from draco.spec import Data, Field
 
 np.random.seed(1)
 
@@ -66,9 +64,9 @@ def prepare_plot_raw_data(data):
 
 def learn_weights(X_train, y_train, X_dev, y_dev):
 
-    #clf = sklearn.linear_model.LogisticRegression() 
+    #clf = sklearn.linear_model.LogisticRegression()
     clf = svm.LinearSVC()
-    clf.fit(X_train, y_train)  
+    clf.fit(X_train, y_train)
 
     #pred = clf.predict(X_dev)
     #score = clf.score(X_dev, y_dev)
@@ -121,7 +119,7 @@ if __name__ == '__main__':
 
     train_data = data.iloc[train_indexes]
     dev_data = data.iloc[dev_indexes]
-    
+
     X_train, y_train = prepare_data(train_data)
     X_dev, y_dev = prepare_data(dev_data)
 
@@ -134,6 +132,3 @@ if __name__ == '__main__':
 
     #X = np.zeros()
     #learn_weights(data)
-
-
-

@@ -78,7 +78,7 @@ def generate_and_store_data():
     data = process_raw_data(raw_data)
     data.to_pickle(pickle_path)
 
-def load_data():
+def load_data() -> pd.DataFrame:
     ''' Load data created with `generate_and_store_data`. '''
     data = pd.read_pickle(pickle_path)
     data.fillna(0, inplace=True)

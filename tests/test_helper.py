@@ -1,5 +1,5 @@
 from draco.spec import Data
-from draco.util import current_weights, count_violations
+from draco.learn.helper import current_weights, count_violations
 
 def test_current_weights():
     assert 'encoding_weight' in current_weights()
