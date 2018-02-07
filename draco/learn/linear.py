@@ -8,6 +8,7 @@ import seaborn as sns
 from sklearn import svm
 from sklearn.decomposition import PCA
 from sklearn import linear_model
+from sklearn import tree
 
 from draco.learn import data_util
 
@@ -60,16 +61,16 @@ def classify_and_plot(X, y, split=0.7):
 
     split_index = int(len(X) * split)
 
-    #clf = linear_model.LogisticRegression()
+    # clf = linear_model.LogisticRegression()
     clf = svm.LinearSVC(C=1)
-    #clf = svm.SVC(C=1)
+    # clf = tree.DecisionTreeClassifier()
 
     X_train, y_train, X_dev, y_dev = data_util.rand_split_XY(X, y)
 
     clf.fit(X_train, y_train)
 
-    print(clf.score(X_train, y_train))
-    print(clf.score(X_dev, y_dev))
+    print("Train score: ", clf.score(X_train, y_train))
+    print("Dev score: ", clf.score(X_dev, y_dev))
 
     # for plotting
     X0, X1 = X[:, 0], X[:, 1]
