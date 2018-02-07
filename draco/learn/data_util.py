@@ -37,9 +37,10 @@ def get_raw_data():
     with open(user_study_data_path) as f:
         qqn_data = json.load(f)
         for row in qqn_data:
-            fields = list(map(Field.from_obj, row['fields']))
-            spec_schema = Data(fields, int(row['num_rows']))
-            raw_data.append((spec_schema, row['worse'], row['better']))
+            if row['task'] == 'readValue':
+                fields = list(map(Field.from_obj, row['fields']))
+                spec_schema = Data(fields, int(row['num_rows']))
+                raw_data.append((spec_schema, row['worse'], row['better']))
 
     return raw_data
 
@@ -89,10 +90,10 @@ def split_dataset(data, split_ratio=[0.7, 0.1, 0.2], seed=1):
 
     N = len(data)
     indexes = np.arange(N)
-    
+
     np.random.seed(seed)
     np.random.shuffle(indexes)
-    
+
     train_split = 0.7
     dev_split = 0.1
     test_split = 0.2
