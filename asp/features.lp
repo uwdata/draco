@@ -28,9 +28,9 @@ feature_term("shape_cardinality",E) :- channel(E,shape), cardinality(E,C), C > 6
 feature_term("number_nominal",E) :- type(E,nominal), field(E,F), fieldtype(F,number).
 
 % bar and tick should not use size
-feature_term("bar_size"):- mark(bar), channel(_,size).
+feature_term("bar_size") :- mark(bar), channel(_,size).
 
-feature_term("tick_size"):- mark(tick), channel(_,size).
+feature_term("tick_size") :- mark(tick), channel(_,size).
 
 % binned quantitative field should not have too low cardinality
 feature_term("bin_cardinality",E) :- type(E,quantitative), bin(E,_), cardinality(E,C), C < 15.
@@ -39,32 +39,32 @@ feature_term("bin_cardinality",E) :- type(E,quantitative), bin(E,_), cardinality
 feature_term("quant_bin",E) :- bin(E,_), type(E,quantitative).
 
 % aggregate should also have a dimension
-feature_term("agg_dim"):- aggregate(_,_), not dimension(_).
+feature_term("agg_dim") :- aggregate(_,_), not dimension(_).
 
 % plots with only ordinal, binned q, or t with time unit should add count
-feature_term("add_count"):- not not dimension(_), not aggregate(_,count).
+feature_term("add_count") :- not measure(_), not aggregate(_,count).
 
-% don"t use bar, line, or area for raw data as it leads to occulusion
-feature_term("bar_raw"):- mark(bar), not aggregate(_,_).
+% don't use bar, line, or area for raw data as it leads to occulusion
+feature_term("bar_raw") :- mark(bar), not aggregate(_,_).
 
-feature_term("line_raw"):- mark(line), not aggregate(_,_).
+feature_term("line_raw") :- mark(line), not aggregate(_,_).
 
-feature_term("area_raw"):- mark(area), not aggregate(_,_).
+feature_term("area_raw") :- mark(area), not aggregate(_,_).
 
 % prefer not to use multiple non-positional encoding channels
-feature_term("multiple_non_pos"):- {channel(_,C): non_positional(C)} > 1.
+feature_term("multiple_non_pos") :- {channel(_,C): non_positional(C)} > 1.
 
 % prefer not to use non-positional channels until all positional channels are used
-feature_term("non_positional_pref"):- channel(_,C), non_positional(C), not channel(_,(x;y)).
+feature_term("non_positional_pref") :- channel(_,C), non_positional(C), not channel(_,(x;y)).
 
 % aggregate plots should not use raw continuous as group by
 feature_term("aggregate_group_by_raw",E) :- aggregate(_,_), type(E,quantitative), not bin(E,_), not aggregate(E,_).
 
 % prefer not to use vertical for dot plot
-feature_term("vertical_dot"):- channel(_,y), not channel(_,C), C != y, channel(C), not mark(bar).
+feature_term("vertical_dot") :- channel(_,y), not channel(_,C), C != y, channel(C), not mark(bar).
 
-% prefer not to use plot with both x and y dimension and no aggregate
-feature_term("x_y_raw"):- channel(EX,x), dimension(EX), channel(EY,y), dimension(EY), not aggregate(_,_).
+% prefer not to use plot with both x and y dimension and no aggregate as it leads to occlusion
+feature_term("x_y_raw") :- channel(EX,x), dimension(EX), channel(EY,y), dimension(EY), not aggregate(_,_).
 
 % prefer not to use log scale
 feature_term("log",E) :- log(E).
@@ -75,44 +75,47 @@ feature_term("zero",E) :- zero(E).
 % prefer not to use x and y for measures with high cardinality and low entropy without aggregation because the points will overlap
 feature_term("position_entropy", E) :- channel(E,(x;y)), measure(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 1, not aggregate(E,_).
 
+% prefer not to use only row and column
+feature_term("only_row_column") :- channel(_,(row;column)), not channel(_,x), not channel(_,y), not channel(_,color), not channel(_,size), not channel(_,opacity), not channel(_,shape).
+
 % ====== Rankings ======
 
 % measure by measure
 is_m_m :- channel_meas(x), channel_meas(y).
 
-feature_term("m_m_point"):- is_m_m, mark(point).
-feature_term("m_m_bar"):- is_m_m, mark(bar).
-feature_term("m_m_line"):- is_m_m, mark(line).
-feature_term("m_m_area"):- is_m_m, mark(area).
-feature_term("m_m_rule"):- is_m_m, mark(rule).
-feature_term("m_m_text"):- is_m_m, mark(text).
-feature_term("m_m_tick"):- is_m_m, mark(tick).
-feature_term("m_m_rect"):- is_m_m, mark(rect).
+feature_term("m_m_point") :- is_m_m, mark(point).
+feature_term("m_m_bar") :- is_m_m, mark(bar).
+feature_term("m_m_line") :- is_m_m, mark(line).
+feature_term("m_m_area") :- is_m_m, mark(area).
+feature_term("m_m_rule") :- is_m_m, mark(rule).
+feature_term("m_m_text") :- is_m_m, mark(text).
+feature_term("m_m_tick") :- is_m_m, mark(tick).
+feature_term("m_m_rect") :- is_m_m, mark(rect).
 
 % measure by dimension
 is_m_d :- channel_meas(x), channel_dim(y).
 is_m_d :- channel_meas(y), channel_dim(x).
 
-feature_term("m_d_point"):- is_m_d, mark(point).
-feature_term("m_d_bar"):- is_m_d, mark(bar).
-feature_term("m_d_line"):- is_m_d, mark(line).
-feature_term("m_d_area"):- is_m_d, mark(area).
-feature_term("m_d_rule"):- is_m_d, mark(rule).
-feature_term("m_d_text"):- is_m_d, mark(text).
-feature_term("m_d_tick"):- is_m_d, mark(tick).
-feature_term("m_d_rect"):- is_m_d, mark(rect).
+feature_term("m_d_point") :- is_m_d, mark(point).
+feature_term("m_d_bar") :- is_m_d, mark(bar).
+feature_term("m_d_line") :- is_m_d, mark(line).
+feature_term("m_d_area") :- is_m_d, mark(area).
+feature_term("m_d_rule") :- is_m_d, mark(rule).
+feature_term("m_d_text") :- is_m_d, mark(text).
+feature_term("m_d_tick") :- is_m_d, mark(tick).
+feature_term("m_d_rect") :- is_m_d, mark(rect).
 
 % dimension by dimension
 is_d_d :- channel_dim(x), channel_dim(y).
 
-feature_term("d_d_point"):- is_d_d, mark(point).
-feature_term("d_d_bar"):- is_d_d, mark(bar).
-feature_term("d_d_line"):- is_d_d, mark(line).
-feature_term("d_d_area"):- is_d_d, mark(area).
-feature_term("d_d_rule"):- is_d_d, mark(rule).
-feature_term("d_d_text"):- is_d_d, mark(text).
-feature_term("d_d_tick"):- is_d_d, mark(tick).
-feature_term("d_d_rect"):- is_d_d, mark(rect).
+feature_term("d_d_point") :- is_d_d, mark(point).
+feature_term("d_d_bar") :- is_d_d, mark(bar).
+feature_term("d_d_line") :- is_d_d, mark(line).
+feature_term("d_d_area") :- is_d_d, mark(area).
+feature_term("d_d_rule") :- is_d_d, mark(rule).
+feature_term("d_d_text") :- is_d_d, mark(text).
+feature_term("d_d_tick") :- is_d_d, mark(tick).
+feature_term("d_d_rect") :- is_d_d, mark(rect).
 
 % channel rankings à la APT
 

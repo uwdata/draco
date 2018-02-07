@@ -230,3 +230,22 @@ Test soft constraints:
 
             :- not feature_term("position_entropy", e).
         Expect: SAT
+
+    Test only row and column:
+        Program: |
+            fieldtype(n3,number).
+            cardinality(n3,10).
+
+            mark(text).
+
+            encoding(e).
+            field(e,n3).
+            channel(e,column).
+            type(e,ordinal).
+
+            type(e1,quantitative).
+            field(e2,n3).
+            channel(e3,text).
+
+            :- not feature_term("only_row_column").
+        Expect: SAT
