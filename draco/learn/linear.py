@@ -30,10 +30,10 @@ def prepare_data(data: pd.DataFrame):
         x_neg = data.negative.iloc[i].values
 
         X[i] = x_pos - x_neg
-        y[i] = 100
+        y[i] = 0
 
         X[i + N] = x_neg - x_pos
-        y[i + N] = 20
+        y[i + N] = 1
 
     return X, y
 
@@ -80,7 +80,8 @@ def classify_and_plot(X, y, split=0.7):
     plot_contours(ax, clf, xx, yy,
                   cmap=plt.cm.coolwarm, alpha=0.2)
 
-    idx = (y == 100)
+    # classes labeled 0
+    idx = (y == 0)
     plt.scatter(X0[idx], X1[idx], c='r', alpha=0.5, cmap=plt.cm.coolwarm, marker='>', label='positive')
     plt.scatter(X0[~idx], X1[~idx], c='b', alpha=0.5, cmap=plt.cm.coolwarm, marker='<', label='negative')
 
