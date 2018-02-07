@@ -78,7 +78,7 @@ def classify_and_plot(X, y, split=0.7):
     f, ax = plt.subplots()
     plot_contours(ax, clf, xx, yy,
                   cmap=plt.cm.coolwarm, alpha=0.8)
-    ax.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=20, edgecolors='k')
+    ax.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, alpha=0.5, s=20, edgecolors='k')
     ax.set_xlim(xx.min(), xx.max())
     ax.set_ylim(yy.min(), yy.max())
     ax.set_xlabel('X0')
