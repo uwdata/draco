@@ -39,7 +39,7 @@ def learn_weights(X_train, y_train, X_dev, y_dev):
     clf = svm.LinearSVC(C=.1)
     clf.fit(X_train, y_train)
     coef = clf.coef_.ravel() / np.linalg.norm(clf.coef_)
-    print(coef)
+    #print(coef)
 
     print(clf.score(X_train, y_train))
     print(clf.score(X_dev, y_dev))
@@ -76,8 +76,9 @@ if __name__ == '__main__':
     X_dev, y_dev = prepare_data(dev_data)
 
     learn_weights(X_train, y_train, X_dev, y_dev)
-        
-    plt = plot_data(*prepare_data(dev_data))
+    
+    plt = plot_data(*prepare_data(train_data))    
+    #plt = plot_data(*prepare_data(dev_data))
     plt.show()
 
 
