@@ -35,10 +35,10 @@ def prepare_data(data):
 
 def learn_weights(X_train, y_train, X_dev, y_dev):
 
-    #clf = sklearn.linear_model.LogisticRegression()
-    clf = svm.LinearSVC(C=.1)
+    clf = sklearn.linear_model.LogisticRegression()
+    #clf = svm.LinearSVC(C=.1)
     clf.fit(X_train, y_train)
-    coef = clf.coef_.ravel() / np.linalg.norm(clf.coef_)
+    #coef = clf.coef_.ravel() / np.linalg.norm(clf.coef_)
     #print(coef)
 
     print(clf.score(X_train, y_train))
