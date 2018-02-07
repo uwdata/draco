@@ -29,6 +29,7 @@
 #const log_weight = 1.
 #const zero_weight = -1.
 #const position_entropy_weight = 2.
+#const only_row_column_weight = -2.
 
 #const m_m_point_weight = 0.
 #const m_m_bar_weight = 20.
@@ -118,6 +119,7 @@ feature_weight("x_y_raw",x_y_raw_weight).
 feature_weight("log",log_weight).
 feature_weight("zero",zero_weight).
 feature_weight("position_entropy",position_entropy_weight).
+feature_weight("only_row_column",only_row_column_weight).
 feature_weight("m_m_point",m_m_point_weight).
 feature_weight("m_m_bar",m_m_bar_weight).
 feature_weight("m_m_line",m_m_line_weight).

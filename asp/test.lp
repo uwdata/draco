@@ -79,7 +79,7 @@
 % point, tick, and bar require x or y channel
 :- mark(point;tick;bar;rule), not channel(_,x), not channel(_,y).
 
-% do not use ruleif we have x and y
+% do not use rule if we have x and y
 :- mark(rule), channel(_,x), channel(_,y).
 
 % line and area require x and y channel
