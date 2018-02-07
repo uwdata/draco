@@ -13,6 +13,12 @@ from draco.learn import data_util
 
 
 def prepare_data(data: pd.DataFrame):
+    """ transform data into X, y matrices
+        Returns:
+            X: ndarray of shape (2 * N, num_columns), representing matrix
+            y: ndarray of shape (2 * N), representing labels
+    """
+
     N = len(data)
 
     X = np.zeros((2 * N, len(data.positive.columns)))
@@ -32,14 +38,12 @@ def prepare_data(data: pd.DataFrame):
 
 def plot_contours(ax, clf, xx, yy, **params):
     """Plot the decision boundaries for a classifier.
-
-    Parameters
-    ----------
-    ax: matplotlib axes object
-    clf: a classifier
-    xx: meshgrid ndarray
-    yy: meshgrid ndarray
-    params: dictionary of params to pass to contourf, optional
+    Params:
+        ax: matplotlib axes object
+        clf: a classifier
+        xx: meshgrid ndarray
+        yy: meshgrid ndarray
+        params: dictionary of params to pass to contourf, optional
     """
     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
     Z = Z.reshape(xx.shape)
@@ -89,16 +93,12 @@ def classify_and_plot(X, y, split=0.7):
 
 def make_meshgrid(x, y, h=.02):
     """Create a mesh of points to plot in
-
-    Parameters
-    ----------
-    x: data to base x-axis meshgrid on
-    y: data to base y-axis meshgrid on
-    h: stepsize for meshgrid, optional
-
-    Returns
-    -------
-    xx, yy : ndarray
+    Params:
+        x: data to base x-axis meshgrid on
+        y: data to base y-axis meshgrid on
+        h: stepsize for meshgrid, optional
+    Returns:
+        xx, yy : ndarray
     """
     x_min, x_max = x.min() - 1, x.max() + 1
     y_min, y_max = y.min() - 1, y.max() + 1
@@ -123,7 +123,6 @@ def plot_data(X, y):
 if __name__ == '__main__':
 
     data = data_util.load_data()
-
     train_dev, _ = data_util.split_dataset(data, ratio=0.7)
 
     X, y = prepare_data(train_dev)
