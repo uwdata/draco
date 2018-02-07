@@ -96,7 +96,7 @@ def split_dataset(data, ratio=0.7, seed=1):
     ])
 
 def rand_split_XY(X, y, ratio=0.7, seed=1):
-    """ Split matrices X, y together, 
+    """ Split matrices X, y together,
         so that X[i], y[i] pairing relation is retained
     """
     np.random.seed(seed)
