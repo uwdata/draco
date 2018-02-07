@@ -41,7 +41,7 @@ You might need to activate a Python 2.7 environment to compile the canvas module
 
 ### Python setup
 
-`pip install -r requirements.txt`
+`pip install -r requirements.txt` or `conda install --file requirements.txt`
 
 Install draco in editable mode
 
