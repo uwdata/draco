@@ -77,12 +77,19 @@ def classify_and_plot(X, y, split=0.7):
 
     f, ax = plt.subplots()
     plot_contours(ax, clf, xx, yy,
-                  cmap=plt.cm.coolwarm, alpha=0.8)
-    ax.scatter(X0, X1, c=y, s=y, cmap=plt.cm.coolwarm, alpha=0.5, edgecolors='k')
+                  cmap=plt.cm.coolwarm, alpha=0.6)
+
+    M = np.where(y == 100, '+', 'x')
+    C = np.where(y == 100, 'r', 'b')
+    for x0, x1, m, c in zip(X0, X1, M, C):
+        ax.scatter(x0, x1, c=c, alpha=0.5, marker=m)
+
     ax.set_xlim(xx.min(), xx.max())
     ax.set_ylim(yy.min(), yy.max())
+
     ax.set_xlabel('X0')
     ax.set_ylabel('X1')
+
     ax.set_xticks(())
     ax.set_yticks(())
 
