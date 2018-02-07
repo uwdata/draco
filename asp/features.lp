@@ -73,7 +73,7 @@ feature_term("log",E) :- log(E).
 feature_term("zero",E) :- zero(E).
 
 % prefer not to use x and y for measures with high cardinality and low entropy without aggregation because the points will overlap
-feature_term("position_entropy", E) :- channel(E,(x;y)), measure(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 1, not aggregate(E,_).
+feature_term("position_entropy", E) :- channel(E,(x;y)), measure(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 3, not aggregate(E,_).
 
 % prefer not to use only row and column
 feature_term("only_row_column") :- channel(_,(row;column)), not channel(_,x), not channel(_,y), not channel(_,color), not channel(_,size), not channel(_,opacity), not channel(_,shape).
