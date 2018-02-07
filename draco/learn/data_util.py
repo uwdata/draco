@@ -86,6 +86,8 @@ def load_data() -> pd.DataFrame:
     data.fillna(0, inplace=True)
     return data
 
+#### data split functions
+
 def split_dataset(data, ratio=0.7, seed=1):
     np.random.seed(seed)
 
@@ -93,18 +95,22 @@ def split_dataset(data, ratio=0.7, seed=1):
         int(ratio*len(data))
     ])
 
-def split_XY(X, y, ratio=0.7, seed=1):
-
+def rand_split_XY(X, y, ratio=0.7, seed=1):
+    """ Split matrices X, y together, 
+        so that X[i], y[i] pairing relation is retained
+    """
     np.random.seed(seed)
 
-    split_index = int(len(X) * ratio )
     indexes = [i for i in range(len(X))]
     np.random.shuffle(indexes)
 
     X = [X[i] for i in indexes]
     y = [y[i] for i in indexes]
 
-    return X[:split_index], y[:split_index], X[split_index:], y[split_index:]
+    X1, X2 = np.split(X, [int(len(X) * ratio)])
+    y1, y2 = np.split(y, [int(len(y) * ratio)])
+
+    return X1, y1, X2, y2
 
 if __name__ == '__main__':
     generate_and_store_data()
