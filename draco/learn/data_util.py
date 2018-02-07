@@ -86,12 +86,25 @@ def load_data() -> pd.DataFrame:
     data.fillna(0, inplace=True)
     return data
 
-def split_dataset(data, train_ratio=0.7, dev_ratio=0.2, seed=1):
+def split_dataset(data, ratio=0.7, seed=1):
     np.random.seed(seed)
 
     return np.split(data.sample(frac=1), [
-        int(train_ratio*len(data)), int((train_ratio + dev_ratio)*len(data))
+        int(ratio*len(data))
     ])
+
+def split_XY(X, y, ratio=0.7, seed=1):
+
+    np.random.seed(seed)
+
+    split_index = int(len(X) * ratio )
+    indexes = [i for i in range(len(X))]
+    np.random.shuffle(indexes)
+
+    X = [X[i] for i in indexes]
+    y = [y[i] for i in indexes]
+
+    return X[:split_index], y[:split_index], X[split_index:], y[split_index:]
 
 if __name__ == '__main__':
     generate_and_store_data()

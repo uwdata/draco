@@ -1,28 +1,26 @@
-import matplotlib.pyplot as plt
+from typing import Tuple
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import sklearn
-import sklearn.preprocessing as preproc
+import seaborn as sns
+
 from sklearn import svm
 from sklearn.decomposition import PCA
+from sklearn import linear_model
 
 from draco.learn import data_util
-from draco.learn.helper import count_violations, current_weights
-from draco.spec import Data, Field
 
-def prepare_data(data):
 
+def prepare_data(data: pd.DataFrame):
     N = len(data)
-    num_features = len(data["positive"].columns)
 
-    X = np.zeros((2 * N, num_features))
+    X = np.zeros((2 * N, len(data.positive.columns)))
     y = np.zeros(2 * N)
 
     for i in range(N):
-
-        x_pos = data["positive"].iloc[i].values
-        x_neg = data["negative"].iloc[i].values
+        x_pos = data.positive.iloc[i].values
+        x_neg = data.negative.iloc[i].values
 
         X[i] = x_pos - x_neg
         y[i] = 1
@@ -32,53 +30,102 @@ def prepare_data(data):
 
     return X, y
 
+def plot_contours(ax, clf, xx, yy, **params):
+    """Plot the decision boundaries for a classifier.
 
-def learn_weights(X_train, y_train, X_dev, y_dev):
+    Parameters
+    ----------
+    ax: matplotlib axes object
+    clf: a classifier
+    xx: meshgrid ndarray
+    yy: meshgrid ndarray
+    params: dictionary of params to pass to contourf, optional
+    """
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+    out = ax.contourf(xx, yy, Z, **params)
+    return out
 
-    clf = sklearn.linear_model.LogisticRegression()
-    #clf = svm.LinearSVC(C=.1)
-    clf.fit(X_train, y_train)
-    #coef = clf.coef_.ravel() / np.linalg.norm(clf.coef_)
-    #print(coef)
-
-    print(clf.score(X_train, y_train))
-    print(clf.score(X_dev, y_dev))
-
-
-
-def plot_data(X, y):
-
-    print(len(list(set([tuple([int(t) for t in x]) for x in X]))))
+def classify_and_plot(X, y, split=0.7):
+    """ Reduce X, y into 2D using PCA and use SVM to classify them
+        Then plot the decision boundary as well as raw data points
+    """
 
     pca = PCA(n_components=2)
     X = pca.fit_transform(X)
 
-    labels = list(set(y))
+    split_index = int(len(X) * split)
 
-    class_label = [('^', 'r'), ('o', 'b'), ('*', 'b'), ('*', 'y'), ('*', 'b')]
+    #clf = linear_model.LogisticRegression()
+    clf = svm.LinearSVC(C=1)
+    #clf = svm.SVC(C=1)
 
-    for v in labels:
-        x1 = [X[i][0] for i in range(len(X)) if y[i] == v]
-        x2 = [X[i][1] for i in range(len(X)) if y[i] == v]
+    X_train, y_train, X_dev, y_dev = data_util.split_XY(X, y)
 
-        label = class_label[labels.index(v)]
-        plt.scatter(x1, x2, marker=label[0], c=label[1])
+    clf.fit(X_train, y_train)
 
-    return plt
+    print(clf.score(X_train, y_train))
+    print(clf.score(X_dev, y_dev))
+
+    # for plotting
+    X0, X1 = X[:, 0], X[:, 1]
+    xx, yy = make_meshgrid(X0, X1)
+
+    f, ax = plt.subplots()
+    plot_contours(ax, clf, xx, yy,
+                  cmap=plt.cm.coolwarm, alpha=0.8)
+    ax.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=20, edgecolors='k')
+    ax.set_xlim(xx.min(), xx.max())
+    ax.set_ylim(yy.min(), yy.max())
+    ax.set_xlabel('X0')
+    ax.set_ylabel('X1')
+    ax.set_xticks(())
+    ax.set_yticks(())
+
+    plt.show()
+
+    return clf
+
+
+def make_meshgrid(x, y, h=.02):
+    """Create a mesh of points to plot in
+
+    Parameters
+    ----------
+    x: data to base x-axis meshgrid on
+    y: data to base y-axis meshgrid on
+    h: stepsize for meshgrid, optional
+
+    Returns
+    -------
+    xx, yy : ndarray
+    """
+    x_min, x_max = x.min() - 1, x.max() + 1
+    y_min, y_max = y.min() - 1, y.max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
+    return xx, yy
+
+
+def plot_data(X, y):
+    pca = PCA(n_components=2)
+    X_2d = pca.fit_transform(X)
+
+    fitted = pd.DataFrame(X_2d)
+
+    fitted[2] = y
+    fitted.columns = ['x1', 'x2', 'label']
+
+    sns.lmplot(data=fitted, x='x1', y='x2', fit_reg=False, hue='label')
+    plt.show()
+
 
 if __name__ == '__main__':
 
     data = data_util.load_data()
 
-    train_data, dev_data, _ = data_util.split_dataset(data)
+    train_dev, _ = data_util.split_dataset(data, ratio=0.7)
 
-    X_train, y_train = prepare_data(train_data)
-    X_dev, y_dev = prepare_data(dev_data)
+    X, y = prepare_data(train_dev)
 
-    learn_weights(X_train, y_train, X_dev, y_dev)
-    
-    plt = plot_data(*prepare_data(train_data))    
-    #plt = plot_data(*prepare_data(dev_data))
-    plt.show()
-
-
+    classify_and_plot(X, y)
