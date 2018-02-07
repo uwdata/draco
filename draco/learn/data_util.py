@@ -6,6 +6,7 @@ import os
 from typing import Dict, List
 
 import pandas as pd
+import numpy as np
 
 from draco.learn.helper import count_violations, current_weights
 from draco.spec import Data, Encoding, Field
@@ -83,6 +84,28 @@ def load_data() -> pd.DataFrame:
     data = pd.read_pickle(pickle_path)
     data.fillna(0, inplace=True)
     return data
+
+def split_dataset(data, split_ratio=[0.7, 0.1, 0.2], seed=1):
+
+    N = len(data)
+    indexes = np.arange(N)
+    
+    np.random.seed(seed)
+    np.random.shuffle(indexes)
+    
+    train_split = 0.7
+    dev_split = 0.1
+    test_split = 0.2
+
+    train_indexes = indexes[:int(N * train_split)]
+    dev_indexes = indexes[int(N * train_split): int(N * (train_split + dev_split))]
+    test_indexes = indexes[int(N * (train_split + dev_split)):]
+
+    train_data = data.iloc[train_indexes]
+    dev_data = data.iloc[dev_indexes]
+    test_data = data.iloc[dev_indexes]
+
+    return train_data, dev_data, test_data
 
 if __name__ == '__main__':
     generate_and_store_data()
