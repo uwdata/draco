@@ -3,7 +3,6 @@ from typing import Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seaborn as sns
 
 from sklearn import svm
 from sklearn.decomposition import PCA
@@ -117,19 +116,6 @@ def make_meshgrid(x, y, h=.02):
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
                          np.arange(y_min, y_max, h))
     return xx, yy
-
-
-def plot_data(X, y):
-    pca = PCA(n_components=2)
-    X_2d = pca.fit_transform(X)
-
-    fitted = pd.DataFrame(X_2d)
-
-    fitted[2] = y
-    fitted.columns = ['x1', 'x2', 'label']
-
-    sns.lmplot(data=fitted, x='x1', y='x2', fit_reg=False, hue='label')
-    plt.show()
 
 
 if __name__ == '__main__':
