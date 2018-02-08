@@ -176,7 +176,6 @@ class Encoding():
             _get_field(encoding_props, 'zero'),
             encoding_id)
 
-
     def __init__(self, channel: str, field: str, ty: str, aggregate: str, binning, log_scale: bool, zero: bool, idx: Optional[str] = None) -> None:
         ''' Create a channel:
             Args:
@@ -193,7 +192,6 @@ class Encoding():
         self.log_scale = log_scale
         self.zero = zero
         self.id = idx if idx is not None else Encoding.gen_encoding_id()
-
 
     def to_vegalite(self):
         encoding = {}
@@ -212,7 +210,6 @@ class Encoding():
             encoding['scale'] = {'zero' : True}
 
         return encoding
-
 
     def to_asp(self) -> str:
         # if a property is a hole, generate a placeholder

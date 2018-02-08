@@ -63,6 +63,7 @@ def classify_and_plot(X, y, split=0.7):
 
     # clf = linear_model.LogisticRegression()
     clf = svm.LinearSVC(C=1)
+    # clf = svm.SVC(C=1)
     # clf = tree.DecisionTreeClassifier()
 
     X_train, y_train, X_dev, y_dev = data_util.rand_split_XY(X, y)

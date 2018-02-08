@@ -37,10 +37,9 @@ def get_raw_data():
     with open(user_study_data_path) as f:
         qqn_data = json.load(f)
         for row in qqn_data:
-            if row['task'] == 'readValue':
-                fields = list(map(Field.from_obj, row['fields']))
-                spec_schema = Data(fields, int(row['num_rows']))
-                raw_data.append((spec_schema, row['worse'], row['better']))
+            fields = list(map(Field.from_obj, row['fields']))
+            spec_schema = Data(fields, int(row['num_rows']))
+            raw_data.append((spec_schema, row['negative'], row['positive']))
 
     return raw_data
 
@@ -64,11 +63,18 @@ def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
     index = get_index()
     df = pd.DataFrame(columns=index)
 
+    processed_specs = {}
+    def count_violations_memoized(data, spec):
+        key = data.to_asp() + ',' + json.dumps(spec)
+        if key not in processed_specs:
+            processed_specs[key] = count_violations(data, spec)
+        return processed_specs[key]
+
     # convert the specs to feature vectors
     for data, spec_neg, spec_pos in raw_data:
         Encoding.encoding_cnt = 0
-        specs = reformat('negative', count_violations(data, spec_neg))
-        specs.update(reformat('positive', count_violations(data, spec_pos)))
+        specs = reformat('negative', count_violations_memoized(data, spec_neg))
+        specs.update(reformat('positive', count_violations_memoized(data, spec_pos)))
 
         df = df.append(pd.DataFrame(specs, index=[0]))
 
