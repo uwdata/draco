@@ -15,7 +15,7 @@ from draco.spec import Query, Task
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DRACO_LP = ['define.lp', 'generate.lp', 'test.lp', 'features.lp', 'weights.lp', 'optimize.lp', 'output.lp']
+DRACO_LP = ['define.lp', 'generate.lp', 'test.lp', 'features.lp', 'weights.lp', 'assign_weights.lp', 'optimize.lp', 'output.lp']
 DRACO_LP_DIR = os.path.join(os.path.dirname(__file__), '../asp')
 
 

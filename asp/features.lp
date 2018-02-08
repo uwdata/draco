@@ -1,3 +1,5 @@
+% After adding a feature to this file, make sure to update `weights.lp` and run `process_features.py` as well.
+
 % ====== Preferences ======
 
 % prefer quantitative > ordinal > nominal
@@ -72,11 +74,16 @@ feature_term("log",E) :- log(E).
 % prefer to include zero
 feature_term("zero",E) :- zero(E).
 
+% prefer not to use only row and column
+feature_term("only_row_column") :- channel(_,(row;column)), not channel(_,x), not channel(_,y), not channel(_,color), not channel(_,size), not channel(_,opacity), not channel(_,shape).
+
+% Overplotting
+
 % prefer not to use x and y for measures with high cardinality and low entropy without aggregation because the points will overlap
 feature_term("position_entropy", E) :- channel(E,(x;y)), measure(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 3, not aggregate(E,_).
 
-% prefer not to use only row and column
-feature_term("only_row_column") :- channel(_,(row;column)), not channel(_,x), not channel(_,y), not channel(_,color), not channel(_,size), not channel(_,opacity), not channel(_,shape).
+% prefer not to use size when the cardinality is large on x or y
+feature_term("high_cardinality_size", E) :- measure(E), channel(_,size), cardinality(E,C), C > 100, channel(E,(x;y)).
 
 % ====== Rankings ======
 
