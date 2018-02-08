@@ -3,11 +3,9 @@ from typing import Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
-from sklearn import svm
+import seaborn as sns
+from sklearn import linear_model, svm, tree
 from sklearn.decomposition import PCA
-from sklearn import linear_model
-from sklearn import tree
 
 from draco.learn import data_util
 
@@ -57,8 +55,6 @@ def classify_and_plot(X, y, split=0.7):
 
     pca = PCA(n_components=2)
     X = pca.fit_transform(X)
-
-    split_index = int(len(X) * split)
 
     # clf = linear_model.LogisticRegression()
     clf = svm.LinearSVC(C=1)
