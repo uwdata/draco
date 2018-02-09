@@ -37,9 +37,6 @@
 % shape requires dimension
 :- channel_meas(shape).
 
-% size or text require measure
-:- channel_dim(size;text).
-
 % row and column require dimension
 :- channel_meas(row;column).
 

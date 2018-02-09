@@ -1,6 +1,8 @@
-from draco.run import run
-from draco.spec import Data, Task, Query, Field
 import unittest
+
+from draco.run import run
+from draco.spec import Data, Field, Query, Task
+
 
 def get_rec(data, query):
     query = Query.from_obj(query)
@@ -15,6 +17,7 @@ def run_spec(data, spec):
 spec_schema = Data([
         Field('q1', 'number', 100, 1),
         Field('q2', 'number', 100, 1),
+        Field('o1', 'number', 6, 1),
         Field('n1', 'string', 5, 1)
     ], 100, url='data.csv')
 
@@ -66,16 +69,28 @@ class TestSpecs():
         }
 
 class TestTypeChannel():
-    def get_spec(self, channel):
+    def get_spec(self, t, channel):
         return {
             'mark': 'point',
             'encoding': {
-                channel: {'field': 'q1', 'type': 'quantitative'}
+                channel: {'field': 'q1' if t == 'quantitative' else 'o1', 'type': t}
             }
         }
 
     def test_q(self):
-        a = run_spec(spec_schema, self.get_spec('x')).cost
-        b = run_spec(spec_schema, self.get_spec('color')).cost
+        comparisons = [('x', 'size'), ('size', 'color'), ('color', 'opacity')]
 
-        assert a < b
+        for c0, c1 in comparisons:
+            a = run_spec(spec_schema, self.get_spec('quantitative', c0)).cost
+            b = run_spec(spec_schema, self.get_spec('quantitative', c1)).cost
+
+            assert a < b, f'Channel {c0} is not better than {c1}.'
+
+    def test_o(self):
+        comparisons = [('x', 'color'), ('color', 'size'), ('size', 'opacity')]
+
+        for c0, c1 in comparisons:
+            a = run_spec(spec_schema, self.get_spec('ordinal', c0)).cost
+            b = run_spec(spec_schema, self.get_spec('ordinal', c1)).cost
+
+            assert a < b, f'Channel {c0} is not better than {c1}.'
