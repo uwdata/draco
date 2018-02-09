@@ -61,12 +61,12 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None) -
         return None
     elif result == 'OPTIMUM FOUND':
         # get the last witness, which is the best result
-        answers = json_result['Call'][0]['Witnesses'][-1]['Value']
+        answers = json_result['Call'][0]['Witnesses'][-1]
 
-        logger.info(answers)
+        logger.info(answers['Value'])
 
-        query = Query.parse_from_answer(clyngor.Answers(answers).sorted)
-        return Task(task.data, query, violations)
+        query = Query.parse_from_answer(clyngor.Answers(answers['Value']).sorted)
+        return Task(task.data, query, answers['Costs'][0], violations)
     else:
         logger.error('Unsupported result: %s', result)
         return None

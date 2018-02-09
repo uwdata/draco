@@ -221,7 +221,7 @@ class Encoding():
             # its type may be a NULL requesting for synthesis
             'type': self.ty,
             'aggregate': self.aggregate,
-            'bin': self.binning,
+            'bin': 10 if self.binning == True else self.binning,
             'log': self.log_scale,
             'zero': self.zero
         }
@@ -323,10 +323,11 @@ class Query():
 
 class Task():
 
-    def __init__(self, data: Data, query: Query, violations: Dict[str, int] = None) -> None:
+    def __init__(self, data: Data, query: Query, cost: Optional[int] = None, violations: Optional[Dict[str, int]] = None) -> None:
         self.data = data
         self.query = query
         self.violations = violations
+        self.cost = cost
 
     @staticmethod
     def from_obj(query_spec, data_dir: Optional[str]) -> 'Task':
