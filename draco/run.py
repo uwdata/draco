@@ -31,7 +31,8 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None) -
         files=[os.path.join(DRACO_LP_DIR, f) for f in files],
         inline=task.to_asp(),
         constants=constants,
-        options=['--outf=2'])
+        stats=False,
+        options=['--outf=2', '--warn=no-atom-undefined'])
 
     logger.info('Command: %s', ' '.join(run_command))
 
@@ -67,6 +68,13 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None) -
 
         query = Query.parse_from_answer(clyngor.Answers(answers['Value']).sorted)
         return Task(task.data, query, answers['Costs'][0], violations)
+    elif result == 'SATISFIABLE':
+        answers = json_result['Call'][0]['Witnesses'][-1]
+
+        logger.info(answers['Value'])
+
+        query = Query.parse_from_answer(clyngor.Answers(answers['Value']).sorted)
+        return Task(task.data, query, violations=violations)
     else:
         logger.error('Unsupported result: %s', result)
         return None

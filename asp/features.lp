@@ -40,11 +40,12 @@ feature_term("bin_cardinality",E) :- type(E,quantitative), bin(E,_), cardinality
 % prefer quantitative for bin
 feature_term("quant_bin",E) :- bin(E,_), type(E,quantitative).
 
-% aggregate should also have a dimension
-feature_term("agg_dim") :- aggregate(_,_), not dimension(_).
+% aggregate should also have a discrete encoding to group by
+feature_term("agg_dim") :- aggregate(_,_), not discrete(_).
 
-% plots with only ordinal, binned q, or t with time unit should add count
-feature_term("add_count") :- not measure(_), not aggregate(_,count).
+% plots with only nominal, ordinal, binned q, or t with time unit should add count
+% fixme
+feature_term("add_count") :- discrete(_), not aggregate(_,count).
 
 % don't use bar, line, or area for raw data as it leads to occulusion
 feature_term("bar_raw") :- mark(bar), not aggregate(_,_).
@@ -65,8 +66,12 @@ feature_term("aggregate_group_by_raw",E) :- aggregate(_,_), type(E,quantitative)
 % prefer not to use vertical for dot plot
 feature_term("vertical_dot") :- channel(_,y), not channel(_,C), C != y, channel(C), not mark(bar).
 
-% prefer not to use plot with both x and y dimension and no aggregate as it leads to occlusion
-feature_term("x_y_raw") :- channel(EX,x), dimension(EX), channel(EY,y), dimension(EY), not aggregate(_,_).
+% prefer not to use plot with x or y discrete and no aggregate as it leads to occlusion
+feature_term("x_raw") :- channel(EX,x), discrete(EX), not aggregate(E,_), continuous(E).
+feature_term("y_raw") :- channel(EY,y), discrete(EY), not aggregate(E,_), continuous(E).
+
+% prefer not to use plot with both x and y discrete and no aggregate as it leads to occlusion
+feature_term("x_y_raw") :- channel(EX,x), discrete(EX), channel(EY,y), discrete(EY), not aggregate(E,_), continuous(E).
 
 % prefer not to use log scale
 feature_term("log",E) :- log(E).
@@ -79,11 +84,11 @@ feature_term("only_row_column") :- channel(_,(row;column)), not channel(_,x), no
 
 % Overplotting
 
-% prefer not to use x and y for measures with high cardinality and low entropy without aggregation because the points will overlap
-feature_term("position_entropy", E) :- channel(E,(x;y)), measure(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 3, not aggregate(E,_).
+% prefer not to use x and y for continuous with high cardinality and low entropy without aggregation because the points will overlap
+feature_term("position_entropy", E) :- channel(E,(x;y)), continuous(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 3, not aggregate(E,_).
 
 % prefer not to use size when the cardinality is large on x or y
-feature_term("high_cardinality_size", E) :- measure(E), channel(_,size), cardinality(E,C), C > 100, channel(E,(x;y)).
+feature_term("high_cardinality_size", E) :- continuous(E), channel(_,size), cardinality(E,C), C > 100, channel(E,(x;y)).
 
 % don't use color without x or y without aggregation
 
@@ -91,33 +96,33 @@ feature_term("high_cardinality_size", E) :- measure(E), channel(_,size), cardina
 
 % ====== Rankings ======
 
-% measure by measure
-is_m_m :- channel_meas(x), channel_meas(y).
+% continuous by continuous
+is_c_c :- channel_continuous(x), channel_continuous(y).
 
-feature_term("m_m_point") :- is_m_m, mark(point).
-feature_term("m_m_bar") :- is_m_m, mark(bar).
-feature_term("m_m_line") :- is_m_m, mark(line).
-feature_term("m_m_area") :- is_m_m, mark(area).
-feature_term("m_m_rule") :- is_m_m, mark(rule).
-feature_term("m_m_text") :- is_m_m, mark(text).
-feature_term("m_m_tick") :- is_m_m, mark(tick).
-feature_term("m_m_rect") :- is_m_m, mark(rect).
+feature_term("m_m_point") :- is_c_c, mark(point).
+feature_term("m_m_bar") :- is_c_c, mark(bar).
+feature_term("m_m_line") :- is_c_c, mark(line).
+feature_term("m_m_area") :- is_c_c, mark(area).
+feature_term("m_m_rule") :- is_c_c, mark(rule).
+feature_term("m_m_text") :- is_c_c, mark(text).
+feature_term("m_m_tick") :- is_c_c, mark(tick).
+feature_term("m_m_rect") :- is_c_c, mark(rect).
 
-% measure by dimension
-is_m_d :- channel_meas(x), channel_dim(y).
-is_m_d :- channel_meas(y), channel_dim(x).
+% continuous by discrete
+is_c_d :- channel_continuous(x), channel_discrete(y).
+is_c_d :- channel_continuous(y), channel_discrete(x).
 
-feature_term("m_d_point") :- is_m_d, mark(point).
-feature_term("m_d_bar") :- is_m_d, mark(bar).
-feature_term("m_d_line") :- is_m_d, mark(line).
-feature_term("m_d_area") :- is_m_d, mark(area).
-feature_term("m_d_rule") :- is_m_d, mark(rule).
-feature_term("m_d_text") :- is_m_d, mark(text).
-feature_term("m_d_tick") :- is_m_d, mark(tick).
-feature_term("m_d_rect") :- is_m_d, mark(rect).
+feature_term("m_d_point") :- is_c_d, mark(point).
+feature_term("m_d_bar") :- is_c_d, mark(bar).
+feature_term("m_d_line") :- is_c_d, mark(line).
+feature_term("m_d_area") :- is_c_d, mark(area).
+feature_term("m_d_rule") :- is_c_d, mark(rule).
+feature_term("m_d_text") :- is_c_d, mark(text).
+feature_term("m_d_tick") :- is_c_d, mark(tick).
+feature_term("m_d_rect") :- is_c_d, mark(rect).
 
-% dimension by dimension
-is_d_d :- channel_dim(x), channel_dim(y).
+% discrete by discrete
+is_d_d :- channel_discrete(x), channel_discrete(y).
 
 feature_term("d_d_point") :- is_d_d, mark(point).
 feature_term("d_d_bar") :- is_d_d, mark(bar).
@@ -130,25 +135,25 @@ feature_term("d_d_rect") :- is_d_d, mark(rect).
 
 % channel rankings à la APT
 
-feature_term("measure_x") :- channel(E,x), measure(E).
-feature_term("measure_y") :- channel(E,y), measure(E).
-feature_term("measure_color") :- channel(E,color), measure(E).
-feature_term("measure_opacity") :- channel(E,opacity), measure(E).
-feature_term("measure_size") :- channel(E,size), measure(E).
-feature_term("measure_shape") :- channel(E,shape), measure(E).
-feature_term("measure_text") :- channel(E,text), measure(E).
-feature_term("measure_row") :- channel(E,row), measure(E).
-feature_term("measure_column") :- channel(E,column), measure(E).
+feature_term("continuous_x") :- channel(E,x), continuous(E).
+feature_term("continuous_y") :- channel(E,y), continuous(E).
+feature_term("continuous_color") :- channel(E,color), continuous(E).
+feature_term("continuous_opacity") :- channel(E,opacity), continuous(E).
+feature_term("continuous_size") :- channel(E,size), continuous(E).
+feature_term("continuous_shape") :- channel(E,shape), continuous(E).
+feature_term("continuous_text") :- channel(E,text), continuous(E).
+feature_term("continuous_row") :- channel(E,row), continuous(E).
+feature_term("continuous_column") :- channel(E,column), continuous(E).
 
-feature_term("ordered_x") :- channel(E,x), dimension(E), not type(E,nominal).
-feature_term("ordered_y") :- channel(E,y), dimension(E), not type(E,nominal).
-feature_term("ordered_color") :- channel(E,color), dimension(E), not type(E,nominal).
-feature_term("ordered_opacity") :- channel(E,opacity), dimension(E), not type(E,nominal).
-feature_term("ordered_size") :- channel(E,size), dimension(E), not type(E,nominal).
-feature_term("ordered_shape") :- channel(E,shape), dimension(E), not type(E,nominal).
-feature_term("ordered_text") :- channel(E,text), dimension(E), not type(E,nominal).
-feature_term("ordered_row") :- channel(E,row), dimension(E), not type(E,nominal).
-feature_term("ordered_column") :- channel(E,column), dimension(E), not type(E,nominal).
+feature_term("ordered_x") :- channel(E,x), discrete(E), not type(E,nominal).
+feature_term("ordered_y") :- channel(E,y), discrete(E), not type(E,nominal).
+feature_term("ordered_color") :- channel(E,color), discrete(E), not type(E,nominal).
+feature_term("ordered_opacity") :- channel(E,opacity), discrete(E), not type(E,nominal).
+feature_term("ordered_size") :- channel(E,size), discrete(E), not type(E,nominal).
+feature_term("ordered_shape") :- channel(E,shape), discrete(E), not type(E,nominal).
+feature_term("ordered_text") :- channel(E,text), discrete(E), not type(E,nominal).
+feature_term("ordered_row") :- channel(E,row), discrete(E), not type(E,nominal).
+feature_term("ordered_column") :- channel(E,column), discrete(E), not type(E,nominal).
 
 feature_term("nominal_x") :- channel(E,x), type(E,nominal).
 feature_term("nominal_y") :- channel(E,y), type(E,nominal).
