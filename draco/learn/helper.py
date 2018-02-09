@@ -21,7 +21,7 @@ def count_violations(data: Data, full_spec: Dict) -> Dict:
     query = Query.from_vegalite(full_spec)
     input_task = Task(data, query)
 
-    task = run(input_task, files=['define.lp', 'features.lp', 'output.lp'] + ['count.lp'])
+    task = run(input_task, files=['define.lp', 'features.lp', 'output.lp'] + ['count.lp'], silence_warnings=True)
     return task.violations
 
 ## useful for initialization and normalization

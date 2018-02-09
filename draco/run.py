@@ -19,7 +19,7 @@ DRACO_LP = ['define.lp', 'generate.lp', 'test.lp', 'features.lp', 'weights.lp', 
 DRACO_LP_DIR = os.path.join(os.path.dirname(__file__), '../asp')
 
 
-def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None) -> Task:
+def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False) -> Task:
     ''' Run clingo to compute a completion of a partial spec or violations.
     '''
 
@@ -32,7 +32,7 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None) -
         inline=task.to_asp(),
         constants=constants,
         stats=False,
-        options=['--outf=2', '--warn=no-atom-undefined'])
+        options=['--outf=2'] + (['--warn=no-atom-undefined'] if silence_warnings else []))
 
     logger.info('Command: %s', ' '.join(run_command))
 
