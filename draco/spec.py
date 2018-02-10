@@ -176,7 +176,7 @@ class Encoding():
             _get_field(encoding_props, 'zero'),
             encoding_id)
 
-    def __init__(self, channel: str, field: str, ty: str, aggregate: str, binning, log_scale: bool, zero: bool, idx: Optional[str] = None) -> None:
+    def __init__(self, channel: str, field: str, ty: str, aggregate: Optional[str] = None, binning = None, log_scale: bool = None, zero: bool = True, idx: Optional[str] = None) -> None:
         ''' Create a channel:
             Args:
                 field: a string refering to a column in the table

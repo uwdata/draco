@@ -1,4 +1,6 @@
-from draco.spec import Field, Data, Task, Encoding
+import unittest
+
+from draco.spec import Data, Encoding, Field, Task
 
 
 class TestField():
@@ -18,6 +20,13 @@ class TestData():
 
 
 class TestEncoding():
+    @unittest.skip("@chenglong")
+    def test_construct_with_bin(self):
+        e = Encoding(channel='x', field='xx', ty='quantitative', binning='??')
+        assert e.binning == '??'
+
+        asp = 'encoding(e0).\nchannel(e0,x).\nfield(e0,xx).\ntype(e0,quantitative).\n0 { bin(e0,_) } 1.%0 { log(e1) } 1\n.zero(e0).\n'
+        assert e.to_asp() == asp
 
     def test_full_to_asp(self):
         e = Encoding(channel='x', field='xx', ty='quantitative', aggregate='max', binning='3', log_scale=True, zero=False, idx='e1')
