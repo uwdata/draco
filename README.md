@@ -63,6 +63,10 @@ You should also be able to run the tests (and coverage report)
 
 `pytest -v`
 
+#### Test types
+
+`mypy draco --ignore-missing-imports`
+
 ### Running Draco
 
 To run draco on a partial spec.
@@ -75,9 +79,11 @@ The output would be a .vl.json file (for Vega-Lite spec) and a .png file to prev
 
 Run `data/generate.js`. Then check out the examples named `qcl_*` in `data/input` and `data/output`.
 
-### Test types
+### Run draco directly on a set of ASP constraints
 
-`mypy draco --ignore-missing-imports`
+You can use the helper file `asp/all.lp`.
+
+`clingo asp/all.lp test.lp`
 
 ## To run the notebook in a conda environment
 

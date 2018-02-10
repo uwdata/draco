@@ -90,10 +90,6 @@ feature_term("position_entropy", E) :- channel(E,(x;y)), continuous(E), cardinal
 % prefer not to use size when the cardinality is large on x or y
 feature_term("high_cardinality_size", E) :- continuous(E), channel(_,size), cardinality(E,C), C > 100, channel(E,(x;y)).
 
-% don't use color without x or y without aggregation
-
-% don't use size without x or y without aggregation
-
 % ====== Rankings ======
 
 % continuous by continuous
