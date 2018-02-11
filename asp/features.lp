@@ -11,6 +11,9 @@ feature_term("type_n",E) :- type(E,nominal).
 % prefer to use raw (no aggregate)
 feature_term("aggregate",E) :- aggregate(E,_).
 
+% prefer to not bin
+feature_term("bin",E) :- bin(E,_).
+
 % prefer to use fewer encodings
 feature_term("encoding",E) :- encoding(E).
 
@@ -43,9 +46,8 @@ feature_term("quant_bin",E) :- bin(E,_), type(E,quantitative).
 % aggregate should also have a discrete encoding to group by
 feature_term("agg_dim") :- aggregate(_,_), not discrete(_).
 
-% plots with only nominal, ordinal, binned q, or t with time unit should add count
-% fixme
-feature_term("add_count") :- discrete(_), not aggregate(_,count).
+% plots with only nominal, ordinal, binned q, or t with time unit should add either an aggregation (e.g. count) or a quantitative field
+feature_term("only_discrete") :- not continuous(_).
 
 % don't use bar, line, or area for raw data as it leads to occulusion
 feature_term("bar_raw") :- mark(bar), not aggregate(_,_).
@@ -79,6 +81,9 @@ feature_term("log",E) :- log(E).
 % prefer to include zero
 feature_term("zero",E) :- zero(E).
 
+% prefer to use zero for the continuous channel of a bar chart
+feature_term("zero_bar") :- mark(bar), not zero(E), continuous(E), channel(E,(x;y)).
+
 % prefer not to use only row and column
 feature_term("only_row_column") :- channel(_,(row;column)), not channel(_,x), not channel(_,y), not channel(_,color), not channel(_,size), not channel(_,opacity), not channel(_,shape).
 
@@ -95,27 +100,27 @@ feature_term("high_cardinality_size", E) :- continuous(E), channel(_,size), card
 % continuous by continuous
 is_c_c :- channel_continuous(x), channel_continuous(y).
 
-feature_term("m_m_point") :- is_c_c, mark(point).
-feature_term("m_m_bar") :- is_c_c, mark(bar).
-feature_term("m_m_line") :- is_c_c, mark(line).
-feature_term("m_m_area") :- is_c_c, mark(area).
-feature_term("m_m_rule") :- is_c_c, mark(rule).
-feature_term("m_m_text") :- is_c_c, mark(text).
-feature_term("m_m_tick") :- is_c_c, mark(tick).
-feature_term("m_m_rect") :- is_c_c, mark(rect).
+feature_term("c_c_point") :- is_c_c, mark(point).
+feature_term("c_c_bar") :- is_c_c, mark(bar).
+feature_term("c_c_line") :- is_c_c, mark(line).
+feature_term("c_c_area") :- is_c_c, mark(area).
+feature_term("c_c_rule") :- is_c_c, mark(rule).
+feature_term("c_c_text") :- is_c_c, mark(text).
+feature_term("c_c_tick") :- is_c_c, mark(tick).
+feature_term("c_c_rect") :- is_c_c, mark(rect).
 
 % continuous by discrete
 is_c_d :- channel_continuous(x), channel_discrete(y).
 is_c_d :- channel_continuous(y), channel_discrete(x).
 
-feature_term("m_d_point") :- is_c_d, mark(point).
-feature_term("m_d_bar") :- is_c_d, mark(bar).
-feature_term("m_d_line") :- is_c_d, mark(line).
-feature_term("m_d_area") :- is_c_d, mark(area).
-feature_term("m_d_rule") :- is_c_d, mark(rule).
-feature_term("m_d_text") :- is_c_d, mark(text).
-feature_term("m_d_tick") :- is_c_d, mark(tick).
-feature_term("m_d_rect") :- is_c_d, mark(rect).
+feature_term("c_d_point") :- is_c_d, mark(point).
+feature_term("c_d_bar") :- is_c_d, mark(bar).
+feature_term("c_d_line") :- is_c_d, mark(line).
+feature_term("c_d_area") :- is_c_d, mark(area).
+feature_term("c_d_rule") :- is_c_d, mark(rule).
+feature_term("c_d_text") :- is_c_d, mark(text).
+feature_term("c_d_tick") :- is_c_d, mark(tick).
+feature_term("c_d_rect") :- is_c_d, mark(rect).
 
 % discrete by discrete
 is_d_d :- channel_discrete(x), channel_discrete(y).
@@ -131,32 +136,40 @@ feature_term("d_d_rect") :- is_d_d, mark(rect).
 
 % channel rankings à la APT
 
-feature_term("continuous_x") :- channel(E,x), continuous(E).
-feature_term("continuous_y") :- channel(E,y), continuous(E).
-feature_term("continuous_color") :- channel(E,color), continuous(E).
-feature_term("continuous_opacity") :- channel(E,opacity), continuous(E).
-feature_term("continuous_size") :- channel(E,size), continuous(E).
-feature_term("continuous_shape") :- channel(E,shape), continuous(E).
-feature_term("continuous_text") :- channel(E,text), continuous(E).
-feature_term("continuous_row") :- channel(E,row), continuous(E).
-feature_term("continuous_column") :- channel(E,column), continuous(E).
+feature_term("continuous_x", E) :- channel(E,x), continuous(E).
+feature_term("continuous_y", E) :- channel(E,y), continuous(E).
+feature_term("continuous_color", E) :- channel(E,color), continuous(E).
+feature_term("continuous_opacity", E) :- channel(E,opacity), continuous(E).
+feature_term("continuous_size", E) :- channel(E,size), continuous(E).
+feature_term("continuous_shape", E) :- channel(E,shape), continuous(E).
+feature_term("continuous_text", E) :- channel(E,text), continuous(E).
+feature_term("continuous_row", E) :- channel(E,row), continuous(E).
+feature_term("continuous_column", E) :- channel(E,column), continuous(E).
 
-feature_term("ordered_x") :- channel(E,x), discrete(E), not type(E,nominal).
-feature_term("ordered_y") :- channel(E,y), discrete(E), not type(E,nominal).
-feature_term("ordered_color") :- channel(E,color), discrete(E), not type(E,nominal).
-feature_term("ordered_opacity") :- channel(E,opacity), discrete(E), not type(E,nominal).
-feature_term("ordered_size") :- channel(E,size), discrete(E), not type(E,nominal).
-feature_term("ordered_shape") :- channel(E,shape), discrete(E), not type(E,nominal).
-feature_term("ordered_text") :- channel(E,text), discrete(E), not type(E,nominal).
-feature_term("ordered_row") :- channel(E,row), discrete(E), not type(E,nominal).
-feature_term("ordered_column") :- channel(E,column), discrete(E), not type(E,nominal).
+feature_term("ordered_x", E) :- channel(E,x), discrete(E), not type(E,nominal).
+feature_term("ordered_y", E) :- channel(E,y), discrete(E), not type(E,nominal).
+feature_term("ordered_color", E) :- channel(E,color), discrete(E), not type(E,nominal).
+feature_term("ordered_opacity", E) :- channel(E,opacity), discrete(E), not type(E,nominal).
+feature_term("ordered_size", E) :- channel(E,size), discrete(E), not type(E,nominal).
+feature_term("ordered_shape", E) :- channel(E,shape), discrete(E), not type(E,nominal).
+feature_term("ordered_text", E) :- channel(E,text), discrete(E), not type(E,nominal).
+feature_term("ordered_row", E) :- channel(E,row), discrete(E), not type(E,nominal).
+feature_term("ordered_column", E) :- channel(E,column), discrete(E), not type(E,nominal).
 
-feature_term("nominal_x") :- channel(E,x), type(E,nominal).
-feature_term("nominal_y") :- channel(E,y), type(E,nominal).
-feature_term("nominal_color") :- channel(E,color), type(E,nominal).
-feature_term("nominal_opacity") :- channel(E,opacity), type(E,nominal).
-feature_term("nominal_size") :- channel(E,size), type(E,nominal).
-feature_term("nominal_shape") :- channel(E,shape), type(E,nominal).
-feature_term("nominal_text") :- channel(E,text), type(E,nominal).
-feature_term("nominal_row") :- channel(E,row), type(E,nominal).
-feature_term("nominal_column") :- channel(E,column), type(E,nominal).
+feature_term("nominal_x", E) :- channel(E,x), type(E,nominal).
+feature_term("nominal_y", E) :- channel(E,y), type(E,nominal).
+feature_term("nominal_color", E) :- channel(E,color), type(E,nominal).
+feature_term("nominal_opacity", E) :- channel(E,opacity), type(E,nominal).
+feature_term("nominal_size", E) :- channel(E,size), type(E,nominal).
+feature_term("nominal_shape", E) :- channel(E,shape), type(E,nominal).
+feature_term("nominal_text", E) :- channel(E,text), type(E,nominal).
+feature_term("nominal_row", E) :- channel(E,row), type(E,nominal).
+feature_term("nominal_column", E) :- channel(E,column), type(E,nominal).
+
+% aggregate weights
+
+feature_term("aggregate_count", E) :- aggregate(E, count).
+feature_term("aggregate_mean", E) :- aggregate(E, mean).
+feature_term("aggregate_median", E) :- aggregate(E, median).
+feature_term("aggregate_min", E) :- aggregate(E, min).
+feature_term("aggregate_max", E) :- aggregate(E, max).

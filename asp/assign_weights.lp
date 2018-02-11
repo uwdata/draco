@@ -4,6 +4,7 @@ feature_weight("type_q",type_q_weight).
 feature_weight("type_o",type_o_weight).
 feature_weight("type_n",type_n_weight).
 feature_weight("aggregate",aggregate_weight).
+feature_weight("bin",bin_weight).
 feature_weight("encoding",encoding_weight).
 feature_weight("same_field_2",same_field_2_weight).
 feature_weight("same_field_3",same_field_3_weight).
@@ -17,7 +18,7 @@ feature_weight("tick_size",tick_size_weight).
 feature_weight("bin_cardinality",bin_cardinality_weight).
 feature_weight("quant_bin",quant_bin_weight).
 feature_weight("agg_dim",agg_dim_weight).
-feature_weight("add_count",add_count_weight).
+feature_weight("only_discrete",only_discrete_weight).
 feature_weight("bar_raw",bar_raw_weight).
 feature_weight("line_raw",line_raw_weight).
 feature_weight("area_raw",area_raw_weight).
@@ -28,6 +29,7 @@ feature_weight("vertical_dot",vertical_dot_weight).
 feature_weight("x_y_raw",x_y_raw_weight).
 feature_weight("log",log_weight).
 feature_weight("zero",zero_weight).
+feature_weight("zero_bar",zero_bar_weight).
 feature_weight("position_entropy",position_entropy_weight).
 feature_weight("only_row_column",only_row_column_weight).
 feature_weight("c_c_point",c_c_point_weight).
@@ -81,3 +83,8 @@ feature_weight("nominal_shape",nominal_shape_weight).
 feature_weight("nominal_text",nominal_text_weight).
 feature_weight("nominal_row",nominal_row_weight).
 feature_weight("nominal_column",nominal_column_weight).
+feature_weight("aggregate_count",aggregate_count_weight).
+feature_weight("aggregate_mean",aggregate_mean_weight).
+feature_weight("aggregate_median",aggregate_median_weight).
+feature_weight("aggregate_min",aggregate_min_weight).
+feature_weight("aggregate_max",aggregate_max_weight).
