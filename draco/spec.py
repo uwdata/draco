@@ -16,7 +16,9 @@ from clyngor.answers import Answers
 
 class Field():
 
-    def __init__(self, name: str, ty: str, cardinality: int, entropy: Optional[float] = None, interesting: Optional[bool] = None) -> None:
+    def __init__(self, name: str, ty: str, 
+                 cardinality: int, entropy: Optional[float] = None, 
+                 interesting: Optional[bool] = None) -> None:
         self.name = name
 
         # column data type, should be a string represented type,
@@ -118,7 +120,9 @@ class Data():
             content.append(row_obj)
         return Data(fields, len(agate_table), content=content)
 
-    def __init__(self, fields: Iterable[Field], size: int, content: Optional[Iterable[Any]] = None, url: Optional[str] = None) -> None:
+    def __init__(self, fields: Iterable[Field], 
+                 size: int, content: Optional[Iterable[Any]] = None, 
+                 url: Optional[str] = None) -> None:
         self.fields = fields
         self.size = size
         self.content = content
@@ -156,7 +160,6 @@ class Encoding():
             Returns:
                 an encoding object
         '''
-
         scale = obj.get('scale')
 
         binning = obj.get('bin')
@@ -184,7 +187,15 @@ class Encoding():
             encoding_props.get('zero'),
             encoding_id)
 
-    def __init__(self, channel: Optional[str] = None, field: Optional[str] = None, ty: Optional[str] = None, aggregate: Optional[str] = None, binning: Optional[Union[int, bool]] = None, log_scale: Optional[bool] = None, zero: Optional[bool] = None, idx: Optional[str] = None) -> None:
+    def __init__(self, 
+                 channel: Optional[str] = None, 
+                 field: Optional[str] = None, 
+                 ty: Optional[str] = None, 
+                 aggregate: Optional[str] = None, 
+                 binning: Optional[Union[int, bool]] = None, 
+                 log_scale: Optional[bool] = None, 
+                 zero: Optional[bool] = None, 
+                 idx: Optional[str] = None) -> None:
         self.channel = channel
         self.field = field
         self.ty = ty
@@ -216,13 +227,21 @@ class Encoding():
     def to_asp(self) -> str:
         constraints = [f'encoding({self.id}).']
 
-        def _constraint(prop: str, value: str) -> str:
+        def _constraint(prop: str, value) -> str:
+            """ if the property is True, we would like to fit something in
+                            ...... False, we do not want to fit anything in,
+                            ...... a none boolean value, we don't want to touch it """
             if value == False:
                 return f':- {prop}({self.id},_).'
-            if value == True or value == '?':
+            elif value == True or value == '?':
                 return f'1 {{ {prop}({self.id},P): {prop}(P) }} 1.'
-            else:
+            elif value is not None:
                 return f'{prop}({self.id},{value}).'
+            else:
+                print("[Error] None value is inserted to constraints.")
+
+        # if a property is None, it means it is a 
+        #   field that should be determined by the system.
 
         if self.channel is not None:
             constraints.append(_constraint('channel', self.channel))
@@ -238,7 +257,6 @@ class Encoding():
 
         if self.binning is not None:
             constraints.append(_constraint('bin', self.binning))
-
 
         if self.log_scale == True:
             constraints.append(f'log({self.id}).')
@@ -320,7 +338,9 @@ class Query():
 
 class Task():
 
-    def __init__(self, data: Data, query: Query, cost: Optional[int] = None, violations: Optional[Dict[str, int]] = None) -> None:
+    def __init__(self, data: Data, query: Query, 
+                 cost: Optional[int] = None, 
+                 violations: Optional[Dict[str, int]] = None) -> None:
         self.data = data
         self.query = query
         self.violations = violations
@@ -328,10 +348,9 @@ class Task():
 
     @staticmethod
     def from_obj(query_spec, data_dir: Optional[str]) -> 'Task':
+        ''' from a dict_obj in compassql format'''
         data = Data.from_obj(query_spec['data'], path_prefix=data_dir)
-
         query = Query.from_obj(query_spec)
-
         return Task(data, query)
 
     def to_vegalite(self):

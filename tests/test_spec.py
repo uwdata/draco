@@ -2,7 +2,6 @@ import unittest
 
 from draco.spec import Data, Encoding, Field, Task
 
-
 class TestField():
     def test_number_to_asp(self):
         assert Field('foo', 'number', 100, 0.3).to_asp() == 'fieldtype(foo,number).\ncardinality(foo,100).\nentropy(foo,3).\n'
