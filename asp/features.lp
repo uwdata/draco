@@ -177,6 +177,7 @@ feature_term("continuous_shape",E) :- channel(E,shape), continuous(E).
 feature_term("continuous_text",E) :- channel(E,text), continuous(E).
 feature_term("continuous_row",E) :- channel(E,row), continuous(E).
 feature_term("continuous_column",E) :- channel(E,column), continuous(E).
+feature_term("continuous_detail",E) :- channel(E,detail), continuous(E).
 
 feature_term("ordered_x",E) :- channel(E,x), discrete(E), not type(E,nominal).
 feature_term("ordered_y",E) :- channel(E,y), discrete(E), not type(E,nominal).
@@ -187,6 +188,7 @@ feature_term("ordered_shape",E) :- channel(E,shape), discrete(E), not type(E,nom
 feature_term("ordered_text",E) :- channel(E,text), discrete(E), not type(E,nominal).
 feature_term("ordered_row",E) :- channel(E,row), discrete(E), not type(E,nominal).
 feature_term("ordered_column",E) :- channel(E,column), discrete(E), not type(E,nominal).
+feature_term("ordered_detail",E) :- channel(E,detail), discrete(E), not type(E,nominal).
 
 feature_term("nominal_x",E) :- channel(E,x), type(E,nominal).
 feature_term("nominal_y",E) :- channel(E,y), type(E,nominal).
@@ -197,6 +199,7 @@ feature_term("nominal_shape",E) :- channel(E,shape), type(E,nominal).
 feature_term("nominal_text",E) :- channel(E,text), type(E,nominal).
 feature_term("nominal_row",E) :- channel(E,row), type(E,nominal).
 feature_term("nominal_column",E) :- channel(E,column), type(E,nominal).
+feature_term("nominal_detail",E) :- channel(E,detail), type(E,nominal).
 
 feature_term("interesting_x",E) :- channel(E,x), field(E,F), interesting(F).
 feature_term("interesting_y",E) :- channel(E,y), field(E,F), interesting(F).
@@ -207,6 +210,7 @@ feature_term("interesting_shape",E) :- channel(E,shape), field(E,F), interesting
 feature_term("interesting_text",E) :- channel(E,text), field(E,F), interesting(F).
 feature_term("interesting_row",E) :- channel(E,row), field(E,F), interesting(F).
 feature_term("interesting_column",E) :- channel(E,column), field(E,F), interesting(F).
+feature_term("interesting_detail",E) :- channel(E,detail), field(E,F), interesting(F).
 
 % aggregate weights
 

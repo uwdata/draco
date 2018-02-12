@@ -80,6 +80,7 @@ feature_weight("continuous_shape",continuous_shape_weight).
 feature_weight("continuous_text",continuous_text_weight).
 feature_weight("continuous_row",continuous_row_weight).
 feature_weight("continuous_column",continuous_column_weight).
+feature_weight("continuous_detail",continuous_detail_weight).
 feature_weight("ordered_x",ordered_x_weight).
 feature_weight("ordered_y",ordered_y_weight).
 feature_weight("ordered_color",ordered_color_weight).
@@ -89,6 +90,7 @@ feature_weight("ordered_shape",ordered_shape_weight).
 feature_weight("ordered_text",ordered_text_weight).
 feature_weight("ordered_row",ordered_row_weight).
 feature_weight("ordered_column",ordered_column_weight).
+feature_weight("ordered_detail",ordered_detail_weight).
 feature_weight("nominal_x",nominal_x_weight).
 feature_weight("nominal_y",nominal_y_weight).
 feature_weight("nominal_color",nominal_color_weight).
@@ -98,6 +100,7 @@ feature_weight("nominal_shape",nominal_shape_weight).
 feature_weight("nominal_text",nominal_text_weight).
 feature_weight("nominal_row",nominal_row_weight).
 feature_weight("nominal_column",nominal_column_weight).
+feature_weight("nominal_detail",nominal_detail_weight).
 feature_weight("interesting_x",interesting_x_weight).
 feature_weight("interesting_y",interesting_y_weight).
 feature_weight("interesting_color",interesting_color_weight).
@@ -107,6 +110,7 @@ feature_weight("interesting_shape",interesting_shape_weight).
 feature_weight("interesting_text",interesting_text_weight).
 feature_weight("interesting_row",interesting_row_weight).
 feature_weight("interesting_column",interesting_column_weight).
+feature_weight("interesting_detail",interesting_detail_weight).
 feature_weight("aggregate_count",aggregate_count_weight).
 feature_weight("aggregate_mean",aggregate_mean_weight).
 feature_weight("aggregate_median",aggregate_median_weight).

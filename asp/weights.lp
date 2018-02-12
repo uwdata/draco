@@ -85,6 +85,7 @@
 #const continuous_text_weight = 20.
 #const continuous_row_weight = 100.
 #const continuous_column_weight = 100.
+#const continuous_detail_weight = 200.
 
 #const ordered_x_weight = 0.
 #const ordered_y_weight = 0.
@@ -95,6 +96,7 @@
 #const ordered_text_weight = 32.
 #const ordered_row_weight = 7.
 #const ordered_column_weight = 7.
+#const ordered_detail_weight = 40.
 
 #const nominal_x_weight = 0.
 #const nominal_y_weight = 0.
@@ -105,6 +107,7 @@
 #const nominal_text_weight = 8.
 #const nominal_row_weight = 7.
 #const nominal_column_weight = 7.
+#const nominal_detail_weight = 20.
 
 #const interesting_x_weight = 0.
 #const interesting_y_weight = 1.
@@ -115,6 +118,7 @@
 #const interesting_text_weight = 6.
 #const interesting_row_weight = 6.
 #const interesting_column_weight = 7.
+#const interesting_detail_weight = 20.
 
 #const aggregate_count_weight = 0.
 #const aggregate_mean_weight = 2.
