@@ -96,13 +96,19 @@ feature_term("zero_size") :- continuous(E), channel(E,size), not zero(E).
 % prefer not to use only row and column
 feature_term("only_row_column") :- channel(_,(row;column)), not channel(_,x), not channel(_,y), not channel(_,color), not channel(_,size), not channel(_,opacity), not channel(_,shape).
 
+% prefer not to use ordinal for fields with high cardinality
+feature_term("high_cardinality_ordinal",E) :- type(E,ordinal), cardinality(E,C), C > 20.
+
+% prefer to use only x instead of only y
+feature_term("only_x") :- channel(_,y), not channel(_,x).
+
 % Overplotting
 
 % prefer not to use x and y for continuous with high cardinality and low entropy without aggregation because the points will overlap
-feature_term("position_entropy", E) :- channel(E,(x;y)), continuous(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 3, not aggregate(E,_).
+feature_term("position_entropy",E) :- channel(E,(x;y)), continuous(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 3, not aggregate(E,_).
 
 % prefer not to use size when the cardinality is large on x or y
-feature_term("high_cardinality_size", E) :- continuous(E), channel(_,size), cardinality(E,C), C > 100, channel(E,(x;y)).
+feature_term("high_cardinality_size",E) :- continuous(E), channel(_,size), cardinality(E,C), C > 100, channel(E,(x;y)).
 
 % ====== Rankings ======
 
@@ -160,40 +166,40 @@ feature_term("d_d_rect") :- is_d_d, mark(rect).
 
 % channel rankings à la APT
 
-feature_term("continuous_x", E) :- channel(E,x), continuous(E).
-feature_term("continuous_y", E) :- channel(E,y), continuous(E).
-feature_term("continuous_color", E) :- channel(E,color), continuous(E).
-feature_term("continuous_opacity", E) :- channel(E,opacity), continuous(E).
-feature_term("continuous_size", E) :- channel(E,size), continuous(E).
-feature_term("continuous_shape", E) :- channel(E,shape), continuous(E).
-feature_term("continuous_text", E) :- channel(E,text), continuous(E).
-feature_term("continuous_row", E) :- channel(E,row), continuous(E).
-feature_term("continuous_column", E) :- channel(E,column), continuous(E).
+feature_term("continuous_x",E) :- channel(E,x), continuous(E).
+feature_term("continuous_y",E) :- channel(E,y), continuous(E).
+feature_term("continuous_color",E) :- channel(E,color), continuous(E).
+feature_term("continuous_opacity",E) :- channel(E,opacity), continuous(E).
+feature_term("continuous_size",E) :- channel(E,size), continuous(E).
+feature_term("continuous_shape",E) :- channel(E,shape), continuous(E).
+feature_term("continuous_text",E) :- channel(E,text), continuous(E).
+feature_term("continuous_row",E) :- channel(E,row), continuous(E).
+feature_term("continuous_column",E) :- channel(E,column), continuous(E).
 
-feature_term("ordered_x", E) :- channel(E,x), discrete(E), not type(E,nominal).
-feature_term("ordered_y", E) :- channel(E,y), discrete(E), not type(E,nominal).
-feature_term("ordered_color", E) :- channel(E,color), discrete(E), not type(E,nominal).
-feature_term("ordered_opacity", E) :- channel(E,opacity), discrete(E), not type(E,nominal).
-feature_term("ordered_size", E) :- channel(E,size), discrete(E), not type(E,nominal).
-feature_term("ordered_shape", E) :- channel(E,shape), discrete(E), not type(E,nominal).
-feature_term("ordered_text", E) :- channel(E,text), discrete(E), not type(E,nominal).
-feature_term("ordered_row", E) :- channel(E,row), discrete(E), not type(E,nominal).
-feature_term("ordered_column", E) :- channel(E,column), discrete(E), not type(E,nominal).
+feature_term("ordered_x",E) :- channel(E,x), discrete(E), not type(E,nominal).
+feature_term("ordered_y",E) :- channel(E,y), discrete(E), not type(E,nominal).
+feature_term("ordered_color",E) :- channel(E,color), discrete(E), not type(E,nominal).
+feature_term("ordered_opacity",E) :- channel(E,opacity), discrete(E), not type(E,nominal).
+feature_term("ordered_size",E) :- channel(E,size), discrete(E), not type(E,nominal).
+feature_term("ordered_shape",E) :- channel(E,shape), discrete(E), not type(E,nominal).
+feature_term("ordered_text",E) :- channel(E,text), discrete(E), not type(E,nominal).
+feature_term("ordered_row",E) :- channel(E,row), discrete(E), not type(E,nominal).
+feature_term("ordered_column",E) :- channel(E,column), discrete(E), not type(E,nominal).
 
-feature_term("nominal_x", E) :- channel(E,x), type(E,nominal).
-feature_term("nominal_y", E) :- channel(E,y), type(E,nominal).
-feature_term("nominal_color", E) :- channel(E,color), type(E,nominal).
-feature_term("nominal_opacity", E) :- channel(E,opacity), type(E,nominal).
-feature_term("nominal_size", E) :- channel(E,size), type(E,nominal).
-feature_term("nominal_shape", E) :- channel(E,shape), type(E,nominal).
-feature_term("nominal_text", E) :- channel(E,text), type(E,nominal).
-feature_term("nominal_row", E) :- channel(E,row), type(E,nominal).
-feature_term("nominal_column", E) :- channel(E,column), type(E,nominal).
+feature_term("nominal_x",E) :- channel(E,x), type(E,nominal).
+feature_term("nominal_y",E) :- channel(E,y), type(E,nominal).
+feature_term("nominal_color",E) :- channel(E,color), type(E,nominal).
+feature_term("nominal_opacity",E) :- channel(E,opacity), type(E,nominal).
+feature_term("nominal_size",E) :- channel(E,size), type(E,nominal).
+feature_term("nominal_shape",E) :- channel(E,shape), type(E,nominal).
+feature_term("nominal_text",E) :- channel(E,text), type(E,nominal).
+feature_term("nominal_row",E) :- channel(E,row), type(E,nominal).
+feature_term("nominal_column",E) :- channel(E,column), type(E,nominal).
 
 % aggregate weights
 
-feature_term("aggregate_count", E) :- aggregate(E, count).
-feature_term("aggregate_mean", E) :- aggregate(E, mean).
-feature_term("aggregate_median", E) :- aggregate(E, median).
-feature_term("aggregate_min", E) :- aggregate(E, min).
-feature_term("aggregate_max", E) :- aggregate(E, max).
+feature_term("aggregate_count",E) :- aggregate(E, count).
+feature_term("aggregate_mean",E) :- aggregate(E, mean).
+feature_term("aggregate_median",E) :- aggregate(E, median).
+feature_term("aggregate_min",E) :- aggregate(E, min).
+feature_term("aggregate_max",E) :- aggregate(E, max).

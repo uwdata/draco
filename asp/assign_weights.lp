@@ -35,6 +35,8 @@ feature_weight("log",log_weight).
 feature_weight("zero",zero_weight).
 feature_weight("zero_bar",zero_bar_weight).
 feature_weight("zero_size",zero_size_weight).
+feature_weight("high_cardinality_ordinal",high_cardinality_ordinal_weight).
+feature_weight("only_x",only_x_weight).
 feature_weight("position_entropy",position_entropy_weight).
 feature_weight("only_row_column",only_row_column_weight).
 feature_weight("c_c_point",c_c_point_weight).

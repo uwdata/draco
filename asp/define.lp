@@ -35,3 +35,6 @@ orientation(vertical) :- mark(bar;tick), channel_discrete(y).
 
 cardinality(E,C) :- field(E,F), cardinality(F,C).
 entropy(E,EN) :- field(E,F), entropy(F,EN).
+
+% define a fake feature_term/2 for all feature_term/1.
+feature_term(F,_placeholder) :- feature_term(F).

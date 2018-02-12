@@ -197,7 +197,7 @@ class Encoding():
             if value == False:
                 return f':- {prop}({self.id},_).'
             if value == True or value == '?':
-                return f':- not {prop}({self.id},_).'
+                return f'1 {{ {prop}({self.id},P): {prop}(P) }} 1.'
             else:
                 return f'{prop}({self.id},{value}).'
 
