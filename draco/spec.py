@@ -8,13 +8,15 @@ from collections import defaultdict
 from typing import Any, Dict, Iterable, List, Optional, Union
 
 import agate
+import numpy as np
+import scipy.stats as stats
 from agate.table import Table
 from clyngor.answers import Answers
 
 
 class Field():
 
-    def __init__(self, name: str, ty: str, cardinality: int, entropy: Optional[float] = None) -> None:
+    def __init__(self, name: str, ty: str, cardinality: int, entropy: Optional[float] = None, interesting: Optional[bool] = None) -> None:
         self.name = name
 
         # column data type, should be a string represented type,
@@ -23,11 +25,18 @@ class Field():
 
         self.cardinality = cardinality
         self.entropy = entropy
+        self.interesting = interesting
 
     @staticmethod
     def from_obj(obj: Dict[str, str]):
         ''' Build a field from a field represented as a dictionary. '''
-        return Field(obj['name'], obj['type'], int(obj['cardinality']), float(obj.get('entropy')))
+        return Field(
+            obj['name'],
+            obj['type'],
+            int(obj['cardinality']),
+            float(obj.get('entropy')),
+            obj.get('interesting')
+        )
 
     def to_asp(self) -> str:
         asp_str = f'fieldtype({self.name},{self.ty}).\n'
@@ -35,6 +44,8 @@ class Field():
         if self.entropy is not None:
             # asp only supports integers
             asp_str += f'entropy({self.name},{int(self.entropy * 10)}).\n'
+        if self.interesting == True:
+            asp_str += f'interesting({self.name}).\n'
         return asp_str
 
 
@@ -69,22 +80,34 @@ class Data():
         '''
         fields: List[Field] = []
 
-        for i in range(len(agate_table.column_names)):
-            name = agate_table.column_names[i]
-            agate_type = agate_table.column_types[i]
+        for column in agate_table.columns:
+            agate_type = column.data_type
             type_name = 'string'
+
+            data = column.values_without_nulls()
+
+            entropy = None
+
             if isinstance(agate_type, agate.Text):
                 type_name = 'string'
+                _, dist = np.unique(data, return_counts=True)
+                dist = dist / np.sum(dist)
+                entropy = stats.entropy(dist)
             elif isinstance(agate_type, agate.Number):
                 type_name = 'number'
+                h = np.histogram(np.array(data).astype(float), 100)
+                entropy = stats.entropy(h[0])
             elif isinstance(agate_type, agate.Boolean):
                 type_name = 'boolean'
+                _, dist = np.unique(data, return_counts=True)
+                dist = dist / np.sum(dist)
+                entropy = stats.entropy(dist)
             elif isinstance(agate_type, agate.Date):
                 type_name = 'date'
             elif isinstance(agate_type, agate.DateTime):
                 type_name = 'date' # take care!
-            cardinality = len(set(agate_table.columns.get(name)))
-            fields.append(Field(name, type_name, cardinality))
+
+            fields.append(Field(column.name, type_name, len(set(data)), entropy))
 
         # store the table into a dict
         content = []

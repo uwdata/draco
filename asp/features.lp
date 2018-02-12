@@ -166,6 +166,8 @@ feature_term("d_d_rect") :- is_d_d, mark(rect).
 
 % channel rankings à la APT
 
+% TODO: add detail
+
 feature_term("continuous_x",E) :- channel(E,x), continuous(E).
 feature_term("continuous_y",E) :- channel(E,y), continuous(E).
 feature_term("continuous_color",E) :- channel(E,color), continuous(E).
@@ -195,6 +197,16 @@ feature_term("nominal_shape",E) :- channel(E,shape), type(E,nominal).
 feature_term("nominal_text",E) :- channel(E,text), type(E,nominal).
 feature_term("nominal_row",E) :- channel(E,row), type(E,nominal).
 feature_term("nominal_column",E) :- channel(E,column), type(E,nominal).
+
+feature_term("interesting_x",E) :- channel(E,x), field(E,F), interesting(F).
+feature_term("interesting_y",E) :- channel(E,y), field(E,F), interesting(F).
+feature_term("interesting_color",E) :- channel(E,color), field(E,F), interesting(F).
+feature_term("interesting_opacity",E) :- channel(E,opacity), field(E,F), interesting(F).
+feature_term("interesting_size",E) :- channel(E,size), field(E,F), interesting(F).
+feature_term("interesting_shape",E) :- channel(E,shape), field(E,F), interesting(F).
+feature_term("interesting_text",E) :- channel(E,text), field(E,F), interesting(F).
+feature_term("interesting_row",E) :- channel(E,row), field(E,F), interesting(F).
+feature_term("interesting_column",E) :- channel(E,column), field(E,F), interesting(F).
 
 % aggregate weights
 

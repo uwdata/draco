@@ -98,6 +98,15 @@ feature_weight("nominal_shape",nominal_shape_weight).
 feature_weight("nominal_text",nominal_text_weight).
 feature_weight("nominal_row",nominal_row_weight).
 feature_weight("nominal_column",nominal_column_weight).
+feature_weight("interesting_x",interesting_x_weight).
+feature_weight("interesting_y",interesting_y_weight).
+feature_weight("interesting_color",interesting_color_weight).
+feature_weight("interesting_opacity",interesting_opacity_weight).
+feature_weight("interesting_size",interesting_size_weight).
+feature_weight("interesting_shape",interesting_shape_weight).
+feature_weight("interesting_text",interesting_text_weight).
+feature_weight("interesting_row",interesting_row_weight).
+feature_weight("interesting_column",interesting_column_weight).
 feature_weight("aggregate_count",aggregate_count_weight).
 feature_weight("aggregate_mean",aggregate_mean_weight).
 feature_weight("aggregate_median",aggregate_median_weight).

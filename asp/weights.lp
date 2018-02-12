@@ -106,6 +106,16 @@
 #const nominal_row_weight = 7.
 #const nominal_column_weight = 7.
 
+#const interesting_x_weight = 0.
+#const interesting_y_weight = 1.
+#const interesting_color_weight = 2.
+#const interesting_opacity_weight = 3.
+#const interesting_size_weight = 2.
+#const interesting_shape_weight = 3.
+#const interesting_text_weight = 6.
+#const interesting_row_weight = 6.
+#const interesting_column_weight = 7.
+
 #const aggregate_count_weight = 0.
 #const aggregate_mean_weight = 2.
 #const aggregate_median_weight = 3.
