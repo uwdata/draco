@@ -27,7 +27,7 @@ discrete(E) :- bin(E,_).
 continuous(E) :- encoding(E), not discrete(E).
 
 channel_discrete(C) :- discrete(E), channel(E,C).
-channel_continuous(C) :- not discrete(E), channel(E,C).
+channel_continuous(C) :- continuous(E), channel(E,C).
 
 % orientation for bars and ticks
 orientation(horizontal) :- mark(bar;tick), channel_discrete(x).

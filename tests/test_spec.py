@@ -5,7 +5,7 @@ from draco.spec import Data, Encoding, Field, Task
 
 class TestField():
     def test_number_to_asp(self):
-        assert Field('foo', 'number', 100).to_asp() == 'fieldtype(foo,number).\ncardinality(foo,100).\n'
+        assert Field('foo', 'number', 100, 0.3).to_asp() == 'fieldtype(foo,number).\ncardinality(foo,100).\nentropy(foo,3).\n'
 
     def test_string_to_asp(self):
         assert Field('xxx', 'string', 1).to_asp() == 'fieldtype(xxx,string).\ncardinality(xxx,1).\n'
@@ -16,16 +16,36 @@ class TestField():
 
 class TestData():
     def test_to_asp(self):
-        assert Data([Field('foo', 'number', '10')], 42).to_asp() == 'data_size(42).\n\nfieldtype(foo,number).\ncardinality(foo,10).\n'
+        assert Data([Field('foo', 'number', 10, 0.4)], 42).to_asp() == 'data_size(42).\n\nfieldtype(foo,number).\ncardinality(foo,10).\nentropy(foo,4).\n'
 
 
 class TestEncoding():
-    @unittest.skip("@chenglong")
-    def test_construct_with_bin(self):
-        e = Encoding(channel='x', field='xx', ty='quantitative', binning='??')
-        assert e.binning == '??'
+    def test_construct_with_bin_wild(self):
+        e = Encoding(channel='x', field='xx', ty='quantitative', binning='?', idx='e1')
+        assert e.binning == '?'
 
-        asp = 'encoding(e0).\nchannel(e0,x).\nfield(e0,xx).\ntype(e0,quantitative).\n0 { bin(e0,_) } 1.%0 { log(e1) } 1\n.zero(e0).\n'
+        asp = 'encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,quantitative).\n:- not bin(e1,_).\n'
+        assert e.to_asp() == asp
+
+    def test_construct_with_bin_true(self):
+        e = Encoding(channel='x', field='xx', ty='quantitative', binning=True, idx='e1')
+        assert e.binning == True
+
+        asp = 'encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,quantitative).\n:- not bin(e1,_).\n'
+        assert e.to_asp() == asp
+
+    def test_construct_with_bin_false(self):
+        e = Encoding(channel='x', field='xx', ty='quantitative', binning=False, idx='e1')
+        assert e.binning == False
+
+        asp = 'encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,quantitative).\n:- bin(e1,_).\n'
+        assert e.to_asp() == asp
+
+    def test_construct_with_bin_value(self):
+        e = Encoding(channel='x', field='xx', ty='quantitative', binning=16, idx='e1')
+        assert e.binning == 16
+
+        asp = 'encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,quantitative).\nbin(e1,16).\n'
         assert e.to_asp() == asp
 
     def test_full_to_asp(self):
@@ -34,20 +54,18 @@ class TestEncoding():
         assert e.to_asp() == asp
 
     def test_channel_idx_to_asp(self):
-        e = Encoding(channel='y', field=None, ty=None, aggregate=None, binning=None, log_scale=None, zero=None, idx='e1')
-        asp = 'encoding(e1).\nchannel(e1,y).\n%0 { log(e1) } 1.\n%0 { zero(e1) } 1.\n'
-        assert e.to_asp() == asp
+        e = Encoding(channel='y', idx='e1')
+        assert e.to_asp() == 'encoding(e1).\nchannel(e1,y).\n'
 
     def test_only_idx_to_asp(self):
-        e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, log_scale=None, zero=None, idx='e1')
-        asp = 'encoding(e1).\n%0 { log(e1) } 1.\n%0 { zero(e1) } 1.\n'
-        assert e.to_asp() == asp
+        e = Encoding(idx='e1')
+        assert e.to_asp() == 'encoding(e1).\n'
 
     def test_id_creation(self):
         Encoding.encoding_cnt = 0
 
-        e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, log_scale=None, zero=None)
+        e = Encoding()
         assert e.id == 'e0'
 
-        e = Encoding(channel=None, field=None, ty=None, aggregate=None, binning=None, log_scale=None, zero=None)
+        e = Encoding()
         assert e.id == 'e1'

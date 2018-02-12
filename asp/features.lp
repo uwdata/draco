@@ -14,8 +14,17 @@ feature_term("aggregate",E) :- aggregate(E,_).
 % prefer to not bin
 feature_term("bin",E) :- bin(E,_).
 
+% prefer binning with at most 12 buckets
+feature_term("bin_high",E) :- bin(E,B), B > 12.
+
+% prefer binning with more than 7 buckets
+feature_term("bin_low",E) :- bin(E,B), B <= 7.
+
 % prefer to use fewer encodings
 feature_term("encoding",E) :- encoding(E).
+
+% prefer to use fewer encodings with fields (count does not have a field)
+feature_term("encoding_field",E) :- encoding(E), field(E,_).
 
 % prefer not to use the same field multiple times
 feature_term("same_field_2",F) :- field(F), { field(_,F) } = 2.
@@ -41,7 +50,7 @@ feature_term("tick_size") :- mark(tick), channel(_,size).
 feature_term("bin_cardinality",E) :- type(E,quantitative), bin(E,_), cardinality(E,C), C < 15.
 
 % prefer quantitative for bin
-feature_term("quant_bin",E) :- bin(E,_), type(E,quantitative).
+feature_term("quant_bin",E) :- bin(E,_), not type(E,quantitative).
 
 % aggregate should also have a discrete encoding to group by
 feature_term("agg_dim") :- aggregate(_,_), not discrete(_).
@@ -63,26 +72,26 @@ feature_term("multiple_non_pos") :- {channel(_,C): non_positional(C)} > 1.
 feature_term("non_positional_pref") :- channel(_,C), non_positional(C), not channel(_,(x;y)).
 
 % aggregate plots should not use raw continuous as group by
-feature_term("aggregate_group_by_raw",E) :- aggregate(_,_), type(E,quantitative), not bin(E,_), not aggregate(E,_).
-
-% prefer not to use vertical for dot plot
-feature_term("vertical_dot") :- channel(_,y), not channel(_,C), C != y, channel(C), not mark(bar).
+feature_term("aggregate_group_by_raw",E) :- aggregate(_,_), continuous(E), not aggregate(E,_).
 
 % prefer not to use plot with x or y discrete and no aggregate as it leads to occlusion
-feature_term("x_raw") :- channel(EX,x), discrete(EX), not aggregate(E,_), continuous(E).
-feature_term("y_raw") :- channel(EY,y), discrete(EY), not aggregate(E,_), continuous(E).
+feature_term("x_raw",E) :- channel(EX,x), discrete(EX), not aggregate(E,_), continuous(E).
+feature_term("y_raw",E) :- channel(EY,y), discrete(EY), not aggregate(E,_), continuous(E).
 
 % prefer not to use plot with both x and y discrete and no aggregate as it leads to occlusion
-feature_term("x_y_raw") :- channel(EX,x), discrete(EX), channel(EY,y), discrete(EY), not aggregate(E,_), continuous(E).
+feature_term("x_y_raw",E) :- channel(EX,x), discrete(EX), channel(EY,y), discrete(EY), not aggregate(E,_), continuous(E).
 
 % prefer not to use log scale
 feature_term("log",E) :- log(E).
 
-% prefer to include zero
-feature_term("zero",E) :- zero(E).
+% prefer to include zero for continuous
+feature_term("zero",E) :- continuous(E), not zero(E).
 
 % prefer to use zero for the continuous channel of a bar chart
-feature_term("zero_bar") :- mark(bar), not zero(E), continuous(E), channel(E,(x;y)).
+feature_term("zero_bar") :- mark(bar), continuous(E), channel(E,(x;y)), not zero(E).
+
+% prefer zero for continuous size
+feature_term("zero_size") :- continuous(E), channel(E,size), not zero(E).
 
 % prefer not to use only row and column
 feature_term("only_row_column") :- channel(_,(row;column)), not channel(_,x), not channel(_,y), not channel(_,color), not channel(_,size), not channel(_,opacity), not channel(_,shape).
@@ -109,18 +118,33 @@ feature_term("c_c_text") :- is_c_c, mark(text).
 feature_term("c_c_tick") :- is_c_c, mark(tick).
 feature_term("c_c_rect") :- is_c_c, mark(rect).
 
-% continuous by discrete
-is_c_d :- channel_continuous(x), channel_discrete(y).
-is_c_d :- channel_continuous(y), channel_discrete(x).
+% continuous by discrete (or continuous only)
+is_c_d :- channel_continuous(x), not channel_continuous(y).
+is_c_d :- channel_continuous(y), not channel_continuous(x).
 
-feature_term("c_d_point") :- is_c_d, mark(point).
-feature_term("c_d_bar") :- is_c_d, mark(bar).
-feature_term("c_d_line") :- is_c_d, mark(line).
-feature_term("c_d_area") :- is_c_d, mark(area).
-feature_term("c_d_rule") :- is_c_d, mark(rule).
-feature_term("c_d_text") :- is_c_d, mark(text).
-feature_term("c_d_tick") :- is_c_d, mark(tick).
-feature_term("c_d_rect") :- is_c_d, mark(rect).
+% the continupus variable is a measure (it is aggregated) and there is no detail -> no overlap
+no_overlap :- continuous(E), channel(E,(x;y)), aggregate(E,_), not channel(_,detail).
+
+feature_term("c_d_point") :- is_c_d, not no_overlap, mark(point).
+feature_term("c_d_bar") :- is_c_d, not no_overlap, mark(bar).
+feature_term("c_d_line") :- is_c_d, not no_overlap, mark(line).
+feature_term("c_d_area") :- is_c_d, not no_overlap, mark(area).
+feature_term("c_d_rule") :- is_c_d, not no_overlap, mark(rule).
+feature_term("c_d_text") :- is_c_d, not no_overlap, mark(text).
+feature_term("c_d_tick") :- is_c_d, not no_overlap, mark(tick).
+feature_term("c_d_rect") :- is_c_d, not no_overlap, mark(rect).
+
+% no overlap
+
+feature_term("c_d_no_overlap_point") :- is_c_d, no_overlap, mark(point).
+feature_term("c_d_no_overlap_bar") :- is_c_d, no_overlap, mark(bar).
+feature_term("c_d_no_overlap_line") :- is_c_d, no_overlap, mark(line).
+feature_term("c_d_no_overlap_area") :- is_c_d, no_overlap, mark(area).
+feature_term("c_d_no_overlap_rule") :- is_c_d, no_overlap, mark(rule).
+feature_term("c_d_no_overlap_text") :- is_c_d, no_overlap, mark(text).
+feature_term("c_d_no_overlap_tick") :- is_c_d, no_overlap, mark(tick).
+feature_term("c_d_no_overlap_rect") :- is_c_d, no_overlap, mark(rect).
+
 
 % discrete by discrete
 is_d_d :- channel_discrete(x), channel_discrete(y).

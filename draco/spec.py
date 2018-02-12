@@ -5,21 +5,11 @@ Tasks, Encoding, and Query helper classes for draco.
 import json
 import os
 from collections import defaultdict
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, Iterable, List, Optional, Union
 
 import agate
 from agate.table import Table
 from clyngor.answers import Answers
-
-NULL = 'NULL_'     # I don't want this property
-HOLE = '_??_'      # I want a value for this property
-# Use `None` for 'I didn't specify this and don't care'
-
-def handle_special_value(v: str) -> str:
-    # return a hole if the given value is not '??', else return the value.
-    # this function is used in the parsing phase to convert '??' 'null'
-    #   into special symbol used by spec objects.
-    return HOLE if v == '??' else (NULL if v == 'null' else v)
 
 
 class Field():
@@ -136,54 +126,42 @@ class Encoding():
         return enc
 
     @staticmethod
-    def from_obj(obj: Dict[str, str]) -> 'Encoding':
+    def from_obj(obj: Dict[str, Union[str, Dict]]) -> 'Encoding':
         ''' load encoding from a dict object representing the spec content
             Args:
                 obj: a dict object representing channel encoding
             Returns:
                 an encoding object
         '''
-        # get the field if it is in the object, otherwise generate a place holder symbol
-        def _get_field(f):
-            if f in obj:
-                # for fields specified by the user, we want to add to the encoding
-                return handle_special_value(obj[f])
-            else:
-                # if the user didn't set a field for the encoding,
-                # we use None (see comment in the beginning of this file)
-                return None
+
+        scale = obj.get('scale')
+
+        binning = obj.get('bin')
+        if binning and isinstance(binning, dict):
+            binning = binning['maxbins']
 
         return Encoding(
-            _get_field('channel'),
-            _get_field('field'),
-            _get_field('type'),
-            _get_field('aggregate'),
-            _get_field('bin'),
-            _get_field('log_scale'),
-            _get_field('zero'))
+            obj.get('channel'),
+            obj.get('field'),
+            obj.get('type'),
+            obj.get('aggregate'),
+            binning,
+            scale.get('type') == 'log' if scale else None,
+            scale.get('zero') if scale else None)
 
     @staticmethod
-    def parse_from_answer(encoding_id: str, encoding_props) -> 'Encoding':
-        _get_field = lambda props, target: props[target] if target in props else None
-
+    def parse_from_answer(encoding_id: str, encoding_props: Dict) -> 'Encoding':
         return Encoding(
-            _get_field(encoding_props, 'channel'),
-            _get_field(encoding_props, 'field'),
-            _get_field(encoding_props, 'type'),
-            _get_field(encoding_props, 'aggregate'),
-            _get_field(encoding_props, 'bin'),
-            _get_field(encoding_props, 'log_scale'),
-            _get_field(encoding_props, 'zero'),
+            encoding_props['channel'],
+            encoding_props.get('field'),
+            encoding_props['type'],
+            encoding_props.get('aggregate'),
+            encoding_props.get('bin'),
+            encoding_props.get('log_scale'),
+            encoding_props.get('zero'),
             encoding_id)
 
-    def __init__(self, channel: str, field: str, ty: str, aggregate: Optional[str] = None, binning = None, log_scale: bool = None, zero: bool = True, idx: Optional[str] = None) -> None:
-        ''' Create a channel:
-            Args:
-                field: a string refering to a column in the table
-                ty: type of the channel, one of 'quantitative', 'ordinal', 'nominal'
-                aggregate: what aggregation function to use on the channel
-                binning: binning or not
-        '''
+    def __init__(self, channel: Optional[str] = None, field: Optional[str] = None, ty: Optional[str] = None, aggregate: Optional[str] = None, binning: Optional[Union[int, bool]] = None, log_scale: Optional[bool] = None, zero: Optional[bool] = None, idx: Optional[str] = None) -> None:
         self.channel = channel
         self.field = field
         self.ty = ty
@@ -194,7 +172,9 @@ class Encoding():
         self.id = idx if idx is not None else Encoding.gen_encoding_id()
 
     def to_vegalite(self):
-        encoding = {}
+        encoding = {
+            'scale': {}
+        }
 
         if self.field:
             encoding['field'] = self.field
@@ -205,55 +185,49 @@ class Encoding():
         if self.binning:
             encoding['bin'] = {'maxbins' : int(self.binning)}
         if self.log_scale:
-            encoding['scale'] = {'type' : 'log'}
-        if self.zero:
-            encoding['scale'] = {'zero' : True}
+            encoding['scale']['type'] = 'log'
+        encoding['scale']['zero'] = False if self.zero == None else self.zero
 
         return encoding
 
     def to_asp(self) -> str:
-        # if a property is a hole, generate a placeholder
-        _wrap_props = lambda v: v if v is not HOLE else '_'
+        constraints = [f'encoding({self.id}).']
 
-        props = {
-            'channel': self.channel,
-            'field': self.field,
-            # its type may be a NULL requesting for synthesis
-            'type': self.ty,
-            'aggregate': self.aggregate,
-            'bin': 10 if self.binning == True else self.binning,
-            'log': self.log_scale,
-            'zero': self.zero
-        }
-
-        constraints = []
-        for k, v in props.items():
-
-            # binary operator this case
-            if k in ['log', 'zero']:
-                if v is NULL:
-                    s = f':- {k}({self.id}).'
-                elif v in [HOLE, None]:
-                    s = f'%0 {{ {k}({self.id}) }} 1.'
-                elif v is False:
-                    s = f':- {k}({self.id}).'
-                elif v is True:
-                    s = f'{k}({self.id}).'
+        def _constraint(prop: str, value: str) -> str:
+            if value == False:
+                return f':- {prop}({self.id},_).'
+            if value == True or value == '?':
+                return f':- not {prop}({self.id},_).'
             else:
-                if v is NULL:
-                    s = f':- {k}({self.id},_).'
-                elif v is HOLE:
-                    # this means the user want this fill to be filled something that is not null
-                    s = f':- not {k}({self.id},_).'
-                elif v is None:
-                    continue
-                else:
-                    s = f'{k}({self.id},{v}).'
+                return f'{prop}({self.id},{value}).'
 
-            constraints.append(s)
+        if self.channel is not None:
+            constraints.append(_constraint('channel', self.channel))
 
-        return f'encoding({self.id}).\n' + '\n'.join(constraints) + '\n'
-        #return f':- not 1 = { encoding(E) {', '.join(constraint) if len(constraint) else ''} }.'
+        if self.field is not None:
+            constraints.append(_constraint('field', self.field))
+
+        if self.ty is not None:
+            constraints.append(_constraint('type', self.ty))
+
+        if self.aggregate is not None:
+            constraints.append(_constraint('aggregate', self.aggregate))
+
+        if self.binning is not None:
+            constraints.append(_constraint('bin', self.binning))
+
+
+        if self.log_scale == True:
+            constraints.append(f'log({self.id}).')
+        if self.log_scale == False:
+            constraints.append(f':- log({self.id}).')
+
+        if self.zero == True:
+            constraints.append(f'zero({self.id}).')
+        if self.zero == False:
+            constraints.append(f':- zero({self.id}).')
+
+        return  '\n'.join(constraints) + '\n'
 
 
 class Query():
@@ -266,7 +240,7 @@ class Query():
     @staticmethod
     def from_obj(query_spec: Dict) -> 'Query':
         ''' Parse from a query object that uses a list for encoding. '''
-        mark = handle_special_value(query_spec.get('mark', '_??_'))
+        mark = query_spec.get('mark')
         encodings = map(Encoding.from_obj, query_spec.get('encoding', []))
         return Query(mark, encodings)
 
@@ -314,7 +288,7 @@ class Query():
 
         prog = ''
 
-        if self.mark != HOLE and self.mark != NULL:
+        if self.mark:
             prog += f'mark({self.mark}).\n\n'
 
         prog += '\n'.join(map(lambda e: e.to_asp(), self.encodings))

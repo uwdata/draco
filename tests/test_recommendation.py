@@ -1,4 +1,5 @@
 import unittest
+from pprint import pprint
 
 from draco.run import run
 from draco.spec import Data, Field, Query, Task
@@ -22,10 +23,9 @@ spec_schema = Data([
     ], 100, url='data.csv')
 
 class TestSpecs():
-    @unittest.skip("not working yet")
     def test_scatter(self):
         recommendation = get_rec(spec_schema, {
-            'encoding': [{'field': 'q1'}, {'field': 'q2'}]
+            'encoding': [{'channel': 'x', 'field': 'q1'}, {'field': 'q2'}]
         }).to_vegalite()
 
         assert recommendation == {
@@ -38,10 +38,9 @@ class TestSpecs():
             }
         }
 
-    @unittest.skip("not working yet")
     def test_histogram(self):
         recommendation = get_rec(spec_schema, {
-            'encoding': [{'field': 'q1', 'bin': True}]
+            'encoding': [{'field': 'q1', 'bin': True, 'channel': 'x'}]
         }).to_vegalite()
 
         assert recommendation == {
@@ -49,12 +48,20 @@ class TestSpecs():
             'data': {'url': 'data.csv'},
             'mark': 'bar',
             'encoding': {
-                'x': {'field': 'q1', 'type': 'quantitative', 'bin': {'maxbins': 10}},
-                'y': {'aggregate': 'count', 'type': 'quantitative', 'scale': {'zero': True}}
+                'x': {
+                    'field': 'q1',
+                    'type': 'quantitative',
+                    'bin': {'maxbins': 10},
+                    'scale': {'zero': False}
+                },
+                'y': {
+                    'aggregate': 'count',
+                    'type': 'quantitative',
+                    'scale': {'zero': True}
+                }
             }
         }
 
-    @unittest.skip("not working yet")
     def test_strip(self):
         recommendation = get_rec(spec_schema, {
             'encoding': [{'field': 'q1'}]
@@ -65,7 +72,7 @@ class TestSpecs():
             'data': {'url': 'data.csv'},
             'mark': 'tick',
             'encoding': {
-                'x': {'field': 'q1', 'type': 'quantitative'}
+                'x': {'field': 'q1', 'type': 'quantitative', 'scale': {'zero': True}}
             }
         }
 
@@ -74,11 +81,11 @@ class TestTypeChannel():
         return {
             'mark': 'point',
             'encoding': {
-                channel: {'field': 'q1' if t == 'quantitative' else 'o1', 'type': t}
+                'y': {'field': 'q1', 'type': 'quantitative'},
+                channel: {'field': 'q2' if t == 'quantitative' else 'o1', 'type': t}
             }
         }
 
-    @unittest.skip("not working yet")
     def test_q(self):
         comparisons = [('x', 'size'), ('size', 'color'), ('color', 'opacity')]
 
@@ -88,7 +95,6 @@ class TestTypeChannel():
 
             assert a < b, f'Channel {c0} is not better than {c1}.'
 
-    @unittest.skip("not working yet")
     def test_o(self):
         comparisons = [('x', 'color'), ('color', 'size'), ('size', 'opacity')]
 

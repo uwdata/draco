@@ -8,4 +8,5 @@
 #include "asp/weights.lp".
 #include "asp/assign_weights.lp".
 #include "asp/optimize.lp".
+#include "asp/count.lp".
 #include "asp/output.lp".
