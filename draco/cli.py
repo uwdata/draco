@@ -14,7 +14,6 @@ from draco import __version__
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 def create_parser():
     parser = argparse.ArgumentParser(description='Draco Visualization recommendation system.',
         epilog='There is a moment in every dawn when light floats, there is the possibility of magic. Creation holds its breath.')
