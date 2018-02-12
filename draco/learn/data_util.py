@@ -1,6 +1,5 @@
-'''
-Use learn to rank to learn weights for soft constraints.
-'''
+#Processing data for learning procedures.
+
 import json
 import os
 from typing import Dict, List
