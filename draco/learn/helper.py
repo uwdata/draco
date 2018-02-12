@@ -4,10 +4,10 @@ Helper functions for learning algorithm.
 
 import json
 import os
-from typing import Dict
+from typing import Dict, Tuple
 
 from draco.run import DRACO_LP, run
-from draco.spec import Query, Task, Data
+from draco.spec import Data, Query, Task
 
 
 def current_weights() -> Dict:
@@ -15,13 +15,19 @@ def current_weights() -> Dict:
     with open(os.path.join(os.path.dirname(__file__), '../../data/weights.json')) as f:
         return json.load(f)
 
+def compute_cost(violations: Dict) -> int:
+    weights = current_weights()
+    c = 0
+    for k,v in violations.items():
+        c += v * weights[f'{k}_weight']
+    return c
+
 def count_violations(data: Data, full_spec: Dict) -> Dict:
     ''' Get a dictionary of violations for a full spec. '''
-
     query = Query.from_vegalite(full_spec)
     input_task = Task(data, query)
 
-    task = run(input_task, files=DRACO_LP + ['count.lp'])
+    task = run(input_task, files=['define.lp', 'features.lp', 'output.lp', 'count.lp'], silence_warnings=True)
     return task.violations
 
 ## useful for initialization and normalization

@@ -21,7 +21,7 @@ install:
 script:
   - ansunit asp/tests.yaml
   - mypy draco tests --ignore-missing-imports
-  - pytest --cov=draco
+  - pytest tests --cov=draco
 after_success:
   - coveralls
 addons:

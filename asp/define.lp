@@ -22,16 +22,21 @@ field(F) :- fieldtype(F,_).
 
 % ====== Helpers ======
 
-dimension(E) :- type(E,(nominal;ordinal)), not aggregate(E,_).
-dimension(E) :- bin(E,_).
-measure(E) :- encoding(E), not dimension(E).
+discrete(E) :- type(E,(nominal;ordinal)), not aggregate(E,_).
+discrete(E) :- bin(E,_).
+continuous(E) :- encoding(E), not discrete(E).
 
-channel_dim(C) :- dimension(E), channel(E,C).
-channel_meas(C) :- not dimension(E), channel(E,C).
+channel_discrete(C) :- discrete(E), channel(E,C).
+channel_continuous(C) :- continuous(E), channel(E,C).
 
 % orientation for bars and ticks
-orientation(horizontal) :- mark(bar;tick), channel_dim(x).
-orientation(vertical) :- mark(bar;tick), channel_dim(y).
+orientation(horizontal) :- mark(bar;tick), channel_discrete(x).
+orientation(vertical) :- mark(bar;tick), channel_discrete(y).
 
+% data properties
 cardinality(E,C) :- field(E,F), cardinality(F,C).
 entropy(E,EN) :- field(E,F), entropy(F,EN).
+interesting(E) :- field(E,F), interesting(F).
+
+% define a fake feature_term/2 for all feature_term/1.
+feature_term(F,_placeholder) :- feature_term(F).

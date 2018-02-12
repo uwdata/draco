@@ -157,7 +157,7 @@ Test constraints:
             :- not log(e).
         Expect: SAT
 
-    Test cannot use log with binned data because becomes a dimension:
+    Test cannot use log with binned data because it is discrete:
         Program: |
             encoding(e).
             :- not log(e).
@@ -178,7 +178,7 @@ Test constraints:
             :- not zero(e).
         Expect: SAT
 
-    Test cannot use zero with binned data because becomes a dimension:
+    Test cannot use zero with binned data because it is discrete:
         Program: |
             encoding(e).
             :- not zero(e).
@@ -199,14 +199,14 @@ Test constraints:
             :- not aggregate(e,mean).
         Expect: UNSAT
 
-    Test cannot aggregate dimension:
+    Test cannot aggregate discrete:
         Program: |
             encoding(e).
             :- not aggregate(e,_).
-            :- not dimensions(e).
+            :- not discrete(e).
         Expect: UNSAT
 
-    Test can aggregate measure:
+    Test can aggregate continuous:
         Program: |
             encoding(e).
             :- not aggregate(e,_).

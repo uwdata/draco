@@ -2,7 +2,7 @@
 
 import json
 import os
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 import pandas as pd
 import numpy as np
@@ -26,11 +26,11 @@ def get_raw_data():
 
     # data, inferior spec, superior spec
     raw_data = [(spec_schema,
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q1', 'type': 'quantitative'}}}
+        {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
+        {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'y': {'field': 'q1', 'type': 'quantitative'}}}
     ), (spec_schema,
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1',' type': 'quantitative'}, 'color': {'field': 'q2', 'type': 'quantitative'}}}
+        {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
+        {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'color': {'field': 'q2', 'type': 'quantitative'}}}
     )]
 
     with open(user_study_data_path) as f:
@@ -93,7 +93,7 @@ def load_data() -> pd.DataFrame:
 
 #### data split functions
 
-def split_dataset(data, ratio=0.7, seed=1):
+def split_dataset(data: pd.DataFrame, ratio=0.7, seed=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
     np.random.seed(seed)
 
     return np.split(data.sample(frac=1), [

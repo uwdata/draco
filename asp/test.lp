@@ -15,11 +15,11 @@
 % cannot use log with ordinal or nominal
 :- log(E), type(E,(ordinal;nominal)).
 
-% do not use scale zero with dimension (which includes binned)
-:- zero(E), dimension(E).
+% do not use scale zero with discrete (which includes binned)
+:- zero(E), discrete(E).
 
-% cannot use log scale with dimension (which includes binned)
-:- log(E), dimension(E).
+% cannot use log scale with discrete (which includes binned)
+:- log(E), discrete(E).
 
 % cannot bin and aggregate
 :- bin(E,_), aggregate(E,_).
@@ -34,14 +34,11 @@
 :- aggregate(E,count), field(E,_).
 :- aggregate(E,count), not type(E,quantitative).
 
-% shape requires dimension
-:- channel_meas(shape).
+% shape requires discrete
+:- channel_continuous(shape).
 
-% size or text require measure
-:- channel_dim(size;text).
-
-% row and column require dimension
-:- channel_meas(row;column).
+% row and column require discrete
+:- channel_continuous(row;column).
 
 % aggregate implies quantitative
 :- aggregate(E,_), not type(E,quantitative).
@@ -86,11 +83,11 @@
 :- mark(line;area), not channel(_,x).
 :- mark(line;area), not channel(_,y).
 
-% bar and tick requires exactly one measure (x or y)
-:- mark(bar;tick), not 1 = {channel_meas(x); channel_meas(y)}.
+% bar and tick requires exactly one continuous (x or y)
+:- mark(bar;tick), not 1 = {channel_continuous(x); channel_continuous(y)}.
 
-% bar mark requires scale of measure to start at zero
-:- mark(bar), channel(E,(x;y)), not dimension(E), not zero(E).
+% bar mark requires scale of continuous to start at zero
+:- mark(bar), channel(E,(x;y)), not discrete(E), not zero(E).
 
 % shape channel requires point mark
 :- channel(_,shape), not mark(point).
@@ -104,15 +101,18 @@
 % detail requires aggregation
 :- channel(_,detail), not aggregate(_,_).
 
+% detail cannot be aggregated
+:- channel(E,detail), aggregate(E,_).
+
 % do not use log for bar or area mark
 :- mark(bar;area), log(E), channel(E,(x;y)).
 
-% rect mark needs dimension x and y
-:- mark(rect), not channel_dim(x).
-:- mark(rect), not channel_dim(y).
+% rect mark needs discrete x and y
+:- mark(rect), not channel_discrete(x).
+:- mark(rect), not channel_discrete(y).
 
-% nominal cannot be measure
-:- type(E,nominal), measure(E).
+% nominal cannot be aggregated
+:- type(E,nominal), aggregate(E,_).
 
 % === Type checks ===
 
