@@ -13,6 +13,9 @@ import scipy.stats as stats
 from agate.table import Table
 from clyngor.answers import Answers
 
+HOLE = '?' # I want the system to fill something for this
+NULL = 'null' # I don't want the system fill anything in this place
+# if it is None, the system decide itself whether to fill it and what to fill
 
 class Field():
 
@@ -24,7 +27,6 @@ class Field():
         # column data type, should be a string represented type,
         # one of ('string', 'number', 'datetime', 'date', 'boolean')
         self.ty = ty
-
         self.cardinality = cardinality
         self.entropy = entropy
         self.interesting = interesting
@@ -125,11 +127,14 @@ class Data():
                  url: Optional[str] = None) -> None:
         self.fields = fields
         self.size = size
-        self.content = content
+        self.content = content if content is not None else {}
         self.url = url
 
     def __len__(self):
         return self.size
+
+    def to_compassql(self):
+        return self.to_vegalite() # same as to_vegalite function
 
     def to_vegalite(self) -> Dict[str, Any]:
         if self.url :
@@ -205,6 +210,22 @@ class Encoding():
         self.zero = zero
         self.id = idx if idx is not None else Encoding.gen_encoding_id()
 
+    def to_compassql(self):
+        # if it is None, we would not ask compassql to suggest
+        encoding = {}
+        if self.channel:
+            encoding['channel'] = self.channel
+        if self.field:
+            encoding['field'] = self.field
+        if self.ty:
+            encoding['type'] = self.ty
+        if self.aggregate:
+            encoding['aggregate'] = self.aggregate
+        if self.binning:
+            encoding['bin'] = {'maxbins' : self.binning}       
+        #TODO: log and zeros seems not supported by compassql?
+        return encoding
+
     def to_vegalite(self):
         encoding = {
             'scale': {}
@@ -227,46 +248,34 @@ class Encoding():
     def to_asp(self) -> str:
         constraints = [f'encoding({self.id}).']
 
-        def _constraint(prop: str, value) -> str:
-            """ if the property is True, we would like to fit something in
-                            ...... False, we do not want to fit anything in,
-                            ...... a none boolean value, we don't want to touch it """
-            if value == False:
-                return f':- {prop}({self.id},_).'
-            elif value == True or value == '?':
-                return f'1 {{ {prop}({self.id},P): {prop}(P) }} 1.'
-            elif value is not None:
-                return f'{prop}({self.id},{value}).'
-            else:
-                print("[Error] None value is inserted to constraints.")
+        # collect a field with value
+        def collect_val(prop: str, value) -> str:
+            if value is None: # ask the system to decide whether to fit
+                pass 
+            elif value is NULL: # we do not want to fit anything in
+                constraints.append(f':- {prop}({self.id},_).')
+            elif value is HOLE: # we would fit something in
+                constraints.append(f'1 {{ {prop}({self.id},P): {prop}(P) }} 1.')
+            else: #the value is already supplied
+                constraints.append(f'{prop}({self.id},{value}).')
+        
+        # collect a boolean field with value
+        def collect_boolean_val(prop, value):
+            if value is True: # the value is set to True
+                constraints.append(f'{prop}({self.id}).')
+            elif value is False or value is NULL: # we want to disable this
+                constraints.append(f':- {prop}({self.id}).')
+            elif value is HOLE or value is None:
+                pass
+        
+        collect_val('channel', self.channel)
+        collect_val('field', self.field)
+        collect_val('type', self.ty)
+        collect_val('aggregate', self.aggregate)
+        collect_val('bin', self.binning)
 
-        # if a property is None, it means it is a 
-        #   field that should be determined by the system.
-
-        if self.channel is not None:
-            constraints.append(_constraint('channel', self.channel))
-
-        if self.field is not None:
-            constraints.append(_constraint('field', self.field))
-
-        if self.ty is not None:
-            constraints.append(_constraint('type', self.ty))
-
-        if self.aggregate is not None:
-            constraints.append(_constraint('aggregate', self.aggregate))
-
-        if self.binning is not None:
-            constraints.append(_constraint('bin', self.binning))
-
-        if self.log_scale == True:
-            constraints.append(f'log({self.id}).')
-        if self.log_scale == False:
-            constraints.append(f':- log({self.id}).')
-
-        if self.zero == True:
-            constraints.append(f'zero({self.id}).')
-        if self.zero == False:
-            constraints.append(f':- zero({self.id}).')
+        collect_boolean_val('log', self.log_scale)
+        collect_boolean_val('zero', self.zero)
 
         return  '\n'.join(constraints) + '\n'
 
@@ -316,6 +325,17 @@ class Query():
 
         return Query(mark, encodings)
 
+    def to_compassql(self):
+        query = {}
+        if self.mark is None or self.mark is True:
+            query["mark"] = '?'
+        else:
+            query["mark"] = self.mark
+        query["encodings"] = []
+        for e in self.encodings:
+            query["encodings"].append(e.to_compassql())
+        return query
+
     def to_vegalite(self):
         query = {}
         query['mark'] = self.mark
@@ -352,6 +372,12 @@ class Task():
         data = Data.from_obj(query_spec['data'], path_prefix=data_dir)
         query = Query.from_obj(query_spec)
         return Task(data, query)
+
+    def to_compassql(self):
+        ''' generate compassql from task'''
+        result = self.query.to_compassql()
+        result['data'] = self.data.to_vegalite()
+        return result
 
     def to_vegalite(self):
         ''' generate a vegalite spec from the object '''
