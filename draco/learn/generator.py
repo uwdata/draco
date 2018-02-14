@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     for i, entry in enumerate(results):
         with open(os.path.join(out_dir, f"{i}_partial_spec.json"), "w") as f:
-            json.dump(entry[0].to_compassql(), f)
+            json.dump(entry[0].to_compassql(), f, indent=4)
         with open(os.path.join(out_dir, f"{i}_full_spec.json"), "w") as f:
-            json.dump(entry[1].to_compassql(), f)
+            json.dump(entry[1].to_compassql(), f, indent=4)
         
