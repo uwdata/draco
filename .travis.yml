@@ -19,9 +19,7 @@ install:
   - pip install coveralls
   - pip install -e .
 script:
-  - ansunit asp/tests.yaml
-  - mypy draco tests --ignore-missing-imports
-  - pytest tests --cov=draco
+  - python setup.py test
 after_success:
   - coveralls
 addons:
