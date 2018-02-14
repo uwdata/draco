@@ -58,13 +58,18 @@ if __name__ == '__main__':
     specs = data_util.get_raw_data()
     results = sample_partial_specs(specs)
 
-    out_dir = os.path.join("..", "..", '__tmp__', 'generated_specs')
-    if not os.path.exists(out_dir):
-        os.makedirs(out_dir)
+    cql_out_dir = os.path.join("..", "..", '__tmp__', 'cql_specs')
+    if not os.path.exists(cql_out_dir):
+        os.makedirs(cql_out_dir)
+
+    vl_out_dir = os.path.join("..", "..", '__tmp__', 'vl_specs')
+    if not os.path.exists(vl_out_dir):
+        os.makedirs(vl_out_dir)
 
     for i, entry in enumerate(results):
-        with open(os.path.join(out_dir, f"{i}_partial_spec.json"), "w") as f:
+        with open(os.path.join(cql_out_dir, f"cql_{i}.json"), "w") as f:
             json.dump(entry[0].to_compassql(), f, indent=4)
-        with open(os.path.join(out_dir, f"{i}_full_spec.json"), "w") as f:
+
+        with open(os.path.join(vl_out_dir, f"full_{i}.vl.json"), "w") as f:
             json.dump(entry[1].to_compassql(), f, indent=4)
         
