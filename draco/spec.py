@@ -19,8 +19,8 @@ NULL = 'null' # I don't want the system fill anything in this place
 
 class Field():
 
-    def __init__(self, name: str, ty: str, 
-                 cardinality: int, entropy: Optional[float] = None, 
+    def __init__(self, name: str, ty: str,
+                 cardinality: int, entropy: Optional[float] = None,
                  interesting: Optional[bool] = None) -> None:
         self.name = name
 
@@ -122,8 +122,8 @@ class Data():
             content.append(row_obj)
         return Data(fields, len(agate_table), content=content)
 
-    def __init__(self, fields: Iterable[Field], 
-                 size: int, content: Optional[Iterable[Any]] = None, 
+    def __init__(self, fields: Iterable[Field],
+                 size: int, content: Optional[Iterable[Any]] = None,
                  url: Optional[str] = None) -> None:
         self.fields = fields
         self.size = size
@@ -192,14 +192,14 @@ class Encoding():
             encoding_props.get('zero'),
             encoding_id)
 
-    def __init__(self, 
-                 channel: Optional[str] = None, 
-                 field: Optional[str] = None, 
-                 ty: Optional[str] = None, 
-                 aggregate: Optional[str] = None, 
-                 binning: Optional[Union[int, bool]] = None, 
-                 log_scale: Optional[bool] = None, 
-                 zero: Optional[bool] = None, 
+    def __init__(self,
+                 channel: Optional[str] = None,
+                 field: Optional[str] = None,
+                 ty: Optional[str] = None,
+                 aggregate: Optional[str] = None,
+                 binning: Optional[Union[int, bool]] = None,
+                 log_scale: Optional[bool] = None,
+                 zero: Optional[bool] = None,
                  idx: Optional[str] = None) -> None:
         self.channel = channel
         self.field = field
@@ -222,7 +222,7 @@ class Encoding():
         if self.aggregate:
             encoding['aggregate'] = self.aggregate
         if self.binning:
-            encoding['bin'] = {'maxbins' : self.binning}       
+            encoding['bin'] = {'maxbins' : self.binning}
         #TODO: log and zeros seems not supported by compassql?
         return encoding
 
@@ -249,17 +249,17 @@ class Encoding():
         # generate asp query
 
         constraints = [f'encoding({self.id}).']
-        
+
         def collect_val(prop: str, value) -> str: # collect a field with value
             if value is None: # ask the system to decide whether to fit
-                pass 
+                pass
             elif value is NULL: # we do not want to fit anything in
                 constraints.append(f':- {prop}({self.id},_).')
             elif value is HOLE: # we would fit something in
                 constraints.append(f'1 {{ {prop}({self.id},P): {prop}(P) }} 1.')
             else: #the value is already supplied
                 constraints.append(f'{prop}({self.id},{value}).')
-        
+
         def collect_boolean_val(prop, value): # collect a boolean field with value
             if value is True: # the value is set to True
                 constraints.append(f'{prop}({self.id}).')
@@ -267,7 +267,7 @@ class Encoding():
                 constraints.append(f':- {prop}({self.id}).')
             elif value is HOLE or value is None:
                 pass
-        
+
         collect_val('channel', self.channel)
         collect_val('field', self.field)
         collect_val('type', self.ty)
@@ -355,8 +355,8 @@ class Query():
 
 class Task():
 
-    def __init__(self, data: Data, query: Query, 
-                 cost: Optional[int] = None, 
+    def __init__(self, data: Data, query: Query,
+                 cost: Optional[int] = None,
                  violations: Optional[Dict[str, int]] = None) -> None:
         self.data = data
         self.query = query
