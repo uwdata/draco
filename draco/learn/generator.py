@@ -33,7 +33,7 @@ def subst_w_prob(v1, v2, prob):
 def insert_holes(query, prob=0.8, subst_val=spec.HOLE):
     """ given a query, randomly substitute values to generate a partial spec
     Args: 
-        query: a vegalite object, 
+        query: a vegalite object
         prob: the probability to substitute an attribute in query with None
     Returns:
         a partial spec generated from the full spec
@@ -52,7 +52,19 @@ def insert_holes(query, prob=0.8, subst_val=spec.HOLE):
     return Query(mark, encodings)
 
 if __name__ == '__main__':
+
+    np.random.seed(1)
+
     specs = data_util.get_raw_data()
     results = sample_partial_specs(specs)
-    for result in results:
-        print(result[0].to_compassql())
+
+    out_dir = os.path.join("..", "..", '__tmp__', 'generated_specs')
+    if not os.path.exists(out_dir):
+        os.makedirs(out_dir)
+
+    for i, entry in enumerate(results):
+        with open(os.path.join(out_dir, f"{i}_partial_spec.json"), "w") as f:
+            json.dump(entry[0].to_compassql(), f)
+        with open(os.path.join(out_dir, f"{i}_full_spec.json"), "w") as f:
+            json.dump(entry[1].to_compassql(), f)
+        

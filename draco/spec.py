@@ -246,10 +246,11 @@ class Encoding():
         return encoding
 
     def to_asp(self) -> str:
-        constraints = [f'encoding({self.id}).']
+        # generate asp query
 
-        # collect a field with value
-        def collect_val(prop: str, value) -> str:
+        constraints = [f'encoding({self.id}).']
+        
+        def collect_val(prop: str, value) -> str: # collect a field with value
             if value is None: # ask the system to decide whether to fit
                 pass 
             elif value is NULL: # we do not want to fit anything in
@@ -259,8 +260,7 @@ class Encoding():
             else: #the value is already supplied
                 constraints.append(f'{prop}({self.id},{value}).')
         
-        # collect a boolean field with value
-        def collect_boolean_val(prop, value):
+        def collect_boolean_val(prop, value): # collect a boolean field with value
             if value is True: # the value is set to True
                 constraints.append(f'{prop}({self.id}).')
             elif value is False or value is NULL: # we want to disable this
@@ -346,12 +346,9 @@ class Query():
 
     def to_asp(self) -> str:
         # the asp constraint comes from both mark and encodings
-
         prog = ''
-
         if self.mark:
             prog += f'mark({self.mark}).\n\n'
-
         prog += '\n'.join(map(lambda e: e.to_asp(), self.encodings))
         return prog
 
