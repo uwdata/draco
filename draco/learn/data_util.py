@@ -62,7 +62,7 @@ def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
     index = get_index()
     df = pd.DataFrame(columns=index)
 
-    processed_specs = {}
+    processed_specs: Dict[str, int] = {}
     def count_violations_memoized(data, spec):
         key = data.to_asp() + ',' + json.dumps(spec)
         if key not in processed_specs:
