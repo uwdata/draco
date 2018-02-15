@@ -1,0 +1,24 @@
+{
+  "data": {
+    "url": "../data/cars.json"
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "aggregate": "mean",
+      "field": "Horsepower",
+      "type": "quantitative"
+    },
+    "y": {
+      "field": "Cylinders",
+      "type": "nominal",
+      "scale": {
+        "rangeStep": 12
+      }
+    },
+    "row": {
+      "field": "Origin",
+      "type": "nominal"
+    }
+  }
+}

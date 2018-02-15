@@ -1,0 +1,21 @@
+{
+  "data": {
+    "url": "../data/cars.json"
+  },
+  "mark": "point",
+  "encoding": {
+    "x": {
+      "field": "Cylinders",
+      "type": "nominal"
+    },
+    "y": {
+      "field": "Origin",
+      "type": "ordinal"
+    },
+    "size": {
+      "aggregate": "mean",
+      "field": "Acceleration",
+      "type": "quantitative"
+    }
+  }
+}

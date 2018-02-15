@@ -1,0 +1,17 @@
+{
+  "data": {
+    "url": "../data/cars.json"
+  },
+  "mark": "bar",
+  "encoding": {
+    "y": {
+      "field": "Cylinders",
+      "type": "ordinal"
+    },
+    "x": {
+      "aggregate": "count",
+      "field": "*",
+      "type": "quantitative"
+    }
+  }
+}

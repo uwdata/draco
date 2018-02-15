@@ -3,47 +3,27 @@
 const cql = require('compassql');
 const dl = require('datalib');
 const fs = require('fs')
+var path = require('path');
 
-// default schema: cars
-const data = dl.csv('data/weather_data.csv');
-const schema = cql.schema.build(data);
+// the folder containing input partial specs
+const inputDir = "./compassql_examples/input/"
+// the folder for output full specs
+const outputDir = "./compassql_examples/output/" 
 
-const inputDir = "__tmp__/cql_specs"
-const outputDir = "__tmp__/compassql_out"
+files = fs.readdirSync(inputDir);
 
-fs.readdir(inputDir, function(err, items) {
-  for (var i = 0; i < items.length; i++) {
-    fs.readFile(inputDir + '/' + items[i], 'utf8', function (err, data) {
-      if (err) throw err; // we'll not consider error handling for now
-      var spec = JSON.parse(data);
-      const query = {
-        spec,
-        chooseBy: 'effectiveness'
-      };
-      const recommendation = cql.recommend(query, schema, {
-        defaultSpecConfig: null,
-        autoAddCount: true
-      });
+for (var i = 0; i < files.length; i ++) {
 
-      console.log(recommendation)
+  console.log("[OK] Processing " + files[i] + "...")
 
-      //const vlSpec = recommendation.result.items[0].toSpec();
-      //console.log(vlSpec);
-    });
-    break;
-  }
-});
+  input = path.join(inputDir, files[i]);
+  output = path.join(outputDir, files[i]);
 
-/*
-// generate recommendation for each spec above
-let i = 0;
-for (const spec of specs) {
-  i++;
-
-  console.info(`Processing "cql_${i}.json"`);
-
-  // write the query spec
-  fs.writeFileSync(`data/input/cql_${i}.json`, JSON.stringify(spec, null, 2), 'utf8');
+  var raw_spec = fs.readFileSync(input, 'utf8');
+  
+  var spec = JSON.parse(raw_spec);
+  var data = dl.json(path.join(inputDir, spec.data.url));
+  var schema = cql.schema.build(data);
 
   const query = {
     spec,
@@ -51,12 +31,13 @@ for (const spec of specs) {
   };
 
   const recommendation = cql.recommend(query, schema, {
-      defaultSpecConfig: null,
-      autoAddCount: true
-    });
+    defaultSpecConfig: null,
+    autoAddCount: true
+  });
 
-  const vlSpec = recommendation.result.items[0].toSpec()
+  const vlSpec = recommendation.result.items[0].toSpec();
 
-  // write recommendation
-  fs.writeFileSync(`data/output/cql_${i}.json`, JSON.stringify(vlSpec, null, 2), 'utf8');
-}*/
+  fs.writeFileSync(output, JSON.stringify(vlSpec, null, 2), 'utf8');
+
+}
+

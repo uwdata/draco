@@ -1,0 +1,24 @@
+{
+  "data": {
+    "url": "../data/movies.json"
+  },
+  "mark": "point",
+  "encoding": {
+    "x": {
+      "field": "Major_Genre",
+      "type": "nominal",
+      "scale": {
+        "rangeStep": 12
+      }
+    },
+    "y": {
+      "field": "Creative_Type",
+      "type": "nominal"
+    },
+    "size": {
+      "aggregate": "count",
+      "field": "*",
+      "type": "quantitative"
+    }
+  }
+}
