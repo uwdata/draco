@@ -32,7 +32,7 @@ class Field():
         self.interesting = interesting
 
     @staticmethod
-    def from_obj(obj: Dict[str, str]):
+    def from_obj(obj: Dict[str, Any]):
         ''' Build a field from a field represented as a dictionary. '''
         return Field(
             obj['name'],
@@ -158,7 +158,7 @@ class Encoding():
         return enc
 
     @staticmethod
-    def from_obj(obj: Dict[str, Union[str, Dict]]) -> 'Encoding':
+    def from_obj(obj: Dict[str, Any]) -> 'Encoding':
         ''' load encoding from a dict object representing the spec content
             Args:
                 obj: a dict object representing channel encoding
@@ -250,7 +250,7 @@ class Encoding():
 
         constraints = [f'encoding({self.id}).']
 
-        def collect_val(prop: str, value) -> str: # collect a field with value
+        def collect_val(prop: str, value: Union[str, int]): # collect a field with value
             if value is None: # ask the system to decide whether to fit
                 pass
             elif value is NULL: # we do not want to fit anything in
