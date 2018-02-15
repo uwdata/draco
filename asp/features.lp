@@ -105,7 +105,7 @@ feature_term("only_x") :- channel(_,y), not channel(_,x).
 % Overplotting
 
 % prefer not to use x and y for continuous with high cardinality and low entropy without aggregation because the points will overlap
-feature_term("position_entropy",E) :- channel(E,(x;y)), continuous(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 3, not aggregate(E,_).
+feature_term("position_entropy",E) :- channel(E,(x;y)), continuous(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 12, not aggregate(E,_).
 
 % prefer not to use size when the cardinality is large on x or y
 feature_term("high_cardinality_size",E) :- continuous(E), channel(_,size), cardinality(E,C), C > 100, channel(E,(x;y)).
