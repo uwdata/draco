@@ -261,18 +261,24 @@ class Encoding():
                 constraints.append(f'{prop}({self.id},{value}).')
 
         def collect_boolean_val(prop, value): # collect a boolean field with value
-            if value is True: # the value is set to True
+            if value is True or (value is HOLE): # the value is set to True
                 constraints.append(f'{prop}({self.id}).')
-            elif value is False or value is NULL: # we want to disable this
+            elif value is False or (value is NULL): # we want to disable this
                 constraints.append(f':- {prop}({self.id}).')
-            elif value is HOLE or value is None:
+            elif value is None:
                 pass
 
         collect_val('channel', self.channel)
         collect_val('field', self.field)
         collect_val('type', self.ty)
         collect_val('aggregate', self.aggregate)
-        collect_val('bin', self.binning)
+
+        if self.binning == True:
+            collect_val('bin', HOLE)
+        elif self.binning == False:
+            collect_val('bin', NULL)
+        else:
+            collect_val('bin', self.binning)
 
         collect_boolean_val('log', self.log_scale)
         collect_boolean_val('zero', self.zero)
@@ -394,3 +400,7 @@ class Task():
         asp_str += '% ====== Query constraints ======\n'
         asp_str += self.query.to_asp()
         return asp_str
+
+if __name__ == '__main__':
+    e = Encoding(channel='x', field='xx', ty='quantitative', binning=True, idx='e1')
+    print (e.binning == True)
