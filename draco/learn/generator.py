@@ -51,18 +51,22 @@ def insert_holes(query, prob=0.8, subst_val=spec.HOLE):
         encodings.append(Encoding(channel, field, ty, aggregate, binning, log_scale, zero, enc.id))
     return Query(mark, encodings)
 
+
 if __name__ == '__main__':
 
     np.random.seed(1)
 
+    # relative to this folder
+    tmp_dir = os.path.join(os.path.dirname(__file__), "..", "..", '__tmp__')
+
     specs = data_util.get_raw_data()
     results = sample_partial_specs(specs)
 
-    cql_out_dir = os.path.join("..", "..", '__tmp__', 'cql_specs')
+    cql_out_dir = os.path.join(tmp_dir, 'cql_specs')
     if not os.path.exists(cql_out_dir):
         os.makedirs(cql_out_dir)
 
-    vl_out_dir = os.path.join("..", "..", '__tmp__', 'vl_specs')
+    vl_out_dir = os.path.join(tmp_dir, 'vl_specs')
     if not os.path.exists(vl_out_dir):
         os.makedirs(vl_out_dir)
 
