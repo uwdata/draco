@@ -374,7 +374,7 @@ class Query():
     def to_asp(self) -> str:
         # the asp constraint comes from both mark and encodings
         prog = ''
-        if self.mark:
+        if self.mark is not None and (self.mark is not HOLE):
             prog += f'mark({self.mark}).\n\n'
         prog += '\n'.join(map(lambda e: e.to_asp(), self.encodings))
         return prog
