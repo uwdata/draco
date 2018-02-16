@@ -17,6 +17,13 @@ HOLE = '?' # I want the system to fill something for this
 NULL = 'null' # I don't want the system fill anything in this place
 # if it is None, the system decide itself whether to fill it and what to fill
 
+def normalize_field_name(s:str) -> str:
+    # normalize the field 
+    if s is HOLE or s is NULL or s is None:
+        return s
+    else:
+        return s.lower()
+
 class Field():
 
     def __init__(self, name: str, ty: str,
@@ -43,13 +50,14 @@ class Field():
         )
 
     def to_asp(self) -> str:
-        asp_str = f'fieldtype({self.name},{self.ty}).\n'
-        asp_str += f'cardinality({self.name},{self.cardinality}).\n'
+        name = normalize_field_name(self.name)
+        asp_str = f'fieldtype({name},{self.ty}).\n'
+        asp_str += f'cardinality({name},{self.cardinality}).\n'
         if self.entropy is not None:
             # asp only supports integers
-            asp_str += f'entropy({self.name},{int(self.entropy * 10)}).\n'
+            asp_str += f'entropy({name},{int(self.entropy * 10)}).\n'
         if self.interesting == True:
-            asp_str += f'interesting({self.name}).\n'
+            asp_str += f'interesting({name}).\n'
         return asp_str
 
 
@@ -267,23 +275,26 @@ class Encoding():
         def collect_val(prop: str, value: Union[str, int]): # collect a field with value
             if value is None: # ask the system to decide whether to fit
                 pass
-            elif value is NULL: # we do not want to fit anything in
+            elif value == NULL: # we do not want to fit anything in
                 constraints.append(f':- {prop}({self.id},_).')
-            elif value is HOLE: # we would fit something in
+            elif value == HOLE: # we would fit something in
                 constraints.append(f'1 {{ {prop}({self.id},P): {prop}(P) }} 1.')
             else: #the value is already supplied
                 constraints.append(f'{prop}({self.id},{value}).')
 
         def collect_boolean_val(prop, value): # collect a boolean field with value
-            if value is True or (value is HOLE): # the value is set to True
+            if value == True or (value == HOLE): # the value is set to True
                 constraints.append(f'{prop}({self.id}).')
-            elif value is False or (value is NULL): # we want to disable this
+            elif value == False or (value == NULL): # we want to disable this
                 constraints.append(f':- {prop}({self.id}).')
             elif value is None:
                 pass
 
         collect_val('channel', self.channel)
+
+        field_name = normalize_field_name(self.field)
         collect_val('field', self.field)
+            
         collect_val('type', self.ty)
         collect_val('aggregate', self.aggregate)
 
@@ -313,12 +324,7 @@ class Query():
         mark = query_spec.get('mark')
         # compassql use "encodings" by some of our previous versions use encoding
         encoding_key = "encoding" if ("encoding" in query_spec) else "encodings"
-        encodings = []
-        if encoding_key in query_spec:
-            for e in query_spec[encoding_key]:
-                encodings.append(Encoding.from_obj(e))
-        # the following in is buggy
-        #encodings = map(Encoding.from_obj, query_spec.get(encoding_key, []))
+        encodings = list(map(Encoding.from_obj, query_spec.get(encoding_key, [])))
         return Query(mark, encodings)
 
     @staticmethod
@@ -374,9 +380,9 @@ class Query():
     def to_asp(self) -> str:
         # the asp constraint comes from both mark and encodings
         prog = ''
-        if self.mark is not None and (self.mark is not HOLE):
+        if self.mark is not None and (self.mark != HOLE):
             prog += f'mark({self.mark}).\n\n'
-        prog += '\n'.join(map(lambda e: e.to_asp(), self.encodings))
+        prog += '\n'.join(list(map(lambda e: e.to_asp(), self.encodings)))
         return prog
 
 

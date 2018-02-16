@@ -1,16 +1,14 @@
-% Corresponding query
-%{'mark': '?', 'encodings': [{'channel': '?', 'field': 'Miles_per_Gallon', 'type': 'quantitative', 'aggregate': '?', 'bin': {'maxbins': '?'}}], 'data': {'url': '/Users/clwang/Research/draco/draco/learn/../../data/compassql_examples/input/../data/cars.json'}}
-
-% ====== data definitions ======
+%1d-Q.json
+% ====== Data definitions ======
 data_size(406).
 
 fieldtype(name,string).
 cardinality(name,311).
 entropy(name,56).
 
-fieldtype(miles_per_gallon,number).
-cardinality(miles_per_gallon,129).
-entropy(miles_per_gallon,39).
+fieldtype(milespergallon,number).
+cardinality(milespergallon,129).
+entropy(milespergallon,39).
 
 fieldtype(cylinders,number).
 cardinality(cylinders,5).
@@ -24,9 +22,9 @@ fieldtype(horsepower,number).
 cardinality(horsepower,93).
 entropy(horsepower,38).
 
-fieldtype(weight_in_lbs,number).
-cardinality(weight_in_lbs,356).
-entropy(weight_in_lbs,43).
+fieldtype(weightinlbs,number).
+cardinality(weightinlbs,356).
+entropy(weightinlbs,43).
 
 fieldtype(acceleration,number).
 cardinality(acceleration,96).
@@ -40,10 +38,14 @@ cardinality(origin,3).
 entropy(origin,9).
 
 
-% ====== query constraints ======
+% ====== Query constraints ======
+%mark(bar).
+
 encoding(e0).
-1 { channel(e0,p): channel(p) } 1.
-field(e0,miles_per_gallon).
+%1 { channel(e0,P): channel(P) } 1.
+field(e0,milespergallon).
 type(e0,quantitative).
-1 { aggregate(e0,p): aggregate(p) } 1.
-1 { bin(e0,p): bin(p) } 1.
+%1 { aggregate(e0,P): aggregate(P) } 1.
+%1 { bin(e0,P): bin(P) } 1.
+
+%{'mark': '?', 'encodings': [{'channel': '?', 'field': 'Miles_per_Gallon', 'type': 'quantitative', 'aggregate': '?', 'bin': {'maxbins': '?'}}], 'data': {'url': '/Users/clwang/Research/draco/draco/learn/../../data/compassql_examples/input/../data/cars.json'}}

@@ -29,7 +29,7 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
 
     run_command = clyngor.command(
         files=[os.path.join(DRACO_LP_DIR, f) for f in files],
-        inline=task.to_asp().lower(),
+        inline=task.to_asp(),
         constants=constants,
         stats=False,
         options=['--outf=2'] + (['--warn=no-atom-undefined'] if silence_warnings else []))
