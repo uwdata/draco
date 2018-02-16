@@ -50,7 +50,7 @@ def insert_holes(query, prob=0.8, subst_val=spec.HOLE):
         zero = subst_w_prob(enc.zero, subst_val, prob)
         encodings.append(Encoding(channel, field, ty, aggregate, binning, log_scale, zero, enc.id))
     return Query(mark, encodings)
-
+    
 
 if __name__ == '__main__':
 

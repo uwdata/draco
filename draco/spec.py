@@ -64,7 +64,13 @@ class Data():
             file_path = obj['url']
             if path_prefix is not None:
                 file_path = os.path.join(path_prefix, file_path)
-            return Data.from_csv(file_path)
+            if file_path.endswith("csv"):
+                return Data.from_csv(file_path)
+            elif file_path.endswith("json"):
+                return Data.from_json(file_path)
+            else:
+                print('[ERROR] the data format is not recognized.')
+                return None
         else:
             # a dict represented data already included in the file
             return Data.from_agate_table(agate.Table.from_object(obj['values']))
@@ -73,6 +79,14 @@ class Data():
     def from_csv(filename: str) -> 'Data':
         ''' load data form a csv file '''
         table = agate.Table.from_csv(filename)
+        dt = Data.from_agate_table(table)
+        dt.url = filename
+        return dt
+
+    @staticmethod
+    def from_json(filename: str) -> 'Data':
+        ''' load from json '''
+        table = agate.Table.from_json(filename)
         dt = Data.from_agate_table(table)
         dt.url = filename
         return dt
@@ -291,13 +305,20 @@ class Query():
     def __init__(self, mark: str, encodings: Iterable[Encoding] = None) -> None:
         # channels include 'x', 'y', 'color', 'size', 'shape', 'text', 'detail'
         self.mark = mark
-        self.encodings = encodings or []
+        self.encodings = encodings if encodings is not None else []
 
     @staticmethod
     def from_obj(query_spec: Dict) -> 'Query':
         ''' Parse from a query object that uses a list for encoding. '''
         mark = query_spec.get('mark')
-        encodings = map(Encoding.from_obj, query_spec.get('encoding', []))
+        # compassql use "encodings" by some of our previous versions use encoding
+        encoding_key = "encoding" if ("encoding" in query_spec) else "encodings"
+        encodings = []
+        if encoding_key in query_spec:
+            for e in query_spec[encoding_key]:
+                encodings.append(Encoding.from_obj(e))
+        # the following in is buggy
+        #encodings = map(Encoding.from_obj, query_spec.get(encoding_key, []))
         return Query(mark, encodings)
 
     @staticmethod
@@ -403,4 +424,5 @@ class Task():
 
 if __name__ == '__main__':
     e = Encoding(channel='x', field='xx', ty='quantitative', binning=True, idx='e1')
-    print (e.binning == True)
+    print(e.to_asp())
+    print(e.to_compassql())
