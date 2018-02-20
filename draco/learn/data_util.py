@@ -1,4 +1,6 @@
-#Processing data for learning procedures.
+'''
+Processing data for learning procedures.
+'''
 
 import json
 import os
@@ -8,7 +10,7 @@ import pandas as pd
 import numpy as np
 
 from draco.learn.helper import count_violations, current_weights
-from draco.spec import Data, Encoding, Field, Task
+from draco.spec import Data, Encoding, Field, Task, Query
 
 
 def absolute_path(p: str) -> str:
@@ -73,7 +75,7 @@ def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
     # convert the specs to feature vectors
     for data, spec_neg, spec_pos in raw_data:
         Encoding.encoding_cnt = 0
-        
+
         specs = reformat('negative', count_violations_memoized(data, spec_neg))
         specs.update(reformat('positive', count_violations_memoized(data, spec_pos)))
 
