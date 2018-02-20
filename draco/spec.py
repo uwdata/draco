@@ -191,8 +191,8 @@ class Encoding():
         scale = obj.get('scale')
 
         binning = obj.get('bin')
-        if binning and isinstance(binning, dict):
-            binning = binning['maxbins']
+        if isinstance(binning, dict):
+            binning = binning.get('maxbins', True)
 
         return Encoding(
             obj.get('channel'),
@@ -448,9 +448,9 @@ class Task():
         return Task(data, query)
 
     @staticmethod
-    def from_vegalite(full_spec: Dict) -> 'Task':
+    def from_vegalite(full_spec: Dict, data_dir: Optional[str]) -> 'Task':
         """ load a task from a vegalite object """
-        data = Data.from_obj(full_spec["data"])
+        data = Data.from_obj(full_spec["data"], path_prefix=data_dir)
         query = Query.from_vegalite(full_spec)
         return Task(data, query)
 
