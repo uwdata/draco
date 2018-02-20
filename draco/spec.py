@@ -13,6 +13,8 @@ import scipy.stats as stats
 from agate.table import Table
 from clyngor.answers import Answers
 
+from pprint import pprint
+
 HOLE = '?' # I want the system to fill something for this
 NULL = 'null' # I don't want the system fill anything in this place
 # if it is None, the system decide itself whether to fill it and what to fill
@@ -203,6 +205,33 @@ class Encoding():
             scale.get('zero') if scale else None)
 
     @staticmethod
+    def from_cql(obj: Dict[str, Any]) -> 'Encoding':
+        ''' load encoding from a dict object representing the spec content
+            Args:
+                obj: a dict object representing channel encoding
+            Returns:
+                an encoding object
+        '''
+
+        def subst_if_hole(v):
+            return v if v != HOLE else None
+
+        scale = subst_if_hole(obj.get('scale'))
+
+        binning = subst_if_hole(obj.get('bin'))
+        if binning and isinstance(binning, dict):
+            binning = binning['maxbins']
+
+        return Encoding(
+            subst_if_hole(obj.get('channel')),
+            subst_if_hole(obj.get('field')),
+            subst_if_hole(obj.get('type')),
+            subst_if_hole(obj.get('aggregate')),
+            binning,
+            subst_if_hole(scale.get('type')) == 'log' if scale else None,
+            subst_if_hole(scale.get('zero')) if scale else None)
+
+    @staticmethod
     def parse_from_answer(encoding_id: str, encoding_props: Dict) -> 'Encoding':
         return Encoding(
             encoding_props['channel'],
@@ -293,7 +322,7 @@ class Encoding():
         collect_val('channel', self.channel)
 
         field_name = normalize_field_name(self.field)
-        collect_val('field', self.field)
+        collect_val('field', field_name)
             
         collect_val('type', self.ty)
         collect_val('aggregate', self.aggregate)
@@ -325,6 +354,13 @@ class Query():
         # compassql use "encodings" by some of our previous versions use encoding
         encoding_key = "encoding" if ("encoding" in query_spec) else "encodings"
         encodings = list(map(Encoding.from_obj, query_spec.get(encoding_key, [])))
+        return Query(mark, encodings)
+
+    @staticmethod
+    def from_cql(query_spec: Dict) -> 'Query':
+        ''' Parse from a compassql encoding object '''
+        mark = query_spec.get('mark')
+        encodings = list(map(Encoding.from_cql, query_spec.get("encodings", [])))
         return Query(mark, encodings)
 
     @staticmethod
@@ -398,9 +434,23 @@ class Task():
 
     @staticmethod
     def from_obj(query_spec, data_dir: Optional[str]) -> 'Task':
-        ''' from a dict_obj in compassql format'''
+        ''' from a dict_obj '''
         data = Data.from_obj(query_spec['data'], path_prefix=data_dir)
         query = Query.from_obj(query_spec)
+        return Task(data, query)
+
+    @staticmethod
+    def from_cql(query_spec, data_dir: Optional[str]) -> 'Task':
+        ''' from a compassql query'''
+        data = Data.from_obj(query_spec['data'], path_prefix=data_dir)
+        query = Query.from_cql(query_spec)
+        return Task(data, query)
+
+    @staticmethod
+    def from_vegalite(full_spec: Dict) -> 'Task':
+        """ load a task from a vegalite object """
+        data = Data.from_obj(full_spec["data"])
+        query = Query.from_vegalite(full_spec)
         return Task(data, query)
 
     def to_compassql(self):
