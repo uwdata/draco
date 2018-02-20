@@ -127,13 +127,6 @@ Test constraints:
             :- not type(e,quantitative).
         Expect: UNSAT
 
-    Test cannot use temporal with string:
-        Program: |
-            encoding(e).
-            field(e,s1).
-            :- not type(e,temporal).
-        Expect: UNSAT
-
     Test cannot bin temporal:
         Program: |
             fieldtype(d,date).

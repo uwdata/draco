@@ -10,8 +10,11 @@
 % can only bin quantitative or ordinal
 :- type(E,T), bin(E,_), T != quantitative, T != ordinal.
 
-% cannot use log with ordinal or nominal
-:- log(E), type(E,(ordinal;nominal)).
+% can only use log with quantitative
+:- log(E), not type(E,quantitative).
+
+% can only use zero with quantitative
+:- zero(E), not type(E,quantitative).
 
 % do not use scale zero with discrete (which includes binned)
 :- zero(E), discrete(E).
