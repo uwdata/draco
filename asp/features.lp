@@ -102,6 +102,9 @@ feature_term("high_cardinality_ordinal",E) :- type(E,ordinal), cardinality(E,C),
 % prefer to use only x instead of only y
 feature_term("only_x") :- channel(_,y), not channel(_,x).
 
+% prefer to use temporal type with dates
+feature_term("temporal_date",E) :- type(E,temporal), field(E,F), not fieldtype(F,date).
+
 % Overplotting
 
 % prefer not to use x and y for continuous with high cardinality and low entropy without aggregation because the points will overlap
