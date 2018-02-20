@@ -48,8 +48,7 @@ class Field():
             obj['type'],
             int(obj['cardinality']),
             float(obj.get('entropy')),
-            obj.get('interesting')
-        )
+            obj.get('interesting'))
 
     def to_asp(self) -> str:
         name = normalize_field_name(self.name)
@@ -212,7 +211,6 @@ class Encoding():
             Returns:
                 an encoding object
         '''
-
         def subst_if_hole(v):
             return v if v != HOLE else None
 

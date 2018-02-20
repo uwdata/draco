@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 
 from draco.learn.helper import count_violations, current_weights
-from draco.spec import Data, Encoding, Field
+from draco.spec import Data, Encoding, Field, Task
 
 
 def absolute_path(p: str) -> str:
@@ -66,12 +66,14 @@ def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
     def count_violations_memoized(data, spec):
         key = data.to_asp() + ',' + json.dumps(spec)
         if key not in processed_specs:
-            processed_specs[key] = count_violations(data, spec)
+            task = Task(data, Query.from_vegalite(spec))
+            processed_specs[key] = count_violations(task)
         return processed_specs[key]
 
     # convert the specs to feature vectors
     for data, spec_neg, spec_pos in raw_data:
         Encoding.encoding_cnt = 0
+        
         specs = reformat('negative', count_violations_memoized(data, spec_neg))
         specs.update(reformat('positive', count_violations_memoized(data, spec_pos)))
 

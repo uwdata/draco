@@ -20,14 +20,16 @@ def compute_cost(violations: Dict) -> int:
     c = 0
     for k,v in violations.items():
         c += v * weights[f'{k}_weight']
-    return c
+    return c    
 
-def count_violations(data: Data, full_spec: Dict) -> Dict:
-    ''' Get a dictionary of violations for a full spec. '''
-    query = Query.from_vegalite(full_spec)
-    input_task = Task(data, query)
-
-    task = run(input_task, files=['define.lp', 'features.lp', 'output.lp', 'count.lp'], silence_warnings=True)
+def count_violations(task: "Task") -> Dict:
+    ''' Get a dictionary of violations for a full spec. 
+        Args:
+            task: a task spec object
+        Returns:
+            a dictionary storing violations of soft rules
+    '''
+    task = run(task, files=['define.lp', 'features.lp', 'output.lp', 'count.lp'], silence_warnings=True)
     return task.violations
 
 ## useful for initialization and normalization
