@@ -20,8 +20,7 @@ DRACO_LP_DIR = os.path.join(os.path.dirname(__file__), '../asp')
 
 
 def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False) -> Task:
-    ''' Run clingo to compute a completion of a partial spec or violations.
-    '''
+    ''' Run clingo to compute a completion of a partial spec or violations. '''
 
     # default args
     files = files or DRACO_LP
@@ -65,7 +64,7 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
         answers = json_result['Call'][0]['Witnesses'][-1]
 
         logger.info(answers['Value'])
-
+        
         query = Query.parse_from_answer(clyngor.Answers(answers['Value']).sorted)
         return Task(task.data, query, answers['Costs'][0], violations)
     elif result == 'SATISFIABLE':
