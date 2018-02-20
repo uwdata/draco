@@ -20,7 +20,7 @@ NULL = 'null' # I don't want the system fill anything in this place
 # if it is None, the system decide itself whether to fill it and what to fill
 
 def normalize_field_name(s:str) -> str:
-    # normalize the field 
+    # normalize the field
     if s is HOLE or s is NULL or s is None:
         return s
     else:
@@ -214,6 +214,9 @@ class Encoding():
         def subst_if_hole(v):
             return v if v != HOLE else None
 
+        def remove_if_star(v):
+            return v if v != '*' else None
+
         scale = subst_if_hole(obj.get('scale'))
 
         binning = subst_if_hole(obj.get('bin'))
@@ -222,7 +225,7 @@ class Encoding():
 
         return Encoding(
             subst_if_hole(obj.get('channel')),
-            subst_if_hole(obj.get('field')),
+            remove_if_star(subst_if_hole(obj.get('field'))),
             subst_if_hole(obj.get('type')),
             subst_if_hole(obj.get('aggregate')),
             binning,
@@ -321,7 +324,7 @@ class Encoding():
 
         field_name = normalize_field_name(self.field)
         collect_val('field', field_name)
-            
+
         collect_val('type', self.ty)
         collect_val('aggregate', self.aggregate)
 
