@@ -35,7 +35,13 @@ def load_data(input_dir, format="compassql"):
 
 
 def load_pairs(compassql_data_dir):
-    """  """
+    """ load partial-full spec pairs from the directory
+        Args:
+            compassql_data_dir: the directory containing compassql data with
+                 "input" and "output" directories specifying compassql input and output
+        Returns:
+            A dictionary mapping each case name into a pair of partial spec - full spec.
+    """
     partial_specs = load_data(os.path.join(compassql_data_dir, "input"), "compassql")
     compassql_outs = load_data(os.path.join(compassql_data_dir, "output"), "vegalite")
     result = {}
