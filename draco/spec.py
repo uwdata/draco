@@ -188,6 +188,9 @@ class Encoding():
             Returns:
                 an encoding object
         '''
+        def remove_if_star(v):
+            return v if v != '*' else None
+
         scale = obj.get('scale')
 
         binning = obj.get('bin')
@@ -196,7 +199,7 @@ class Encoding():
 
         return Encoding(
             obj.get('channel'),
-            obj.get('field'),
+            remove_if_star(obj.get('field')),
             obj.get('type'),
             obj.get('aggregate'),
             binning,
@@ -448,7 +451,7 @@ class Task():
         return Task(data, query)
 
     @staticmethod
-    def from_vegalite(full_spec: Dict, data_dir: Optional[str]) -> 'Task':
+    def from_vegalite(full_spec: Dict, data_dir: Optional[str]=None) -> 'Task':
         """ load a task from a vegalite object """
         data = Data.from_obj(full_spec["data"], path_prefix=data_dir)
         query = Query.from_vegalite(full_spec)
