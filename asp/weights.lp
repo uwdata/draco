@@ -36,10 +36,11 @@
 #const zero_bar_weight = 2.
 #const zero_size_weight = 3.
 #const high_cardinality_ordinal_weight = 10.
+#const only_row_column_weight = 2.
 #const only_x_weight = 1.
 #const temporal_date_weight = 1.
 #const position_entropy_weight = 2.
-#const only_row_column_weight = 2.
+#const high_cardinality_size_weight = 1.
 
 #const c_c_point_weight = 0.
 #const c_c_bar_weight = 20.
