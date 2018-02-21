@@ -111,12 +111,13 @@ def make_meshgrid(x, y, h=.02):
                          np.arange(y_min, y_max, h))
     return xx, yy
 
-
-if __name__ == '__main__':
-
+def main():
     data = data_util.load_data()
     train_dev, _ = data_util.split_dataset(data, ratio=0.7)
 
     X, y = prepare_data(train_dev)
 
     classify_and_plot(X, y)
+
+if __name__ == '__main__':
+    main()
