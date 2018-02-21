@@ -5,6 +5,7 @@ import seaborn as sns
 from matplotlib.colors import ListedColormap
 from sklearn import linear_model, svm, tree
 from sklearn.decomposition import PCA
+from sklearn.model_selection import train_test_split
 
 from draco.learn import data_util
 
@@ -60,7 +61,7 @@ def classify_and_plot(X: np.array, y: np.array, split=0.7):
     # clf = svm.SVC(C=1)
     # clf = tree.DecisionTreeClassifier()
 
-    X_train, y_train, X_dev, y_dev = data_util.rand_split_XY(X, y, split)
+    X_train,  X_dev, y_train, y_dev = train_test_split(X, y, test_size=split, random_state=1)
 
     clf.fit(X_train, y_train)
 

@@ -3,36 +3,23 @@ import 'bugviewer/scss/App.css';
 
 import Visualization from 'shared/js/components/Visualization';
 
-const BUGS = require('../../example.json');
+const BUGS = require('../../bugs.json');
 
 class App extends Component {
   render() {
     const bugs = [];
     for (let i = 0; i < BUGS.length; i++) {
       const bug = BUGS[i];
-      for (const vlSpec of [bug.left, bug.right]) {
-        const dataUrl = vlSpec.data.url;
-        const data = require('vega-datasets/' + dataUrl);
-        delete vlSpec.data.url;
-        vlSpec.data.values = data;
+
+      for (const vlSpec of [bug.negative, bug.positive]) {
         vlSpec.width = 100;
         vlSpec.height = 100;
       }
 
       bugs.push(
         <div className="bug" key={i}>
-          <Visualization vlSpec={bug.left}/>
-          <div className="relationship">
-            <div className="comparison">
-              <p>predicted:</p>
-              <p>actual:</p>
-            </div>
-            <div className="comparison">
-              <p>{bug.prediction}</p>
-              <p>{bug.actual}</p>
-            </div>
-          </div>
-          <Visualization vlSpec={bug.right}/>
+          <Visualization vlSpec={bug.negative}/>
+          <Visualization vlSpec={bug.positive}/>
         </div>
       );
     }

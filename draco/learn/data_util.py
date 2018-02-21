@@ -6,11 +6,11 @@ import json
 import os
 from typing import Dict, List, Tuple
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 from draco.learn.helper import count_violations, current_weights
-from draco.spec import Data, Encoding, Field, Task, Query
+from draco.spec import Data, Encoding, Field, Query, Task
 
 
 def absolute_path(p: str) -> str:
@@ -93,6 +93,7 @@ def load_data() -> pd.DataFrame:
     ''' Load data created with `generate_and_store_data`. '''
     data = pd.read_pickle(pickle_path)
     data.fillna(0, inplace=True)
+
     return data
 
 #### data split functions
@@ -103,23 +104,6 @@ def split_dataset(data: pd.DataFrame, ratio: float=0.7, seed: int=1) -> Tuple[pd
     return np.split(data.sample(frac=1), [
         int(ratio*len(data))
     ])
-
-def rand_split_XY(X: np.array, y: np.array, ratio: float=0.7, seed: int=1):
-    """ Split matrices X, y together,
-        so that X[i], y[i] pairing relation is retained
-    """
-    np.random.seed(seed)
-
-    indexes = np.arange(len(X))
-    np.random.shuffle(indexes)
-
-    X = [X[i] for i in indexes]
-    y = [y[i] for i in indexes]
-
-    X1, X2 = np.split(X, [int(len(X) * ratio)])
-    y1, y2 = np.split(y, [int(len(y) * ratio)])
-
-    return X1, y1, X2, y2
 
 if __name__ == '__main__':
     generate_and_store_data()
