@@ -97,20 +97,20 @@ def load_data() -> pd.DataFrame:
 
 #### data split functions
 
-def split_dataset(data: pd.DataFrame, ratio=0.7, seed=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def split_dataset(data: pd.DataFrame, ratio: float=0.7, seed: int=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
     np.random.seed(seed)
 
     return np.split(data.sample(frac=1), [
         int(ratio*len(data))
     ])
 
-def rand_split_XY(X, y, ratio=0.7, seed=1):
+def rand_split_XY(X: np.array, y: np.array, ratio: float=0.7, seed: int=1):
     """ Split matrices X, y together,
         so that X[i], y[i] pairing relation is retained
     """
     np.random.seed(seed)
 
-    indexes = [i for i in range(len(X))]
+    indexes = np.arange(len(X))
     np.random.shuffle(indexes)
 
     X = [X[i] for i in indexes]

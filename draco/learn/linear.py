@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from matplotlib.colors import ListedColormap
 from sklearn import linear_model, svm, tree
 from sklearn.decomposition import PCA
 
@@ -46,7 +47,7 @@ def plot_contours(ax, clf, xx, yy, **params):
     out = ax.contourf(xx, yy, Z, **params)
     return out
 
-def classify_and_plot(X, y, split=0.7):
+def classify_and_plot(X: np.array, y: np.array, split=0.7):
     """ Reduce X, y into 2D using PCA and use SVM to classify them
         Then plot the decision boundary as well as raw data points
     """
@@ -59,7 +60,7 @@ def classify_and_plot(X, y, split=0.7):
     # clf = svm.SVC(C=1)
     # clf = tree.DecisionTreeClassifier()
 
-    X_train, y_train, X_dev, y_dev = data_util.rand_split_XY(X, y)
+    X_train, y_train, X_dev, y_dev = data_util.rand_split_XY(X, y, split)
 
     clf.fit(X_train, y_train)
 
@@ -70,14 +71,16 @@ def classify_and_plot(X, y, split=0.7):
     X0, X1 = X[:, 0], X[:, 1]
     xx, yy = make_meshgrid(X0, X1)
 
+    cm_bright = ListedColormap(['#FF0000', '#0000FF'])
+
     f, ax = plt.subplots()
     plot_contours(ax, clf, xx, yy,
-                  cmap=plt.cm.coolwarm, alpha=0.2)
+                  cmap=cm_bright, alpha=0.2)
 
     # classes labeled 0
     idx = (y == 0)
-    plt.scatter(X0[idx], X1[idx], c='b', alpha=0.5, marker='>', label='positive')
-    plt.scatter(X0[~idx], X1[~idx], c='r', alpha=0.5, marker='<', label='negative')
+    plt.scatter(X0[idx], X1[idx], c='r', cmap=cm_bright, alpha=0.5, marker='>', label='positive')
+    plt.scatter(X0[~idx], X1[~idx], c='b', cmap=cm_bright, alpha=0.5, marker='<', label='negative')
 
     ax.set_xlim(xx.min(), xx.max())
     ax.set_ylim(yy.min(), yy.max())
@@ -117,7 +120,7 @@ def main():
 
     X, y = prepare_data(train_dev)
 
-    classify_and_plot(X, y)
+    return classify_and_plot(X, y)
 
 if __name__ == '__main__':
     main()
