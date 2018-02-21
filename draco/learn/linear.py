@@ -76,8 +76,8 @@ def classify_and_plot(X, y, split=0.7):
 
     # classes labeled 0
     idx = (y == 0)
-    plt.scatter(X0[idx], X1[idx], c='r', alpha=0.5, cmap=plt.cm.coolwarm, marker='>', label='positive')
-    plt.scatter(X0[~idx], X1[~idx], c='b', alpha=0.5, cmap=plt.cm.coolwarm, marker='<', label='negative')
+    plt.scatter(X0[idx], X1[idx], c='b', alpha=0.5, marker='>', label='positive')
+    plt.scatter(X0[~idx], X1[~idx], c='r', alpha=0.5, marker='<', label='negative')
 
     ax.set_xlim(xx.min(), xx.max())
     ax.set_ylim(yy.min(), yy.max())
