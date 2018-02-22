@@ -7,6 +7,8 @@ from draco.spec import *
 from draco.learn.helper import *
 from draco.run import run
 
+from draco.learn import data_util
+
 import logging
 
 import copy
@@ -14,42 +16,8 @@ import copy
 def absolute_path(p: str) -> str:
     return os.path.join(os.path.dirname(__file__), p)
 
-def load_data(input_dir, format="compassql"):
-    """ load compassql data
-        Args: 
-            input_dir: the directory containing a set of json compassql specs
-            format: one of "compassql" and "vegalite"
-        Returns:
-            a dictionary containing name and the Task object representing the spec
-    """
-    files = [os.path.join(input_dir, f) for f in os.listdir(input_dir)]
-    result = {}
-    for fname in files:
-        with open(fname, 'r') as f:
-            content = json.load(f)
-            content["data"]["url"] = os.path.join(input_dir, content["data"]["url"])
-            if format == "compassql":
-                spec = Task.from_cql(content, ".")
-            elif format == "vegalite":
-                spec = Task.from_vegalite(content)
-            result[os.path.basename(fname)] = spec
-    return result
 
 
-def load_pairs(compassql_data_dir):
-    """ load partial-full spec pairs from the directory
-        Args:
-            compassql_data_dir: the directory containing compassql data with
-                 "input" and "output" directories specifying compassql input and output
-        Returns:
-            A dictionary mapping each case name into a pair of partial spec - full spec.
-    """
-    partial_specs = load_data(os.path.join(compassql_data_dir, "input"), "compassql")
-    compassql_outs = load_data(os.path.join(compassql_data_dir, "output"), "vegalite")
-    result = {}
-    for k in partial_specs:
-        result[k] = (partial_specs[k], compassql_outs[k])
-    return result
 
 
 def discriminative_learning(train_data, initial_weights, learning_rate=0.01, max_iter=100):
@@ -133,5 +101,5 @@ def pairwise_learning(train_pairs, initial_weights, learning_rate=0.01, max_iter
 
 
 if __name__ == '__main__':
-    train_data = load_pairs(absolute_path("../../data/compassql_examples"))
+    train_data = data_util.load_data_partial_full(absolute_path("../../data/compassql_examples"))
     #weights = discriminative_learning(train_data, current_weights())

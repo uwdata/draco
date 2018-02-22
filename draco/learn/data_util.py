@@ -44,34 +44,72 @@ def get_raw_data():
 
     return raw_data
 
-def get_index():
-    # it gives you a pandas index that we apply to the data when creating a dataframe
-    weights = current_weights()
-    features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
 
-    iterables = [['negative', 'positive'], features]
-    index = pd.MultiIndex.from_product(iterables, names=['category', 'feature'])
+def load_data_partial_full(compassql_data_dir):
+    """ load partial-full spec pairs from the directory
+        Args:
+            compassql_data_dir: the directory containing compassql data with
+                 "input" and "output" directories specifying compassql input and output
+        Returns:
+            A dictionary mapping each case name into a pair of partial spec - full spec.
+    """
+    def load_spec(input_dir, format="compassql"):
+        """ load compassql data
+            Args: input_dir: the directory containing a set of json compassql specs
+                  format: one of "compassql" and "vegalite"
+            Returns:
+                a dictionary containing name and the Task object representing the spec
+        """
+        files = [os.path.join(input_dir, f) for f in os.listdir(input_dir)]
+        result = {}
+        for fname in files:
+            with open(fname, 'r') as f:
+                content = json.load(f)
+                content["data"]["url"] = os.path.join(input_dir, content["data"]["url"])
+                if format == "compassql":
+                    spec = Task.from_cql(content, ".")
+                elif format == "vegalite":
+                    spec = Task.from_vegalite(content)
+                result[os.path.basename(fname)] = spec
+        return result
 
-    return index
+    partial_specs = load_spec(os.path.join(compassql_data_dir, "input"), "compassql")
+    compassql_outs = load_spec(os.path.join(compassql_data_dir, "output"), "vegalite")
+    result = {}
+    for k in partial_specs:
+        result[k] = (partial_specs[k], compassql_outs[k])
+    return result
 
-def reformat(category: str, raw_data: Dict):
-    '''
-    Reformat the json data so that we can insert it int a multi index data frame.
-    https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
-    '''
-    return {(category, key): values for key, values in raw_data.items()}
 
 def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
-    index = get_index()
-    df = pd.DataFrame(columns=index)
 
-    processed_specs: Dict[str, int] = {}
+    def reformat(category: str, raw_data: Dict):
+        '''
+        Reformat the json data so that we can insert it int a multi index data frame.
+        https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
+        '''
+        return {(category, key): values for key, values in raw_data.items()}
+
+    def get_index():
+        # it gives you a pandas index that we apply to the data when creating a dataframe
+        weights = current_weights()
+        features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
+
+        iterables = [['negative', 'positive'], features]
+        index = pd.MultiIndex.from_product(iterables, names=['category', 'feature'])
+        return index
+
     def count_violations_memoized(data, spec):
         key = data.to_asp() + ',' + json.dumps(spec)
         if key not in processed_specs:
             task = Task(data, Query.from_vegalite(spec))
             processed_specs[key] = count_violations(task)
         return processed_specs[key]
+
+    index = get_index()
+    df = pd.DataFrame(columns=index)
+
+    processed_specs: Dict[str, int] = {}
 
     # convert the specs to feature vectors
     for data, spec_neg, spec_pos in raw_data:
@@ -110,7 +148,6 @@ def split_dataset(data: pd.DataFrame, ratio: float=0.7, seed: int=1) -> Tuple[pd
     ])
     np.random.set_state(st0)
     return result
-
 
 if __name__ == '__main__':
     generate_and_store_data()
