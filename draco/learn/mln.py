@@ -134,4 +134,4 @@ def pairwise_learning(train_pairs, initial_weights, learning_rate=0.01, max_iter
 
 if __name__ == '__main__':
     train_data = load_pairs(absolute_path("../../data/compassql_examples"))
-    weights = discriminative_learning(train_data, current_weights())
+    #weights = discriminative_learning(train_data, current_weights())

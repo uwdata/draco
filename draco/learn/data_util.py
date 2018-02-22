@@ -45,6 +45,7 @@ def get_raw_data():
     return raw_data
 
 def get_index():
+    # it gives you a pandas index that we apply to the data when creating a dataframe
     weights = current_weights()
     features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
 
