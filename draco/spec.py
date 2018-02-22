@@ -29,7 +29,8 @@ def normalize_field_name(s:str) -> str:
 class Field():
 
     def __init__(self, name: str, ty: str,
-                 cardinality: int, entropy: Optional[float] = None,
+                 cardinality: Optional[int] = None,
+                 entropy: Optional[float] = None,
                  interesting: Optional[bool] = None) -> None:
         self.name = name
 
@@ -46,14 +47,15 @@ class Field():
         return Field(
             obj['name'],
             obj['type'],
-            int(obj['cardinality']),
-            float(obj.get('entropy')),
+            obj.get('cardinality'),
+            obj.get('entropy'),
             obj.get('interesting'))
 
     def to_asp(self) -> str:
         name = normalize_field_name(self.name)
         asp_str = f'fieldtype({name},{self.ty}).\n'
-        asp_str += f'cardinality({name},{self.cardinality}).\n'
+        if self.cardinality is not None:
+            asp_str += f'cardinality({name},{self.cardinality}).\n'
         if self.entropy is not None:
             # asp only supports integers
             asp_str += f'entropy({name},{int(self.entropy * 10)}).\n'
@@ -145,8 +147,10 @@ class Data():
             content.append(row_obj)
         return Data(fields, len(agate_table), content=content)
 
-    def __init__(self, fields: Iterable[Field],
-                 size: int, content: Optional[Iterable[Any]] = None,
+    def __init__(self,
+                 fields: Iterable[Field],
+                 size: Optional[int] = None,
+                 content: Optional[Iterable[Any]] = None,
                  url: Optional[str] = None) -> None:
         self.fields = fields
         self.size = size
@@ -166,7 +170,12 @@ class Data():
             return {'values': self.content}
 
     def to_asp(self) -> str:
-        return f'data_size({len(self)}).\n\n' + '\n'.join([x.to_asp() for x in self.fields])
+        asp = ''
+
+        if self.size is not None:
+            asp += f'data_size({self.size}).\n\n'
+
+        return asp + '\n'.join([x.to_asp() for x in self.fields])
 
 
 class Encoding():
@@ -428,11 +437,15 @@ class Query():
 
 class Task():
 
-    def __init__(self, data: Data, query: Query,
+    def __init__(self,
+                 data: Data,
+                 query: Query,
+                 task: Optional[str] = None,
                  cost: Optional[int] = None,
                  violations: Optional[Dict[str, int]] = None) -> None:
         self.data = data
         self.query = query
+        self.task = task
         self.violations = violations
         self.cost = cost
 
@@ -479,7 +492,10 @@ class Task():
         asp_str = '% ====== Data definitions ======\n'
         asp_str += self.data.to_asp() + '\n\n'
         asp_str += '% ====== Query constraints ======\n'
-        asp_str += self.query.to_asp()
+        asp_str += self.query.to_asp() + '\n\n'
+        if self.task:
+            asp_str += '% ====== Task constraint ======\n'
+            asp_str += f'task({self.task}).\n\n'
         return asp_str
 
 if __name__ == '__main__':

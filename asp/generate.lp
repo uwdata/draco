@@ -26,3 +26,7 @@ encoding(Id-1) :- encoding(Id), obj_id(Id), Id > 0.
 0 { bin(E,B): bin(B) } 1 :- encoding(E).
 0 { zero(E) } 1 :- encoding(E).
 0 { log(E) } 1 :- encoding(E).
+
+% task
+
+0 { task(T): tasks(T) } 1.
