@@ -16,7 +16,6 @@ def prepare_data(data: pd.DataFrame):
             X: ndarray of shape (2 * N, num_columns), representing matrix
             y: ndarray of shape (2 * N), representing labels
     """
-
     N = len(data)
 
     X = np.zeros((2 * N, len(data.positive.columns)))
@@ -33,40 +32,31 @@ def prepare_data(data: pd.DataFrame):
         y[i + N] = 1
 
     return X, y
+  
 
-def plot_contours(ax, clf, xx, yy, **params):
-    """Plot the decision boundaries for a classifier.
-    Params:
-        ax: matplotlib axes object
-        clf: a classifier
-        xx: meshgrid ndarray
-        yy: meshgrid ndarray
-        params: dictionary of params to pass to contourf, optional
+def train_model(X: np.array, y: np.array, split=0.7):
+    """ Given features X and labels y, train a linear model to classify them
+        Args:
+            X: a N x M matrix, representing feature vectors
+            y: a N vector, representing labels
+            split: the split between train and dev
     """
-    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
-    Z = Z.reshape(xx.shape)
-    out = ax.contourf(xx, yy, Z, **params)
-    return out
+    X_train, X_dev, y_train, y_dev = train_test_split(X, y, test_size=split, random_state=1)
+    clf = svm.LinearSVC(C=1)
+    clf.fit(X_train, y_train)
+    print("Train score: ", clf.score(X_train, y_train))
+    print("Dev score: ", clf.score(X_dev, y_dev))
+    return clf
 
-def classify_and_plot(X: np.array, y: np.array, split=0.7):
+
+def train_and_plot(X: np.array, y: np.array, split=0.7):
     """ Reduce X, y into 2D using PCA and use SVM to classify them
         Then plot the decision boundary as well as raw data points
     """
-
     pca = PCA(n_components=2)
     X = pca.fit_transform(X)
 
-    # clf = linear_model.LogisticRegression()
-    clf = svm.LinearSVC(C=1)
-    # clf = svm.SVC(C=1)
-    # clf = tree.DecisionTreeClassifier()
-
-    X_train, X_dev, y_train, y_dev = train_test_split(X, y, test_size=split, random_state=1)
-
-    clf.fit(X_train, y_train)
-
-    print("Train score: ", clf.score(X_train, y_train))
-    print("Dev score: ", clf.score(X_dev, y_dev))
+    clf = train_model(X, y, split)
 
     # for plotting
     X0, X1 = X[:, 0], X[:, 1]
@@ -100,6 +90,20 @@ def classify_and_plot(X: np.array, y: np.array, split=0.7):
     return clf
 
 
+def plot_contours(ax, clf, xx, yy, **params):
+    """Plot the decision boundaries for a classifier.
+    Params:
+        ax: matplotlib axes object
+        clf: a classifier
+        xx: meshgrid ndarray
+        yy: meshgrid ndarray
+        params: dictionary of params to pass to contourf, optional
+    """
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+    out = ax.contourf(xx, yy, Z, **params)
+    return out
+
 def make_meshgrid(x, y, h=.02):
     """Create a mesh of points to plot in
     Params:
@@ -116,14 +120,10 @@ def make_meshgrid(x, y, h=.02):
     return xx, yy
 
 
-
-
 def main():
     train_dev, _  = data_util.load_data()
-
     X, y = prepare_data(train_dev)
-
-    return classify_and_plot(X, y)
-
+    return train_and_plot(X, y)
+    
 if __name__ == '__main__':
     main()

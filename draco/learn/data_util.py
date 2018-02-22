@@ -91,7 +91,8 @@ def generate_and_store_data():
 
 def load_data() -> pd.DataFrame:
     ''' Load data created with `generate_and_store_data`. 
-        The dataset is automatically split into train_dev, and test dataset.
+        Returns:
+            a tuple containing: train_dev, test.
     '''
     data = pd.read_pickle(pickle_path)
     data.fillna(0, inplace=True)
