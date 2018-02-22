@@ -17,7 +17,8 @@ def absolute_path(p: str) -> str:
     return os.path.join(os.path.dirname(__file__), p)
 
 pickle_path = absolute_path('../../__tmp__/data.pickle')
-user_study_data_path = absolute_path('../../data/training/q_q_n.json')
+yh_data_path = absolute_path('../../data/training/younghoon.json')
+ba_data_path = absolute_path('../../data/training/bahador.json')
 
 def get_raw_data():
     spec_schema = Data([
@@ -27,20 +28,20 @@ def get_raw_data():
         ], 100)
 
     # data, inferior spec, superior spec
-    raw_data = [(spec_schema,
+    raw_data = [(spec_schema, None,
         {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
         {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'y': {'field': 'q1', 'type': 'quantitative'}}}
-    ), (spec_schema,
+    ), (spec_schema, None,
         {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
         {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'color': {'field': 'q2', 'type': 'quantitative'}}}
     )]
 
-    with open(user_study_data_path) as f:
-        qqn_data = json.load(f)
-        for row in qqn_data:
-            fields = list(map(Field.from_obj, row['fields']))
-            spec_schema = Data(fields, int(row['num_rows']))
-            raw_data.append((spec_schema, row['negative'], row['positive']))
+    for path in [yh_data_path, ba_data_path]:
+        with open(path) as f:
+            for row in json.load(f):
+                fields = list(map(Field.from_obj, row['fields']))
+                spec_schema = Data(fields, row.get('num_rows'))
+                raw_data.append((spec_schema, row['task'], row['negative'], row['positive']))
 
     return raw_data
 
@@ -66,19 +67,19 @@ def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
     df = pd.DataFrame(columns=index)
 
     processed_specs: Dict[str, int] = {}
-    def count_violations_memoized(data, spec):
+    def count_violations_memoized(data, task, spec):
         key = data.to_asp() + ',' + json.dumps(spec)
         if key not in processed_specs:
-            task = Task(data, Query.from_vegalite(spec))
+            task = Task(data, Query.from_vegalite(spec), task)
             processed_specs[key] = count_violations(task)
         return processed_specs[key]
 
     # convert the specs to feature vectors
-    for data, spec_neg, spec_pos in raw_data:
+    for data, task, spec_neg, spec_pos in raw_data:
         Encoding.encoding_cnt = 0
 
-        specs = reformat('negative', count_violations_memoized(data, spec_neg))
-        specs.update(reformat('positive', count_violations_memoized(data, spec_pos)))
+        specs = reformat('negative', count_violations_memoized(data, task, spec_neg))
+        specs.update(reformat('positive', count_violations_memoized(data, task, spec_pos)))
 
         df = df.append(pd.DataFrame(specs, index=[0]))
 
@@ -91,7 +92,7 @@ def generate_and_store_data():
     data.to_pickle(pickle_path)
 
 def load_data() -> pd.DataFrame:
-    ''' Load data created with `generate_and_store_data`. 
+    ''' Load data created with `generate_and_store_data`.
         Returns:
             a tuple containing: train_dev, test.
     '''

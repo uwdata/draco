@@ -126,3 +126,6 @@
 
 % fieldtype has to be primitive type
 :- fieldtype(_,T), not primitive_type(T).
+
+% task has to be one of the tasks
+:- task(T), not tasks(T).

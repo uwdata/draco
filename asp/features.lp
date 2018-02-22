@@ -169,8 +169,6 @@ feature_term("d_d_rect") :- is_d_d, mark(rect).
 
 % channel rankings à la APT
 
-% TODO: add detail
-
 feature_term("continuous_x",E) :- channel(E,x), continuous(E).
 feature_term("continuous_y",E) :- channel(E,y), continuous(E).
 feature_term("continuous_color",E) :- channel(E,color), continuous(E).
@@ -215,10 +213,48 @@ feature_term("interesting_row",E) :- channel(E,row), field(E,F), interesting(F).
 feature_term("interesting_column",E) :- channel(E,column), field(E,F), interesting(F).
 feature_term("interesting_detail",E) :- channel(E,detail), field(E,F), interesting(F).
 
-% aggregate weights
+% aggregations
 
 feature_term("aggregate_count",E) :- aggregate(E, count).
 feature_term("aggregate_mean",E) :- aggregate(E, mean).
 feature_term("aggregate_median",E) :- aggregate(E, median).
 feature_term("aggregate_min",E) :- aggregate(E, min).
 feature_term("aggregate_max",E) :- aggregate(E, max).
+
+% task - marktype correlations
+
+feature_term("compare_point") :- task(compare), mark(point).
+feature_term("compare_bar") :- task(compare), mark(bar).
+feature_term("compare_line") :- task(compare), mark(line).
+feature_term("compare_area") :- task(compare), mark(area).
+feature_term("compare_rule") :- task(compare), mark(rule).
+feature_term("compare_text") :- task(compare), mark(text).
+feature_term("compare_tick") :- task(compare), mark(tick).
+feature_term("compare_rect") :- task(compare), mark(rect).
+
+feature_term("derived_point") :- task(derived), mark(point).
+feature_term("derived_bar") :- task(derived), mark(bar).
+feature_term("derived_line") :- task(derived), mark(line).
+feature_term("derived_area") :- task(derived), mark(area).
+feature_term("derived_rule") :- task(derived), mark(rule).
+feature_term("derived_text") :- task(derived), mark(text).
+feature_term("derived_tick") :- task(derived), mark(tick).
+feature_term("derived_rect") :- task(derived), mark(rect).
+
+feature_term("extremum_point") :- task(extremum), mark(point).
+feature_term("extremum_bar") :- task(extremum), mark(bar).
+feature_term("extremum_line") :- task(extremum), mark(line).
+feature_term("extremum_area") :- task(extremum), mark(area).
+feature_term("extremum_rule") :- task(extremum), mark(rule).
+feature_term("extremum_text") :- task(extremum), mark(text).
+feature_term("extremum_tick") :- task(extremum), mark(tick).
+feature_term("extremum_rect") :- task(extremum), mark(rect).
+
+feature_term("value_point") :- task(value), mark(point).
+feature_term("value_bar") :- task(value), mark(bar).
+feature_term("value_line") :- task(value), mark(line).
+feature_term("value_area") :- task(value), mark(area).
+feature_term("value_rule") :- task(value), mark(rule).
+feature_term("value_text") :- task(value), mark(text).
+feature_term("value_tick") :- task(value), mark(tick).
+feature_term("value_rect") :- task(value), mark(rect).

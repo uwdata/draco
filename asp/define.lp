@@ -18,7 +18,8 @@ channel(C) :- single_channel(C).
 channel(C) :- multi_channel(C).
 non_positional(color;opacity;size;shape;text;detail).
 
-field(F) :- fieldtype(F,_).
+% possible tasks
+tasks(compare;derived;extremum;value).
 
 % ====== Helpers ======
 
@@ -32,6 +33,9 @@ channel_continuous(C) :- continuous(E), channel(E,C).
 % orientation for bars and ticks
 orientation(horizontal) :- mark(bar;tick), channel_discrete(x).
 orientation(vertical) :- mark(bar;tick), channel_discrete(y).
+
+% fields
+field(F) :- fieldtype(F,_).
 
 % data properties
 cardinality(E,C) :- field(E,F), cardinality(F,C).
