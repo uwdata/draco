@@ -90,20 +90,25 @@ def generate_and_store_data():
     data.to_pickle(pickle_path)
 
 def load_data() -> pd.DataFrame:
-    ''' Load data created with `generate_and_store_data`. '''
+    ''' Load data created with `generate_and_store_data`. 
+        The dataset is automatically split into train_dev, and test dataset.
+    '''
     data = pd.read_pickle(pickle_path)
     data.fillna(0, inplace=True)
-
-    return data
+    return split_dataset(data, ratio=0.7, seed=1)
 
 #### data split functions
 
 def split_dataset(data: pd.DataFrame, ratio: float=0.7, seed: int=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    # get the initial state of the RNG so that the seed does not rewrite random number state
+    st0 = np.random.get_state()
     np.random.seed(seed)
-
-    return np.split(data.sample(frac=1), [
+    result = np.split(data.sample(frac=1), [
         int(ratio*len(data))
     ])
+    np.random.set_state(st0)
+    return result
+
 
 if __name__ == '__main__':
     generate_and_store_data()

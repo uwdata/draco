@@ -61,7 +61,7 @@ def classify_and_plot(X: np.array, y: np.array, split=0.7):
     # clf = svm.SVC(C=1)
     # clf = tree.DecisionTreeClassifier()
 
-    X_train,  X_dev, y_train, y_dev = train_test_split(X, y, test_size=split, random_state=1)
+    X_train, X_dev, y_train, y_dev = train_test_split(X, y, test_size=split, random_state=1)
 
     clf.fit(X_train, y_train)
 
@@ -115,9 +115,11 @@ def make_meshgrid(x, y, h=.02):
                          np.arange(y_min, y_max, h))
     return xx, yy
 
+
+
+
 def main():
-    data = data_util.load_data()
-    train_dev, _ = data_util.split_dataset(data, ratio=0.7)
+    train_dev, _  = data_util.load_data()
 
     X, y = prepare_data(train_dev)
 
