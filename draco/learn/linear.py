@@ -65,8 +65,7 @@ def train_and_plot(X: np.array, y: np.array, split=0.7):
     cm_bright = ListedColormap(['#FF0000', '#0000FF'])
 
     f, ax = plt.subplots()
-    plot_contours(ax, clf, xx, yy,
-                  cmap=cm_bright, alpha=0.2)
+    plot_contours(ax, clf, xx, yy, cmap=cm_bright, alpha=0.2)
 
     # classes labeled 0
     idx = (y == 0)
