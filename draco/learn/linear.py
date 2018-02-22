@@ -33,7 +33,7 @@ def prepare_data(data: pd.DataFrame):
         y[i + N] = 1
 
     return X, y
-  
+
 
 def train_model(X: np.array, y: np.array, split=0.7):
     """ Given features X and labels y, train a linear model to classify them
@@ -55,46 +55,6 @@ def train_and_plot(X: np.array, y: np.array, split=0.7):
         Then plot the decision boundary as well as raw data points
     """
     pca = PCA(n_components=2)
-    X = pca.fit_transform(X)
-
-    clf = train_model(X, y, split)
-
-    # for plotting
-    X0, X1 = X[:, 0], X[:, 1]
-    xx, yy = make_meshgrid(X0, X1)
-
-    cm_bright = ListedColormap(['#FF0000', '#0000FF'])
-
-    f, ax = plt.subplots()
-    plot_contours(ax, clf, xx, yy, cmap=cm_bright, alpha=0.2)
-
-    # classes labeled 0
-    idx = (y == 0)
-    plt.scatter(X0[idx], X1[idx], c='r', cmap=cm_bright, alpha=0.5, marker='>', label='positive')
-    plt.scatter(X0[~idx], X1[~idx], c='b', cmap=cm_bright, alpha=0.5, marker='<', label='negative')
-
-    ax.set_xlim(xx.min(), xx.max())
-    ax.set_ylim(yy.min(), yy.max())
-
-    ax.set_xlabel('X0')
-    ax.set_ylabel('X1')
-
-    ax.set_xticks(())
-    ax.set_yticks(())
-
-    plt.legend(loc='lower right')
-    plt.axis("tight")
-
-    plt.show()
-
-    return clf
-
-
-def train_and_plot2(X: np.array, y: np.array, split=0.7):
-    """ Reduce X, y into 2D using PCA and use SVM to classify them
-        Then plot the decision boundary as well as raw data points
-    """
-    pca = PCA(n_components=2)
     X2 = pca.fit_transform(X)
 
     clf = train_model(X, y, split)
@@ -105,25 +65,20 @@ def train_and_plot2(X: np.array, y: np.array, split=0.7):
 
     cm_bright = ListedColormap(['#FF0000', '#0000FF'])
 
-    f, ax = plt.subplots()
+    f, ax = plt.subplots(figsize=(10,8))
 
-    # predictions made by the linear model
+    # predictions made by the model
     pred = clf.predict(X)
 
-    l = np.copy(y)
-    for i in range(len(pred)):
-        l[i] = pred[i] * 2 + y[i]
+    correct_positive = (y == 1) & (y == pred)
+    correct_negative = (y == 0) & (y == pred)
+    false_positive = (y == 0) & (y != pred)
+    false_negative = (y == 1) & (y != pred)
 
-    #label: 00 -> correct
-    #       11 -> correct
-    #       10 -> wrong, predict 0 to 1
-    #       01 -> wrong, predict 0 to 1
-
-    # classes labeled 0
-    plt.scatter(X0[l==0], X1[l==0], c='b', cmap=cm_bright, alpha=0.5, marker='>', label='positive')
-    plt.scatter(X0[l==2], X1[l==2], c='y', cmap=cm_bright, alpha=0.5, marker='>', label='positive')
-    plt.scatter(X0[l==3], X1[l==3], c='r', cmap=cm_bright, alpha=0.5, marker='<', label='negative')
-    plt.scatter(X0[l==1], X1[l==1], c='g', cmap=cm_bright, alpha=0.5, marker='>', label='positive')
+    plt.scatter(X0[correct_positive], X1[correct_positive], c='g', cmap=cm_bright, alpha=0.5, marker='>', label='correct positive')
+    plt.scatter(X0[correct_negative], X1[correct_negative], c='r', cmap=cm_bright, alpha=0.5, marker='>', label='correct negative')
+    plt.scatter(X0[false_positive], X1[false_positive], c='y', cmap=cm_bright, alpha=0.5, marker='<', label='false positive')
+    plt.scatter(X0[false_negative], X1[false_negative], c='b', cmap=cm_bright, alpha=0.5, marker='>', label='false negative')
 
     ax.set_xlim(xx.min(), xx.max())
     ax.set_ylim(yy.min(), yy.max())
@@ -175,7 +130,7 @@ def make_meshgrid(x, y, h=.02):
 def main():
     train_dev, _  = data_util.load_data()
     X, y = prepare_data(train_dev)
-    return train_and_plot2(X, y)
-    
+    return train_and_plot(X, y)
+
 if __name__ == '__main__':
     main()
