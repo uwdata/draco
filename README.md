@@ -31,7 +31,7 @@ Solvers using CEGAR](https://www.microsoft.com/en-us/research/wp-content/uploads
 
 ### Install clingo.
 
-On Linux, run `apt get install gringo`. On MacOS, you can run `brew install clingo`.
+On Linux, run `conda install clingo`. On MacOS, you can alternatively run `brew install clingo`.
 
 ### Install node dependencies
 
