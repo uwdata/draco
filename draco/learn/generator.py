@@ -59,7 +59,7 @@ if __name__ == '__main__':
     # relative to this folder
     tmp_dir = os.path.join(os.path.dirname(__file__), "..", "..", '__tmp__')
 
-    specs = data_util.get_raw_data()
+    specs = data_util.load_neg_pos_data()
     results = sample_partial_specs(specs)
 
     cql_out_dir = os.path.join(tmp_dir, 'cql_specs')

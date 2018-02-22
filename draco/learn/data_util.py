@@ -18,8 +18,10 @@ def absolute_path(p: str) -> str:
 
 pickle_path = absolute_path('../../__tmp__/data.pickle')
 user_study_data_path = absolute_path('../../data/training/q_q_n.json')
+compassql_data_path = absolute_path("../../data/compassql_examples")
 
-def get_raw_data():
+def load_neg_pos_data():
+
     spec_schema = Data([
             Field('q1', 'number', 100, 1),
             Field('q2', 'number', 100, 1),
@@ -45,7 +47,7 @@ def get_raw_data():
     return raw_data
 
 
-def load_data_partial_full(compassql_data_dir):
+def load_partial_full_data():
     """ load partial-full spec pairs from the directory
         Args:
             compassql_data_dir: the directory containing compassql data with
@@ -73,22 +75,16 @@ def load_data_partial_full(compassql_data_dir):
                 result[os.path.basename(fname)] = spec
         return result
 
-    partial_specs = load_spec(os.path.join(compassql_data_dir, "input"), "compassql")
-    compassql_outs = load_spec(os.path.join(compassql_data_dir, "output"), "vegalite")
+    partial_specs = load_spec(os.path.join(compassql_data_path, "input"), "compassql")
+    compassql_outs = load_spec(os.path.join(compassql_data_path, "output"), "vegalite")
     result = {}
     for k in partial_specs:
         result[k] = (partial_specs[k], compassql_outs[k])
     return result
 
 
-def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
-
-    def reformat(category: str, raw_data: Dict):
-        '''
-        Reformat the json data so that we can insert it int a multi index data frame.
-        https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
-        '''
-        return {(category, key): values for key, values in raw_data.items()}
+def to_feature_vec(neg_pos_data: List[tuple]) -> List[pd.DataFrame]:
+    """ given neg_pos_data, convert them into feature vectors """
 
     def get_index():
         # it gives you a pandas index that we apply to the data when creating a dataframe
@@ -112,11 +108,16 @@ def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
     processed_specs: Dict[str, int] = {}
 
     # convert the specs to feature vectors
-    for data, spec_neg, spec_pos in raw_data:
+    for data, spec_neg, spec_pos in neg_pos_data:
         Encoding.encoding_cnt = 0
 
-        specs = reformat('negative', count_violations_memoized(data, spec_neg))
-        specs.update(reformat('positive', count_violations_memoized(data, spec_pos)))
+        neg_feature_vec = count_violations_memoized(data, spec_neg)
+        pos_feature_vec = count_violations_memoized(data, spec_pos)
+        
+        # Reformat the json data so that we can insert it int a multi index data frame.
+        # https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
+        specs = {('negative', key): values for key, values in neg_feature_vec.items()}
+        specs.update({('positive', key): values for key, values in pos_feature_vec.items()})
 
         df = df.append(pd.DataFrame(specs, index=[0]))
 
@@ -124,8 +125,8 @@ def process_raw_data(raw_data: List[tuple]) -> List[pd.DataFrame]:
 
 def generate_and_store_data():
     ''' Generate and store data in default path. '''
-    raw_data = get_raw_data()
-    data = process_raw_data(raw_data)
+    raw_data = load_neg_pos_data()
+    data = to_feature_vec(raw_data)
     data.to_pickle(pickle_path)
 
 def load_data() -> pd.DataFrame:

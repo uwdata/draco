@@ -13,13 +13,6 @@ import logging
 
 import copy
 
-def absolute_path(p: str) -> str:
-    return os.path.join(os.path.dirname(__file__), p)
-
-
-
-
-
 def discriminative_learning(train_data, initial_weights, learning_rate=0.01, max_iter=100):
     """ discriminative learning for mln from partial and full specs """
 
@@ -101,5 +94,5 @@ def pairwise_learning(train_pairs, initial_weights, learning_rate=0.01, max_iter
 
 
 if __name__ == '__main__':
-    train_data = data_util.load_data_partial_full(absolute_path("../../data/compassql_examples"))
+    train_data = data_util.load_partial_full_data()
     #weights = discriminative_learning(train_data, current_weights())
