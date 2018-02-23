@@ -6,7 +6,7 @@ from draco.learn.helper import *
 
 from pprint import pprint
 
-def main():
+def play(partial_full_data):
 
     train_dev, _  = data_util.load_data()
     X, y = linear.prepare_data(train_dev)
@@ -29,10 +29,8 @@ def main():
         else:
             weights[k] = 10000 + init_weights[k]
 
-    partial_full_data = data_util.load_partial_full_data()
     for case in partial_full_data:
         partial_spec, full_spec = partial_full_data[case]
-
         draco_rec = run(partial_spec, constants=weights, silence_warnings=True)
 
         print(draco_rec.to_vegalite_json())
@@ -41,7 +39,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    partial_full_data = data_util.load_partial_full_data()
+    play(partial_full_data)
     
 
 
