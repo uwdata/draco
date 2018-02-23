@@ -124,33 +124,27 @@ def to_feature_vec(neg_pos_data: List[tuple]) -> List[pd.DataFrame]:
         df = df.append(pd.DataFrame(specs, index=[0]))
 
     return df.reset_index()
+    
 
-def generate_and_store_data():
-    ''' Generate and store data in default path. '''
-    neg_pos_data = load_neg_pos_data()
-    data = to_feature_vec(neg_pos_data)
-    data.to_pickle(pickle_path)
-
-def load_data() -> pd.DataFrame:
+def load_data(ratio=0.7, split_seed=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
     ''' Load data created with `generate_and_store_data`.
         Returns:
             a tuple containing: train_dev, test.
     '''
     data = pd.read_pickle(pickle_path)
     data.fillna(0, inplace=True)
-    return split_dataset(data, ratio=0.7, seed=1)
 
-#### data split functions
-
-def split_dataset(data: pd.DataFrame, ratio: float=0.7, seed: int=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    # get the initial state of the RNG so that the seed does not rewrite random number state
     st0 = np.random.get_state()
-    np.random.seed(seed)
+    np.random.seed(split_seed)
     result = np.split(data.sample(frac=1), [
         int(ratio*len(data))
     ])
     np.random.set_state(st0)
+
     return result
 
 if __name__ == '__main__':
-    generate_and_store_data()
+    ''' Generate and store data in default path. '''
+    neg_pos_data = load_neg_pos_data()
+    data = to_feature_vec(neg_pos_data)
+    data.to_pickle(pickle_path)
