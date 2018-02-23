@@ -26,6 +26,14 @@ def normalize_field_name(s:str) -> str:
     else:
         return s.lower()
 
+def recover_field_name(s:str, field_names: List[str]) -> str:
+    """ recover fields for visualization purpose """
+    for k in field_names:
+        if k == s or k.lower() == s:
+            return k
+    return s
+
+
 class Field():
 
     def __init__(self, name: str, ty: str,
@@ -160,6 +168,10 @@ class Data():
     def __len__(self):
         return self.size
 
+    def get_field_names(self):
+        return [f.name for f in self.fields]
+
+
     def to_compassql(self):
         return self.to_vegalite() # same as to_vegalite function
 
@@ -290,13 +302,16 @@ class Encoding():
         #TODO: log and zeros seems not supported by compassql?
         return encoding
 
-    def to_vegalite(self):
+    def to_vegalite(self, field_names=None):
         encoding = {
             'scale': {}
         }
 
         if self.field:
-            encoding['field'] = self.field
+            if field_names is not None:
+                encoding['field'] = recover_field_name(self.field, field_names)
+            else:
+                encoding['field'] = self.field
         if self.ty:
             encoding['type'] = self.ty
         if self.aggregate:
@@ -418,12 +433,12 @@ class Query():
             query["encodings"].append(e.to_compassql())
         return query
 
-    def to_vegalite(self):
+    def to_vegalite(self, field_names=None):
         query = {}
         query['mark'] = self.mark
         query['encoding'] = {}
         for e in self.encodings:
-            query['encoding'][e.channel] = e.to_vegalite()
+            query['encoding'][e.channel] = e.to_vegalite(field_names)
         return query
 
     def to_asp(self) -> str:
@@ -478,7 +493,7 @@ class Task():
 
     def to_vegalite(self):
         ''' generate a vegalite spec from the object '''
-        result = self.query.to_vegalite()
+        result = self.query.to_vegalite(self.data.get_field_names())
         result['data'] = self.data.to_vegalite()
         result['$schema'] = 'https://vega.github.io/schema/vega-lite/v2.0.json'
         return result
@@ -502,3 +517,7 @@ if __name__ == '__main__':
     e = Encoding(channel='x', field='xx', ty='quantitative', binning=True, idx='e1')
     print(e.to_asp())
     print(e.to_compassql())
+
+    agate.Table.from_json("../data/compassql_examples/data/cars.json")
+    agate.Table.from_json("../data/compassql_examples/data/driving.json")
+    agate.Table.from_json("../data/compassql_examples/data/movies.json")

@@ -43,7 +43,7 @@ def train_model(X: np.array, y: np.array, split=0.7):
             split: the split between train and dev
     """
     X_train, X_dev, y_train, y_dev = train_test_split(X, y, test_size=split, random_state=1)
-    clf = svm.LinearSVC(C=1)
+    clf = svm.LinearSVC(C=1, fit_intercept=False)
     #clf = linear_model.LogisticRegression()
     clf.fit(X_train, y_train)
     print("Train score: ", clf.score(X_train, y_train))
@@ -131,11 +131,12 @@ def make_meshgrid(x, y, h=.02):
                          np.arange(y_min, y_max, h))
     return xx, yy
 
-
 def main():
     train_dev, _  = data_util.load_data()
     X, y = prepare_data(train_dev)
+
     return train_and_plot(X, y)
+
 
 if __name__ == '__main__':
     main()

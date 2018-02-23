@@ -12,6 +12,7 @@ import pandas as pd
 from draco.learn.helper import count_violations, current_weights
 from draco.spec import Data, Encoding, Field, Query, Task
 
+from pprint import pprint
 
 def absolute_path(p: str) -> str:
     return os.path.join(os.path.dirname(__file__), p)
@@ -136,9 +137,7 @@ def load_data(ratio=0.7, split_seed=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
 
     st0 = np.random.get_state()
     np.random.seed(split_seed)
-    result = np.split(data.sample(frac=1), [
-        int(ratio*len(data))
-    ])
+    result = np.split(data.sample(frac=1), [int(ratio*len(data))])
     np.random.set_state(st0)
 
     return result

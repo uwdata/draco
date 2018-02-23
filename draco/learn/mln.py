@@ -29,14 +29,9 @@ def discriminative_learning(train_data, initial_weights, learning_rate=0.01, max
             partial_spec, full_spec = train_data[case][0], train_data[case][1]
             draco_rec = run(partial_spec, constants=weights, silence_warnings=True)
 
-            pprint("=============")
-            pprint(case)
-
             map_state = count_violations(draco_rec)
             truth_state = count_violations(full_spec)
 
-            pprint(map_state)
-            pprint(truth_state)
             # get the names of violated rules in two specs
             violated_rules = set(list(map_state.keys()) + list(truth_state.keys()))
 
@@ -55,9 +50,8 @@ def discriminative_learning(train_data, initial_weights, learning_rate=0.01, max
 
 
 if __name__ == '__main__':
-    #partial_full_data = data_util.load_partial_full_data()
-    neg_pos_data = data_util.load_neg_pos_data()
+    partial_full_data = data_util.load_partial_full_data()
+    #neg_pos_data = data_util.load_neg_pos_data()
 
-    pprint(neg_pos_data)
-
+    pprint(partial_full_data)
     #weights = discriminative_learning(train_data, current_weights())

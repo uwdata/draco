@@ -9,13 +9,6 @@ from typing import Dict, Tuple
 from draco.run import DRACO_LP, run
 from draco.spec import Data, Query, Task
 
-
-def weight_to_int(weights, scale=100):
-    scaled_weights = {}
-    for k in weights:
-        scaled_weights[k] = int(weights[k] * scale)
-    return scaled_weights
-
 def current_weights() -> Dict:
     ''' Get the current weights as a dictionary. '''
     with open(os.path.join(os.path.dirname(__file__), '../../data/weights.json')) as f:

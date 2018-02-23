@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 
 from draco.learn import data_util
 from draco.spec import *
@@ -16,14 +17,14 @@ def sample_partial_specs(specs):
     results = []
 
     for entry in specs:
-        data, query = entry[0], Query.from_vegalite(entry[1])
+        data, task, query = entry[0], entry[1], Query.from_vegalite(entry[3])
         partial_query = insert_holes(query)
 
         # re-run the insert function until we find a partial spec different from the input. 
         while partial_query.to_asp() == query.to_asp():
             partial_query = insert_holes(query)
         
-        results.append((Task(data, partial_query), Task(data, query)))
+        results.append((Task(data, partial_query, task), Task(data, query, task)))
 
     return results
 
@@ -60,6 +61,7 @@ if __name__ == '__main__':
     tmp_dir = os.path.join(os.path.dirname(__file__), "..", "..", '__tmp__')
 
     specs = data_util.load_neg_pos_data()
+
     results = sample_partial_specs(specs)
 
     cql_out_dir = os.path.join(tmp_dir, 'cql_specs')
