@@ -66,7 +66,7 @@ def train_and_plot(X: np.array, y: np.array, split=0.7):
 
     cm_bright = ListedColormap(['#FF0000', '#0000FF'])
 
-    f, ax = plt.subplots(figsize=(10,8))
+    f, ax = plt.subplots(figsize=(8,6))
 
     # predictions made by the model
     pred = clf.predict(X)
@@ -89,6 +89,10 @@ def train_and_plot(X: np.array, y: np.array, split=0.7):
 
     ax.set_xticks(())
     ax.set_yticks(())
+
+    plt.title("Predicitons of Linear Model")
+
+    plt.annotate(f'Score: {clf.score(X, y):.{5}}. Size: {len(y)}', (0,0), (0, -20), xycoords='axes fraction', textcoords='offset points', va='top')
 
     plt.legend(loc='lower right')
     plt.axis("tight")
