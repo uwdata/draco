@@ -43,8 +43,8 @@ def train_model(X: np.array, y: np.array, split=0.7):
             split: the split between train and dev
     """
     X_train, X_dev, y_train, y_dev = train_test_split(X, y, test_size=split, random_state=1)
-    #clf = svm.LinearSVC(C=1)
-    clf = linear_model.LogisticRegression()
+    clf = svm.LinearSVC(C=1)
+    #clf = linear_model.LogisticRegression()
     clf.fit(X_train, y_train)
     print("Train score: ", clf.score(X_train, y_train))
     print("Dev score: ", clf.score(X_dev, y_dev))
