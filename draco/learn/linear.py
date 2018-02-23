@@ -92,7 +92,7 @@ def train_and_plot(X: np.array, y: np.array, split=0.7):
 
     plt.title("Predicitons of Linear Model")
 
-    plt.annotate(f'Score: {clf.score(X, y):.{5}}. # of pairs: {len(y)/2}', (0,0), (0, -20), xycoords='axes fraction', textcoords='offset points', va='top')
+    plt.annotate(f'Score: {clf.score(X, y):.{5}}. # of pairs: {int(len(y)/2)}', (0,0), (0, -20), xycoords='axes fraction', textcoords='offset points', va='top')
 
     plt.legend(loc='lower right')
     plt.axis("tight")
