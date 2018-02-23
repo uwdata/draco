@@ -66,7 +66,7 @@ def train_and_plot(X: np.array, y: np.array, split=0.7):
 
     cm_bright = ListedColormap(['#FF0000', '#0000FF'])
 
-    f, ax = plt.subplots(figsize=(10,8))
+    f, ax = plt.subplots(figsize=(8,6))
 
     # predictions made by the model
     pred = clf.predict(X)
@@ -77,9 +77,9 @@ def train_and_plot(X: np.array, y: np.array, split=0.7):
     false_negative = (y == 1) & (y != pred)
 
     plt.scatter(X0[correct_positive], X1[correct_positive], c='g', cmap=cm_bright, alpha=0.5, marker='>', label='correct positive')
-    plt.scatter(X0[correct_negative], X1[correct_negative], c='r', cmap=cm_bright, alpha=0.5, marker='>', label='correct negative')
-    plt.scatter(X0[false_positive], X1[false_positive], c='y', cmap=cm_bright, alpha=0.5, marker='<', label='false positive')
-    plt.scatter(X0[false_negative], X1[false_negative], c='b', cmap=cm_bright, alpha=0.5, marker='>', label='false negative')
+    plt.scatter(X0[correct_negative], X1[correct_negative], c='r', cmap=cm_bright, alpha=0.5, marker='<', label='correct negative')
+    plt.scatter(X0[false_positive], X1[false_positive], c='y', cmap=cm_bright, alpha=0.5, marker='>', label='false positive')
+    plt.scatter(X0[false_negative], X1[false_negative], c='b', cmap=cm_bright, alpha=0.5, marker='<', label='false negative')
 
     ax.set_xlim(xx.min(), xx.max())
     ax.set_ylim(yy.min(), yy.max())
@@ -89,6 +89,10 @@ def train_and_plot(X: np.array, y: np.array, split=0.7):
 
     ax.set_xticks(())
     ax.set_yticks(())
+
+    plt.title("Predicitons of Linear Model")
+
+    plt.annotate(f'Score: {clf.score(X, y):.{5}}. # of pairs: {int(len(y)/2)}', (0,0), (0, -20), xycoords='axes fraction', textcoords='offset points', va='top')
 
     plt.legend(loc='lower right')
     plt.axis("tight")

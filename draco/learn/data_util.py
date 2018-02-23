@@ -85,7 +85,7 @@ def load_partial_full_data():
     return result
 
 
-def to_feature_vec(neg_pos_data: List[tuple]) -> List[pd.DataFrame]:
+def to_feature_vec(neg_pos_data: List[tuple]) -> pd.DataFrame:
     """ given neg_pos_data, convert them into feature vectors """
 
     def get_index():
@@ -115,7 +115,7 @@ def to_feature_vec(neg_pos_data: List[tuple]) -> List[pd.DataFrame]:
 
         neg_feature_vec = count_violations_memoized(data, task, spec_neg)
         pos_feature_vec = count_violations_memoized(data, task, spec_pos)
-        
+
         # Reformat the json data so that we can insert it int a multi index data frame.
         # https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
         specs = {('negative', key): values for key, values in neg_feature_vec.items()}
@@ -124,7 +124,7 @@ def to_feature_vec(neg_pos_data: List[tuple]) -> List[pd.DataFrame]:
         df = df.append(pd.DataFrame(specs, index=[0]))
 
     return df.reset_index()
-    
+
 
 def load_data(ratio=0.7, split_seed=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
     ''' Load data created with `generate_and_store_data`.
