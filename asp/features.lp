@@ -103,7 +103,7 @@ feature_term("high_cardinality_ordinal",E) :- type(E,ordinal), cardinality(E,C),
 feature_term("only_x") :- channel(_,y), not channel(_,x).
 
 % prefer to use temporal type with dates
-feature_term("temporal_date",E) :- type(E,temporal), field(E,F), not fieldtype(F,date).
+feature_term("temporal_date",E) :- field(E,F), fieldtype(F,date), not type(E,temporal).
 
 % Overplotting
 
