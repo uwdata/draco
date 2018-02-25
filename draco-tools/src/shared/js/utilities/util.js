@@ -8,17 +8,13 @@ const vega = require('vega');
  * @param {Spec} vlSpec The vega-lite spec to
  *        translate.
  */
-export async function vl2svg(vlSpec, callback) {
+export function vl2view(vlSpec, parent) {
   const spec =  vl.compile(vlSpec).spec;
 
-  const view = new vega.View(vega.parse(spec), {
-    loader: vega.loader({baseURL: null}),
-    logLevel: vega.Warn,
-    renderer: 'none'
-  }).initialize()
-    .toSVG();
-
-    return view;
+  new vega.View(vega.parse(spec))
+    .renderer('svg')  
+    .initialize(parent)
+    .run();
 }
 
 /**

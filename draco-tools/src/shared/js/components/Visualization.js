@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { vl2svg, equals } from 'shared/js/utilities/util';
+import { vl2view, equals } from 'shared/js/utilities/util';
 
 import 'shared/scss/Visualization.css';
 
@@ -8,24 +8,19 @@ import 'shared/scss/Visualization.css';
  * and renders the resulting svg.
  */
 class Visualization extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      svg: null
-    };
-    this.updateSvg(this.props.vlSpec);
+  componentDidMount() {
+    this.updateView(this.props.vlSpec);
   }
 
   componentWillReceiveProps(nextProps) {
     if (!equals(this.props, nextProps)) {
-      this.updateSvg(nextProps.vlSpec);
+      this.updateView(nextProps.vlSpec);
     }
   }
 
   render() {
     return (
-      <div className="Visualization">
-        <span dangerouslySetInnerHTML={{__html: this.state.svg}} />
+      <div className="Visualization" ref='vis'>
       </div>
     );
   }
@@ -35,14 +30,8 @@ class Visualization extends Component {
    * 
    * @param {Object} vlSpec The Vega-Lite spec to use.
    */
-  updateSvg(vlSpec) {
-    vl2svg(vlSpec).then(
-      (svg) => {
-        this.setState({
-          svg: svg,
-        });
-      }
-    );
+  updateView(vlSpec) {
+    vl2view(vlSpec, this.refs.vis);
   }
 }
 

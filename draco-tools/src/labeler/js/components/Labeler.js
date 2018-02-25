@@ -41,12 +41,12 @@ class Labeler extends Component {
   render() {
     let leftViz;
     if (this.state.left) {
-      leftViz = <Visualization vlSpec={this.state.left}/>
+      leftViz = <Visualization vlSpec={this.state.left} id="left"/>
     }
 
     let rightViz;
     if (this.state.right) {
-      rightViz = <Visualization vlSpec={this.state.right}/>
+      rightViz = <Visualization vlSpec={this.state.right} id="right"/>
     }
 
     const displayClasses = classnames({
