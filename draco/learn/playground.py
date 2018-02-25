@@ -31,7 +31,7 @@ def play(partial_full_data):
 
     for case in partial_full_data:
         partial_spec, full_spec = partial_full_data[case]
-        draco_rec = run(partial_spec, constants=weights, silence_warnings=True)
+        draco_rec = run(partial_spec, constants=weights)
 
         print(draco_rec.to_vegalite_json())
         print(full_spec.to_vegalite_json())
