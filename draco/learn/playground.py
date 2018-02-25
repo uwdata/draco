@@ -1,17 +1,17 @@
+from pprint import pprint
+
 import numpy as np
 
-from draco.learn import data_util
-from draco.learn import linear
-from draco.learn.helper import *
+from draco.learn import data_util, linear
+from draco.learn.helper import current_weights
+from draco.run import run
 
-from pprint import pprint
 
 def play(partial_full_data):
 
     train_dev, _  = data_util.load_data()
     X, y = linear.prepare_data(train_dev)
 
-    #return train_and_plot(X, y)
     clf = linear.train_model(X, y)
 
     # columns where all X[i] are zero
@@ -39,9 +39,4 @@ def play(partial_full_data):
 
 
 if __name__ == '__main__':
-    partial_full_data = data_util.load_partial_full_data()
-    play(partial_full_data)
-    
-
-
-    
+    play(data_util.load_partial_full_data())
