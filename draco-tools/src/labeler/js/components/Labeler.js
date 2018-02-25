@@ -14,7 +14,7 @@ const KEYS = {
   37: '>', 40: '=', 39: '<',
 };
 
-const CONFIRMATION_TIME = 750;
+const CONFIRMATION_TIME = 500;
 const REQUEST_PATH = 'http://0.0.0.0:5000/pair';
 
 class Labeler extends Component {
@@ -123,14 +123,19 @@ class Labeler extends Component {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
+    }).then((response) => {
+      if (response.ok) {
+        // on success, fetch another pair
+        setTimeout(() => {
+          this.fetchPair();
+        }, CONFIRMATION_TIME);
+      } else {
+        alert('failed POST');
+      }
     });
-
-    setTimeout(() => {
-      this.fetchPair();
-    }, CONFIRMATION_TIME);
   }
 
-  async fetchPair() {
+  fetchPair() {
     fetch(REQUEST_PATH, {
       method: 'get'
     }).then((response) => {
@@ -144,6 +149,8 @@ class Labeler extends Component {
             hover: UNK,
           });
         });
+      } else {
+        alert('failed GET');
       }
     });
   }
