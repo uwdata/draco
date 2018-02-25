@@ -24,7 +24,8 @@ class Labeler extends Component {
       id: null,
       left: null,
       right: null,
-      comparison: '?',
+      chosen: null,
+      hover: UNK,
     };
   }
 
@@ -48,6 +49,11 @@ class Labeler extends Component {
       rightViz = <Visualization vlSpec={this.state.right}/>
     }
 
+    const displayClasses = classnames({
+      'display': true,
+      'block': this.state.chosen !== null,  // block events during confirmation
+    });
+
     const leftClasses = classnames({
       'visualization': true,
       'chosen': this.state.chosen === LEFT,
@@ -69,7 +75,7 @@ class Labeler extends Component {
 
     return (
       <div className="Labeler" onMouseOut={() => {this.hover(UNK)}}>
-        <div className="display">
+        <div className={displayClasses}>
           <div className={leftClasses}
                 onClick={() => {this.choose(this.state.id, LEFT)}}
                 onMouseEnter={() => {this.hover(LEFT)}}
@@ -134,7 +140,7 @@ class Labeler extends Component {
             id: data.id,
             left: data.left,
             right: data.right,
-            chosen: UNK,
+            chosen: null,
             hover: UNK,
           });
         });
@@ -143,12 +149,15 @@ class Labeler extends Component {
   }
 
   handleKeyDown(event) {
-    const comparison = KEYS[event.keyCode];
-    if (comparison) {
-      if (comparison === this.state.hover) {
-        this.choose(this.state.id, comparison);
-      } else {
-        this.hover(comparison);
+    // block events during confirmation
+    if (this.state.chosen === null) {
+      const comparison = KEYS[event.keyCode];
+      if (comparison) {
+        if (comparison === this.state.hover) {
+          this.choose(this.state.id, comparison);
+        } else {
+          this.hover(comparison);
+        }
       }
     }
   }
