@@ -12,7 +12,6 @@ import pandas as pd
 from draco.learn.helper import count_violations, current_weights
 from draco.spec import Data, Encoding, Field, Query, Task
 
-from pprint import pprint
 
 def absolute_path(p: str) -> str:
     return os.path.join(os.path.dirname(__file__), p)
@@ -58,6 +57,7 @@ def load_partial_full_data():
         Returns:
             A dictionary mapping each case name into a pair of partial spec - full spec.
     """
+
     def load_spec(input_dir, format="compassql"):
         """ load compassql data
             Args: input_dir: the directory containing a set of json compassql specs
@@ -80,6 +80,7 @@ def load_partial_full_data():
 
     partial_specs = load_spec(os.path.join(compassql_data_path, "input"), "compassql")
     compassql_outs = load_spec(os.path.join(compassql_data_path, "output"), "vegalite")
+
     result = {}
     for k in partial_specs:
         result[k] = (partial_specs[k], compassql_outs[k])
