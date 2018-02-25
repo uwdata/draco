@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router'
+
 import 'index/scss/ToolTile.css';
 
 class ToolTile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirect: false,
+    };
+  }
+
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to={this.props.route}/>
+    }
     return (
       <div className="ToolTile" onClick={this.redirect.bind(this)}>
         <div className="name">
@@ -16,7 +28,9 @@ class ToolTile extends Component {
   }
 
   redirect() {
-    window.location.href = '/' + this.props.url;
+    this.setState({
+      redirect: true
+    });
   }
 }
 

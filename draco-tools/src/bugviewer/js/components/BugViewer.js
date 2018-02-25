@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import 'bugviewer/scss/App.css';
+import 'bugviewer/scss/BugViewer.css';
 
 import Visualization from 'shared/js/components/Visualization';
 
-const BUGS = require('../../bugs.json');
+const BUGS = require('bugviewer/bugs.json');
 
-class App extends Component {
+class BugViewer extends Component {
   render() {
     const bugs = [];
     for (let i = 0; i < BUGS.length; i++) {
@@ -25,11 +25,11 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
+      <div className="BugViewer">
         {bugs}
       </div>
     );
   }
 }
 
-export default App;
+export default BugViewer;

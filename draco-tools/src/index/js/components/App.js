@@ -1,35 +1,49 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 import 'index/scss/App.css';
 
 import ToolTile from './ToolTile';
+import BugViewer from 'bugviewer/js/components/BugViewer';
 
 const TOOLS = [
   {
     name: 'Bug Viewer', 
     description: 'View bugs (incorrect predictions)',
-    url: 'bugviewer.html',
+    route: '/bugviewer',
   }
 ];
 
 class App extends Component {
   render() {
-    const tools = [];
+    const Home = () => {
+      const tools = [];
 
-    for (const tool of TOOLS) {
-      tools.push(
-        <ToolTile key={tool.name} name={tool.name} description={tool.description} url={tool.url} />
+      for (const tool of TOOLS) {
+        tools.push(
+          <ToolTile key={tool.name} name={tool.name} description={tool.description} route={tool.route} />
+        );
+      }
+  
+      return (
+        <div className="App">
+          <div className="title">
+            Tools for Draco
+          </div>
+          <div className="tools">
+            {tools}
+          </div>
+        </div>
       );
     }
 
     return (
-      <div className="App">
-        <div className="title">
-          Tools for Draco
+      <Router>
+        <div>
+          <Route exact path="/" component={Home} />
+          <Route path="/bugviewer" component={BugViewer} />
         </div>
-        <div className="tools">
-          {tools}
-        </div>
-      </div>
+      </Router>
     );
   }
 }
