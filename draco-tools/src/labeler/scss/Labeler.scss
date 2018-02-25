@@ -1,0 +1,60 @@
+@import 'shared/scss/base.scss';
+
+.Labeler {
+  font-family: 'Noto Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+
+  .display {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .visualization {
+      height: 100vh;
+      flex-grow: 1;
+      flex-shrink: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .visualization.hover {
+      background-color: $extra-light-grey;
+    }
+
+    .visualization.chosen {
+      background-color: $light-blue;
+    }
+
+    .equals {
+      width: 128px;
+      height: 100vh;
+      cursor: pointer;
+    }
+
+    .equals.hover {
+      background-color: $extra-light-grey;
+    }
+
+    .equals.chosen {
+      background-color: $light-blue;
+    }
+  }
+
+  .indicator {
+    font-size: 48px;
+    color: $med-grey;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    pointer-events: none;
+  }
+}

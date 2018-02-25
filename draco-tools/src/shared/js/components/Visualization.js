@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { vl2svg, equals } from 'shared/js/utilities/util';
 
+import 'shared/scss/Visualization.css';
+
 /**
  * A Visualization component accepts a `vlSpec` as a prop
  * and renders the resulting svg.
@@ -22,7 +24,7 @@ class Visualization extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Visualization">
         <span dangerouslySetInnerHTML={{__html: this.state.svg}} />
       </div>
     );

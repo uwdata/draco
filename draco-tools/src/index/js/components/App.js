@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import 'index/scss/App.css';
 
 import ToolTile from './ToolTile';
 import BugViewer from 'bugviewer/js/components/BugViewer';
+import Labeler from 'labeler/js/components/Labeler';
 
 const TOOLS = [
   {
     name: 'Bug Viewer', 
     description: 'View bugs (incorrect predictions)',
     route: '/bugviewer',
+  },
+  {
+    name: 'Labeler',
+    description: 'Label pairs of visualizations',
+    route: '/labeler',
   }
 ];
 
@@ -42,6 +48,7 @@ class App extends Component {
         <div>
           <Route exact path="/" component={Home} />
           <Route path="/bugviewer" component={BugViewer} />
+          <Route path="/labeler" component={Labeler} />
         </div>
       </Router>
     );
