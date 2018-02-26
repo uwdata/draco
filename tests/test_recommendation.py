@@ -1,5 +1,4 @@
 import unittest
-from pprint import pprint
 
 from draco.run import run
 from draco.spec import Data, Field, Query, Task

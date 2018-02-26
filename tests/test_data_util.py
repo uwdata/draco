@@ -1,5 +1,11 @@
+import os
+
 import numpy as np
-from draco.learn.data_util import paired_train_test_split, load_data
+import pytest
+
+from draco.learn.data_util import (load_data, paired_train_test_split,
+                                   pickle_path)
+
 
 def test_paired_train_test_split():
     X = np.arange(10)
@@ -11,6 +17,9 @@ def test_paired_train_test_split():
     assert np.sum(y_test) == 2
 
 def test_load_data():
+    if not os.path.isfile(pickle_path):
+        pytest.skip('Test needs data file')
+
     train, test = load_data()
 
     size = len(train) + len(test)
