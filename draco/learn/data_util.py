@@ -9,6 +9,7 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 from draco.learn.helper import count_violations, current_weights
 from draco.spec import Data, Encoding, Field, Query, Task
@@ -128,7 +129,7 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
 
 def get_pos_neg_data() -> pd.DataFrame:
     '''
-        Load data created with `generate_and_store_data`.
+    Load data created with `generate_and_store_data`.
     '''
 
     data = pd.read_pickle(pickle_path)
@@ -136,19 +137,32 @@ def get_pos_neg_data() -> pd.DataFrame:
 
     return data
 
-def load_data(ratio=0.7, split_seed=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def paired_train_test_split(X: np.array, y: np.array, test_size: float=0.3, random_state=1) -> Tuple[np.array, np.array, np.array, np.array]:
+    '''
+    Split a dataset that has paired examples into train and test data.
+    '''
+    np.random.seed(random_state)
+
+    size = int(len(X) / 2)
+    assert sum(y[:size]) == 0
+    assert sum(y[size:]) == size
+
+    idx = np.ones(size, dtype=bool)
+    idx[:int(test_size * size)] = False
+    np.random.shuffle(idx)
+
+    idx = np.concatenate([idx, idx])
+
+    return X[idx], X[~idx], y[idx], y[~idx]
+
+def load_data(test_size: float=0.3, random_state=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
     '''
         Returns:
             a tuple containing: train_dev, test.
     '''
     data = get_pos_neg_data()
 
-    st0 = np.random.get_state()
-    np.random.seed(split_seed)
-    result = np.split(data.sample(frac=1), [int(ratio*len(data))])
-    np.random.set_state(st0)
-
-    return result
+    return train_test_split(data, test_size=test_size, random_state=random_state)
 
 if __name__ == '__main__':
     ''' Generate and store data in default path. '''

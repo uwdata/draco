@@ -5,14 +5,14 @@ import seaborn as sns
 from matplotlib.colors import ListedColormap
 from sklearn import linear_model, svm, tree
 from sklearn.decomposition import PCA
-from sklearn.model_selection import train_test_split
 
 from draco.learn import data_util
 from pprint import pprint
+from sklearn.model_selection import train_test_split
 
 
-def prepare_data(data: pd.DataFrame):
-    """ transform data into X, y matrices
+def prepare_paired_data(data: pd.DataFrame):
+    """ Transform data into X, y matrices that are paired.
         Returns:
             X: ndarray of shape (2 * N, num_columns), representing matrix
             y: ndarray of shape (2 * N), representing labels
@@ -35,14 +35,18 @@ def prepare_data(data: pd.DataFrame):
     return X, y
 
 
-def train_model(X: np.array, y: np.array, split=0.7):
+def train_model(X: np.array, y: np.array, paired: bool, test_size: float=0.3):
     """ Given features X and labels y, train a linear model to classify them
         Args:
             X: a N x M matrix, representing feature vectors
             y: a N vector, representing labels
-            split: the split between train and dev
+            test_size: the fraction of test data
     """
-    X_train, X_dev, y_train, y_dev = train_test_split(X, y, test_size=split, random_state=1)
+    if paired:
+        X_train, X_dev, y_train, y_dev = data_util.paired_train_test_split(X, y, test_size=test_size, random_state=1)
+    else:
+        X_train, X_dev, y_train, y_dev = train_test_split(X, y, test_size=test_size, random_state=1)
+
     # clf = svm.LinearSVC(C=1, fit_intercept=False)
     clf = linear_model.LogisticRegression(solver='sag')
     clf.fit(X_train, y_train)
@@ -51,14 +55,14 @@ def train_model(X: np.array, y: np.array, split=0.7):
     return clf
 
 
-def train_and_plot(X: np.array, y: np.array, split=0.7):
+def train_and_plot(X: np.array, y: np.array, paired: bool, test_size: float=0.3):
     """ Reduce X, y into 2D using PCA and use SVM to classify them
         Then plot the decision boundary as well as raw data points
     """
     pca = PCA(n_components=2)
     X2 = pca.fit_transform(X)
 
-    clf = train_model(X, y, split)
+    clf = train_model(X, y, paired, test_size)
 
     # for plotting
     X0, X1 = X2[:, 0], X2[:, 1]
@@ -116,6 +120,7 @@ def plot_contours(ax, clf, xx, yy, **params):
     out = ax.contourf(xx, yy, Z, **params)
     return out
 
+
 def make_meshgrid(x, y, h=.02):
     """Create a mesh of points to plot in
     Params:
@@ -132,10 +137,10 @@ def make_meshgrid(x, y, h=.02):
     return xx, yy
 
 def main():
-    train_dev, _  = data_util.load_data()
-    X, y = prepare_data(train_dev)
+    train_dev, _ = data_util.load_data(test_size=0.3)
+    X, y = prepare_paired_data(train_dev)
 
-    return train_and_plot(X, y)
+    return train_and_plot(X, y, paired=True)
 
 
 if __name__ == '__main__':

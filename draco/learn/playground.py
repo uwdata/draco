@@ -7,9 +7,9 @@ from draco.run import run
 
 def play(partial_full_data):
     train_dev, _  = data_util.load_data()
-    X, y = linear.prepare_data(train_dev)
+    X, y = linear.prepare_paired_data(train_dev)
 
-    clf = linear.train_model(X, y)
+    clf = linear.train_model(X, y, paired=True)
 
     # columns where all X[i] are zero
     unused_features = np.nonzero(np.sum(np.abs(X), axis=0) == 0)[0]
