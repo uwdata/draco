@@ -126,13 +126,22 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
 
     return df
 
+def get_pos_neg_data() -> pd.DataFrame:
+    '''
+        Load data created with `generate_and_store_data`.
+    '''
+
+    data = pd.read_pickle(pickle_path)
+    data.fillna(0, inplace=True)
+
+    return data
+
 def load_data(ratio=0.7, split_seed=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    ''' Load data created with `generate_and_store_data`.
+    '''
         Returns:
             a tuple containing: train_dev, test.
     '''
-    data = pd.read_pickle(pickle_path)
-    data.fillna(0, inplace=True)
+    data = get_pos_neg_data()
 
     st0 = np.random.get_state()
     np.random.seed(split_seed)
