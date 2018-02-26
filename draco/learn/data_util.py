@@ -4,6 +4,7 @@ Processing data for learning procedures.
 
 import json
 import os
+from collections import namedtuple
 from typing import Dict, List, Tuple
 
 import numpy as np
@@ -23,7 +24,10 @@ ba_data_path = absolute_path('../../data/training/bahador.json')
 compassql_data_path = absolute_path("../../data/compassql_examples")
 
 
-def load_neg_pos_data():
+PosNegExample = namedtuple('PosNeg', ['data', 'task', 'source', 'negative', 'positive'])
+
+
+def load_neg_pos_data() -> List[PosNegExample]:
     raw_data = []
 
     for path in [man_data_path, yh_data_path, ba_data_path]:
@@ -33,7 +37,13 @@ def load_neg_pos_data():
             for row in json_data['data']:
                 fields = list(map(Field.from_obj, row['fields']))
                 spec_schema = Data(fields, row.get('num_rows'))
-                raw_data.append((spec_schema, row.get('task'), row['negative'], row['positive']))
+                raw_data.append(PosNegExample(
+                    spec_schema,
+                    row.get('task'),
+                    json_data['source'],
+                    row['negative'],
+                    row['positive'])
+                )
 
     return raw_data
 
@@ -76,7 +86,7 @@ def load_partial_full_data():
     return result
 
 
-def to_feature_vec(neg_pos_data: List[tuple]) -> pd.DataFrame:
+def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
     """ given neg_pos_data, convert them into feature vectors """
 
     def get_index():
@@ -101,21 +111,20 @@ def to_feature_vec(neg_pos_data: List[tuple]) -> pd.DataFrame:
     processed_specs: Dict[str, int] = {}
 
     # convert the specs to feature vectors
-    for data, task, spec_neg, spec_pos in neg_pos_data:
+    for idx, example in enumerate(neg_pos_data):
         Encoding.encoding_cnt = 0
 
-        neg_feature_vec = count_violations_memoized(data, task, spec_neg)
-        pos_feature_vec = count_violations_memoized(data, task, spec_pos)
+        neg_feature_vec = count_violations_memoized(example.data, example.task, example.negative)
+        pos_feature_vec = count_violations_memoized(example.data, example.task, example.positive)
 
         # Reformat the json data so that we can insert it int a multi index data frame.
         # https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
         specs = {('negative', key): values for key, values in neg_feature_vec.items()}
         specs.update({('positive', key): values for key, values in pos_feature_vec.items()})
 
-        df = df.append(pd.DataFrame(specs, index=[0]))
+        df = df.append(pd.DataFrame(specs, index=[idx]))  # the idx is the same as the one in load_neg_pos_data
 
-    return df.reset_index()
-
+    return df
 
 def load_data(ratio=0.7, split_seed=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
     ''' Load data created with `generate_and_store_data`.
