@@ -27,7 +27,7 @@ class Visualization extends Component {
 
   /**
    * Updates this to use the given vlSpec.
-   * 
+   *
    * @param {Object} vlSpec The Vega-Lite spec to use.
    */
   updateView(vlSpec) {
