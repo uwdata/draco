@@ -1,0 +1,74 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["data"],
+    "properties": {
+        "source": {
+            "type": "string"
+        },
+        "$schema": {
+            "type": "string"
+        },
+        "data": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "fields": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "type": "string"
+                                },
+                                "entropy": {
+                                    "type": "number"
+                                },
+                                "cardinality": {
+                                    "type": "number"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "name",
+                                "type"
+                            ]
+                        }
+                    },
+                    "num_rows": {
+                        "type": "number"
+                    },
+                    "pvalue": {
+                        "type": "number"
+                    },
+                    "task": {
+                        "type": "string",
+                        "enum": [
+                            "compare",
+                            "derived",
+                            "extremum",
+                            "value"
+                        ]
+                    },
+                    "negative": {
+                        "$ref": "https://vega.github.io/schema/vega-lite/v2.json"
+                    },
+                    "positive": {
+                        "$ref": "https://vega.github.io/schema/vega-lite/v2.json"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "fields",
+                    "negative",
+                    "positive"
+                ]
+            }
+        }
+    }
+}

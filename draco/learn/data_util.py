@@ -17,34 +17,23 @@ def absolute_path(p: str) -> str:
     return os.path.join(os.path.dirname(__file__), p)
 
 pickle_path = absolute_path('../../__tmp__/data.pickle')
+man_data_path = absolute_path('../../data/training/manual.json')
 yh_data_path = absolute_path('../../data/training/younghoon.json')
 ba_data_path = absolute_path('../../data/training/bahador.json')
-#user_study_data_path = absolute_path('../../data/training/q_q_n.json')
 compassql_data_path = absolute_path("../../data/compassql_examples")
 
+
 def load_neg_pos_data():
+    raw_data = []
 
-    spec_schema = Data([
-            Field('q1', 'number', 100, 1),
-            Field('q2', 'number', 100, 1),
-            Field('n1', 'string', 5, 1)
-        ], 100)
-
-    # data, inferior spec, superior spec
-    raw_data = [(spec_schema, None,
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'y': {'field': 'q1', 'type': 'quantitative'}}}
-    ), (spec_schema, None,
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'y': {'field': 'q2', 'type': 'quantitative'}}},
-        {'mark': 'point', 'encoding': {'x': {'field': 'q1', 'type': 'quantitative'}, 'color': {'field': 'q2', 'type': 'quantitative'}}}
-    )]
-
-    for path in [yh_data_path, ba_data_path]:
+    for path in [man_data_path, yh_data_path, ba_data_path]:
         with open(path) as f:
-            for row in json.load(f):
+            json_data = json.load(f)
+
+            for row in json_data['data']:
                 fields = list(map(Field.from_obj, row['fields']))
                 spec_schema = Data(fields, row.get('num_rows'))
-                raw_data.append((spec_schema, row['task'], row['negative'], row['positive']))
+                raw_data.append((spec_schema, row.get('task'), row['negative'], row['positive']))
 
     return raw_data
 

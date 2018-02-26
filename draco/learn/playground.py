@@ -1,5 +1,3 @@
-from pprint import pprint
-
 import numpy as np
 
 from draco.learn import data_util, linear
@@ -8,7 +6,6 @@ from draco.run import run
 
 
 def play(partial_full_data):
-
     train_dev, _  = data_util.load_data()
     X, y = linear.prepare_data(train_dev)
 

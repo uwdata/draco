@@ -1,0 +1,102 @@
+{
+    "$schema": "./schema.json",
+    "source": "manual",
+    "data": [
+        {
+            "fields": [
+                {
+                    "name": "q1",
+                    "type": "number",
+                    "cardinality": 100,
+                    "entropy": 1
+                },
+                {
+                    "name": "q2",
+                    "type": "number",
+                    "cardinality": 100,
+                    "entropy": 1
+                },
+                {
+                    "name": "n",
+                    "type": "string",
+                    "cardinality": 5
+                }
+            ],
+            "num_rows": 100,
+            "negative": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "field": "q1",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "q2",
+                        "type": "quantitative"
+                    }
+                }
+            },
+            "positive": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "field": "q1",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "q1",
+                        "type": "quantitative"
+                    }
+                }
+            }
+        },
+        {
+            "fields": [
+                {
+                    "name": "q1",
+                    "type": "number",
+                    "cardinality": 100,
+                    "entropy": 1
+                },
+                {
+                    "name": "q2",
+                    "type": "number",
+                    "cardinality": 100,
+                    "entropy": 1
+                },
+                {
+                    "name": "n",
+                    "type": "string",
+                    "cardinality": 5
+                }
+            ],
+            "num_rows": 100,
+            "negative": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "field": "q1",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "q2",
+                        "type": "quantitative"
+                    }
+                }
+            },
+            "positive": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "field": "q1",
+                        "type": "quantitative"
+                    },
+                    "color": {
+                        "field": "q2",
+                        "type": "quantitative"
+                    }
+                }
+            }
+        }
+    ]
+}
