@@ -8,19 +8,42 @@
 
   .bug {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     border: 1px solid $light-grey;
     border-radius: 4px;
     margin-top: 16px;
+    color: $med-grey;
 
-    .relationship {
+    .visualizations {
       display: flex;
       flex-direction: row;
-      margin: 16px;
 
-      .comparison {
-        padding: 8px;
+      &> div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
       }
+
+      .label {
+        font-size: 1.1em;
+        font-weight: 600;
+        margin-bottom: .6em;
+
+        small {
+          font-weight: normal;
+        }
+      }
+
+      svg {
+        max-height: 600px;
+        max-width: 400px;
+      }
+    }
+
+    p {
+      margin-left: 20px;
+      margin-right: 20px;
     }
   }
 }

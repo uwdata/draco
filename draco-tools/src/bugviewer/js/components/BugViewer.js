@@ -11,15 +11,25 @@ class BugViewer extends Component {
     for (let i = 0; i < BUGS.length; i++) {
       const bug = BUGS[i];
 
-      for (const vlSpec of [bug.negative, bug.positive]) {
-        vlSpec.width = 100;
-        vlSpec.height = 100;
-      }
-
       bugs.push(
         <div className="bug" key={i}>
-          <Visualization vlSpec={bug.negative}/>
-          <Visualization vlSpec={bug.positive}/>
+          <div className="visualizations">
+            <div>
+              <span className="label">
+                Negative<br/><small>but was labeled as better</small>
+              </span>
+              <Visualization vlSpec={bug.negative}/>
+            </div>
+            <div>
+              <span className="label">
+                Positive<br/><small>but was labeled as worse</small>
+              </span>
+              <Visualization vlSpec={bug.positive}/>
+            </div>
+          </div>
+          <p>
+            Confidence: {bug.confidence}
+          </p>
         </div>
       );
     }
