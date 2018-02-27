@@ -8,8 +8,8 @@ from draco.spec import *
 from draco import spec
 
 def sample_partial_specs(specs):
-    """ Given a list of full specs, sample partial specs from them 
-    Args: 
+    """ Given a list of full specs, sample partial specs from them
+    Args:
         specs: full specs formed from (data, query) pairs, query is a vegalite json file
     Returns:
         a list of (data, partial_spec, spec) pairs, where the partial_spec is created from spec
@@ -20,10 +20,10 @@ def sample_partial_specs(specs):
         data, task, query = entry[0], entry[1], Query.from_vegalite(entry[3])
         partial_query = insert_holes(query)
 
-        # re-run the insert function until we find a partial spec different from the input. 
+        # re-run the insert function until we find a partial spec different from the input.
         while partial_query.to_asp() == query.to_asp():
             partial_query = insert_holes(query)
-        
+
         results.append((Task(data, partial_query, task), Task(data, query, task)))
 
     return results
@@ -33,7 +33,7 @@ def subst_w_prob(v1, v2, prob):
 
 def insert_holes(query, prob=0.8, subst_val=spec.HOLE):
     """ given a query, randomly substitute values to generate a partial spec
-    Args: 
+    Args:
         query: a vegalite object
         prob: the probability to substitute an attribute in query with None
     Returns:
@@ -51,7 +51,7 @@ def insert_holes(query, prob=0.8, subst_val=spec.HOLE):
         zero = subst_w_prob(enc.zero, subst_val, prob)
         encodings.append(Encoding(channel, field, ty, aggregate, binning, log_scale, zero, enc.id))
     return Query(mark, encodings)
-    
+
 
 if __name__ == '__main__':
 
@@ -78,4 +78,3 @@ if __name__ == '__main__':
 
         with open(os.path.join(vl_out_dir, f"full_{i}.vl.json"), "w") as f:
             json.dump(entry[1].to_compassql(), f, indent=4)
-        
