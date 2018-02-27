@@ -9,60 +9,45 @@ from sklearn.decomposition import PCA
 from draco.learn import data_util
 from pprint import pprint
 from sklearn.model_selection import train_test_split
+from typing import Tuple
 
 
-def prepare_paired_data(data: pd.DataFrame):
-    """ Transform data into X, y matrices that are paired.
-        Returns:
-            X: ndarray of shape (2 * N, num_columns), representing matrix
-            y: ndarray of shape (2 * N), representing labels
-    """
-    N = len(data)
-
-    X = np.zeros((2 * N, len(data.positive.columns)))
-    y = np.zeros(2 * N)
-
-    for i in range(N):
-        x_pos = data.positive.iloc[i].values
-        x_neg = data.negative.iloc[i].values
-
-        X[i] = x_pos - x_neg
-        y[i] = 0
-
-        X[i + N] = x_neg - x_pos
-        y[i + N] = 1
-
-    return X, y
-
-
-def train_model(X: np.array, y: np.array, paired: bool, test_size: float=0.3):
+def train_model(X: pd.DataFrame, test_size: float=0.3):
     """ Given features X and labels y, train a linear model to classify them
         Args:
             X: a N x M matrix, representing feature vectors
             y: a N vector, representing labels
             test_size: the fraction of test data
     """
-    if paired:
-        X_train, X_dev, y_train, y_dev = data_util.paired_train_test_split(X, y, test_size=test_size, random_state=1)
-    else:
-        X_train, X_dev, y_train, y_dev = train_test_split(X, y, test_size=test_size, random_state=1)
 
-    # clf = svm.LinearSVC(C=1, fit_intercept=False)
-    clf = linear_model.LogisticRegression(solver='sag')
+    X_train, X_dev = train_test_split(X, test_size=test_size, random_state=1)
+
+    y_train = np.ones(len(X_train))
+    X_train = X_train.as_matrix()
+
+    # swap first example
+    X_train[0] = -X_train[0]
+    y_train[0] = -y_train[0]
+
+    clf = svm.LinearSVC(C=1, fit_intercept=False)
     clf.fit(X_train, y_train)
+
     print("Train score: ", clf.score(X_train, y_train))
-    print("Dev score: ", clf.score(X_dev, y_dev))
+    print("Dev score: ", clf.score(X_dev, np.ones(len(X_dev))))
+
     return clf
 
 
-def train_and_plot(X: np.array, y: np.array, paired: bool, test_size: float=0.3):
+def train_and_plot(data: pd.DataFrame, test_size: float=0.3):
     """ Reduce X, y into 2D using PCA and use SVM to classify them
         Then plot the decision boundary as well as raw data points
     """
+    X = data.positive - data.negative
+
     pca = PCA(n_components=2)
     X2 = pca.fit_transform(X)
 
-    clf = train_model(X, y, paired, test_size)
+    clf = train_model(X, test_size)
 
     # for plotting
     X0, X1 = X2[:, 0], X2[:, 1]
@@ -75,15 +60,10 @@ def train_and_plot(X: np.array, y: np.array, paired: bool, test_size: float=0.3)
     # predictions made by the model
     pred = clf.predict(X)
 
-    correct_positive = (y == 1) & (y == pred)
-    correct_negative = (y == 0) & (y == pred)
-    false_positive = (y == 0) & (y != pred)
-    false_negative = (y == 1) & (y != pred)
+    correct = (pred > 0)
 
-    plt.scatter(X0[correct_positive], X1[correct_positive], c='g', cmap=cm_bright, alpha=0.5, marker='>', label='correct positive')
-    plt.scatter(X0[correct_negative], X1[correct_negative], c='r', cmap=cm_bright, alpha=0.5, marker='<', label='correct negative')
-    plt.scatter(X0[false_positive], X1[false_positive], c='y', cmap=cm_bright, alpha=0.5, marker='>', label='false positive')
-    plt.scatter(X0[false_negative], X1[false_negative], c='b', cmap=cm_bright, alpha=0.5, marker='<', label='false negative')
+    plt.scatter(X0[correct], X1[correct], c='g', cmap=cm_bright, alpha=0.5, marker='>', label='correct')
+    plt.scatter(X0[~correct], X1[~correct], c='r', cmap=cm_bright, alpha=0.5, marker='<', label='incorrect')
 
     ax.set_xlim(xx.min(), xx.max())
     ax.set_ylim(yy.min(), yy.max())
@@ -94,9 +74,9 @@ def train_and_plot(X: np.array, y: np.array, paired: bool, test_size: float=0.3)
     ax.set_xticks(())
     ax.set_yticks(())
 
-    plt.title("Predicitons of Linear Model")
+    plt.title("Predictions of Linear Model")
 
-    plt.annotate(f'Score: {clf.score(X, y):.{5}}. # of pairs: {int(len(y)/2)}', (0,0), (0, -20), xycoords='axes fraction', textcoords='offset points', va='top')
+    plt.annotate(f'Score: {clf.score(X, np.ones(len(X))):.{5}}. N: {int(len(data))}', (0,0), (0, -20), xycoords='axes fraction', textcoords='offset points', va='top')
 
     plt.legend(loc='lower right')
     plt.axis("tight")
@@ -138,9 +118,8 @@ def make_meshgrid(x, y, h=.02):
 
 def main():
     train_dev, _ = data_util.load_data(test_size=0.3)
-    X, y = prepare_paired_data(train_dev)
 
-    return train_and_plot(X, y, paired=True)
+    return train_and_plot(train_dev)
 
 
 if __name__ == '__main__':

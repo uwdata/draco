@@ -5,11 +5,11 @@ marktype(point;bar;line;area;rule;text;tick;rect).
 % high level data types: quantitative, ordinal, nominal, temporal
 type(quantitative;ordinal;nominal;temporal).
 % basic types of the data
-primitive_type(string;number;integer;boolean;date).
+primitive_type(string;number;boolean;date).
 % supported aggregation functions
-aggregate(count;mean;median;min;max).
+aggregate(count;mean;median;min;max;stdev;sum).
 % possible numbers of bins
-bin(3;5;10;100;200).
+bin(3;5;10;20;100;200).
 
 % encoding channels
 single_channel(x;y;color;opacity;size;shape;text;row;column).

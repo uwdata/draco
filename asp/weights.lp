@@ -10,9 +10,7 @@
 #const encoding_weight = 2.
 #const encoding_field_weight = 6.
 #const same_field_2_weight = 8.
-#const same_field_3_weight = 12.
-#const same_field_4_weight = 14.
-#const same_field_gte5_weight = 18.
+#const same_field_gte3_weight = 16.
 #const categorical_cardinality_weight = 5.
 #const shape_cardinality_weight = 5.
 #const number_nominal_weight = 10.
@@ -123,10 +121,12 @@
 #const interesting_detail_weight = 20.
 
 #const aggregate_count_weight = 0.
+#const aggregate_count_sum = 1.
 #const aggregate_mean_weight = 2.
 #const aggregate_median_weight = 3.
 #const aggregate_min_weight = 4.
 #const aggregate_max_weight = 4.
+#const aggregate_stdev_weight = 5.
 
 #const compare_point_weight = 0.
 #const compare_bar_weight = 0.
