@@ -16,13 +16,13 @@ class BugViewer extends Component {
           <div className="visualizations">
             <div>
               <span className="label">
-                Negative<br/><small>but was labeled as better</small>
+                Negative<br/><small>but was predicted as better</small>
               </span>
               <Visualization vlSpec={bug.negative}/>
             </div>
             <div>
               <span className="label">
-                Positive<br/><small>but was labeled as worse</small>
+                Positive<br/><small>but was predicted as worse</small>
               </span>
               <Visualization vlSpec={bug.positive}/>
             </div>
