@@ -9,7 +9,7 @@ import Labeler from 'labeler/js/components/Labeler';
 
 const TOOLS = [
   {
-    name: 'Bug Viewer', 
+    name: 'Bug Viewer',
     description: 'View bugs (incorrect predictions)',
     route: '/bugviewer',
   },
@@ -30,7 +30,7 @@ class App extends Component {
           <ToolTile key={tool.name} name={tool.name} description={tool.description} route={tool.route} />
         );
       }
-  
+
       return (
         <div className="App">
           <div className="title">
