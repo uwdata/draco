@@ -174,7 +174,7 @@ def make_meshgrid(x, y, h=.01):
 def main():
     train_dev, _ = data_util.load_data(test_size=0.3)
 
-    return project_and_plot(train_dev)
+    return train_and_plot(train_dev)
 
 
 if __name__ == '__main__':
