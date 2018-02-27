@@ -1,70 +1,84 @@
 @import 'shared/scss/base.scss';
 
 .Labeler {
-  font-family: 'Noto Sans', sans-serif;
   display: flex;
   flex-direction: column;
 
-  .display {
+  .chooser {
+    display: flex;
+    flex-direction: column;
+    height: 900px;
+
+    .display {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+
+      .visualization {
+        flex-grow: 1;
+        flex-shrink: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        svg {
+          max-height: 900px;
+        }
+      }
+
+      .visualization.hover {
+        background-color: $extra-light-grey;
+      }
+
+      .visualization.chosen {
+        background-color: $light-blue;
+      }
+
+      .equals {
+        width: 128px;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .indicator {
+          font-size: 48px;
+          color: $med-grey;
+          pointer-events: none;
+        }
+      }
+
+      .equals.hover {
+        background-color: $extra-light-grey;
+      }
+
+      .equals.chosen {
+        background-color: $light-blue;
+      }
+    }
+
+    .display.block {
+      .visualization {
+        pointer-events: none;
+      }
+
+      .equals {
+        pointer-events: none;
+        display: flex;
+      }
+    }
+  }
+
+  .specs {
     display: flex;
     flex-direction: row;
-    align-items: center;
-
-    .visualization {
-      height: 100vh;
-      flex-grow: 1;
-      flex-shrink: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
+    &> * {
+      width: 30%;
     }
-
-    .visualization.hover {
-      background-color: $extra-light-grey;
-    }
-
-    .visualization.chosen {
-      background-color: $light-blue;
-    }
-
-    .equals {
-      width: 128px;
-      height: 100vh;
-      cursor: pointer;
-    }
-
-    .equals.hover {
-      background-color: $extra-light-grey;
-    }
-
-    .equals.chosen {
-      background-color: $light-blue;
-    }
-  }
-
-  .indicator {
-    font-size: 48px;
-    color: $med-grey;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    pointer-events: none;
-  }
-
-  .display.block {
-    .visualization {
-      pointer-events: none;
-    }
-
-    .equals {
-      pointer-events: none;
+    pre {
+      white-space: pre-wrap;
     }
   }
 }

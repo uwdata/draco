@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
 import 'labeler/scss/Labeler.css';
 
+import React, { Component } from 'react';
 import Visualization from 'shared/js/components/Visualization';
+import { duplicate } from 'vega-lite/build/src/util';
+import * as stringify from 'json-stable-stringify';
 
 const classnames = require('classnames');
 
@@ -16,6 +18,16 @@ const KEYS = {
 
 const CONFIRMATION_TIME = 500;
 const REQUEST_PATH = 'http://0.0.0.0:5000/pair';
+
+function cleanUpSpec(spec) {
+  if (!spec) {
+    return spec;
+  }
+
+  spec = duplicate(spec);
+  delete spec.data;
+  return spec;
+}
 
 class Labeler extends Component {
   constructor(props) {
@@ -75,27 +87,33 @@ class Labeler extends Component {
 
     return (
       <div className="Labeler" onMouseOut={() => {this.hover(UNK)}}>
-        <div className={displayClasses}>
-          <div className={leftClasses}
-                onClick={() => {this.choose(this.state.id, LEFT)}}
-                onMouseEnter={() => {this.hover(LEFT)}}
-          >
-            {leftViz}
-          </div>
-          <div className={equalsClasses}
-               onClick={() => {this.choose(this.state.id, EQUALS)}}
-               onMouseEnter={() => {this.hover(EQUALS)}}>
-          </div>
-          <div className={rightClasses}
-               onClick={() => {this.choose(this.state.id, RIGHT)}}
-               onMouseEnter={() => {this.hover(RIGHT)}}
-          >
-            {rightViz}
+        <div className="chooser">
+          <div className={displayClasses}>
+            <div className={leftClasses}
+                  onClick={() => {this.choose(this.state.id, LEFT)}}
+                  onMouseEnter={() => {this.hover(LEFT)}}>
+              {leftViz}
+            </div>
+            <div className={equalsClasses}
+                onClick={() => {this.choose(this.state.id, EQUALS)}}
+                onMouseEnter={() => {this.hover(EQUALS)}}>
+              <div className="indicator">
+                {this.state.hover}
+              </div>
+            </div>
+            <div className={rightClasses}
+                onClick={() => {this.choose(this.state.id, RIGHT)}}
+                onMouseEnter={() => {this.hover(RIGHT)}}>
+              {rightViz}
+            </div>
           </div>
         </div>
-        <div className="indicator">
-          {this.state.hover}
+        <div className="specs">
+          <pre>{stringify(cleanUpSpec(this.state.left), {space: 2})}</pre>
+          <div></div>
+          <pre>{stringify(cleanUpSpec(this.state.right), {space: 2})}</pre>
         </div>
+        <div>Task:</div>
       </div>
     );
   }
