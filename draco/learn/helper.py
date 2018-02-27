@@ -6,8 +6,11 @@ import json
 import os
 from typing import Dict, Tuple
 
+import numpy as np
+
 from draco.run import DRACO_LP, run
 from draco.spec import Data, Query, Task
+
 
 def current_weights() -> Dict:
     ''' Get the current weights as a dictionary. '''
@@ -19,10 +22,10 @@ def compute_cost(violations: Dict) -> int:
     c = 0
     for k,v in violations.items():
         c += v * weights[f'{k}_weight']
-    return c    
+    return c
 
 def count_violations(task: "Task") -> Dict:
-    ''' Get a dictionary of violations for a full spec. 
+    ''' Get a dictionary of violations for a full spec.
         Args:
             task: a task spec object
         Returns:
@@ -31,20 +34,11 @@ def count_violations(task: "Task") -> Dict:
     task = run(task, files=['define.lp', 'features.lp', 'output.lp', 'count.lp'], silence_warnings=True)
     return task.violations
 
-## useful for initialization and normalization
 
-def get_grounding_num(full_spec):
-    # returns the number of groudings for each soft constraint
-    # return in a dictionary
-    pass
+def contingency_table(labels_1: np.array, labels_2: np.array) -> np.array:
+    '''
+    Compute a contingency table for two arrays of booleans.
+    '''
+    return [[np.sum(labels_1), len(labels_1) - np.sum(labels_1)],
+            [np.sum(labels_2), len(labels_2) - np.sum(labels_2)]]
 
-## todo later, for MC-SAT (sampling)
-
-def get_soft_constraint(constraint_id):
-    # returns the weight and the constraint text given its id
-    pass
-
-def sample_full_spec(partial_spec, extra_hard_constraints):
-    # sample a solution by solving partial_spec
-    # using original hard_constraints plus extra ones (extra_hard_constraints)
-    pass

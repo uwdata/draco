@@ -1,15 +1,15 @@
+from pprint import pprint
+from typing import Tuple
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seaborn as sns
 from matplotlib.colors import ListedColormap
-from sklearn import linear_model, svm, tree
+from sklearn import svm
 from sklearn.decomposition import PCA
+from sklearn.model_selection import train_test_split
 
 from draco.learn import data_util
-from pprint import pprint
-from sklearn.model_selection import train_test_split
-from typing import Tuple
 
 
 def train_model(X: pd.DataFrame, test_size: float=0.3):
@@ -22,12 +22,18 @@ def train_model(X: pd.DataFrame, test_size: float=0.3):
 
     X_train, X_dev = train_test_split(X, test_size=test_size, random_state=1)
 
-    y_train = np.ones(len(X_train))
+    size = len(X_train)
+
+    y_train = np.ones(size)
     X_train = X_train.as_matrix()
 
-    # swap first example
-    X_train[0] = -X_train[0]
-    y_train[0] = -y_train[0]
+    # flip a few examples at random
+    idx = np.ones(size, dtype=bool)
+    idx[:int(size/2)] = False
+    np.random.shuffle(idx)
+
+    X_train[idx] = -X_train[idx]
+    y_train[idx] = -y_train[idx]
 
     clf = svm.LinearSVC(C=1, fit_intercept=False)
     clf.fit(X_train, y_train)
