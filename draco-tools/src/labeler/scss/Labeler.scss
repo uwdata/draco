@@ -9,6 +9,9 @@
     flex-direction: column;
     height: 900px;
 
+    border-bottom: 3px solid $light-grey;
+    margin-bottom: 20px;
+
     .display {
       display: flex;
       flex-direction: row;
@@ -72,13 +75,62 @@
   }
 
   .specs {
+    margin-top: 10px;
+
     display: flex;
     flex-direction: row;
-    &> * {
-      width: 30%;
-    }
+    justify-content: space-around;
+
     pre {
+      margin: 0 20px 0 26px;
       white-space: pre-wrap;
+
+      &.diff {
+        color: #999;
+      }
+
+      .added {
+        color: green;
+        &:before {
+          content: "+";
+          margin-left: -1em;
+        }
+      }
+      .removed {
+        color: #b90000;
+        &:before {
+          content: "-";
+          margin-left: -1em;
+        }
+      }
+    }
+  }
+
+  .table {
+    display: flex;
+    justify-content: center;
+
+    table {
+      border-collapse: collapse;
+      font-size: 0.8em;
+      min-width: 800px;
+
+      tr {
+        background-color: #fff;
+      }
+      tr:nth-child(2n), thead tr {
+        background-color: $extra-light-grey;
+      }
+
+      thead {
+        border-bottom: 1px solid med-grey;
+      }
+
+      td, th {
+        text-align: left;
+        padding: 8px 10px;
+        border: 1px solid $light-grey;
+      }
     }
   }
 }

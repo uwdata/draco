@@ -1,9 +1,10 @@
 import 'labeler/scss/Labeler.css';
 
+import { diffJson } from 'diff';
+import * as stringify from 'json-stable-stringify';
 import React, { Component } from 'react';
 import Visualization from 'shared/js/components/Visualization';
 import { duplicate } from 'vega-lite/build/src/util';
-import * as stringify from 'json-stable-stringify';
 
 const classnames = require('classnames');
 
@@ -13,7 +14,7 @@ const EQUALS = '=';
 const RIGHT = '<';
 
 const KEYS = {
-  37: '>', 40: '=', 39: '<',
+  37: '>', 40: '=', 39: '<', 38: '='
 };
 
 const CONFIRMATION_TIME = 500;
@@ -84,6 +85,37 @@ class Labeler extends Component {
       'hover': this.state.hover === RIGHT && !(this.state.chosen === RIGHT)
     });
 
+    const leftSpec = cleanUpSpec(this.state.left);
+    const rightSpec = cleanUpSpec(this.state.right);
+
+    const data = this.state.left && this.state.left.data.values;
+    let table = "";
+
+    if (data) {
+      const fields = Object.keys(data[0]);
+      const header = fields.map(t => <th key={t}>{t}</th>)
+      const tableBody = data.map((r, i) => <tr key={i}>
+        {fields.map(f => <td key={f}>{r[f]}</td>)}
+      </tr>)
+      table = <table>
+        <thead>
+          <tr>
+            {header}
+          </tr>
+        </thead>
+        <tbody>
+          {tableBody}
+        </tbody>
+      </table>
+    }
+
+    const specDiff = diffJson(leftSpec, rightSpec).map((part, idx) => {
+      const className = classnames({
+        added: part.added,
+        removed: part.removed
+      });
+      return <span key={idx} className={className}>{part.value}</span>
+    });
 
     return (
       <div className="Labeler" onMouseOut={() => {this.hover(UNK)}}>
@@ -109,11 +141,14 @@ class Labeler extends Component {
           </div>
         </div>
         <div className="specs">
-          <pre>{stringify(cleanUpSpec(this.state.left), {space: 2})}</pre>
-          <div></div>
-          <pre>{stringify(cleanUpSpec(this.state.right), {space: 2})}</pre>
+          <pre>{stringify(leftSpec, {space: 2})}</pre>
+          <pre className="diff">{specDiff}</pre>
+          <pre>{stringify(rightSpec, {space: 2})}</pre>
         </div>
-        <div>Task:</div>
+        <div>Task: No Task</div>
+        <div className="table">
+          { table }
+        </div>
       </div>
     );
   }
