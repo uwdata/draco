@@ -10,9 +10,7 @@ feature_weight("bin_low",bin_low_weight).
 feature_weight("encoding",encoding_weight).
 feature_weight("encoding_field",encoding_field_weight).
 feature_weight("same_field_2",same_field_2_weight).
-feature_weight("same_field_3",same_field_3_weight).
-feature_weight("same_field_4",same_field_4_weight).
-feature_weight("same_field_gte5",same_field_gte5_weight).
+feature_weight("same_field_gte3",same_field_gte3_weight).
 feature_weight("categorical_cardinality",categorical_cardinality_weight).
 feature_weight("shape_cardinality",shape_cardinality_weight).
 feature_weight("number_nominal",number_nominal_weight).
@@ -118,6 +116,7 @@ feature_weight("aggregate_mean",aggregate_mean_weight).
 feature_weight("aggregate_median",aggregate_median_weight).
 feature_weight("aggregate_min",aggregate_min_weight).
 feature_weight("aggregate_max",aggregate_max_weight).
+feature_weight("aggregate_stdev",aggregate_stdev_weight).
 feature_weight("compare_point",compare_point_weight).
 feature_weight("compare_bar",compare_bar_weight).
 feature_weight("compare_line",compare_line_weight).

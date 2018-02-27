@@ -28,9 +28,7 @@ feature_term("encoding_field",E) :- encoding(E), field(E,_).
 
 % prefer not to use the same field multiple times
 feature_term("same_field_2",F) :- field(F), { field(_,F) } = 2.
-feature_term("same_field_3",F) :- field(F), { field(_,F) } = 3.
-feature_term("same_field_4",F) :- field(F), { field(_,F) } = 4.
-feature_term("same_field_gte5",F) :- field(F), { field(_,F) } >= 5.
+feature_term("same_field_gte3",F) :- field(F), { field(_,F) } >= 3.
 
 % categorical color channel should not have too high cardinality
 feature_term("categorical_cardinality",E) :- channel(E,color), type(E,nominal), cardinality(E,C), C > 20.
@@ -216,10 +214,12 @@ feature_term("interesting_detail",E) :- channel(E,detail), field(E,F), interesti
 % aggregations
 
 feature_term("aggregate_count",E) :- aggregate(E, count).
+feature_term("aggregate_sum",E) :- aggregate(E, sum).
 feature_term("aggregate_mean",E) :- aggregate(E, mean).
 feature_term("aggregate_median",E) :- aggregate(E, median).
 feature_term("aggregate_min",E) :- aggregate(E, min).
 feature_term("aggregate_max",E) :- aggregate(E, max).
+feature_term("aggregate_stdev",E) :- aggregate(E, stdev).
 
 % task - marktype correlations
 

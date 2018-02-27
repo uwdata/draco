@@ -137,24 +137,6 @@ def get_pos_neg_data() -> pd.DataFrame:
 
     return data
 
-def paired_train_test_split(X: np.array, y: np.array, test_size: float=0.3, random_state=1) -> Tuple[np.array, np.array, np.array, np.array]:
-    '''
-    Split a dataset that has paired examples into train and test data.
-    '''
-    np.random.seed(random_state)
-
-    size = int(len(X) / 2)
-    assert sum(y[:size]) == 0
-    assert sum(y[size:]) == size
-
-    idx = np.ones(size, dtype=bool)
-    idx[:int(test_size * size)] = False
-    np.random.shuffle(idx)
-
-    idx = np.concatenate([idx, idx])
-
-    return X[idx], X[~idx], y[idx], y[~idx]
-
 def load_data(test_size: float=0.3, random_state=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
     '''
         Returns:
