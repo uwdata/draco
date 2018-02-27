@@ -25,7 +25,6 @@ def train_model(X: pd.DataFrame, test_size: float=0.3):
     size = len(X_train)
 
     y_train = np.ones(size)
-    X_train = X_train.as_matrix()
 
     # flip a few examples at random
     idx = np.ones(size, dtype=bool)
@@ -45,10 +44,9 @@ def train_model(X: pd.DataFrame, test_size: float=0.3):
 
 
 def train_and_plot(data: pd.DataFrame, test_size: float=0.3):
-    """ Reduce X, y into 2D using PCA and use SVM to classify them
-        Then plot the decision boundary as well as raw data points
+    """ use SVM to classify them and then plot them after projecting X, y into 2D using PCA
     """
-    X = data.positive - data.negative
+    X = (data.positive - data.negative).as_matrix()
 
     pca = PCA(n_components=2)
     X2 = pca.fit_transform(X)
@@ -62,6 +60,56 @@ def train_and_plot(data: pd.DataFrame, test_size: float=0.3):
     cm_bright = ListedColormap(['#FF0000', '#0000FF'])
 
     f, ax = plt.subplots(figsize=(8,6))
+
+    # predictions made by the model
+    pred = clf.predict(X)
+
+    correct = (pred > 0)
+
+    plt.scatter(X0[correct], X1[correct], c='g', cmap=cm_bright, alpha=0.5, marker='>', label='correct')
+    plt.scatter(X0[~correct], X1[~correct], c='r', cmap=cm_bright, alpha=0.5, marker='<', label='incorrect')
+
+    ax.set_xlim(xx.min(), xx.max())
+    ax.set_ylim(yy.min(), yy.max())
+
+    ax.set_xlabel('X0')
+    ax.set_ylabel('X1')
+
+    ax.set_xticks(())
+    ax.set_yticks(())
+
+    plt.title("Predictions of Linear Model")
+
+    plt.annotate(f'Score: {clf.score(X, np.ones(len(X))):.{5}}. N: {int(len(data))}', (0,0), (0, -20), xycoords='axes fraction', textcoords='offset points', va='top')
+
+    plt.legend(loc='lower right')
+    plt.axis("tight")
+
+    plt.show()
+
+    return clf
+
+
+def project_and_plot(data: pd.DataFrame, test_size: float=0.3):
+    """ Reduce X, y into 2D using PCA and use SVM to classify them
+        Then plot the decision boundary as well as raw data points
+    """
+    X = (data.positive - data.negative).as_matrix()
+
+    pca = PCA(n_components=2)
+    X = pca.fit_transform(X)
+
+    clf = train_model(X, test_size)
+
+    # for plotting
+    X0, X1 = X[:, 0], X[:, 1]
+    xx, yy = make_meshgrid(X0, X1)
+
+    cm_bright = ListedColormap(['#FF0000', '#0000FF'])
+
+    f, ax = plt.subplots(figsize=(8,6))
+
+    plot_contours(ax, clf, xx, yy)
 
     # predictions made by the model
     pred = clf.predict(X)
@@ -107,7 +155,7 @@ def plot_contours(ax, clf, xx, yy, **params):
     return out
 
 
-def make_meshgrid(x, y, h=.02):
+def make_meshgrid(x, y, h=.01):
     """Create a mesh of points to plot in
     Params:
         x: data to base x-axis meshgrid on
@@ -122,10 +170,11 @@ def make_meshgrid(x, y, h=.02):
                          np.arange(y_min, y_max, h))
     return xx, yy
 
+
 def main():
     train_dev, _ = data_util.load_data(test_size=0.3)
 
-    return train_and_plot(train_dev)
+    return project_and_plot(train_dev)
 
 
 if __name__ == '__main__':
