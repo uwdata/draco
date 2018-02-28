@@ -169,7 +169,7 @@ class Labeler extends Component {
       label: label
     };
 
-    fetch(REQUEST_PATH + "upload_label", {
+    fetch(REQUEST_PATH + 'upload_label', {
       body: JSON.stringify(message),
       method: 'post',
       headers: {
@@ -189,7 +189,7 @@ class Labeler extends Component {
   }
 
   fetchPair() {
-    fetch(REQUEST_PATH + "fetch_pair", {
+    fetch(REQUEST_PATH + 'fetch_pair', {
       method: 'get'
     }).then((response) => {
       if (response.ok) {
