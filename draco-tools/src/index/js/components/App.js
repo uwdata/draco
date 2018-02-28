@@ -4,14 +4,14 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import 'index/scss/App.css';
 
 import ToolTile from './ToolTile';
-import BugViewer from 'bugviewer/js/components/BugViewer';
+import SpecViewer from 'specviewer/js/components/SpecViewer';
 import Labeler from 'labeler/js/components/Labeler';
 
 const TOOLS = [
   {
-    name: 'Bug Viewer',
-    description: 'View bugs (incorrect predictions)',
-    route: '/bugviewer',
+    name: 'Spec Viewer',
+    description: 'View many specs side by side',
+    route: '/specviewer',
   },
   {
     name: 'Labeler',
@@ -47,7 +47,7 @@ class App extends Component {
       <Router>
         <div>
           <Route exact path="/" component={Home} />
-          <Route path="/bugviewer" component={BugViewer} />
+          <Route path="/specviewer" component={SpecViewer} />
           <Route path="/labeler" component={Labeler} />
         </div>
       </Router>

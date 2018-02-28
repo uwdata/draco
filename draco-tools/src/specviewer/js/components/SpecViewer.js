@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import 'bugviewer/scss/BugViewer.css';
+import 'specviewer/scss/SpecViewer.css';
 
 import Visualization from 'shared/js/components/Visualization';
 
-class BugViewer extends Component {
+class SpecViewer extends Component {
   constructor(props) {
     super(props);
 
@@ -45,7 +45,7 @@ class BugViewer extends Component {
     }
 
     return (
-      <div className="BugViewer">
+      <div className="SpecViewer">
         <div className="header">
           <div className="label">
             {headers.first.title}<br/><small>{headers.first.subtitle}</small>
@@ -60,4 +60,4 @@ class BugViewer extends Component {
   }
 }
 
-export default BugViewer;
+export default SpecViewer;
