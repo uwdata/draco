@@ -1,6 +1,5 @@
-[
-  {
-    "name": "mark",
+{
+  "mark": {
     "probability": 1,
     "values": [
       { "name": "area", "probability": 0.1 },
@@ -15,8 +14,7 @@
       { "name": "tick", "probability": 0.1 }
     ]
   },
-  {
-    "name": "channel",
+  "channel": {
     "probability": 1,
     "values": [
       { "name": "x", "probability": 0.2 },
@@ -31,8 +29,7 @@
       { "name": "detail", "probability": 0.05 }
     ]
   },
-  {
-    "name": "type",
+  "type": {
     "probability": 1,
     "values": [
       { "name": "nominal", "probability": 0.35 },
@@ -41,8 +38,7 @@
       { "name": "temporal", "probability": 0.15 }
     ]
   },
-  {
-    "name": "aggregate",
+  "aggregate": {
     "probability": 0.1,
     "values": [
       { "name": "count", "probability": 0.2 },
@@ -54,8 +50,7 @@
       { "name": "max", "probability": 0.1 }
     ]
   },
-  {
-    "name": "bin",
+  "bin": {
     "probability": 0.1,
     "values": [
       { "name": 3, "probability": 0.25 },
@@ -66,17 +61,15 @@
       { "name": 200, "probability": 0.05 }
     ]
   },
-  {
-    "name": "scale",
+  "scale": {
     "probability": 0.1,
     "values": [
       { "name": "zero", "probability": 0.8 },
       { "name": "log", "probability": 0.2 }
     ]
   },
-  {
-    "name": "timeUnit",
-    "probability": 0.1,
+  "timeUnit": {
+    "probability": 0,
     "values": [
       { "name": 3, "probability": 0.1 },
       { "name": 5, "probability": 0.25 },
@@ -86,8 +79,7 @@
       { "name": 200, "probability": 0.05 }
     ]
   },
-  {
-    "name": "stack",
+  "stack": {
     "probability": 0.1,
     "values": [
       { "name": null, "probability": 0.1 },
@@ -96,16 +88,14 @@
       { "name": "normalize", "probability": 0.1 }
     ]
   },
-  {
-    "name": "sort",
+  "sort": {
     "probability": 0.1,
     "values": [
       { "name": "ascending", "probability": 0.5 },
       { "name": "descending", "probability": 0.5 } 
     ]
   },
-  {
-    "name": "task",
+  "task": {
     "probability": 0,
     "values": [
       { "name": "compare", "probability": 0.25 },
@@ -114,4 +104,4 @@
       { "name": "value", "probability": 0.25 }
     ]
   }
-]
+}
