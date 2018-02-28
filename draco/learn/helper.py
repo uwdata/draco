@@ -24,7 +24,7 @@ def compute_cost(violations: Dict) -> int:
         c += v * weights[f'{k}_weight']
     return c
 
-def count_violations(task: "Task") -> Dict:
+def count_violations(task: Task) -> Dict:
     ''' Get a dictionary of violations for a full spec.
         Args:
             task: a task spec object

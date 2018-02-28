@@ -115,6 +115,10 @@
 % nominal cannot be aggregated
 :- type(E,nominal), aggregate(E,_).
 
+% dont' use size with line
+:- mark(line), channel(E,size).
+
+
 % === Type checks ===
 
 % check types of encoding properties
