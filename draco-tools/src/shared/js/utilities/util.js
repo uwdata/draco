@@ -2,7 +2,9 @@ import * as vl from 'vega-lite';
 import * as vega from 'vega';
 
 const datasets = {
-  'data/cars.json': require('vega-datasets/data/cars.json')
+  'data/cars.json': require('vega-datasets/data/cars.json'),
+  'data/movies.json': require('vega-datasets/data/movies.json'),
+  'data/weather.json': require('../../data/weather.json')
 };
 
 /**
