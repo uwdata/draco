@@ -13,7 +13,7 @@ class SpecViewer extends Component {
   }
 
   componentDidMount() {
-    fetch((new URL(window.location.href)).searchParams.get("data") || 'bugs.json')
+    fetch((new URL(window.location.href)).searchParams.get('data') || 'bugs.json')
       .then(response => response.json())
       .then(data => this.setState({ data: data }));
   }
@@ -22,7 +22,7 @@ class SpecViewer extends Component {
     const data = this.state.data;
 
     if (!data) {
-      return <div>loading...</div>
+      return <div>loading...</div>;
     }
 
     const headers = data.headers;
@@ -31,7 +31,7 @@ class SpecViewer extends Component {
     for (let i = 0; i < data.specs.length; i++) {
       const pair = data.specs[i];
 
-      const properties = Object.keys(pair.properties || {}).map((p, i) => <p key={i}><strong>{p}: </strong>{pair.properties[p]}</p>)
+      const properties = Object.keys(pair.properties || {}).map((p, i) => <p key={i}><strong>{p}: </strong>{pair.properties[p]}</p>);
 
       pairs.push(
         <div className="spec" key={i}>

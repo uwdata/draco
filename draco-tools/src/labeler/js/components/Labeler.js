@@ -54,12 +54,12 @@ class Labeler extends Component {
   render() {
     let leftViz;
     if (this.state.left) {
-      leftViz = <Visualization vlSpec={this.state.left} id="left"/>
+      leftViz = <Visualization vlSpec={this.state.left} id="left"/>;
     }
 
     let rightViz;
     if (this.state.right) {
-      rightViz = <Visualization vlSpec={this.state.right} id="right"/>
+      rightViz = <Visualization vlSpec={this.state.right} id="right"/>;
     }
 
     const displayClasses = classnames({
@@ -89,14 +89,14 @@ class Labeler extends Component {
     const rightSpec = cleanUpSpec(this.state.right);
 
     const data = this.state.left && this.state.left.data.values;
-    let table = "";
+    let table = '';
 
     if (data) {
       const fields = Object.keys(data[0]);
-      const header = fields.map(t => <th key={t}>{t}</th>)
+      const header = fields.map(t => <th key={t}>{t}</th>);
       const tableBody = data.map((r, i) => <tr key={i}>
         {fields.map(f => <td key={f}>{r[f]}</td>)}
-      </tr>)
+      </tr>);
       table = <table>
         <thead>
           <tr>
@@ -106,7 +106,7 @@ class Labeler extends Component {
         <tbody>
           {tableBody}
         </tbody>
-      </table>
+      </table>;
     }
 
     const specDiff = diffJson(leftSpec, rightSpec).map((part, idx) => {
@@ -114,28 +114,28 @@ class Labeler extends Component {
         added: part.added,
         removed: part.removed
       });
-      return <span key={idx} className={className}>{part.value}</span>
+      return <span key={idx} className={className}>{part.value}</span>;
     });
 
     return (
-      <div className="Labeler" onMouseOut={() => {this.hover(UNK)}}>
+      <div className="Labeler" onMouseOut={() => {this.hover(UNK);}}>
         <div className="chooser">
           <div className={displayClasses}>
             <div className={leftClasses}
-                  onClick={() => {this.choose(this.state.id, LEFT)}}
-                  onMouseEnter={() => {this.hover(LEFT)}}>
+                  onClick={() => {this.choose(this.state.id, LEFT);}}
+                  onMouseEnter={() => {this.hover(LEFT);}}>
               {leftViz}
             </div>
             <div className={equalsClasses}
-                onClick={() => {this.choose(this.state.id, EQUALS)}}
-                onMouseEnter={() => {this.hover(EQUALS)}}>
+                onClick={() => {this.choose(this.state.id, EQUALS);}}
+                onMouseEnter={() => {this.hover(EQUALS);}}>
               <div className="indicator">
                 {this.state.hover}
               </div>
             </div>
             <div className={rightClasses}
-                onClick={() => {this.choose(this.state.id, RIGHT)}}
-                onMouseEnter={() => {this.hover(RIGHT)}}>
+                onClick={() => {this.choose(this.state.id, RIGHT);}}
+                onMouseEnter={() => {this.hover(RIGHT);}}>
               {rightViz}
             </div>
           </div>

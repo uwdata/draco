@@ -20,7 +20,7 @@ class Visualization extends Component {
 
   render() {
     return (
-      <div className="Visualization" ref='vis'>
+      <div className='Visualization' ref='vis'>
       </div>
     );
   }
