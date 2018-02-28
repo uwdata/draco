@@ -4,6 +4,9 @@ from draco.learn import data_util, linear
 from draco.learn.helper import current_weights
 from draco.run import run
 
+import os
+
+import json
 
 def play(partial_full_data):
     train_dev, _  = data_util.load_data()
@@ -26,15 +29,35 @@ def play(partial_full_data):
         else:
             weights[k] = 10000 + init_weights[k]
 
+    result = {}
+    result["headers"] = {
+        "first": {
+            "title": "Draco",
+            "subtitle": "Draco Prediction"
+        },
+        "second": {
+            "title": "CQL",
+            "subtitle": "Compassql Prediction"
+        }
+    }
+
+    result["specs"] = []
     for case in partial_full_data:
         partial_spec, full_spec = partial_full_data[case]
         draco_rec = run(partial_spec, constants=weights)
 
-        print("Draco:")
-        print(draco_rec.to_vegalite_json())
-        print("CompassQL:")
-        print(full_spec.to_vegalite_json())
-        print("======================")
+        data_url = os.path.join("data", os.path.split(draco_rec.data.url)[1])
+
+        draco_rec.data.url = data_url
+        full_spec.data.url = data_url
+
+        result["specs"].append({
+            "first": draco_rec.to_vegalite(),
+            "second": full_spec.to_vegalite(),
+            "properties": {}
+        })
+
+    return result
 
 
 if __name__ == '__main__':
@@ -42,4 +65,6 @@ if __name__ == '__main__':
     logging.basicConfig()
     logging.getLogger().setLevel(logging.WARN)
 
-    play(data_util.load_partial_full_data())
+    result = play(data_util.load_partial_full_data())
+
+    print(json.dumps(result, indent=4))

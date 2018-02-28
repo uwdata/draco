@@ -18,7 +18,7 @@ const KEYS = {
 };
 
 const CONFIRMATION_TIME = 500;
-const REQUEST_PATH = 'http://0.0.0.0:5000/pair';
+const REQUEST_PATH = 'http://0.0.0.0:5000/';
 
 function cleanUpSpec(spec) {
   if (!spec) {
@@ -169,7 +169,7 @@ class Labeler extends Component {
       label: label
     };
 
-    fetch(REQUEST_PATH, {
+    fetch(REQUEST_PATH + 'upload_label', {
       body: JSON.stringify(message),
       method: 'post',
       headers: {
@@ -189,7 +189,7 @@ class Labeler extends Component {
   }
 
   fetchPair() {
-    fetch(REQUEST_PATH, {
+    fetch(REQUEST_PATH + 'fetch_pair', {
       method: 'get'
     }).then((response) => {
       if (response.ok) {

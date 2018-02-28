@@ -7,13 +7,15 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/pair', methods=['GET'])
+@app.route('/fetch_pair', methods=['GET'])
 def get_pair():
+    """ Fetch a pair from the server """
     with open(os.path.join(os.path.dirname(__file__), 'example.json')) as data:
         return jsonify(json.load(data))
 
-@app.route('/pair', methods=['POST'])
-def choose():
+@app.route('/upload_label', methods=['POST'])
+def upload_label():
+    """ upload a label to the server """
     if not request or not 'id' in request.json or not 'label' in request.json:
         abort(400)
     print(request.json)

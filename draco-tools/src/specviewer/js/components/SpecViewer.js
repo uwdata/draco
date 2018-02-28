@@ -9,11 +9,12 @@ class SpecViewer extends Component {
 
     this.state = {
       data: undefined,
+      specs: (new URL(window.location.href)).searchParams.get('data') || '/spec_pairs/data.json'
     };
   }
 
   componentDidMount() {
-    fetch((new URL(window.location.href)).searchParams.get('data') || 'bugs.json')
+    fetch(this.state.specs)
       .then(response => response.json())
       .then(data => this.setState({ data: data }));
   }
@@ -36,8 +37,8 @@ class SpecViewer extends Component {
       pairs.push(
         <div className="spec" key={i}>
           <div className="visualizations">
-            <Visualization vlSpec={pair.negative}/>
-            <Visualization vlSpec={pair.positive}/>
+            <Visualization vlSpec={pair.first}/>
+            <Visualization vlSpec={pair.second}/>
           </div>
           {properties}
         </div>
@@ -46,13 +47,18 @@ class SpecViewer extends Component {
 
     return (
       <div className="SpecViewer">
-        <div className="label">
-          {headers.first.title}<br/><small>{headers.first.subtitle}</small>
+        <p>
+          You are viewing <code>{this.state.specs}</code>. Append <code>?data=spec_pairs/FILE.json</code> to the URL to change the source.
+        </p>
+        <div className="main">
+          <div className="label">
+            {headers.first.title}<br/><small>{headers.first.subtitle}</small>
+          </div>
+          <div className="label">
+            {headers.second.title}<br/><small>{headers.second.subtitle}</small>
+          </div>
+          {pairs}
         </div>
-        <div className="label">
-          {headers.second.title}<br/><small>{headers.second.subtitle}</small>
-        </div>
-        {pairs}
       </div>
     );
   }

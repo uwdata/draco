@@ -104,7 +104,7 @@ class Data():
 
     @staticmethod
     def from_json(filename: str) -> 'Data':
-        ''' load from json '''
+        ''' load from json file '''
         table = agate.Table.from_json(filename)
         dt = Data.from_agate_table(table)
         dt.url = filename
@@ -170,7 +170,6 @@ class Data():
 
     def get_field_names(self):
         return [f.name for f in self.fields]
-
 
     def to_compassql(self):
         return self.to_vegalite() # same as to_vegalite function

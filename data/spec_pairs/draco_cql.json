@@ -1,0 +1,1016 @@
+{
+    "headers": {
+        "first": {
+            "title": "Draco",
+            "subtitle": "Draco Prediction"
+        },
+        "second": {
+            "title": "CQL",
+            "subtitle": "Compassql Prediction"
+        }
+    },
+    "specs": [
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Miles_per_Gallon",
+                        "type": "quantitative",
+                        "aggregate": "sum"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "tick",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Miles_per_Gallon",
+                        "type": "quantitative"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "sum"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "tick",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "shape": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "sum"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "tick",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "tick",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Miles_per_Gallon",
+                        "type": "quantitative",
+                        "aggregate": "sum"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "tick",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Miles_per_Gallon",
+                        "type": "quantitative"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "nominal"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "bar",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "type": "quantitative",
+                        "aggregate": "count"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "line",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "bar",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "area",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Miles_per_Gallon",
+                        "type": "quantitative",
+                        "aggregate": "sum"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Miles_per_Gallon",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "nominal"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "bar",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "type": "quantitative",
+                        "aggregate": "count"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "bar",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "type": "quantitative",
+                        "aggregate": "count"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "area",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative",
+                        "aggregate": "count"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative",
+                        "aggregate": "count"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "bar",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "type": "quantitative",
+                        "aggregate": "count"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "shape": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "ordinal"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "bin": {
+                            "maxbins": 3
+                        }
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Acceleration",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "ordinal"
+                    },
+                    "size": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Acceleration",
+                        "type": "quantitative",
+                        "bin": {
+                            "maxbins": 1
+                        }
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "area",
+                "encoding": {
+                    "detail": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Acceleration",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "nominal"
+                    },
+                    "size": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Acceleration",
+                        "type": "quantitative",
+                        "bin": {
+                            "maxbins": 1
+                        }
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "bar",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Miles_per_Gallon",
+                        "type": "quantitative",
+                        "bin": {
+                            "maxbins": 10
+                        }
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative",
+                        "aggregate": "count"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "bar",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Miles_per_Gallon",
+                        "type": "quantitative",
+                        "bin": {
+                            "maxbins": 5
+                        }
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "type": "quantitative",
+                        "aggregate": "count"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "color": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "tick",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "tick",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Release_Date",
+                        "type": "temporal"
+                    }
+                },
+                "data": {
+                    "url": "data/movies.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Release_Date",
+                        "type": "temporal"
+                    }
+                },
+                "data": {
+                    "url": "data/movies.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "line",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "nominal"
+                    },
+                    "detail": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "nominal"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "bar",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "nominal"
+                    },
+                    "row": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "nominal"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "IMDB_Rating",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Release_Date",
+                        "type": "temporal"
+                    }
+                },
+                "data": {
+                    "url": "data/movies.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "IMDB_Rating",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Release_Date",
+                        "type": "temporal"
+                    }
+                },
+                "data": {
+                    "url": "data/movies.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "nominal"
+                    },
+                    "shape": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "ordinal"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Acceleration",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Origin",
+                        "type": "ordinal"
+                    },
+                    "size": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Acceleration",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "color": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Major_Genre",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Creative_Type",
+                        "type": "nominal"
+                    }
+                },
+                "data": {
+                    "url": "data/movies.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Major_Genre",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Creative_Type",
+                        "type": "nominal"
+                    },
+                    "size": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "type": "quantitative",
+                        "aggregate": "count"
+                    }
+                },
+                "data": {
+                    "url": "data/movies.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        },
+        {
+            "first": {
+                "mark": "point",
+                "encoding": {
+                    "shape": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "aggregate": "sum"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "second": {
+                "mark": "tick",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    },
+                    "x": {
+                        "scale": {
+                            "zero": false
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "data": {
+                    "url": "data/cars.json"
+                },
+                "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+            },
+            "properties": {}
+        }
+    ]
+}
