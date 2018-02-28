@@ -171,7 +171,6 @@ class Data():
     def get_field_names(self):
         return [f.name for f in self.fields]
 
-
     def to_compassql(self):
         return self.to_vegalite() # same as to_vegalite function
 

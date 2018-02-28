@@ -4,6 +4,8 @@ from draco.learn import data_util, linear
 from draco.learn.helper import current_weights
 from draco.run import run
 
+import os
+
 import json
 
 def play(partial_full_data):
@@ -44,16 +46,16 @@ def play(partial_full_data):
         partial_spec, full_spec = partial_full_data[case]
         draco_rec = run(partial_spec, constants=weights)
 
-        result["specs"].append({
-            "negative": draco_rec.to_vegalite(),
-            "positive": full_spec.to_vegalite()
-        })
+        data_url = os.path.join("data", os.path.split(draco_rec.data.url)[1])
 
-        #print("Draco:")
-        #print(draco_rec.to_vegalite_json())
-        #print("CompassQL:")
-        #print(full_spec.to_vegalite_json())
-        #print("======================")
+        draco_rec.data.url = data_url
+        full_spec.data.url = data_url
+
+        result["specs"].append({
+            "first": draco_rec.to_vegalite(),
+            "second": full_spec.to_vegalite(),
+            "properties": {}
+        })
 
     return result
 
@@ -65,4 +67,4 @@ if __name__ == '__main__':
 
     result = play(data_util.load_partial_full_data())
 
-    print(json.dumps(result))
+    print(json.dumps(result, indent=4))
