@@ -97,6 +97,7 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
 
         iterables = [['negative', 'positive'], features]
         index = pd.MultiIndex.from_product(iterables, names=['category', 'feature'])
+        index.append(pd.MultiIndex.from_arrays([['source', 'task'], ['', '']]))
         return index
 
     def count_violations_memoized(data, task, spec):
@@ -122,6 +123,9 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
         # https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
         specs = {('negative', key): values for key, values in neg_feature_vec.items()}
         specs.update({('positive', key): values for key, values in pos_feature_vec.items()})
+
+        specs[('source', '')] = example.source
+        specs[('task', '')] = example.task
 
         df = df.append(pd.DataFrame(specs, index=[idx]))  # the idx is the same as the one in load_neg_pos_data
 
