@@ -6,6 +6,23 @@
   align-items: center;
   align-content: center;
 
+  .header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+
+    .label {
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-bottom: .6em;
+
+      small {
+        font-weight: normal;
+      }
+    }
+  }
+
   .bug {
     display: flex;
     flex-direction: column;
@@ -18,21 +35,11 @@
       display: flex;
       flex-direction: row;
 
-      &> div {
+      &> * {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 20px;
-      }
-
-      .label {
-        font-size: 1.1em;
-        font-weight: 600;
-        margin-bottom: .6em;
-
-        small {
-          font-weight: normal;
-        }
       }
 
       svg {
