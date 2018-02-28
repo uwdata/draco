@@ -46,13 +46,11 @@ class SpecViewer extends Component {
 
     return (
       <div className="SpecViewer">
-        <div className="header">
-          <div className="label">
-            {headers.first.title}<br/><small>{headers.first.subtitle}</small>
-          </div>
-          <div className="label">
-            {headers.second.title}<br/><small>{headers.second.subtitle}</small>
-          </div>
+        <div className="label">
+          {headers.first.title}<br/><small>{headers.first.subtitle}</small>
+        </div>
+        <div className="label">
+          {headers.second.title}<br/><small>{headers.second.subtitle}</small>
         </div>
         {bugs}
       </div>
