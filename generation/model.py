@@ -39,14 +39,17 @@ class Model:
 
     encodings = []
     for i in range(n_dimensions):
-      enc = self.generate_enc(partial)
+      if (i < len(partial['encodings'])):
+        enc = self.generate_enc(partial['encodings'][i])
+      else:
+        enc = self.generate_enc({})
       encodings.append(enc)
 
     spec['encodings'] = encodings
 
     return spec
 
-  def generate_enc(self, partial):
+  def generate_enc(self, partial_enc):
     """
     Returns an encoding, randomizing non-specified fields.
     """
@@ -60,6 +63,15 @@ class Model:
 
 
     return enc
+
+  def get_enums(self, field):
+    return self.enums[field]
+
+  def get_top_level_props(self):
+    return self.top_level_props
+
+  def get_encoding_props(self):
+    return self.encoding_props
 
   def include(self, field):
     """
