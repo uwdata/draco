@@ -8,36 +8,36 @@ class SpecViewer extends Component {
     super(props);
 
     this.state = {
-      bugs: undefined,
+      data: undefined,
     };
   }
 
   componentDidMount() {
     fetch((new URL(window.location.href)).searchParams.get("data") || 'bugs.json')
       .then(response => response.json())
-      .then(data => this.setState({ bugs: data }));
+      .then(data => this.setState({ data: data }));
   }
 
   render() {
-    const BUGS = this.state.bugs;
+    const data = this.state.data;
 
-    if (!BUGS) {
+    if (!data) {
       return <div>loading...</div>
     }
 
-    const headers = BUGS.headers;
+    const headers = data.headers;
 
-    const bugs = [];
-    for (let i = 0; i < 5; i++) {
-      const bug = BUGS.specs[i];
+    const pairs = [];
+    for (let i = 0; i < data.specs.length; i++) {
+      const pair = data.specs[i];
 
-      const properties = Object.keys(bug.properties || {}).map((p, i) => <p key={i}><strong>{p}: </strong>{bug.properties[p]}</p>)
+      const properties = Object.keys(pair.properties || {}).map((p, i) => <p key={i}><strong>{p}: </strong>{pair.properties[p]}</p>)
 
-      bugs.push(
-        <div className="bug" key={i}>
+      pairs.push(
+        <div className="spec" key={i}>
           <div className="visualizations">
-            <Visualization vlSpec={bug.negative}/>
-            <Visualization vlSpec={bug.positive}/>
+            <Visualization vlSpec={pair.negative}/>
+            <Visualization vlSpec={pair.positive}/>
           </div>
           {properties}
         </div>
@@ -52,7 +52,7 @@ class SpecViewer extends Component {
         <div className="label">
           {headers.second.title}<br/><small>{headers.second.subtitle}</small>
         </div>
-        {bugs}
+        {pairs}
       </div>
     );
   }
