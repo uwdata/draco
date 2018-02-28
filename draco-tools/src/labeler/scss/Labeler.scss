@@ -7,7 +7,7 @@
   .chooser {
     display: flex;
     flex-direction: column;
-    height: 900px;
+    height: min(90vh, 900px);
 
     border-bottom: 3px solid $light-grey;
     margin-bottom: 20px;
@@ -26,7 +26,7 @@
         cursor: pointer;
 
         svg {
-          max-height: 900px;
+          max-height: min(90vh, 900px);
         }
       }
 
