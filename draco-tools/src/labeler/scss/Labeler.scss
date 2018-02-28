@@ -7,7 +7,6 @@
   .chooser {
     display: flex;
     flex-direction: column;
-    height: min(90vh, 900px);
 
     border-bottom: 3px solid $light-grey;
     margin-bottom: 20px;
@@ -16,6 +15,11 @@
       display: flex;
       flex-direction: row;
       align-items: stretch;
+
+      .Visualization {
+        height: 900px;
+        max-height: 90vh;
+      }
 
       .visualization {
         flex-grow: 1;
@@ -26,7 +30,7 @@
         cursor: pointer;
 
         svg {
-          max-height: min(90vh, 900px);
+          max-height: 100%;
         }
       }
 
