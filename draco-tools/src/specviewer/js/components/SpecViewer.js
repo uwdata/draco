@@ -36,8 +36,8 @@ class SpecViewer extends Component {
       pairs.push(
         <div className="spec" key={i}>
           <div className="visualizations">
-            <Visualization vlSpec={pair.negative}/>
-            <Visualization vlSpec={pair.positive}/>
+            <Visualization vlSpec={pair.first}/>
+            <Visualization vlSpec={pair.second}/>
           </div>
           {properties}
         </div>
