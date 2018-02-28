@@ -1,0 +1,48 @@
+{
+    "headers": {
+        "first": {
+            "title": "Some spec",
+            "subtitle": "Some description"
+        },
+        "second": {
+            "title": "Some other spec",
+            "subtitle": "Some description"
+        }
+    },
+    "specs": [{
+        "first": {
+            "mark": "point",
+            "encoding": {
+                "y": {
+                    "scale": {
+                        "zero": true
+                    },
+                    "field": "Miles_per_Gallon",
+                    "type": "quantitative",
+                    "aggregate": "sum"
+                }
+            },
+            "data": {
+                "url": "data/cars.json"
+            },
+            "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+        },
+        "second": {
+            "mark": "tick",
+            "encoding": {
+                "y": {
+                    "scale": {
+                        "zero": false
+                    },
+                    "field": "Miles_per_Gallon",
+                    "type": "quantitative"
+                }
+            },
+            "data": {
+                "url": "data/cars.json"
+            },
+            "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
+        },
+        "properties": {}
+    }]
+}
