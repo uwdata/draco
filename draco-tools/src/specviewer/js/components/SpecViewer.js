@@ -13,7 +13,7 @@ class SpecViewer extends Component {
   }
 
   componentDidMount() {
-    fetch((new URL(window.location.href)).searchParams.get('data') || 'bugs.json')
+    fetch((new URL(window.location.href)).searchParams.get('data') || '/spec_pairs/bugs.json')
       .then(response => response.json())
       .then(data => this.setState({ data: data }));
   }
