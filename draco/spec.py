@@ -104,7 +104,7 @@ class Data():
 
     @staticmethod
     def from_json(filename: str) -> 'Data':
-        ''' load from json '''
+        ''' load from json file '''
         table = agate.Table.from_json(filename)
         dt = Data.from_agate_table(table)
         dt.url = filename
