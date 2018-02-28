@@ -22,7 +22,8 @@ def train_model(X: pd.DataFrame, test_size: float=0.3):
 
     X_train, X_dev = train_test_split(X, test_size=test_size, random_state=1)
 
-    X_train = X_train.as_matrix()
+    if isinstance(X_train, pd.DataFrame):
+        X_train = X_train.as_matrix()
 
     size = len(X_train)
 
