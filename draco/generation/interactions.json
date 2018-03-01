@@ -1,119 +1,62 @@
 [
   {
-    "name": "mark",
-    "fields": [
-      { "name": "mark", "multi": false }
-    ],
-    "include": true
+    "name": "mark", "props": ["mark"], "include": true
   },
   {
-    "name": "channel",
-    "fields":  [
-      { "name": "channel", "multi": false }
-     ],
-    "include": true
+    "name": "channel", "props": ["channel"], "include": true
   },
   {
-    "name": "aggregate",
-    "fields": [
-      { "name": "aggregate", "multi": false }
-    ], "include": true
+    "name": "aggregate", "props": ["aggregate"], "include": true
   },
   {
-    "name": "bin", "fields": [
-      { "name": "bin", "multi": false }
-    ],
-    "include": true
+    "name": "bin", "props": ["bin"], "include": true
   },
   {
-    "name": "scale",
-    "fields": [
-      { "name": "scale", "multi": false }
-    ],
-    "include": true
+    "name": "scale", "props": ["scale"], "include": true
   },
   {
-    "name": "stack",
-    "fields": [
-      { "name": "stack", "multi": false }
-    ],
-    "include": true
+    "name": "stack", "props": ["stack"], "include": true
   },
   {
-    "name": "sort",
-    "fields": [
-      { "name": "sort", "multi": false }
-    ],
-    "include": true
+    "name": "sort", "props": ["sort"], "include": true
   },
   {
-    "name": "timeUnit",
-    "fields": [
-      { "name": "timeUnit", "multi": false }
-    ],
-    "include": false
+    "name": "timeUnit", "props": ["timeUnit"], "include": false
   },
   {
-    "name": "task",
-    "fields": [
-      {"name": "task", "multi": false }
-    ],
-    "include": true
+    "name": "task", "props": ["task"], "include": true
   },
   {
-    "name": "mark-channel",
-    "fields": [
-      { "name": "mark", "multi": false },
-      { "name": "channel", "multi": true }
-    ],
-    "include": true
+    "name": "mark-channel", "props": ["mark", "channel"], "include": true
   },
   {
-    "name": "type-channel",
-    "fields": [
-      { "name": "type", "multi": true }, 
-      { "name": "channel", "multi": true },
-    ],
-    "include": true
+    "name": "type-channel", "props": ["type", "channel"], "include": true
   },
   {
-    "name": "mark-aggregate",
-    "fields": [
-      { "name": "mark", "multi": false },
-      { "name": "aggregate", "multi": false }
-    ],
-    "include": true
+    "name": "mark-aggregate", "props": ["mark", "aggregate"], "include": true
   },
   {
-    "name": "channel-aggregate",
-    "fields": [
-      { "name": "channel", "multi": true },
-      { "name": "aggregate", "multi": false }
-    ],
-    "include": true
+    "name": "channel-aggregate", "props": ["channel", "aggregate"], "include": true
   },
   {
-    "name": "channel-channel",
-    "fields": [
-      { "name": "channel", "multi": true }
-      "channel"], "include": true
+    "name": "channel-channel", "props": ["channel", "channel"], "include": true
   },
   {
-    "name": "mark-scale", "fields": ["mark", "scale"], "include": true
+    "name": "mark-scale", "props": ["mark", "scale"], "include": true
   },
   {
-    "name": "channel-scale", "fields": ["channel", "scale"], "include": true
+    "name": "channel-scale", "props": ["channel", "scale"], "include": true
   },
   {
-    "name": "datatype-type", "fields": ["field", "type"], "include": true
+    "name": "datatype-type", "props": ["field", "type"], "include": false
   },
   {
-    "name": "interesting-channel", "fields": ["interesting", "channel"], "include": true
+    "name": "interesting-channel", "props": ["interesting", "channel"], "include": false
   },
   {
-    "name": "mark-task", "fields": ["mark", "task"], "include": true
+    "name": "mark-task", "props": ["mark", "task"], "include": true
   },
   {
-    "name": "bin-channel", "fields": ["bin", "channel"], "include": true
+    "name": "bin-channel", "props": ["bin", "channel"], "include": true
   }
 ]
