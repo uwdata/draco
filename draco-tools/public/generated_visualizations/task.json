@@ -1,0 +1,1425 @@
+{
+  "interaction": "task",
+  "groups": [
+    [
+      {
+        "mark": "square",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "bin": {
+              "maxbins": 3
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "bin": {
+              "maxbins": 3
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "bin": {
+              "maxbins": 3
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "bin": {
+              "maxbins": 3
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "stack": "center",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "stack": "center",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "stack": "center",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "stack": "center",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "task": "compare",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": null,
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "derived",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": null,
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "extremum",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": null,
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "value",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": null,
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "task": "compare",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "size"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "task": "derived",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "size"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "task": "extremum",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "size"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "task": "value",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "size"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "task": "compare",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "column"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "task": "derived",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "column"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "task": "extremum",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "column"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "task": "value",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "column"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "task": "compare",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "task": "derived",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "task": "extremum",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "task": "value",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "task": "compare",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "task": "derived",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "task": "extremum",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "task": "value",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "task": "compare",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "derived",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "extremum",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "value",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "task": "compare",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "derived",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "extremum",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "value",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "task": "compare",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "derived",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "extremum",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "task": "value",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      }
+    ]
+  ]
+}

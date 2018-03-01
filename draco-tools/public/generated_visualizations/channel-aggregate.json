@@ -1,0 +1,1285 @@
+{
+  "interaction": "channel-aggregate",
+  "groups": [
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "median",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "median",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "median",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "opacity"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "normalize",
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "normalize",
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "normalize",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "aggregate": "median",
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "normalize",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "normalize",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "median",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "stack": "zero",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "stack": "zero",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "stack": "zero",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "median",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": null,
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": null,
+            "aggregate": "median",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": null,
+            "aggregate": "max",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rule",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": "center",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": "center",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "median",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": "center",
+            "aggregate": "stdev",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": "center",
+            "aggregate": "stdev",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "x"
+          },
+          "opacity": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "opacity"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "median",
+            "field": "q1",
+            "channel": "x"
+          },
+          "opacity": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "opacity"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q1",
+            "channel": "x"
+          },
+          "opacity": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q2",
+            "channel": "opacity"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "encoding": {
+          "color": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "color"
+          },
+          "x": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "color": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "color"
+          },
+          "x": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "color": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "color"
+          },
+          "x": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "median",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "sum",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "stdev",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "median",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      }
+    ]
+  ]
+}

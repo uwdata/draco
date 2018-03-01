@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import 'index/scss/App.css';
 
 import ToolTile from './ToolTile';
 import SpecViewer from 'specviewer/js/components/SpecViewer';
 import Labeler from 'labeler/js/components/Labeler';
+import DatasetViewer from 'datasetviewer/js/components/DatasetViewer';
 
 const TOOLS = [
   {
@@ -17,6 +18,11 @@ const TOOLS = [
     name: 'Labeler',
     description: 'Label pairs of visualizations',
     route: '/labeler',
+  },
+  {
+    name: 'Dataset Viewer',
+    description: 'View specs generated for labeling (to be pooled)',
+    route: '/datasetviewer'
   }
 ];
 
@@ -41,7 +47,7 @@ class App extends Component {
           </div>
         </div>
       );
-    }
+    };
 
     return (
       <Router>
@@ -49,6 +55,7 @@ class App extends Component {
           <Route exact path="/" component={Home} />
           <Route path="/specviewer" component={SpecViewer} />
           <Route path="/labeler" component={Labeler} />
+          <Route path="/datasetviewer" component={DatasetViewer} />
         </div>
       </Router>
     );

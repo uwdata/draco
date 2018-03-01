@@ -1,0 +1,2252 @@
+{
+  "interaction": "mark-scale",
+  "groups": [
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": "zero",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": "zero",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": "zero",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "stack": "zero",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "min",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "zero",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "stack": "zero",
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "zero",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "stack": "zero",
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "zero",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "stack": "zero",
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "zero",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "stack": "zero",
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "zero",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "stack": "zero",
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "zero",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "stack": "zero",
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "stack": "zero",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "stack": "zero",
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "stack": null,
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "stack": null,
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "stack": null,
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "stack": null,
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "stack": null,
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "stack": null,
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "stack": null,
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "size": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "size"
+          },
+          "y": {
+            "scale": {
+              "type": "log"
+            },
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "size": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "size"
+          },
+          "y": {
+            "scale": {
+              "type": "log"
+            },
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "size": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "size"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "size": {
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "size"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "stack": "zero",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "stack": "zero",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "stack": "zero",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "stack": "zero",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "stack": "zero",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "bar",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "size"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "size"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "aggregate": "mean",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "aggregate": "max",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "stack": "zero",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      }
+    ]
+  ]
+}
