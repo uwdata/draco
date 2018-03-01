@@ -97,8 +97,10 @@ feature_term("only_row_column") :- channel(_,(row;column)), not channel(_,x), no
 % prefer to use only x instead of only y
 feature_term("only_x") :- channel(_,y), not channel(_,x).
 
-% prefer to use vertical charts
-feature_term("horizontal") :- horizontal.
+% chart orientation for bar and tick (with and without bin)
+% binned fields have short labels if they are quantitative while otherwise labels can be long
+feature_term("orientation_binned") :- channel(E,y), bin(E,_), type(E,quantitative).
+feature_term("orientation_discrete") :- channel(E,x), discrete(ordinal;nominal).
 
 % prefer not to use ordinal for fields with high cardinality
 feature_term("high_cardinality_ordinal",E) :- type(E,ordinal), cardinality(E,C), C > 30.
@@ -120,6 +122,9 @@ feature_term("position_entropy",E) :- channel(E,(x;y)), continuous(E), cardinali
 
 % prefer not to use size when the cardinality is large on x or y
 feature_term("high_cardinality_size",E) :- continuous(E), channel(_,size), cardinality(E,C), C > 100, channel(E,(x;y)).
+
+% prefer to not use stacking when opacity is used
+feature_term("stack") :- stack(_).
 
 % ====== Rankings ======
 

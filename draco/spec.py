@@ -248,7 +248,8 @@ class Encoding():
             obj.get('aggregate'),
             binning,
             scale.get('type') == 'log' if scale else None,
-            scale.get('zero') if scale else None)
+            scale.get('zero') if scale else None,
+            obj.get('stack'))
 
     @staticmethod
     def from_cql(obj: Dict[str, Any]) -> 'Encoding':
@@ -277,7 +278,8 @@ class Encoding():
             subst_if_hole(obj.get('aggregate')),
             binning,
             subst_if_hole(scale.get('type')) == 'log' if scale else None,
-            subst_if_hole(scale.get('zero')) if scale else None)
+            subst_if_hole(scale.get('zero')) if scale else None,
+            subst_if_hole(obj.get('stack')))
 
     @staticmethod
     def parse_from_answer(encoding_id: str, encoding_props: Dict) -> 'Encoding':
@@ -289,6 +291,7 @@ class Encoding():
             encoding_props.get('bin'),
             encoding_props.get('log_scale'),
             encoding_props.get('zero'),
+            encoding_props.get('stack'),
             encoding_id)
 
     def __init__(self,
@@ -299,6 +302,7 @@ class Encoding():
                  binning: Optional[Union[int, bool]] = None,
                  log_scale: Optional[bool] = None,
                  zero: Optional[bool] = None,
+                 stack: Optional[str] = None,
                  idx: Optional[str] = None) -> None:
         self.channel = channel
         self.field = field
@@ -307,6 +311,7 @@ class Encoding():
         self.binning = binning
         self.log_scale = log_scale
         self.zero = zero
+        self.stack = stack
         self.id = idx if idx is not None else Encoding.gen_encoding_id()
 
     def to_compassql(self):
@@ -322,6 +327,8 @@ class Encoding():
             encoding['aggregate'] = self.aggregate
         if self.binning:
             encoding['bin'] = {'maxbins' : self.binning}
+        if self.stack:
+            encoding['stack'] = self.stack
         #TODO: log and zeros seems not supported by compassql?
         return encoding
 
@@ -344,6 +351,8 @@ class Encoding():
         if self.log_scale:
             encoding['scale']['type'] = 'log'
         encoding['scale']['zero'] = False if self.zero == None else self.zero
+        if self.stack:
+            encoding['stack'] = self.stack
 
         return encoding
 
@@ -358,7 +367,7 @@ class Encoding():
             elif value == NULL: # we do not want to fit anything in
                 constraints.append(f':- {prop}({self.id},_).')
             elif value == HOLE: # we would fit something in
-                constraints.append(f'1 {{ {prop}({self.id},P): {prop_type}(P) }} 1.')
+                constraints.append(f'1 = {{ {prop}({self.id},P): {prop_type}(P) }}.')
             else: #the value is already supplied
                 constraints.append(f'{prop}({self.id},{value}).')
 
@@ -377,6 +386,7 @@ class Encoding():
 
         collect_val('type', 'type', self.ty)
         collect_val('aggregate', 'aggregate_op', self.aggregate)
+        collect_val('stack', 'stacking', self.stack)
 
         if self.binning == True:
             collect_val('bin', 'binning', HOLE)

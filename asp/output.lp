@@ -7,6 +7,7 @@
 #show field/2.
 #show aggregate/2.
 #show bin/2.
+#show stack/2.
 
 #show log/1.
 #show zero/1.

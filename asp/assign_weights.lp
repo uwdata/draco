@@ -35,13 +35,15 @@ feature_weight("zero_size",zero_size_weight).
 feature_weight("zero_positional",zero_positional_weight).
 feature_weight("only_row_column",only_row_column_weight).
 feature_weight("only_x",only_x_weight).
-feature_weight("horizontal",horizontal_weight).
+feature_weight("orientation_binned",orientation_binned_weight).
+feature_weight("orientation_discrete",orientation_discrete_weight).
 feature_weight("high_cardinality_ordinal",high_cardinality_ordinal_weight).
 feature_weight("high_cardinality_nominal",high_cardinality_nominal_weight).
 feature_weight("horizontal_scrolling",horizontal_scrolling_weight).
 feature_weight("temporal_date",temporal_date_weight).
 feature_weight("position_entropy",position_entropy_weight).
 feature_weight("high_cardinality_size",high_cardinality_size_weight).
+feature_weight("stack",stack_weight).
 feature_weight("c_c_point",c_c_point_weight).
 feature_weight("c_c_bar",c_c_bar_weight).
 feature_weight("c_c_line",c_c_line_weight).
