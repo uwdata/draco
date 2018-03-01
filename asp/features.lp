@@ -253,13 +253,13 @@ feature_term("value_channel_row",E) :- task(value), channel(E,row), interesting(
 feature_term("value_channel_column",E) :- task(value), channel(E,column), interesting(E).
 feature_term("value_channel_detail",E) :- task(value), channel(E,detail), interesting(E).
 
-feature_term("summa_channelry_x",E) :- task(summary), channel(E,x), interesting(E).
-feature_term("summa_channelry_y",E) :- task(summary), channel(E,y), interesting(E).
-feature_term("summa_channelry_color",E) :- task(summary), channel(E,color), interesting(E).
-feature_term("summa_channelry_opacity",E) :- task(summary), channel(E,opacity), interesting(E).
-feature_term("summa_channelry_size",E) :- task(summary), channel(E,size), interesting(E).
-feature_term("summa_channelry_shape",E) :- task(summary), channel(E,shape), interesting(E).
-feature_term("summa_channelry_text",E) :- task(summary), channel(E,text), interesting(E).
-feature_term("summa_channelry_row",E) :- task(summary), channel(E,row), interesting(E).
-feature_term("summa_channelry_column",E) :- task(summary), channel(E,column), interesting(E).
-feature_term("summa_channelry_detail",E) :- task(summary), channel(E,detail), interesting(E).
+feature_term("summary_channel_x",E) :- task(summary), channel(E,x), interesting(E).
+feature_term("summary_channel_y",E) :- task(summary), channel(E,y), interesting(E).
+feature_term("summary_channel_color",E) :- task(summary), channel(E,color), interesting(E).
+feature_term("summary_channel_opacity",E) :- task(summary), channel(E,opacity), interesting(E).
+feature_term("summary_channel_size",E) :- task(summary), channel(E,size), interesting(E).
+feature_term("summary_channel_shape",E) :- task(summary), channel(E,shape), interesting(E).
+feature_term("summary_channel_text",E) :- task(summary), channel(E,text), interesting(E).
+feature_term("summary_channel_row",E) :- task(summary), channel(E,row), interesting(E).
+feature_term("summary_channel_column",E) :- task(summary), channel(E,column), interesting(E).
+feature_term("summary_channel_detail",E) :- task(summary), channel(E,detail), interesting(E).
