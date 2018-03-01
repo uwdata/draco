@@ -126,6 +126,9 @@ feature_term("high_cardinality_size",E) :- continuous(E), channel(_,size), cardi
 % prefer to not use stacking when opacity is used
 feature_term("stack") :- stack(_).
 
+% prefer not to aggregate for value tasks
+feature_term("value_agg") :- task(value), aggregate(_,_).
+
 % ====== Rankings ======
 
 % continuous by continuous
@@ -238,33 +241,6 @@ feature_term("aggregate_stdev",E) :- aggregate(E, stdev).
 
 % task - marktype correlations
 
-feature_term("compare_point") :- task(compare), mark(point).
-feature_term("compare_bar") :- task(compare), mark(bar).
-feature_term("compare_line") :- task(compare), mark(line).
-feature_term("compare_area") :- task(compare), mark(area).
-feature_term("compare_rule") :- task(compare), mark(rule).
-feature_term("compare_text") :- task(compare), mark(text).
-feature_term("compare_tick") :- task(compare), mark(tick).
-feature_term("compare_rect") :- task(compare), mark(rect).
-
-feature_term("derived_point") :- task(derived), mark(point).
-feature_term("derived_bar") :- task(derived), mark(bar).
-feature_term("derived_line") :- task(derived), mark(line).
-feature_term("derived_area") :- task(derived), mark(area).
-feature_term("derived_rule") :- task(derived), mark(rule).
-feature_term("derived_text") :- task(derived), mark(text).
-feature_term("derived_tick") :- task(derived), mark(tick).
-feature_term("derived_rect") :- task(derived), mark(rect).
-
-feature_term("extremum_point") :- task(extremum), mark(point).
-feature_term("extremum_bar") :- task(extremum), mark(bar).
-feature_term("extremum_line") :- task(extremum), mark(line).
-feature_term("extremum_area") :- task(extremum), mark(area).
-feature_term("extremum_rule") :- task(extremum), mark(rule).
-feature_term("extremum_text") :- task(extremum), mark(text).
-feature_term("extremum_tick") :- task(extremum), mark(tick).
-feature_term("extremum_rect") :- task(extremum), mark(rect).
-
 feature_term("value_point") :- task(value), mark(point).
 feature_term("value_bar") :- task(value), mark(bar).
 feature_term("value_line") :- task(value), mark(line).
@@ -273,3 +249,12 @@ feature_term("value_rule") :- task(value), mark(rule).
 feature_term("value_text") :- task(value), mark(text).
 feature_term("value_tick") :- task(value), mark(tick).
 feature_term("value_rect") :- task(value), mark(rect).
+
+feature_term("summary_point") :- task(summary), mark(point).
+feature_term("summary_bar") :- task(summary), mark(bar).
+feature_term("summary_line") :- task(summary), mark(line).
+feature_term("summary_area") :- task(summary), mark(area).
+feature_term("summary_rule") :- task(summary), mark(rule).
+feature_term("summary_text") :- task(summary), mark(text).
+feature_term("summary_tick") :- task(summary), mark(tick).
+feature_term("summary_rect") :- task(summary), mark(rect).

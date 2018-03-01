@@ -19,10 +19,10 @@ channel(C) :- single_channel(C).
 channel(C) :- multi_channel(C).
 non_positional(color;opacity;size;shape;text;detail).
 
-% possible tasks (in addition to none)
-tasks(compare;derived;extremum;value).
+% possible tasks
+tasks(value;summary).
 
-% possible stackings (in addition to none)
+% possible stackings
 stacking(zero;normalize).
 
 % ====== Helpers ======
