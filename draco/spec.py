@@ -5,6 +5,7 @@ Tasks, Encoding, and Query helper classes for draco.
 import json
 import os
 from collections import defaultdict
+from pprint import pprint
 from typing import Any, Dict, Iterable, List, Optional, Union
 
 import agate
@@ -12,8 +13,6 @@ import numpy as np
 import scipy.stats as stats
 from agate.table import Table
 from clyngor.answers import Answers
-
-from pprint import pprint
 
 HOLE = '?' # I want the system to fill something for this
 NULL = 'null' # I don't want the system fill anything in this place
@@ -170,24 +169,23 @@ class Data():
 
     def fill_with_random_content(self, defaut_size=10):
         """ Fill the data with randomly generated data
-            Args:
-                override: denote whether to override existing data if content exists
-            Returns: None 
         """
+
+        assert self.content == None
 
         size = self.size if self.size is not None else defaut_size
 
         self.content = []
-        for i in range(size):
+        for _ in range(size):
             row = {}
             for f in self.fields:
-                card = f.cardinality if f.cardinality is not None else 10
                 if f.ty == "number":
-                    row[f.name] = np.random.uniform(low=0., high=card)
+                    row[f.name] = np.random.uniform(low=0.0, high=1.0)
                 elif f.ty == "string":
+                    card = f.cardinality or 10
                     row[f.name] = np.random.randint(low=0, high=card)
                 elif f.ty == "boolean":
-                    row[f.name] = numpy.random.choice([True, False])
+                    row[f.name] = np.random.choice([True, False])
             self.content.append(row)
 
 
@@ -241,7 +239,7 @@ class Encoding():
 
         binning = obj.get('bin')
         if isinstance(binning, dict):
-            binning = binning.get('maxbins', True)
+            binning = binning['maxbins']
 
         return Encoding(
             obj.get('channel'),
@@ -342,7 +340,7 @@ class Encoding():
         if self.aggregate:
             encoding['aggregate'] = self.aggregate
         if self.binning:
-            encoding['bin'] = {'maxbins' : int(self.binning)}
+            encoding['bin'] = {'maxbins' : self.binning}
         if self.log_scale:
             encoding['scale']['type'] = 'log'
         encoding['scale']['zero'] = False if self.zero == None else self.zero
@@ -423,6 +421,13 @@ class Query():
 
         for channel, enc in full_spec.get('encoding', {}).items():
             enc['channel'] = channel
+
+            # fix binning as the default is 10
+            if enc.get('bin') == True:
+                enc['bin'] = {'maxbins': 10}
+
+            # TODO: other defaults
+
             encodings.append(Encoding.from_obj(enc))
 
         return Query(full_spec['mark'], encodings)
