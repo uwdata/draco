@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 DRACO_LP = ['define.lp', 'generate.lp', 'test.lp', 'features.lp', 'weights.lp', 'assign_weights.lp', 'optimize.lp', 'output.lp']
-DRACO_LP_DIR = os.path.join(os.path.dirname(__file__), '../asp')
+DRACO_LP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../asp'))
 
 def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False) -> Tuple[str, str]:
     '''
@@ -77,6 +77,8 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
         return Task(task.data, query, cost=answers['Costs'][0], violations=violations)
     elif result == 'SATISFIABLE':
         answers = json_result['Call'][0]['Witnesses'][-1]
+
+        assert json_result['Models']['Number'] == 1, 'Should not have more than one model if we don\'t optimize'
 
         logger.info(answers['Value'])
 
