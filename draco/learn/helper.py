@@ -4,12 +4,12 @@ Helper functions for learning algorithm.
 
 import json
 import os
-from typing import Dict, Tuple
+from typing import Dict
 
 import numpy as np
 
-from draco.run import DRACO_LP, run
-from draco.spec import Data, Query, Task
+from draco.run import run
+from draco.spec import Task
 
 
 def current_weights() -> Dict:
@@ -41,4 +41,3 @@ def contingency_table(labels_1: np.array, labels_2: np.array) -> np.array:
     '''
     return [[np.sum(labels_1), len(labels_1) - np.sum(labels_1)],
             [np.sum(labels_2), len(labels_2) - np.sum(labels_2)]]
-
