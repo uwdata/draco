@@ -8,19 +8,21 @@ import os
 
 import json
 
-def play(partial_full_data):
-    train_dev, _  = data_util.load_data()
-
-    X = train_dev.positive - train_dev.negative
-    clf = linear.train_model(X)
-
-    # columns where all X[i] are zero
-    unused_features = np.nonzero(np.sum(np.abs(X), axis=0) == 0)[0]
-    # if a feature is not used, its weight is 0
-    learnt_weights = [int(x * 1000) if (i not in unused_features) else None
-                      for i, x in enumerate(clf.coef_[0])]
-
+def play(partial_full_data, train_weights=True):
+    
     init_weights = current_weights()
+
+    if train_weights:
+        train_dev, _  = data_util.load_data()
+
+        X = train_dev.positive - train_dev.negative
+        clf = linear.train_model(X)
+
+        # columns where all X[i] are zero
+        unused_features = np.nonzero(np.sum(np.abs(X), axis=0) == 0)[0]
+        # if a feature is not used, its weight is 0
+        learnt_weights = [int(x * 1000) if (i not in unused_features) else None
+                          for i, x in enumerate(clf.coef_[0])]
 
     weights = {}
     for i, k in enumerate(init_weights):
@@ -29,6 +31,13 @@ def play(partial_full_data):
         else:
             weights[k] = 10000 + init_weights[k]
 
+    pairs = generate_visaul_pairs(partial_full_data, weights)
+
+    print(json.dumps(pairs))
+
+
+def generate_visaul_pairs(partial_full_data, weights):
+    # Generate pairs that can be visualized by bug finders
     result = {}
     result["headers"] = {
         "first": {
@@ -46,10 +55,17 @@ def play(partial_full_data):
         partial_spec, full_spec = partial_full_data[case]
         draco_rec = run(partial_spec, constants=weights)
 
-        data_url = os.path.join("data", os.path.split(draco_rec.data.url)[1])
+        if draco_rec is None:
+            continue
 
-        draco_rec.data.url = data_url
-        full_spec.data.url = data_url
+        if len(result) > 15:
+            break
+
+        if draco_rec.data.url is not None:
+            data_url = os.path.join("data", os.path.split(draco_rec.data.url)[1])
+
+            draco_rec.data.url = data_url
+            full_spec.data.url = data_url
 
         result["specs"].append({
             "first": draco_rec.to_vegalite(),
@@ -65,6 +81,10 @@ if __name__ == '__main__':
     logging.basicConfig()
     logging.getLogger().setLevel(logging.WARN)
 
-    result = play(data_util.load_partial_full_data())
+    spec_dir = os.path.join(os.path.dirname(__file__), "../../data/synthetic")
+    dataset = data_util.load_partial_full_data(spec_dir)
+    #spec_dir = os.path.join(os.path.dirname(__file__), "../../data/compassql_examples")
 
-    print(json.dumps(result, indent=4))
+    play(dataset)
+
+

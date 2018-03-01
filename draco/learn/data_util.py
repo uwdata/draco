@@ -49,7 +49,7 @@ def load_neg_pos_data() -> List[PosNegExample]:
     return raw_data
 
 
-def load_partial_full_data():
+def load_partial_full_data(path=compassql_data_path):
     """ load partial-full spec pairs from the directory
         Args:
             compassql_data_dir: the directory containing compassql data with
@@ -70,7 +70,8 @@ def load_partial_full_data():
         for fname in files:
             with open(fname, 'r') as f:
                 content = json.load(f)
-                content["data"]["url"] = os.path.join(input_dir, content["data"]["url"])
+                if "url" in content["data"] and content["data"]["url"] is not None:
+                    content["data"]["url"] = os.path.join(input_dir, content["data"]["url"])
                 if format == "compassql":
                     spec = Task.from_cql(content, ".")
                 elif format == "vegalite":
@@ -78,8 +79,8 @@ def load_partial_full_data():
                 result[os.path.basename(fname)] = spec
         return result
 
-    partial_specs = load_spec(os.path.join(compassql_data_path, "input"), "compassql")
-    compassql_outs = load_spec(os.path.join(compassql_data_path, "output"), "vegalite")
+    partial_specs = load_spec(os.path.join(path, "input"), "compassql")
+    compassql_outs = load_spec(os.path.join(path, "output"), "vegalite")
 
     result = {}
     for k in partial_specs:

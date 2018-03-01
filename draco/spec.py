@@ -71,8 +71,21 @@ class Field():
             asp_str += f'interesting({name}).\n'
         return asp_str
 
+    def __str__(self):
+        return f'<{self.name},{self.ty},{self.cardinality},{self.entropy},{self.interesting}>'
+
 
 class Data():
+
+    def __init__(self,
+                 fields: Iterable[Field],
+                 size: Optional[int] = None,
+                 content: Optional[Iterable[Any]] = None,
+                 url: Optional[str] = None) -> None:
+        self.fields = fields
+        self.size = size
+        self.content = content if content is not None else {}
+        self.url = url
 
     @staticmethod
     def from_obj(obj: Dict[str, str], path_prefix: Optional[str] = None) -> 'Data':
@@ -155,15 +168,28 @@ class Data():
             content.append(row_obj)
         return Data(fields, len(agate_table), content=content)
 
-    def __init__(self,
-                 fields: Iterable[Field],
-                 size: Optional[int] = None,
-                 content: Optional[Iterable[Any]] = None,
-                 url: Optional[str] = None) -> None:
-        self.fields = fields
-        self.size = size
-        self.content = content if content is not None else {}
-        self.url = url
+    def fill_with_random_content(self, defaut_size=10):
+        """ Fill the data with randomly generated data
+            Args:
+                override: denote whether to override existing data if content exists
+            Returns: None 
+        """
+
+        size = self.size if self.size is not None else defaut_size
+
+        self.content = []
+        for i in range(size):
+            row = {}
+            for f in self.fields:
+                card = f.cardinality if f.cardinality is not None else 10
+                if f.ty == "number":
+                    row[f.name] = np.random.uniform(low=0., high=card)
+                elif f.ty == "string":
+                    row[f.name] = np.random.randint(low=0, high=card)
+                elif f.ty == "boolean":
+                    row[f.name] = numpy.random.choice([True, False])
+            self.content.append(row)
+
 
     def __len__(self):
         return self.size

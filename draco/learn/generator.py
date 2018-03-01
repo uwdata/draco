@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+import random
 
 from draco.learn import data_util
 from draco.spec import *
@@ -20,6 +21,9 @@ def sample_partial_specs(specs):
         data, task, query = entry[0], entry[1], Query.from_vegalite(entry[3])
         partial_query = insert_holes(query)
 
+        if (not data.content) and (data.url is None):
+            data.fill_with_random_content()
+
         # re-run the insert function until we find a partial spec different from the input.
         while partial_query.to_asp() == query.to_asp():
             partial_query = insert_holes(query)
@@ -28,8 +32,10 @@ def sample_partial_specs(specs):
 
     return results
 
+
 def subst_w_prob(v1, v2, prob):
     return np.random.choice([v1, v2], p=[prob, 1. - prob])
+
 
 def insert_holes(query, prob=0.8, subst_val=spec.HOLE):
     """ given a query, randomly substitute values to generate a partial spec
@@ -41,6 +47,7 @@ def insert_holes(query, prob=0.8, subst_val=spec.HOLE):
     """
     mark = subst_w_prob(query.mark, subst_val, prob)
     encodings = []
+    
     for enc in query.encodings:
         channel = subst_w_prob(enc.channel, subst_val, prob)
         field = enc.field
@@ -50,6 +57,7 @@ def insert_holes(query, prob=0.8, subst_val=spec.HOLE):
         log_scale = subst_w_prob(enc.log_scale, subst_val, prob)
         zero = subst_w_prob(enc.zero, subst_val, prob)
         encodings.append(Encoding(channel, field, ty, aggregate, binning, log_scale, zero, enc.id))
+    
     return Query(mark, encodings)
 
 
@@ -58,23 +66,24 @@ if __name__ == '__main__':
     np.random.seed(1)
 
     # relative to this folder
-    tmp_dir = os.path.join(os.path.dirname(__file__), "..", "..", '__tmp__')
+    synthetic_data_dir = os.path.join(os.path.dirname(__file__), "..", "..", 'data', "synthetic")
+    cql_out_dir = os.path.join(synthetic_data_dir, 'input')
+    vl_out_dir = os.path.join(synthetic_data_dir, 'output')
 
     specs = data_util.load_neg_pos_data()
 
     results = sample_partial_specs(specs)
 
-    cql_out_dir = os.path.join(tmp_dir, 'cql_specs')
-    if not os.path.exists(cql_out_dir):
-        os.makedirs(cql_out_dir)
+    indexes = list(range(len(results)))
+    np.random.shuffle(indexes)
 
-    vl_out_dir = os.path.join(tmp_dir, 'vl_specs')
-    if not os.path.exists(vl_out_dir):
-        os.makedirs(vl_out_dir)
+    N = 20
 
-    for i, entry in enumerate(results):
-        with open(os.path.join(cql_out_dir, f"cql_{i}.json"), "w") as f:
+    for i in range(N):
+        entry = results[indexes[i]]
+
+        with open(os.path.join(cql_out_dir, f"spec_{i}.json"), "w") as f:
             json.dump(entry[0].to_compassql(), f, indent=4)
 
-        with open(os.path.join(vl_out_dir, f"full_{i}.vl.json"), "w") as f:
+        with open(os.path.join(vl_out_dir, f"spec_{i}.json"), "w") as f:
             json.dump(entry[1].to_compassql(), f, indent=4)
