@@ -3,119 +3,29 @@
   "groups": [
     [
       {
-        "mark": "tick",
+        "mark": "rule",
         "encoding": {
-          "x": {
+          "y": {
+            "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
             },
-            "type": "quantitative",
             "field": "q1",
-            "channel": "x"
-          },
-          "color": {
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "color"
+            "channel": "y"
           }
         }
       },
       {
-        "mark": "tick",
+        "mark": "rule",
         "encoding": {
-          "x": {
+          "y": {
+            "type": "quantitative",
             "scale": {
               "type": "log"
             },
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "x"
-          },
-          "opacity": {
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "opacity"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "bar",
-        "encoding": {
-          "color": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "color"
-          },
-          "y": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
             "field": "q1",
             "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "bar",
-        "encoding": {
-          "opacity": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "opacity"
-          },
-          "y": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "tick",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "color": {
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "tick",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "opacity": {
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "opacity"
           }
         }
       }
@@ -124,19 +34,19 @@
       {
         "mark": "point",
         "encoding": {
-          "color": {
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "type": "quantitative",
+          "y": {
             "stack": "zero",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
             "field": "q1",
-            "channel": "color"
+            "channel": "y"
           },
           "x": {
-            "type": "quantitative",
-            "field": "q2",
+            "type": "nominal",
+            "field": "n1",
             "channel": "x"
           }
         }
@@ -144,37 +54,18 @@
       {
         "mark": "point",
         "encoding": {
-          "opacity": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
             "scale": {
               "type": "log"
             },
-            "type": "quantitative",
-            "stack": "zero",
             "field": "q1",
-            "channel": "opacity"
+            "channel": "y"
           },
           "x": {
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "size": {
-            "scale": {
-              "type": "log"
-            },
-            "type": "quantitative",
-            "stack": "zero",
-            "field": "q1",
-            "channel": "size"
-          },
-          "x": {
-            "type": "quantitative",
-            "field": "q2",
+            "type": "nominal",
+            "field": "n1",
             "channel": "x"
           }
         }
@@ -182,182 +73,80 @@
     ],
     [
       {
-        "mark": "point",
+        "mark": "line",
         "encoding": {
           "color": {
-            "sort": "descending",
-            "type": "nominal",
-            "field": "n1",
-            "channel": "color"
-          },
-          "y": {
             "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
             },
             "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
             "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "x"
           }
         }
       },
       {
-        "mark": "point",
+        "mark": "line",
         "encoding": {
           "color": {
-            "sort": "descending",
-            "type": "nominal",
-            "field": "n1",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
             "channel": "color"
           },
           "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
             "type": "quantitative",
             "scale": {
               "type": "log"
             },
-            "field": "q1",
-            "channel": "y"
+            "field": "q2",
+            "channel": "x"
           }
         }
       },
       {
-        "mark": "point",
+        "mark": "line",
         "encoding": {
           "opacity": {
-            "sort": "descending",
-            "type": "nominal",
-            "field": "n1",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
             "channel": "opacity"
           },
           "y": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "size": {
-            "sort": "descending",
             "type": "nominal",
             "field": "n1",
-            "channel": "size"
-          },
-          "y": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
             "channel": "y"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "point",
-        "encoding": {
-          "color": {
-            "type": "quantitative",
-            "aggregate": "sum",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "color"
           },
-          "y": {
+          "x": {
             "type": "quantitative",
-            "field": "q2",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "color": {
-            "type": "quantitative",
-            "aggregate": "sum",
             "scale": {
               "type": "log"
             },
-            "field": "q1",
-            "channel": "color"
-          },
-          "y": {
-            "type": "quantitative",
             "field": "q2",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "aggregate": "sum",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
             "channel": "x"
-          },
-          "opacity": {
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "opacity"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "size": {
-            "type": "quantitative",
-            "aggregate": "sum",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "size"
-          },
-          "y": {
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "aggregate": "sum",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "detail": {
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "detail"
           }
         }
       }
@@ -366,11 +155,6 @@
       {
         "mark": "tick",
         "encoding": {
-          "y": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "y"
-          },
           "x": {
             "type": "quantitative",
             "scale": {
@@ -385,11 +169,6 @@
       {
         "mark": "tick",
         "encoding": {
-          "y": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "y"
-          },
           "x": {
             "type": "quantitative",
             "scale": {
@@ -403,10 +182,54 @@
     ],
     [
       {
-        "mark": "circle",
+        "mark": "point",
         "encoding": {
           "x": {
             "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
             "field": "q1",
             "channel": "x"
           },
@@ -420,41 +243,55 @@
             "channel": "color"
           }
         }
-      },
+      }
+    ],
+    [
       {
-        "mark": "circle",
+        "mark": "point",
         "encoding": {
           "x": {
             "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
             "field": "q1",
             "channel": "x"
           },
+          "y": {
+            "sort": "descending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
           "color": {
             "type": "quantitative",
-            "scale": {
-              "type": "log"
-            },
             "field": "q2",
             "channel": "color"
           }
         }
       },
       {
-        "mark": "circle",
+        "mark": "point",
         "encoding": {
-          "opacity": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "opacity"
-          },
-          "y": {
+          "x": {
             "type": "quantitative",
             "scale": {
-              "type": "linear",
-              "zero": true
+              "type": "log"
             },
-            "field": "q2",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "descending",
+            "type": "nominal",
+            "field": "n1",
             "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "color"
           }
         }
       }
@@ -463,18 +300,13 @@
       {
         "mark": "point",
         "encoding": {
-          "x": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "x"
-          },
           "y": {
             "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
             },
-            "field": "q2",
+            "field": "q1",
             "channel": "y"
           }
         }
@@ -482,36 +314,12 @@
       {
         "mark": "point",
         "encoding": {
-          "x": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "x"
-          },
           "y": {
             "type": "quantitative",
             "scale": {
               "type": "log"
             },
-            "field": "q2",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "size": {
-            "type": "quantitative",
             "field": "q1",
-            "channel": "size"
-          },
-          "y": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q2",
             "channel": "y"
           }
         }
@@ -519,33 +327,35 @@
     ],
     [
       {
-        "mark": "bar",
+        "mark": "tick",
         "encoding": {
           "y": {
+            "sort": "descending",
+            "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
             },
-            "type": "quantitative",
             "field": "q1",
             "channel": "y"
           },
-          "opacity": {
+          "color": {
             "type": "nominal",
             "field": "n1",
-            "channel": "opacity"
+            "channel": "color"
           }
         }
       },
       {
-        "mark": "bar",
+        "mark": "tick",
         "encoding": {
           "y": {
+            "sort": "descending",
+            "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
             },
-            "type": "quantitative",
             "field": "q1",
             "channel": "y"
           },
@@ -555,29 +365,6 @@
             "channel": "row"
           }
         }
-      }
-    ],
-    [
-      {
-        "mark": "tick",
-        "encoding": {
-          "y": {
-            "sort": "descending",
-            "type": "quantitative",
-            "aggregate": "max",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "x"
-          }
-        }
       },
       {
         "mark": "tick",
@@ -585,97 +372,396 @@
           "y": {
             "sort": "descending",
             "type": "quantitative",
-            "aggregate": "max",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "column"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "aggregate": "mean",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "aggregate": "mean",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
             "scale": {
               "type": "log"
             },
             "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "nominal",
-            "field": "n1",
             "channel": "x"
           }
         }
-      }
-    ],
-    [
+      },
       {
-        "mark": "bar",
+        "mark": "square",
         "encoding": {
-          "x": {
+          "y": {
             "type": "quantitative",
-            "stack": "zero",
             "scale": {
               "type": "linear",
               "zero": true
             },
             "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "bin": {
-              "maxbins": 3
-            },
-            "type": "quantitative",
-            "field": "q2",
             "channel": "y"
           }
         }
       },
       {
-        "mark": "bar",
+        "mark": "square",
         "encoding": {
-          "x": {
+          "color": {
             "type": "quantitative",
-            "stack": "zero",
             "scale": {
               "type": "linear",
               "zero": true
             },
             "field": "q1",
-            "channel": "x"
-          },
-          "color": {
-            "bin": {
-              "maxbins": 3
-            },
-            "type": "quantitative",
-            "field": "q2",
             "channel": "color"
           }
         }
       },
       {
-        "mark": "bar",
+        "mark": "square",
+        "encoding": {
+          "opacity": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "opacity"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
         "encoding": {
           "x": {
             "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "opacity": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "opacity"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
             "stack": "zero",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "row": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "row"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "stack": "zero",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "row": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "row"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "opacity": {
+            "stack": "zero",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "row": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "row"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
             },
             "field": "q1",
             "channel": "x"
-          },
-          "opacity": {
-            "bin": {
-              "maxbins": 3
-            },
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "opacity"
           }
         }
       },
       {
-        "mark": "bar",
+        "mark": "rule",
         "encoding": {
           "x": {
-            "type": "quantitative",
             "stack": "zero",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "color": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "color": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "opacity": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
@@ -684,72 +770,101 @@
             "channel": "x"
           },
           "row": {
-            "bin": {
-              "maxbins": 3
-            },
-            "type": "quantitative",
-            "field": "q2",
+            "type": "nominal",
+            "field": "n1",
             "channel": "row"
+          }
+        }
+      }
+    ],
+    [],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
           }
         }
       }
     ],
     [
       {
-        "mark": "point",
+        "mark": "circle",
         "encoding": {
           "color": {
+            "sort": "descending",
+            "stack": "center",
             "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
             "field": "q1",
             "channel": "color"
           },
           "y": {
             "type": "quantitative",
-            "stack": "zero",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
             "field": "q2",
             "channel": "y"
           }
         }
       },
       {
-        "mark": "point",
+        "mark": "circle",
         "encoding": {
-          "opacity": {
+          "color": {
+            "sort": "descending",
+            "stack": "center",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
             "type": "quantitative",
             "scale": {
-              "type": "linear",
-              "zero": true
+              "type": "log"
             },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "opacity": {
+            "sort": "descending",
+            "stack": "center",
+            "type": "quantitative",
             "field": "q1",
             "channel": "opacity"
           },
           "y": {
             "type": "quantitative",
-            "stack": "zero",
-            "field": "q2",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "size": {
-            "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
             },
-            "field": "q1",
-            "channel": "size"
-          },
-          "y": {
-            "type": "quantitative",
-            "stack": "zero",
             "field": "q2",
             "channel": "y"
           }
@@ -760,37 +875,57 @@
       {
         "mark": "line",
         "encoding": {
-          "x": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
             "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
             },
-            "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
             "field": "q2",
-            "channel": "y"
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q3",
+            "channel": "x"
           }
         }
       },
       {
         "mark": "line",
         "encoding": {
-          "x": {
+          "y": {
             "type": "quantitative",
             "scale": {
               "type": "log"
             },
             "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
-            "field": "q2",
             "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q3",
+            "channel": "x"
           }
         }
       }
@@ -799,11 +934,165 @@
       {
         "mark": "rule",
         "encoding": {
-          "color": {
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "stack": null,
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "stack": null,
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "opacity": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "y": {
             "type": "nominal",
             "field": "n1",
-            "channel": "color"
+            "channel": "y"
           },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "row": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "row"
+          },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "column": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "column"
+          },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rule",
+        "encoding": {
           "x": {
             "type": "quantitative",
             "scale": {
@@ -818,11 +1107,6 @@
       {
         "mark": "rule",
         "encoding": {
-          "color": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "color"
-          },
           "x": {
             "type": "quantitative",
             "scale": {
@@ -836,28 +1120,25 @@
       {
         "mark": "rule",
         "encoding": {
-          "opacity": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "opacity"
-          },
-          "x": {
+          "y": {
             "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
             },
             "field": "q1",
-            "channel": "x"
+            "channel": "y"
           }
         }
-      },
+      }
+    ],
+    [
       {
-        "mark": "rule",
+        "mark": "point",
         "encoding": {
           "y": {
-            "type": "nominal",
-            "field": "n1",
+            "type": "ordinal",
+            "field": "o1",
             "channel": "y"
           },
           "size": {
@@ -870,6 +1151,119 @@
             "channel": "size"
           }
         }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "size"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "stack": "zero",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "stack": "zero",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "y": {
+            "stack": "zero",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "opacity"
+          }
+        }
       }
     ],
     [
@@ -878,7 +1272,108 @@
         "encoding": {
           "x": {
             "type": "quantitative",
-            "stack": null,
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "aggregate": "stdev",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "aggregate": "stdev",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "opacity": {
+            "aggregate": "stdev",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "opacity"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
@@ -894,11 +1389,942 @@
         }
       },
       {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "row": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "row"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "opacity": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "opacity"
+          }
+        }
+      }
+    ],
+    [
+      {
         "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "opacity"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "column"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rule",
+        "encoding": {
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "size"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "size"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "row": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "row"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "size"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "aggregate": "mean",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "aggregate": "mean",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "aggregate": "mean",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "aggregate": "mean",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "opacity": {
+            "aggregate": "mean",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "opacity"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "encoding": {
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "opacity"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "row": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "row"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "column": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "column"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "opacity"
+          },
+          "color": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "opacity"
+          },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "aggregate": "min",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "aggregate": "min",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rule",
+        "encoding": {
+          "opacity": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "size": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "size"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
         "encoding": {
           "x": {
             "type": "quantitative",
-            "stack": null,
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "opacity"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "size"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rule",
+        "encoding": {
+          "opacity": {
+            "stack": "zero",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "row": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "row"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "size"
+          },
+          "row": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "row"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "row": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "row"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "column": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "column"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "row": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "row"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
@@ -916,38 +2342,87 @@
     ],
     [
       {
-        "mark": "bar",
+        "mark": "point",
         "encoding": {
           "x": {
             "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
             },
             "field": "q1",
             "channel": "x"
           },
           "color": {
             "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
             "field": "q2",
             "channel": "color"
           }
         }
       },
       {
-        "mark": "bar",
+        "mark": "square",
         "encoding": {
           "x": {
             "type": "quantitative",
             "scale": {
-              "type": "linear",
-              "zero": true
+              "type": "log"
             },
             "field": "q1",
             "channel": "x"
           },
           "opacity": {
             "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
             "field": "q2",
             "channel": "opacity"
           }
@@ -956,29 +2431,134 @@
     ],
     [
       {
-        "mark": "tick",
+        "mark": "line",
         "encoding": {
           "y": {
-            "type": "quantitative",
-            "field": "q1",
+            "sort": "ascending",
+            "type": "temporal",
+            "field": "t1",
             "channel": "y"
           },
+          "x": {
+            "sort": "descending",
+            "type": "temporal",
+            "field": "t2",
+            "channel": "x"
+          },
           "color": {
+            "sort": "descending",
             "type": "quantitative",
-            "aggregate": "sum",
             "scale": {
               "type": "linear",
               "zero": true
             },
-            "field": "q2",
+            "field": "q1",
             "channel": "color"
           }
         }
       },
       {
-        "mark": "tick",
+        "mark": "line",
         "encoding": {
           "y": {
+            "sort": "ascending",
+            "type": "temporal",
+            "field": "t1",
+            "channel": "y"
+          },
+          "x": {
+            "sort": "descending",
+            "type": "temporal",
+            "field": "t2",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "aggregate": "max",
+            "stack": null,
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "aggregate": "max",
+            "stack": null,
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "y": {
+            "aggregate": "max",
+            "stack": null,
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "aggregate": "sum",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "aggregate": "sum",
             "type": "quantitative",
             "scale": {
               "type": "log"
@@ -986,22 +2566,46 @@
             "field": "q1",
             "channel": "y"
           },
-          "color": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "opacity": {
+            "stack": "zero",
             "type": "quantitative",
-            "aggregate": "sum",
             "scale": {
               "type": "linear",
               "zero": true
             },
-            "field": "q2",
-            "channel": "color"
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "stack": "zero",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
           }
         }
       },
       {
-        "mark": "tick",
+        "mark": "area",
         "encoding": {
           "opacity": {
+            "stack": "zero",
             "type": "quantitative",
             "scale": {
               "type": "log"
@@ -1009,14 +2613,257 @@
             "field": "q1",
             "channel": "opacity"
           },
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
           "x": {
+            "stack": "zero",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "aggregate": "max",
             "type": "quantitative",
-            "aggregate": "sum",
             "scale": {
               "type": "linear",
               "zero": true
             },
-            "field": "q2",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "aggregate": "max",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "aggregate": "max",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "opacity": {
+            "aggregate": "max",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "opacity"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "color": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "row": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "row"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "column": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "column"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "column": {
+            "type": "nominal",
+            "field": "n2",
+            "channel": "column"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
             "channel": "x"
           }
         }
@@ -1024,99 +2871,507 @@
       {
         "mark": "tick",
         "encoding": {
+          "row": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "row"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "column": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "column"
+          },
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "opacity": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "opacity"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "encoding": {
+          "color": {
+            "sort": "descending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "color": {
+            "sort": "descending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          },
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "sort": "descending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "opacity": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "opacity"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "aggregate": "median",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "aggregate": "median",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "opacity": {
+            "aggregate": "median",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q2",
+            "channel": "opacity"
+          },
           "detail": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "detail"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
             "type": "quantitative",
             "scale": {
               "type": "log"
             },
             "field": "q1",
-            "channel": "detail"
+            "channel": "y"
           },
-          "x": {
+          "size": {
+            "aggregate": "median",
             "type": "quantitative",
-            "aggregate": "sum",
             "scale": {
               "type": "linear",
               "zero": true
             },
             "field": "q2",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "x"
+            "channel": "size"
           },
-          "y": {
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "y"
+          "detail": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "detail"
           }
         }
       },
       {
         "mark": "point",
         "encoding": {
-          "x": {
+          "y": {
             "type": "quantitative",
             "scale": {
               "type": "log"
             },
             "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "ordinal",
-            "field": "o1",
             "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "x"
           },
-          "opacity": {
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "opacity"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
           "x": {
+            "aggregate": "median",
             "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
             },
-            "field": "q1",
+            "field": "q2",
             "channel": "x"
           },
           "shape": {
-            "type": "ordinal",
-            "field": "o1",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "shape"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "opacity"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q2",
+            "channel": "size"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "scale": {
+              "type": "log"
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "scale": {
+              "type": "linear",
+              "zero": true
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "x"
+          },
+          "shape": {
+            "type": "nominal",
+            "field": "n1",
             "channel": "shape"
           }
         }
@@ -1124,119 +3379,25 @@
       {
         "mark": "point",
         "encoding": {
-          "x": {
+          "y": {
+            "sort": "ascending",
             "type": "quantitative",
             "scale": {
               "type": "linear",
               "zero": true
             },
             "field": "q1",
-            "channel": "x"
+            "channel": "y"
           },
-          "row": {
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "row"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
           "x": {
             "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
+            "field": "q2",
             "channel": "x"
           },
           "column": {
-            "type": "ordinal",
-            "field": "o1",
+            "type": "nominal",
+            "field": "n1",
             "channel": "column"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "circle",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "ordinal",
-            "stack": "center",
-            "field": "o1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "scale": {
-              "type": "log"
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "ordinal",
-            "stack": "center",
-            "field": "o1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "color": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "color"
-          },
-          "y": {
-            "type": "ordinal",
-            "stack": "center",
-            "field": "o1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "opacity": {
-            "type": "quantitative",
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
-            "field": "q1",
-            "channel": "opacity"
-          },
-          "y": {
-            "type": "ordinal",
-            "stack": "center",
-            "field": "o1",
-            "channel": "y"
           }
         }
       }

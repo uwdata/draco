@@ -41,9 +41,15 @@ class DatasetViewer extends Component {
     }
 
     let vizGroups;
+    let info;
     if (!this.state.specs) {
       vizGroups = <div>loading...</div>;
+      info = null;
     } else {
+      let pairs = 0;
+      let count = 0;
+
+
       const groups = this.state.specs.groups;
 
       vizGroups = [];
@@ -67,13 +73,21 @@ class DatasetViewer extends Component {
             {visualizations}
           </div>
         );
+
+        count += group.length;
+        pairs += factorial(group.length) / (2 * factorial(group.length - 2));
       }
+
+      info = <div className="summary">{count} visualizations and {pairs} pairs</div>;
     }
 
     return (
       <div className="DatasetViewer">
-        <DatasetChooser dataset={this.state.dataset} datasets={this.state.datasets}
-                        setDataset={this.setDataset.bind(this)}/>
+        <div className="header">
+          <DatasetChooser dataset={this.state.dataset} datasets={this.state.datasets}
+                          setDataset={this.setDataset.bind(this)}/>
+          {info}
+        </div>
         {vizGroups}
       </div>
     );
@@ -89,6 +103,15 @@ class DatasetViewer extends Component {
       .then(response => response.json())
       .then(data => this.setState({ dataset: name, specs: data }));
   }
+}
+
+function factorial(n) {
+  let result = 1;
+  for (let i = 2; i <= n; i++) {
+    result *= i;
+  }
+
+  return result;
 }
 
 export default DatasetViewer;

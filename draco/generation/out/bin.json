@@ -3,471 +3,58 @@
   "groups": [
     [
       {
-        "mark": "circle",
+        "mark": "point",
         "encoding": {
           "y": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "y"
-          },
-          "x": {
             "sort": "descending",
-            "type": "ordinal",
-            "stack": "zero",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "ordinal",
-            "stack": "zero",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "ordinal",
-            "stack": "zero",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "area",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
             "type": "quantitative",
             "bin": {
               "maxbins": 3
             },
-            "field": "q2",
-            "channel": "x"
+            "field": "q1",
+            "channel": "y"
           }
         }
       },
       {
-        "mark": "area",
+        "mark": "point",
         "encoding": {
           "y": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
+            "sort": "descending",
             "type": "quantitative",
             "bin": {
               "maxbins": 5
             },
-            "field": "q2",
-            "channel": "x"
+            "field": "q1",
+            "channel": "y"
           }
         }
       },
       {
-        "mark": "area",
+        "mark": "point",
         "encoding": {
           "y": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
+            "sort": "descending",
             "type": "quantitative",
             "bin": {
               "maxbins": 10
             },
-            "field": "q2",
-            "channel": "x"
+            "field": "q1",
+            "channel": "y"
           }
         }
       },
       {
-        "mark": "area",
+        "mark": "point",
         "encoding": {
           "y": {
+            "sort": "descending",
             "type": "quantitative",
             "bin": {
               "maxbins": 20
             },
             "field": "q1",
             "channel": "y"
-          },
-          "x": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "area",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 100
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "area",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 100
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "area",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "bin": {
-              "maxbins": 10
-            },
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "area",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "bin": {
-              "maxbins": 10
-            },
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "area",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "bin": {
-              "maxbins": 20
-            },
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "area",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 100
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "bin": {
-              "maxbins": 10
-            },
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "area",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "bin": {
-              "maxbins": 10
-            },
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "tick",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "tick",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "point",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "x"
           }
         }
       },
@@ -475,1309 +62,7 @@
         "mark": "point",
         "encoding": {
           "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 100
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "line",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "sort": "ascending",
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "line",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "sort": "ascending",
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "line",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "sort": "ascending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q2",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "line",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "sort": "ascending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q2",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "line",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 100
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "sort": "ascending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q2",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "line",
-        "encoding": {
-          "x": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "y": {
-            "sort": "ascending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "q2",
-            "channel": "y"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "line",
-        "encoding": {
-          "y": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "line",
-        "encoding": {
-          "y": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
             "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 100
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "color": {
-            "bin": {
-              "maxbins": 10
-            },
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "color": {
-            "bin": {
-              "maxbins": 10
-            },
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "color": {
-            "bin": {
-              "maxbins": 20
-            },
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "color": {
-            "bin": {
-              "maxbins": 100
-            },
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "q1",
-            "channel": "x"
-          },
-          "color": {
-            "bin": {
-              "maxbins": 10
-            },
-            "type": "quantitative",
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "x"
-          },
-          "size": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "o2",
-            "channel": "size"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "x"
-          },
-          "size": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o2",
-            "channel": "size"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "x"
-          },
-          "size": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "o2",
-            "channel": "size"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "size": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "o2",
-            "channel": "size"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "size": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 100
-            },
-            "field": "o2",
-            "channel": "size"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "size": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "o2",
-            "channel": "size"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "point",
-        "encoding": {
-          "y": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "o1",
-            "channel": "y"
-          },
-          "color": {
-            "type": "temporal",
-            "field": "t1",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "y": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "y"
-          },
-          "color": {
-            "type": "temporal",
-            "field": "t1",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "point",
-        "encoding": {
-          "y": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "o1",
-            "channel": "y"
-          },
-          "color": {
-            "type": "temporal",
-            "field": "t1",
-            "channel": "color"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "square",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "y"
-          },
-          "color": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "square",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "y"
-          },
-          "color": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "square",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "color": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "square",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "color": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "square",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "color": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 100
-            },
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      },
-      {
-        "mark": "square",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "color": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "q2",
-            "channel": "color"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "line",
-        "encoding": {
-          "y": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "line",
-        "encoding": {
-          "y": {
-            "type": "nominal",
-            "field": "n1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "q1",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 100
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "sort": "descending",
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q2",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "rule",
-        "encoding": {
-          "size": {
-            "bin": {
-              "maxbins": 5
-            },
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "size"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "rule",
-        "encoding": {
-          "size": {
-            "bin": {
-              "maxbins": 5
-            },
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "size"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "rule",
-        "encoding": {
-          "size": {
-            "bin": {
-              "maxbins": 5
-            },
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "size"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "rule",
-        "encoding": {
-          "size": {
-            "bin": {
-              "maxbins": 5
-            },
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "size"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 100
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "rule",
-        "encoding": {
-          "size": {
-            "bin": {
-              "maxbins": 200
-            },
-            "type": "quantitative",
-            "field": "q1",
-            "channel": "size"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "stack": "normalize",
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "stack": "normalize",
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "stack": "normalize",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "stack": "normalize",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "stack": "normalize",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 100
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      },
-      {
-        "mark": "circle",
-        "encoding": {
-          "y": {
-            "type": "quantitative",
-            "stack": "normalize",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "q1",
-            "channel": "y"
-          },
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "o1",
-            "channel": "x"
-          }
-        }
-      }
-    ],
-    [
-      {
-        "mark": "rect",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "field": "o1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "rect",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "rect",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 10
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "rect",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 20
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "y": {
-            "type": "quantitative",
-            "bin": {
-              "maxbins": 3
-            },
-            "field": "q1",
-            "channel": "y"
-          }
-        }
-      },
-      {
-        "mark": "rect",
-        "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 5
-            },
-            "field": "o1",
-            "channel": "x"
-          },
-          "y": {
             "type": "quantitative",
             "bin": {
               "maxbins": 100
@@ -1788,20 +73,13 @@
         }
       },
       {
-        "mark": "rect",
+        "mark": "point",
         "encoding": {
-          "x": {
-            "type": "ordinal",
-            "bin": {
-              "maxbins": 200
-            },
-            "field": "o1",
-            "channel": "x"
-          },
           "y": {
+            "sort": "descending",
             "type": "quantitative",
             "bin": {
-              "maxbins": 3
+              "maxbins": 200
             },
             "field": "q1",
             "channel": "y"
@@ -1813,9 +91,3190 @@
       {
         "mark": "tick",
         "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "opacity": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "opacity"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "opacity": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "opacity"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "opacity": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "opacity"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "opacity": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "opacity"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "opacity": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "opacity"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "opacity": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "opacity"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "column": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "column"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "column": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "column"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          },
+          "column": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "column"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "o2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "stack": null,
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "stack": null,
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "stack": null,
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "opacity": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
           "y": {
             "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "shape": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "shape"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "shape": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "shape"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rule",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q3",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q3",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q3",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q3",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q3",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q2",
+            "channel": "color"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q3",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "color": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "o1",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "field": "q3",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q3",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q3",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q3",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q3",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
             "aggregate": "stdev",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "aggregate": "stdev",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "aggregate": "stdev",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "aggregate": "stdev",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "stack": null,
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "stack": null,
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "stack": null,
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "stack": null,
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "stack": null,
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "shape": {
+            "type": "nominal",
+            "field": "n2",
+            "channel": "shape"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "shape": {
+            "type": "nominal",
+            "field": "n2",
+            "channel": "shape"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "aggregate": "max",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "stack": null,
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "aggregate": "max",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "stack": null,
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "aggregate": "max",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "stack": null,
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "aggregate": "max",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "stack": null,
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "aggregate": "max",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "stack": null,
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "aggregate": "max",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "stack": null,
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q2",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rect",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "rect",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "rect",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "rect",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "rule",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "descending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "o1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n2",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          },
+          "color": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n2",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "size"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "size"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "size"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
             "field": "q1",
             "channel": "y"
           },
@@ -1830,13 +3289,360 @@
         }
       },
       {
-        "mark": "tick",
+        "mark": "point",
         "encoding": {
           "y": {
             "type": "quantitative",
-            "aggregate": "stdev",
             "field": "q1",
             "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "y"
+          },
+          "row": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "row"
+          }
+        }
+      },
+      {
+        "mark": "area",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "y"
+          },
+          "row": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "row"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "square",
+        "encoding": {
+          "x": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "opacity": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "opacity": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "opacity": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "opacity": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "opacity": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "opacity"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "opacity": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "opacity"
           },
           "x": {
             "type": "quantitative",
@@ -1851,7 +3657,552 @@
     ],
     [
       {
-        "mark": "circle",
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "color"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "color"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q2",
+            "channel": "color"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "color"
+          },
+          "x": {
+            "type": "temporal",
+            "field": "t1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q3",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q3",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q3",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q3",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q3",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          },
+          "color": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q3",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "o1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
         "encoding": {
           "x": {
             "type": "quantitative",
@@ -1862,11 +4213,689 @@
             "channel": "x"
           },
           "y": {
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
             "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "sort": "descending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "shape": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "shape"
+          },
+          "color": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "color"
+          },
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "shape": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "shape"
+          },
+          "color": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "color"
+          },
+          "x": {
+            "sort": "descending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "aggregate": "stdev",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "aggregate": "stdev",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "aggregate": "stdev",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "text",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "text": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "text"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "text",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "text": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "text"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "text",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "text": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "text"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "text",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "text": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q2",
+            "channel": "text"
+          },
+          "color": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "normalize",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "normalize",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "normalize",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "normalize",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "normalize",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "stack": "normalize",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
             "field": "q2",
             "channel": "y"
           }
@@ -1878,19 +4907,769 @@
           "x": {
             "type": "quantitative",
             "bin": {
-              "maxbins": 5
+              "maxbins": 20
             },
             "field": "q1",
             "channel": "x"
           },
           "y": {
-            "scale": {
-              "type": "linear",
-              "zero": true
-            },
             "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
             "field": "q2",
             "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "circle",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q2",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "column"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "column"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "column"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q2",
+            "channel": "column"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q2",
+            "channel": "column"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "column": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q2",
+            "channel": "column"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q1",
+            "channel": "y"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "stack": "zero",
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "q2",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "color"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "x"
+          },
+          "y": {
+            "sort": "ascending",
+            "type": "nominal",
+            "field": "n1",
+            "channel": "y"
+          },
+          "color": {
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "color"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "tick",
+        "encoding": {
+          "x": {
+            "stack": "zero",
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "o1",
+            "channel": "x"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "shape": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "shape"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "q1",
+            "channel": "y"
+          },
+          "shape": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "shape"
+          }
+        }
+      }
+    ],
+    [
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "stack": null,
+            "type": "ordinal",
+            "field": "o1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "size"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "stack": null,
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "size"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "stack": null,
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 5
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 10
+            },
+            "field": "q1",
+            "channel": "size"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "stack": null,
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 20
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "size"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "stack": null,
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 100
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "size"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
+          }
+        }
+      },
+      {
+        "mark": "point",
+        "encoding": {
+          "y": {
+            "sort": "ascending",
+            "stack": null,
+            "type": "ordinal",
+            "bin": {
+              "maxbins": 200
+            },
+            "field": "o1",
+            "channel": "y"
+          },
+          "size": {
+            "type": "quantitative",
+            "bin": {
+              "maxbins": 3
+            },
+            "field": "q1",
+            "channel": "size"
+          },
+          "x": {
+            "type": "nominal",
+            "field": "n1",
+            "channel": "x"
           }
         }
       }

@@ -1,6 +1,7 @@
 import json
 import os
 import random
+import math
 from tqdm import tqdm
 from copy import deepcopy
 
@@ -30,31 +31,35 @@ def main():
   interaction_groups = []
 
   count = 0
+  pairs = 0
   for i in tqdm(range(len(interactions))):
     interaction = interactions[i]
     if (interaction['include']):
       groups = []
       
       for j in tqdm(range(NUM_GROUPS)):
-        specs = generate_interaction(model, dummy_data, interaction)
 
-        for tries in tqdm(range(NUM_TRIES)):
-          specs = generate_interaction(model, dummy_data, interaction)
-          if (len(specs) >= 2):
-            break
+        for d in tqdm(range(1, 4)):
+          specs = generate_interaction(model, dummy_data, interaction, d)
 
-        groups.append(specs)
-        count += len(specs)
+          for tries in tqdm(range(NUM_TRIES)):
+            specs = generate_interaction(model, dummy_data, interaction, d)
+            if (len(specs) >= 2):
+              break
+
+          groups.append(specs)
+          count += len(specs)
+          pairs += math.factorial(len(specs)) // 2
       
       out = { 'interaction': interaction['name'], 'groups': groups }
       with open('out/{0}.json'.format(interaction['name']), 'w') as outfile:
         json.dump(out, outfile, indent=2)
 
-  print('{0} specs generated for {1} interactions'.format(count, len(interactions)))
+  print('{0} specs with {1} pairs for {2} interactions'.format(count, pairs, len(interactions)))
 
-def generate_interaction(model, dummy_data, interaction):
+def generate_interaction(model, dummy_data, interaction, dimensions):
   props = interaction['props'].copy()
-  base_spec = model.generate_spec(2)
+  base_spec = model.generate_spec(dimensions)
 
   specs = []
   mutate_spec(model, dummy_data, deepcopy(base_spec), props, specs)
