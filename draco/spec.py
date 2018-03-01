@@ -179,10 +179,10 @@ class Data():
         for _ in range(size):
             row = {}
             for f in self.fields:
-                card = f.cardinality or 10
                 if f.ty == "number":
-                    row[f.name] = np.random.uniform(low=0., high=card)
+                    row[f.name] = np.random.uniform(low=0.0, high=1.0)
                 elif f.ty == "string":
+                    card = f.cardinality or 10
                     row[f.name] = np.random.randint(low=0, high=card)
                 elif f.ty == "boolean":
                     row[f.name] = np.random.choice([True, False])
