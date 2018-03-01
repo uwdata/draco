@@ -115,7 +115,7 @@
 % nominal cannot be aggregated
 :- type(E,nominal), aggregate(E,_).
 
-% dont' use size with line
+% don't use size with line
 :- mark(line), channel(E,size).
 
 
