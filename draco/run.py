@@ -6,7 +6,7 @@ import json
 import logging
 import os
 import subprocess
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 import clyngor
 
@@ -18,9 +18,10 @@ logger = logging.getLogger(__name__)
 DRACO_LP = ['define.lp', 'generate.lp', 'test.lp', 'features.lp', 'weights.lp', 'assign_weights.lp', 'optimize.lp', 'output.lp']
 DRACO_LP_DIR = os.path.join(os.path.dirname(__file__), '../asp')
 
-
-def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False) -> Task:
-    ''' Run clingo to compute a completion of a partial spec or violations. '''
+def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False) -> Tuple[str, str]:
+    '''
+    Run draco and return stderr and stdout
+    '''
 
     # default args
     files = files or DRACO_LP
@@ -39,6 +40,13 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
 
     stderr = clingo.stderr.decode('utf-8')
     stdout = clingo.stdout.decode('utf-8')
+
+    return (stderr, stdout)
+
+def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False) -> Task:
+    ''' Run clingo to compute a completion of a partial spec or violations. '''
+
+    stderr, stdout = run_draco(task, constants, files, silence_warnings)
 
     try:
         json_result = json.loads(stdout)

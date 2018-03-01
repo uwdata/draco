@@ -2,19 +2,19 @@
 
 const cql = require('compassql');
 const dl = require('datalib');
-const fs = require('fs')
+const fs = require('fs');
 var path = require('path');
 
 // the folder containing input partial specs
-const inputDir = "./compassql_examples/input/"
+const inputDir = './compassql_examples/input/';
 // the folder for output full specs
-const outputDir = "./compassql_examples/output/" 
+const outputDir = './compassql_examples/output/';
 
 files = fs.readdirSync(inputDir);
 
 for (var i = 0; i < files.length; i ++) {
 
-  console.log("[OK] Processing " + files[i] + "...")
+  console.log('[OK] Processing ' + files[i] + '...');
 
   input = path.join(inputDir, files[i]);
   output = path.join(outputDir, files[i]);
@@ -38,7 +38,7 @@ for (var i = 0; i < files.length; i ++) {
   });
 
   const vlSpec = recommendation.result.items[0].toSpec();
-  
+
   fs.writeFileSync(output, JSON.stringify(vlSpec, null, 2), 'utf8');
 }
 
