@@ -35,14 +35,17 @@
 :- aggregate(E,count), field(E,_).
 :- aggregate(E,count), not type(E,quantitative).
 
-% shape requires discrete
-:- channel_continuous(shape).
+% shape requires discrete and not ordered (nominal)
+:- channel(E,shape), not type(E,nominal).
+
+% detail requires nominal
+:- channel(E,detail), not type(E,nominal).
 
 % row and column require discrete
 :- channel_continuous(row;column).
 
-% aggregate implies quantitative
-:- aggregate(E,_), not type(E,quantitative).
+% size, and opacity impy order so nominal is misleading
+:- channel(E,(size;opacity)), type(E,nominal).
 
 % cannot aggregate nominal
 :- aggregate(E,_), type(E,nominal).
@@ -68,8 +71,6 @@
 
 % text mark requires text channel
 :- mark(text), not channel(_,text).
-% and row or column
-:- mark(text), not channel(_,row), not channel(_,column).
 
 % text channel requires text mark
 :- channel(_,text), not mark(text).
@@ -84,11 +85,11 @@
 :- mark(line;area), not channel(_,x).
 :- mark(line;area), not channel(_,y).
 
-% bar and tick requires exactly one continuous (x or y)
-:- mark(bar;tick), not 1 = {channel_continuous(x); channel_continuous(y)}.
+% bar and tick cannot have both x and y continuous
+:- mark(bar;tick), channel_continuous(x), channel_continuous(y).
 
 % bar mark requires scale of continuous to start at zero
-:- mark(bar), channel(E,(x;y)), not discrete(E), not zero(E).
+:- mark(bar), channel(E,(x;y)), continuous(E), not zero(E).
 
 % shape channel requires point mark
 :- channel(_,shape), not mark(point).
@@ -115,9 +116,20 @@
 % nominal cannot be aggregated
 :- type(E,nominal), aggregate(E,_).
 
-% dont' use size with line
+% don't use size with line
 :- mark(line), channel(E,size).
 
+
+% === Global properties ===
+
+% only use stacking for bar, area, line
+:- stack(_), not mark(bar), not mark(area), not mark(line).
+
+% don't stack if aggregation is not summative (summative are count, sum, distinct, valid, missing)
+:- stack(E,_), aggregate(E,A), not summative_aggregate_op(A).
+
+% stack if no opacity is used for bar and area
+:- not channel(_,opacity), mark(bar;area), channel(_,(detail;color;opacity)), not stack(_).
 
 % === Type checks ===
 
@@ -125,8 +137,8 @@
 :- channel(_,C), not channel(C).
 :- field(_,F), not field(F).
 :- type(_,T), not type(T).
-:- aggregate(_,A), not aggregate(A).
-:- bin(_,B), not bin(B).
+:- aggregate(_,A), not aggregate_op(A).
+:- bin(_,B), not B >= 0.  % bin has to be a natural number
 
 % fieldtype has to be primitive type
 :- fieldtype(_,T), not primitive_type(T).

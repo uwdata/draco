@@ -7,9 +7,10 @@ type(quantitative;ordinal;nominal;temporal).
 % basic types of the data
 primitive_type(string;number;boolean;date).
 % supported aggregation functions
-aggregate(count;mean;median;min;max;stdev;sum).
-% possible numbers of bins
-bin(3;5;10;20;100;200).
+aggregate_op(count;mean;median;min;max;stdev;sum).
+summative_aggregate_op(count;sum).
+% numbers of bins that can be recommended; any natural number is allowed
+binning(5;10;20;200).
 
 % encoding channels
 single_channel(x;y;color;opacity;size;shape;text;row;column).
@@ -19,23 +20,27 @@ channel(C) :- multi_channel(C).
 non_positional(color;opacity;size;shape;text;detail).
 
 % possible tasks
-tasks(compare;derived;extremum;value).
+tasks(value;summary).
+
+% possible stackings
+stacking(zero;normalize).
 
 % ====== Helpers ======
 
-discrete(E) :- type(E,(nominal;ordinal)), not aggregate(E,_).
+discrete(E) :- type(E,(nominal;ordinal)).
 discrete(E) :- bin(E,_).
 continuous(E) :- encoding(E), not discrete(E).
 
 channel_discrete(C) :- discrete(E), channel(E,C).
 channel_continuous(C) :- continuous(E), channel(E,C).
 
-% orientation for bars and ticks
-orientation(horizontal) :- mark(bar;tick), channel_discrete(x).
-orientation(vertical) :- mark(bar;tick), channel_discrete(y).
+ordered(E) :- type(E,(ordinal;quantitative)).
 
 % fields
 field(F) :- fieldtype(F,_).
+
+% stacking is applied to the continuous x or y
+stack(E,S) :- continuous(E), stack(S).
 
 % data properties
 cardinality(E,C) :- field(E,F), cardinality(F,C).

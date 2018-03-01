@@ -8,7 +8,7 @@ import os
 
 import json
 
-def play(partial_full_data, train_weights=True):
+def play(partial_full_data, train_weights=True, output_file=None):
     
     init_weights = current_weights()
 
@@ -24,16 +24,22 @@ def play(partial_full_data, train_weights=True):
         learnt_weights = [int(x * 1000) if (i not in unused_features) else None
                           for i, x in enumerate(clf.coef_[0])]
 
-    weights = {}
-    for i, k in enumerate(init_weights):
-        if learnt_weights[i] is not None:
-            weights[k] = learnt_weights[i]
-        else:
-            weights[k] = 10000 + init_weights[k]
+        weights = {}
+        for i, k in enumerate(init_weights):
+            if learnt_weights[i] is not None:
+                weights[k] = learnt_weights[i]
+            else:
+                weights[k] = 10000 + init_weights[k]
+    else:
+        weights = init_weights
 
     pairs = generate_visaul_pairs(partial_full_data, weights)
 
-    print(json.dumps(pairs))
+    if output_file is not None:
+        with open(output_file, "w+") as f:
+            json.dump(pairs, f)
+    else:
+        print(json.dumps(pairs))
 
 
 def generate_visaul_pairs(partial_full_data, weights):
@@ -53,6 +59,7 @@ def generate_visaul_pairs(partial_full_data, weights):
     result["specs"] = []
     for case in partial_full_data:
         partial_spec, full_spec = partial_full_data[case]
+
         draco_rec = run(partial_spec, constants=weights)
 
         if draco_rec is None:
@@ -82,9 +89,11 @@ if __name__ == '__main__':
     logging.getLogger().setLevel(logging.WARN)
 
     spec_dir = os.path.join(os.path.dirname(__file__), "../../data/synthetic")
+    output_file = os.path.join(os.path.dirname(__file__), "../../data/spec_pairs/synthetic_default_weights.json")
+
     dataset = data_util.load_partial_full_data(spec_dir)
     #spec_dir = os.path.join(os.path.dirname(__file__), "../../data/compassql_examples")
 
-    play(dataset)
+    play(dataset, train_weights=False, output_file=output_file)
 
 

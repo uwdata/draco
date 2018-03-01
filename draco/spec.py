@@ -168,10 +168,9 @@ class Data():
         return Data(fields, len(agate_table), content=content)
 
     def fill_with_random_content(self, defaut_size=10):
-        """ Fill the data with randomly generated data
-        """
+        """ Fill the data with randomly generated data if the content its content is empty """
 
-        assert self.content == None
+        assert self.content == {} and self.url == None
 
         size = self.size if self.size is not None else defaut_size
 
@@ -180,10 +179,12 @@ class Data():
             row = {}
             for f in self.fields:
                 if f.ty == "number":
-                    row[f.name] = np.random.uniform(low=0.0, high=1.0)
+                    v = np.random.uniform(low=0.0, high=1.0)
+                    row[f.name] = float(f'{v:.3f}')
                 elif f.ty == "string":
                     card = f.cardinality or 10
-                    row[f.name] = np.random.randint(low=0, high=card)
+                    v = np.random.randint(low=0, high=card)
+                    row[f.name] = float(f'{v:.3f}')
                 elif f.ty == "boolean":
                     row[f.name] = np.random.choice([True, False])
             self.content.append(row)
@@ -248,7 +249,8 @@ class Encoding():
             obj.get('aggregate'),
             binning,
             scale.get('type') == 'log' if scale else None,
-            scale.get('zero') if scale else None)
+            scale.get('zero') if scale else None,
+            obj.get('stack'))
 
     @staticmethod
     def from_cql(obj: Dict[str, Any]) -> 'Encoding':
@@ -277,7 +279,8 @@ class Encoding():
             subst_if_hole(obj.get('aggregate')),
             binning,
             subst_if_hole(scale.get('type')) == 'log' if scale else None,
-            subst_if_hole(scale.get('zero')) if scale else None)
+            subst_if_hole(scale.get('zero')) if scale else None,
+            subst_if_hole(obj.get('stack')))
 
     @staticmethod
     def parse_from_answer(encoding_id: str, encoding_props: Dict) -> 'Encoding':
@@ -289,6 +292,7 @@ class Encoding():
             encoding_props.get('bin'),
             encoding_props.get('log_scale'),
             encoding_props.get('zero'),
+            encoding_props.get('stack'),
             encoding_id)
 
     def __init__(self,
@@ -299,6 +303,7 @@ class Encoding():
                  binning: Optional[Union[int, bool]] = None,
                  log_scale: Optional[bool] = None,
                  zero: Optional[bool] = None,
+                 stack: Optional[str] = None,
                  idx: Optional[str] = None) -> None:
         self.channel = channel
         self.field = field
@@ -307,6 +312,7 @@ class Encoding():
         self.binning = binning
         self.log_scale = log_scale
         self.zero = zero
+        self.stack = stack
         self.id = idx if idx is not None else Encoding.gen_encoding_id()
 
     def to_compassql(self):
@@ -322,6 +328,8 @@ class Encoding():
             encoding['aggregate'] = self.aggregate
         if self.binning:
             encoding['bin'] = {'maxbins' : self.binning}
+        if self.stack:
+            encoding['stack'] = self.stack
         #TODO: log and zeros seems not supported by compassql?
         return encoding
 
@@ -344,6 +352,8 @@ class Encoding():
         if self.log_scale:
             encoding['scale']['type'] = 'log'
         encoding['scale']['zero'] = False if self.zero == None else self.zero
+        if self.stack:
+            encoding['stack'] = self.stack
 
         return encoding
 
@@ -352,13 +362,13 @@ class Encoding():
 
         constraints = [f'encoding({self.id}).']
 
-        def collect_val(prop: str, value: Union[str, int]): # collect a field with value
+        def collect_val(prop: str, prop_type: str, value: Union[str, int]): # collect a field with value
             if value is None: # ask the system to decide whether to fit
                 pass
             elif value == NULL: # we do not want to fit anything in
                 constraints.append(f':- {prop}({self.id},_).')
             elif value == HOLE: # we would fit something in
-                constraints.append(f'1 {{ {prop}({self.id},P): {prop}(P) }} 1.')
+                constraints.append(f'1 = {{ {prop}({self.id},P): {prop_type}(P) }}.')
             else: #the value is already supplied
                 constraints.append(f'{prop}({self.id},{value}).')
 
@@ -370,20 +380,21 @@ class Encoding():
             elif value is None:
                 pass
 
-        collect_val('channel', self.channel)
+        collect_val('channel', 'channel', self.channel)
 
         field_name = normalize_field_name(self.field)
-        collect_val('field', field_name)
+        collect_val('field', 'field', field_name)
 
-        collect_val('type', self.ty)
-        collect_val('aggregate', self.aggregate)
+        collect_val('type', 'type', self.ty)
+        collect_val('aggregate', 'aggregate_op', self.aggregate)
+        collect_val('stack', 'stacking', self.stack)
 
         if self.binning == True:
-            collect_val('bin', HOLE)
+            collect_val('bin', 'binning', HOLE)
         elif self.binning == False:
-            collect_val('bin', NULL)
+            collect_val('bin', 'binning', NULL)
         else:
-            collect_val('bin', self.binning)
+            collect_val('bin', 'binning', self.binning)
 
         collect_boolean_val('log', self.log_scale)
         collect_boolean_val('zero', self.zero)

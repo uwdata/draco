@@ -1,6 +1,6 @@
 import unittest
 
-from draco.spec import Data, Encoding, Field, Task
+from draco.spec import Data, Encoding, Field
 
 class TestField():
     def test_number_to_asp(self):
@@ -23,14 +23,14 @@ class TestEncoding():
         e = Encoding(channel='x', field='xx', ty='quantitative', binning='?', idx='e1')
         assert e.binning == '?'
 
-        asp = 'encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,quantitative).\n1 { bin(e1,P): bin(P) } 1.\n'
+        asp = 'encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,quantitative).\n1 = { bin(e1,P): binning(P) }.\n'
         assert e.to_asp() == asp
 
     def test_construct_with_bin_true(self):
         e = Encoding(channel='x', field='xx', ty='quantitative', binning=True, idx='e1')
         assert e.binning == True
 
-        asp = 'encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,quantitative).\n1 { bin(e1,P): bin(P) } 1.\n'
+        asp = 'encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,quantitative).\n1 = { bin(e1,P): binning(P) }.\n'
         assert e.to_asp() == asp
 
     def test_construct_with_bin_false(self):
@@ -48,8 +48,8 @@ class TestEncoding():
         assert e.to_asp() == asp
 
     def test_full_to_asp(self):
-        e = Encoding(channel='x', field='xx', ty='quantitative', aggregate='max', binning=3, log_scale=True, zero=False, idx='e1')
-        asp = 'encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,quantitative).\naggregate(e1,max).\nbin(e1,3).\nlog(e1).\n:- zero(e1).\n'
+        e = Encoding(channel='x', field='xx', ty='quantitative', aggregate='max', binning=3, log_scale=True, zero=False, stack='zero', idx='e1')
+        asp = 'encoding(e1).\nchannel(e1,x).\nfield(e1,xx).\ntype(e1,quantitative).\naggregate(e1,max).\nstack(e1,zero).\nbin(e1,3).\nlog(e1).\n:- zero(e1).\n'
         assert e.to_asp() == asp
 
     def test_channel_idx_to_asp(self):
