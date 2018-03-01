@@ -84,11 +84,11 @@
 :- mark(line;area), not channel(_,x).
 :- mark(line;area), not channel(_,y).
 
-% bar and tick requires exactly one continuous (x or y)
-:- mark(bar;tick), not 1 = {channel_continuous(x); channel_continuous(y)}.
+% bar and tick cannot have both x and y continuous
+:- mark(bar;tick), channel_continuous(x), channel_continuous(y).
 
 % bar mark requires scale of continuous to start at zero
-:- mark(bar), channel(E,(x;y)), not discrete(E), not zero(E).
+:- mark(bar), channel(E,(x;y)), continuous(E), not zero(E).
 
 % shape channel requires point mark
 :- channel(_,shape), not mark(point).
@@ -119,14 +119,17 @@
 :- mark(line), channel(E,size).
 
 
+% === Global properties ===
+
+
 % === Type checks ===
 
 % check types of encoding properties
 :- channel(_,C), not channel(C).
 :- field(_,F), not field(F).
 :- type(_,T), not type(T).
-:- aggregate(_,A), not aggregate(A).
-:- bin(_,B), not bin(B).
+:- aggregate(_,A), not aggregate_op(A).
+:- bin(_,B), not B >= 0.  % bin has to be a natural number
 
 % fieldtype has to be primitive type
 :- fieldtype(_,T), not primitive_type(T).

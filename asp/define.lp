@@ -7,9 +7,9 @@ type(quantitative;ordinal;nominal;temporal).
 % basic types of the data
 primitive_type(string;number;boolean;date).
 % supported aggregation functions
-aggregate(count;mean;median;min;max;stdev;sum).
-% possible numbers of bins
-bin(3;5;10;20;100;200).
+aggregate_op(count;mean;median;min;max;stdev;sum).
+% numbers of bins that can be recommended; any natural number is allowed
+binning(5;10;20;200).
 
 % encoding channels
 single_channel(x;y;color;opacity;size;shape;text;row;column).
@@ -18,12 +18,15 @@ channel(C) :- single_channel(C).
 channel(C) :- multi_channel(C).
 non_positional(color;opacity;size;shape;text;detail).
 
-% possible tasks
+% possible tasks (in addition to none)
 tasks(compare;derived;extremum;value).
+
+% possible stackings (in addition to none)
+stacking(zero;normalize).
 
 % ====== Helpers ======
 
-discrete(E) :- type(E,(nominal;ordinal)), not aggregate(E,_).
+discrete(E) :- type(E,(nominal;ordinal)).
 discrete(E) :- bin(E,_).
 continuous(E) :- encoding(E), not discrete(E).
 

@@ -352,13 +352,13 @@ class Encoding():
 
         constraints = [f'encoding({self.id}).']
 
-        def collect_val(prop: str, value: Union[str, int]): # collect a field with value
+        def collect_val(prop: str, prop_type: str, value: Union[str, int]): # collect a field with value
             if value is None: # ask the system to decide whether to fit
                 pass
             elif value == NULL: # we do not want to fit anything in
                 constraints.append(f':- {prop}({self.id},_).')
             elif value == HOLE: # we would fit something in
-                constraints.append(f'1 {{ {prop}({self.id},P): {prop}(P) }} 1.')
+                constraints.append(f'1 {{ {prop}({self.id},P): {prop_type}(P) }} 1.')
             else: #the value is already supplied
                 constraints.append(f'{prop}({self.id},{value}).')
 
@@ -370,20 +370,20 @@ class Encoding():
             elif value is None:
                 pass
 
-        collect_val('channel', self.channel)
+        collect_val('channel', 'channel', self.channel)
 
         field_name = normalize_field_name(self.field)
-        collect_val('field', field_name)
+        collect_val('field', 'field', field_name)
 
-        collect_val('type', self.ty)
-        collect_val('aggregate', self.aggregate)
+        collect_val('type', 'type', self.ty)
+        collect_val('aggregate', 'aggregate_op', self.aggregate)
 
         if self.binning == True:
-            collect_val('bin', HOLE)
+            collect_val('bin', 'binning', HOLE)
         elif self.binning == False:
-            collect_val('bin', NULL)
+            collect_val('bin', 'binning', NULL)
         else:
-            collect_val('bin', self.binning)
+            collect_val('bin', 'binning', self.binning)
 
         collect_boolean_val('log', self.log_scale)
         collect_boolean_val('zero', self.zero)
