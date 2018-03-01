@@ -34,6 +34,8 @@ continuous(E) :- encoding(E), not discrete(E).
 channel_discrete(C) :- discrete(E), channel(E,C).
 channel_continuous(C) :- continuous(E), channel(E,C).
 
+ordered(E) :- type(E,(ordinal;quantitative)).
+
 % fields
 field(F) :- fieldtype(F,_).
 

@@ -35,14 +35,17 @@
 :- aggregate(E,count), field(E,_).
 :- aggregate(E,count), not type(E,quantitative).
 
-% shape requires discrete
-:- channel_continuous(shape).
+% shape requires discrete and not ordered (nominal)
+:- channel(E,shape), not type(E,nominal).
+
+% detail requires nominal
+:- channel(E,detail), not type(E,nominal).
 
 % row and column require discrete
 :- channel_continuous(row;column).
 
-% aggregate implies quantitative
-:- aggregate(E,_), not type(E,quantitative).
+% size, and opacity impy order so nominal is misleading
+:- channel(E,(size;opacity)), type(E,nominal).
 
 % cannot aggregate nominal
 :- aggregate(E,_), type(E,nominal).
@@ -68,8 +71,6 @@
 
 % text mark requires text channel
 :- mark(text), not channel(_,text).
-% and row or column
-:- mark(text), not channel(_,row), not channel(_,column).
 
 % text channel requires text mark
 :- channel(_,text), not mark(text).

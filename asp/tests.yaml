@@ -192,11 +192,11 @@ Test constraints:
             :- not aggregate(e,mean).
         Expect: UNSAT
 
-    Test cannot aggregate discrete:
+    Test cannot aggregate nominal:
         Program: |
             encoding(e).
             :- not aggregate(e,_).
-            :- not discrete(e).
+            :- not type(e,nominal).
         Expect: UNSAT
 
     Test can aggregate continuous:
