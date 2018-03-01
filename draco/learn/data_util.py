@@ -68,6 +68,8 @@ def load_partial_full_data(path=compassql_data_path):
         files = [os.path.join(input_dir, f) for f in os.listdir(input_dir)]
         result = {}
         for fname in files:
+            if not fname.endswith(".json"):
+                continue
             with open(fname, 'r') as f:
                 content = json.load(f)
                 if "url" in content["data"] and content["data"]["url"] is not None:
