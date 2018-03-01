@@ -124,6 +124,12 @@ feature_term("stack") :- stack(_).
 % prefer not to aggregate for value tasks
 feature_term("value_agg") :- task(value), aggregate(_,_).
 
+% positional interactions
+feature_term("x_row") :- channel(_,x), channel(_,row), interesting(x).
+feature_term("y_row") :- channel(_,y), channel(_,row), interesting(y).
+feature_term("x_column") :- channel(_,x), channel(_,column), interesting(x).
+feature_term("y_column") :- channel(_,y), channel(_,column), interesting(y).
+
 % ====== Rankings ======
 
 % continuous by continuous
@@ -195,16 +201,16 @@ feature_term("nominal_row",E) :- channel(E,row), type(E,nominal).
 feature_term("nominal_column",E) :- channel(E,column), type(E,nominal).
 feature_term("nominal_detail",E) :- channel(E,detail), type(E,nominal).
 
-feature_term("interesting_x",E) :- channel(E,x), field(E,F), interesting(F).
-feature_term("interesting_y",E) :- channel(E,y), field(E,F), interesting(F).
-feature_term("interesting_color",E) :- channel(E,color), field(E,F), interesting(F).
-feature_term("interesting_opacity",E) :- channel(E,opacity), field(E,F), interesting(F).
-feature_term("interesting_size",E) :- channel(E,size), field(E,F), interesting(F).
-feature_term("interesting_shape",E) :- channel(E,shape), field(E,F), interesting(F).
-feature_term("interesting_text",E) :- channel(E,text), field(E,F), interesting(F).
-feature_term("interesting_row",E) :- channel(E,row), field(E,F), interesting(F).
-feature_term("interesting_column",E) :- channel(E,column), field(E,F), interesting(F).
-feature_term("interesting_detail",E) :- channel(E,detail), field(E,F), interesting(F).
+feature_term("interesting_x",E) :- channel(E,x), interesting(E).
+feature_term("interesting_y",E) :- channel(E,y), interesting(E).
+feature_term("interesting_color",E) :- channel(E,color), interesting(E).
+feature_term("interesting_opacity",E) :- channel(E,opacity), interesting(E).
+feature_term("interesting_size",E) :- channel(E,size), interesting(E).
+feature_term("interesting_shape",E) :- channel(E,shape), interesting(E).
+feature_term("interesting_text",E) :- channel(E,text), interesting(E).
+feature_term("interesting_row",E) :- channel(E,row), interesting(E).
+feature_term("interesting_column",E) :- channel(E,column), interesting(E).
+feature_term("interesting_detail",E) :- channel(E,detail), interesting(E).
 
 % aggregations
 
@@ -236,24 +242,24 @@ feature_term("summary_text") :- task(summary), mark(text).
 feature_term("summary_tick") :- task(summary), mark(tick).
 feature_term("summary_rect") :- task(summary), mark(rect).
 
-feature_term("value_channel_x",E) :- task(value), channel(E,x), field(E,F), interesting(F).
-feature_term("value_channel_y",E) :- task(value), channel(E,y), field(E,F), interesting(F).
-feature_term("value_channel_color",E) :- task(value), channel(E,color), field(E,F), interesting(F).
-feature_term("value_channel_opacity",E) :- task(value), channel(E,opacity), field(E,F), interesting(F).
-feature_term("value_channel_size",E) :- task(value), channel(E,size), field(E,F), interesting(F).
-feature_term("value_channel_shape",E) :- task(value), channel(E,shape), field(E,F), interesting(F).
-feature_term("value_channel_text",E) :- task(value), channel(E,text), field(E,F), interesting(F).
-feature_term("value_channel_row",E) :- task(value), channel(E,row), field(E,F), interesting(F).
-feature_term("value_channel_column",E) :- task(value), channel(E,column), field(E,F), interesting(F).
-feature_term("value_channel_detail",E) :- task(value), channel(E,detail), field(E,F), interesting(F).
+feature_term("value_channel_x",E) :- task(value), channel(E,x), interesting(E).
+feature_term("value_channel_y",E) :- task(value), channel(E,y), interesting(E).
+feature_term("value_channel_color",E) :- task(value), channel(E,color), interesting(E).
+feature_term("value_channel_opacity",E) :- task(value), channel(E,opacity), interesting(E).
+feature_term("value_channel_size",E) :- task(value), channel(E,size), interesting(E).
+feature_term("value_channel_shape",E) :- task(value), channel(E,shape), interesting(E).
+feature_term("value_channel_text",E) :- task(value), channel(E,text), interesting(E).
+feature_term("value_channel_row",E) :- task(value), channel(E,row), interesting(E).
+feature_term("value_channel_column",E) :- task(value), channel(E,column), interesting(E).
+feature_term("value_channel_detail",E) :- task(value), channel(E,detail), interesting(E).
 
-feature_term("summa_channelry_x",E) :- task(summary), channel(E,x), field(E,F), interesting(F).
-feature_term("summa_channelry_y",E) :- task(summary), channel(E,y), field(E,F), interesting(F).
-feature_term("summa_channelry_color",E) :- task(summary), channel(E,color), field(E,F), interesting(F).
-feature_term("summa_channelry_opacity",E) :- task(summary), channel(E,opacity), field(E,F), interesting(F).
-feature_term("summa_channelry_size",E) :- task(summary), channel(E,size), field(E,F), interesting(F).
-feature_term("summa_channelry_shape",E) :- task(summary), channel(E,shape), field(E,F), interesting(F).
-feature_term("summa_channelry_text",E) :- task(summary), channel(E,text), field(E,F), interesting(F).
-feature_term("summa_channelry_row",E) :- task(summary), channel(E,row), field(E,F), interesting(F).
-feature_term("summa_channelry_column",E) :- task(summary), channel(E,column), field(E,F), interesting(F).
-feature_term("summa_channelry_detail",E) :- task(summary), channel(E,detail), field(E,F), interesting(F).
+feature_term("summa_channelry_x",E) :- task(summary), channel(E,x), interesting(E).
+feature_term("summa_channelry_y",E) :- task(summary), channel(E,y), interesting(E).
+feature_term("summa_channelry_color",E) :- task(summary), channel(E,color), interesting(E).
+feature_term("summa_channelry_opacity",E) :- task(summary), channel(E,opacity), interesting(E).
+feature_term("summa_channelry_size",E) :- task(summary), channel(E,size), interesting(E).
+feature_term("summa_channelry_shape",E) :- task(summary), channel(E,shape), interesting(E).
+feature_term("summa_channelry_text",E) :- task(summary), channel(E,text), interesting(E).
+feature_term("summa_channelry_row",E) :- task(summary), channel(E,row), interesting(E).
+feature_term("summa_channelry_column",E) :- task(summary), channel(E,column), interesting(E).
+feature_term("summa_channelry_detail",E) :- task(summary), channel(E,detail), interesting(E).
