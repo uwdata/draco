@@ -8,7 +8,7 @@ import os
 
 import json
 
-def play(partial_full_data, train_weights=True):
+def play(partial_full_data, train_weights=True, output_file=None):
     
     init_weights = current_weights()
 
@@ -35,7 +35,11 @@ def play(partial_full_data, train_weights=True):
 
     pairs = generate_visaul_pairs(partial_full_data, weights)
 
-    print(json.dumps(pairs))
+    if output_file is not None:
+        with open(output_file, "w") as f:
+            json.dump(pairs, f)
+    else:
+        print(json.dumps(pairs))
 
 
 def generate_visaul_pairs(partial_full_data, weights):
@@ -85,9 +89,11 @@ if __name__ == '__main__':
     logging.getLogger().setLevel(logging.WARN)
 
     spec_dir = os.path.join(os.path.dirname(__file__), "../../data/synthetic")
+    output_file = os.path.join(os.path.dirname(__file__), "../../data/spec_pairs/synthetic.json")
+
     dataset = data_util.load_partial_full_data(spec_dir)
     #spec_dir = os.path.join(os.path.dirname(__file__), "../../data/compassql_examples")
 
-    play(dataset, train_weights=False)
+    play(dataset, train_weights=False, output_file=output_file)
 
 
