@@ -24,12 +24,14 @@ def play(partial_full_data, train_weights=True):
         learnt_weights = [int(x * 1000) if (i not in unused_features) else None
                           for i, x in enumerate(clf.coef_[0])]
 
-    weights = {}
-    for i, k in enumerate(init_weights):
-        if learnt_weights[i] is not None:
-            weights[k] = learnt_weights[i]
-        else:
-            weights[k] = 10000 + init_weights[k]
+        weights = {}
+        for i, k in enumerate(init_weights):
+            if learnt_weights[i] is not None:
+                weights[k] = learnt_weights[i]
+            else:
+                weights[k] = 10000 + init_weights[k]
+    else:
+        weights = init_weights
 
     pairs = generate_visaul_pairs(partial_full_data, weights)
 
@@ -53,6 +55,7 @@ def generate_visaul_pairs(partial_full_data, weights):
     result["specs"] = []
     for case in partial_full_data:
         partial_spec, full_spec = partial_full_data[case]
+
         draco_rec = run(partial_spec, constants=weights)
 
         if draco_rec is None:
@@ -85,6 +88,6 @@ if __name__ == '__main__':
     dataset = data_util.load_partial_full_data(spec_dir)
     #spec_dir = os.path.join(os.path.dirname(__file__), "../../data/compassql_examples")
 
-    play(dataset)
+    play(dataset, train_weights=False)
 
 

@@ -168,10 +168,9 @@ class Data():
         return Data(fields, len(agate_table), content=content)
 
     def fill_with_random_content(self, defaut_size=10):
-        """ Fill the data with randomly generated data
-        """
+        """ Fill the data with randomly generated data if the content its content is empty """
 
-        assert self.content == None
+        assert self.content == {} and self.url == None
 
         size = self.size if self.size is not None else defaut_size
 
@@ -180,10 +179,12 @@ class Data():
             row = {}
             for f in self.fields:
                 if f.ty == "number":
-                    row[f.name] = np.random.uniform(low=0.0, high=1.0)
+                    v = np.random.uniform(low=0.0, high=1.0)
+                    row[f.name] = float(f'{v:.3f}')
                 elif f.ty == "string":
                     card = f.cardinality or 10
-                    row[f.name] = np.random.randint(low=0, high=card)
+                    v = np.random.randint(low=0, high=card)
+                    row[f.name] = float(f'{v:.3f}')
                 elif f.ty == "boolean":
                     row[f.name] = np.random.choice([True, False])
             self.content.append(row)
