@@ -31,8 +31,9 @@ channel_discrete(C) :- discrete(E), channel(E,C).
 channel_continuous(C) :- continuous(E), channel(E,C).
 
 % orientation for bars and ticks
-orientation(horizontal) :- mark(bar;tick), channel_discrete(x).
-orientation(vertical) :- mark(bar;tick), channel_discrete(y).
+horizontal :- mark(bar;tick), channel_discrete(y).
+vertical :- mark(bar;tick), channel_discrete(x).
+vertical :- mark(line), channel_continuous(x), channel_continuous(y).
 
 % fields
 field(F) :- fieldtype(F,_).

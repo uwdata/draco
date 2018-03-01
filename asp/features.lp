@@ -50,9 +50,6 @@ feature_term("bin_cardinality",E) :- type(E,quantitative), bin(E,_), cardinality
 % prefer quantitative for bin
 feature_term("quant_bin",E) :- bin(E,_), not type(E,quantitative).
 
-% aggregate should also have a discrete encoding to group by
-feature_term("agg_dim") :- aggregate(_,_), not discrete(_).
-
 % plots with only nominal, ordinal, binned q, or t with time unit should add either an aggregation (e.g. count) or a quantitative field
 feature_term("only_discrete") :- not continuous(_).
 
@@ -72,6 +69,9 @@ feature_term("non_positional_pref") :- channel(_,C), non_positional(C), not chan
 % aggregate plots should not use raw continuous as group by
 feature_term("aggregate_group_by_raw",E) :- aggregate(_,_), continuous(E), not aggregate(E,_).
 
+% aggregate should also have a discrete encoding to group by
+feature_term("agg_dim") :- aggregate(_,_), not discrete(_).
+
 % prefer not to use plot with x or y discrete and no aggregate as it leads to occlusion
 feature_term("x_raw",E) :- channel(EX,x), discrete(EX), not aggregate(E,_), continuous(E).
 feature_term("y_raw",E) :- channel(EY,y), discrete(EY), not aggregate(E,_), continuous(E).
@@ -85,20 +85,30 @@ feature_term("log",E) :- log(E).
 % prefer to include zero for continuous
 feature_term("zero",E) :- continuous(E), not zero(E).
 
-% prefer to use zero for the continuous channel of a bar chart
-feature_term("zero_bar") :- mark(bar), continuous(E), channel(E,(x;y)), not zero(E).
-
 % prefer zero for continuous size
 feature_term("zero_size") :- continuous(E), channel(E,size), not zero(E).
+
+% prefer zero for continuous positional
+feature_term("zero_positional") :- continuous(E), channel(E,(x;y)), not zero(E).
 
 % prefer not to use only row and column
 feature_term("only_row_column") :- channel(_,(row;column)), not channel(_,x), not channel(_,y), not channel(_,color), not channel(_,size), not channel(_,opacity), not channel(_,shape).
 
-% prefer not to use ordinal for fields with high cardinality
-feature_term("high_cardinality_ordinal",E) :- type(E,ordinal), cardinality(E,C), C > 20.
-
 % prefer to use only x instead of only y
 feature_term("only_x") :- channel(_,y), not channel(_,x).
+
+% prefer to use vertical charts
+feature_term("horizontal") :- horizontal.
+
+% prefer not to use ordinal for fields with high cardinality
+feature_term("high_cardinality_ordinal",E) :- type(E,ordinal), cardinality(E,C), C > 30.
+
+% prefer not to use nominal for fields with high cardinality
+feature_term("high_cardinality_nominal",E) :- type(E,nominal), cardinality(E,C), C > 12.
+
+% avoid high cardinality on x or column as it causes horizontal scrolling
+feature_term("horizontal_scrolling",E) :- channel(E,x), discrete(E), cardinality(E,C), C > 20.
+feature_term("horizontal_scrolling",E) :- channel(E,columm), discrete(E), cardinality(E,C), C > 5.
 
 % prefer to use temporal type with dates
 feature_term("temporal_date",E) :- field(E,F), fieldtype(F,date), not type(E,temporal).
