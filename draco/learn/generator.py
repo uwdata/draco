@@ -86,4 +86,4 @@ if __name__ == '__main__':
             json.dump(entry[0].to_compassql(), f, indent=4)
 
         with open(os.path.join(vl_out_dir, f"spec_{i}.json"), "w") as f:
-            json.dump(entry[1].to_compassql(), f, indent=4)
+            json.dump(entry[1].to_vegalite(), f, indent=4)

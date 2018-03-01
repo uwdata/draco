@@ -1,22 +1,28 @@
 {
     "mark": "point",
-    "encodings": [
-        {
-            "channel": "color",
+    "encoding": {
+        "color": {
+            "scale": {
+                "zero": true
+            },
             "field": "q1",
             "type": "quantitative"
         },
-        {
-            "channel": "x",
+        "x": {
+            "scale": {
+                "zero": true
+            },
             "field": "q2",
             "type": "quantitative"
         },
-        {
-            "channel": "y",
+        "y": {
+            "scale": {
+                "zero": false
+            },
             "field": "n",
             "type": "nominal"
         }
-    ],
+    },
     "data": {
         "values": [
             {
@@ -3020,5 +3026,6 @@
                 "q2": 0.735
             }
         ]
-    }
+    },
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json"
 }
