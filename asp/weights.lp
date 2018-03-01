@@ -150,3 +150,25 @@
 #const summary_text_weight = 0.
 #const summary_tick_weight = 0.
 #const summary_rect_weight = 0.
+
+#const value_x_weight = 0.
+#const value_y_weight = 0.
+#const value_color_weight = 0.
+#const value_opacity_weight = 0.
+#const value_size_weight = 0.
+#const value_shape_weight = 0.
+#const value_text_weight = 0.
+#const value_row_weight = 0.
+#const value_column_weight = 0.
+#const value_detail_weight = 0.
+
+#const summary_x_weight = 0.
+#const summary_y_weight = 0.
+#const summary_color_weight = 0.
+#const summary_opacity_weight = 0.
+#const summary_size_weight = 0.
+#const summary_shape_weight = 0.
+#const summary_text_weight = 0.
+#const summary_row_weight = 0.
+#const summary_column_weight = 0.
+#const summary_detail_weight = 0.

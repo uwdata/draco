@@ -258,3 +258,25 @@ feature_term("summary_rule") :- task(summary), mark(rule).
 feature_term("summary_text") :- task(summary), mark(text).
 feature_term("summary_tick") :- task(summary), mark(tick).
 feature_term("summary_rect") :- task(summary), mark(rect).
+
+feature_term("value_x",E) :- task(value), channel(E,x).
+feature_term("value_y",E) :- task(value), channel(E,y).
+feature_term("value_color",E) :- task(value), channel(E,color).
+feature_term("value_opacity",E) :- task(value), channel(E,opacity).
+feature_term("value_size",E) :- task(value), channel(E,size).
+feature_term("value_shape",E) :- task(value), channel(E,shape).
+feature_term("value_text",E) :- task(value), channel(E,text).
+feature_term("value_row",E) :- task(value), channel(E,row).
+feature_term("value_column",E) :- task(value), channel(E,column).
+feature_term("value_detail",E) :- task(value), channel(E,detail).
+
+feature_term("summary_x",E) :- task(summary), channel(E,x).
+feature_term("summary_y",E) :- task(summary), channel(E,y).
+feature_term("summary_color",E) :- task(summary), channel(E,color).
+feature_term("summary_opacity",E) :- task(summary), channel(E,opacity).
+feature_term("summary_size",E) :- task(summary), channel(E,size).
+feature_term("summary_shape",E) :- task(summary), channel(E,shape).
+feature_term("summary_text",E) :- task(summary), channel(E,text).
+feature_term("summary_row",E) :- task(summary), channel(E,row).
+feature_term("summary_column",E) :- task(summary), channel(E,column).
+feature_term("summary_detail",E) :- task(summary), channel(E,detail).
