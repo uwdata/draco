@@ -167,10 +167,11 @@ class Data():
             content.append(row_obj)
         return Data(fields, len(agate_table), content=content)
 
-    def fill_with_random_content(self, defaut_size=10):
+    def fill_with_random_content(self, defaut_size=10, override=False):
         """ Fill the data with randomly generated data if the content its content is empty """
 
-        assert self.content == {} and self.url == None
+        if not (self.content == {} and self.url == None) and not override:
+            return
 
         size = self.size if self.size is not None else defaut_size
 
