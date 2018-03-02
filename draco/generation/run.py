@@ -47,7 +47,8 @@ def main(args):
                         tries += 1
                     groups.append(specs)
 
-            with open(args.output_dir, 'w') as out:
+            output_name = '{0}/{1}.json'.format(args.output_dir, interaction['name'])
+            with open(output_name, 'w') as out:
                 json.dump(groups, out, indent=2)
 
 def load_json(file_path):
