@@ -9,6 +9,7 @@ import pathlib
 import sqlite3
 
 def init_database(db_file):
+    """ initialize the databsae and insert default entries into it. """
 
     if pathlib.Path(db_file).exists():
         print("[Err] The database {} exists, won't create one.".format(db_file))
