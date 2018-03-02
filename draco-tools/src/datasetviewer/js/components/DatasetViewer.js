@@ -95,7 +95,7 @@ class DatasetViewer extends Component {
       if (this.state.currentSpec) {
         specView = (
           <div className="spec-view" style={{
-            left: this.state.specX + 'px', top: this.state.specY + 'px'
+            left: this.state.specX - 100 + 'px', top: this.state.specY + 50 + 'px'
           }}>
             <pre>{JSON.stringify(this.state.currentSpec, null, 2)}</pre>
           </div>
