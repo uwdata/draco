@@ -43,10 +43,10 @@
 #const high_cardinality_size_weight = 1.
 #const stack_weight = 1.
 #const value_agg_weight = 1.
-#cosnt x_row_weight = 1.
-#cosnt y_row_weight = 1.
-#cosnt x_column_weight = 1.
-#cosnt y_column_weight = 1.
+#const x_row_weight = 1.
+#const y_row_weight = 1.
+#const x_column_weight = 1.
+#const y_column_weight = 1.
 
 #const c_c_point_weight = 0.
 #const c_c_line_weight = 20.

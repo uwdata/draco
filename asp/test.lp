@@ -82,11 +82,16 @@
 :- mark(rule), channel(_,x), channel(_,y).
 
 % line and area require x and y channel
-:- mark(line;area), not channel(_,x).
-:- mark(line;area), not channel(_,y).
+:- mark(line;area), not channel(_,(x;y)).
+
+% line and area cannot have two continuous
+:- mark(line;area), channel_discrete(x), channel_discrete(y).
 
 % bar and tick cannot have both x and y continuous
 :- mark(bar;tick), channel_continuous(x), channel_continuous(y).
+
+% bar and tick cannot have both x and y discrete
+:- mark(bar;tick), channel_discrete(x), channel_discrete(y).
 
 % bar mark requires scale of continuous to start at zero
 :- mark(bar), channel(E,(x;y)), continuous(E), not zero(E).
@@ -96,9 +101,6 @@
 
 % size only works with some marks
 :- channel(_,size), not mark(point), not mark(rule), not mark(text), not mark(line).
-
-% area and line require x and y
-:- mark(area;line), not channel(_,(x;y)).
 
 % detail requires aggregation
 :- channel(_,detail), not aggregate(_,_).
