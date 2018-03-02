@@ -148,3 +148,10 @@ class Model:
             used.add(enc[prop])
     
     return used
+
+  @staticmethod
+  def build_value_from_enum(prop, enum):
+    if (prop in Model.SPECIAL_ENUMS):
+      return Model.SPECIAL_ENUMS[prop](enum)
+    else:
+      return enum
