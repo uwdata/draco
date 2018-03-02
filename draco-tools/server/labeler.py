@@ -17,6 +17,7 @@ def get_db():
         db = g._database = sqlite3.connect(DATABASE)
     return db
 
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -26,6 +27,7 @@ def close_connection(exception):
 
 @app.route('/fetch_pair', methods=['GET'])
 def fetch_pair():
+    """ fetch an unlabeled pair from the server """
     db = get_db()
     c = db.cursor()
 
@@ -41,7 +43,6 @@ def fetch_pair():
         "right": json.loads(row[2])
     }
 
-    """ Fetch a pair from the server """
     return jsonify(data)
 
 
@@ -61,7 +62,6 @@ def upload_label():
     c.execute(stmt, (tid, label))
 
     db.commit()
-
     return 'success'
 
 

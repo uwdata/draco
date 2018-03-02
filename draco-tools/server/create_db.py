@@ -4,6 +4,7 @@ import numpy as np
 
 from draco.learn import data_util
 from draco.spec import *
+from draco.learn.helper import count_violations
 
 import pathlib
 import sqlite3
@@ -19,8 +20,27 @@ def init_database(db_file):
     c = conn.cursor()
 
     # Create table
-    c.execute('CREATE TABLE unlabeled (id text primary key, left text, right text)')
+    c.execute("CREATE TABLE unlabeled (id text primary key, left text, right text)")
     c.execute("CREATE TABLE labels (id text, label integer)")
+    c.execute("CREATE TABLE feature_vec (spec text, feature text)")
+    
+    conn.close()
+
+
+def insert_user_study_data(db_file):
+
+    # generate feature vector and store in database
+    processed_specs = {}
+
+    def count_violations_memoized(data, task, query):
+            key = data.to_asp() + ',' + query.to_asp()
+            if key not in processed_specs:
+                task = Task(data, query, task)
+                processed_specs[key] = count_violations(task)
+            return processed_specs[key]
+
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
 
     input_pairs = data_util.load_neg_pos_data()
 
@@ -45,16 +65,26 @@ def init_database(db_file):
         t1 = Task(data, q1, task)
         t2 = Task(data, q2, task)
 
+        vec1 = count_violations_memoized(data, task, q1)
+        vec2 = count_violations_memoized(data, task, q2)
+
         print(tid)
 
         stmt = "INSERT INTO unlabeled VALUES (?, ?, ?)"
 
         c.execute(stmt, (tid, t1.to_vegalite_json(), t2.to_vegalite_json()))
 
+        fv_stmt = "INSERT INTO feature_vec VALUES (?, ?)"
+
+        c.execute(fv_stmt, (t1.to_vegalite_json(), json.dumps(vec1)))
+        c.execute(fv_stmt, (t2.to_vegalite_json(), json.dumps(vec2)))
+
         conn.commit()
-    
+
     conn.close()
 
 
 if __name__ == '__main__':
-    init_database("label_data.db")
+    db_file = "label_data.db"
+    init_database(db_file)
+    insert_user_study_data(db_file)
