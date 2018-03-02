@@ -19,6 +19,7 @@ class DatasetViewer extends Component {
       datasets: undefined,
       specs: undefined
     };
+
   }
 
   componentDidMount() {
@@ -33,6 +34,12 @@ class DatasetViewer extends Component {
     fetch(DATA)
       .then(response => response.json())
       .then(data => this.setState({ data: data }));
+
+    document.body.addEventListener('click', this.removeCurrentSpec.bind(this));
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('click', this.removeCurrentSpec.bind(this));
   }
 
   render() {
@@ -42,9 +49,9 @@ class DatasetViewer extends Component {
 
     let vizGroups;
     let info;
+    let specView;
     if (!this.state.specs) {
       vizGroups = <div>loading...</div>;
-      info = null;
     } else {
       let pairs = 0;
       let count = 0;
@@ -60,10 +67,15 @@ class DatasetViewer extends Component {
         for (let j = 0; j < group.length; j++) {
           const spec = group[j];
           spec['data'] = { values: this.state.data };
+
+          const specNoData = {};
+          Object.assign(specNoData, spec);
+          delete specNoData['data'];
+
   
           visualizations.push(
-            <div className="visualization" key={j}>
-              <Visualization vlSpec={spec}/>
+            <div className="visualization" key={j} onClick={ (e) => this.setCurrentSpec(e, specNoData) }>
+              <Visualization vlSpec={spec} />
             </div>
           );
         }
@@ -79,6 +91,16 @@ class DatasetViewer extends Component {
       }
 
       info = <div className="summary">{count} visualizations and {pairs} pairs</div>;
+
+      if (this.state.currentSpec) {
+        specView = (
+          <div className="spec-view" style={{
+            left: this.state.specX + 'px', top: this.state.specY + 'px'
+          }}>
+            <pre>{JSON.stringify(this.state.currentSpec, null, 2)}</pre>
+          </div>
+        );
+      }
     }
 
     return (
@@ -89,6 +111,7 @@ class DatasetViewer extends Component {
           {info}
         </div>
         {vizGroups}
+        {specView}
       </div>
     );
   }
@@ -102,6 +125,20 @@ class DatasetViewer extends Component {
     fetch(BASE_DIR + name)
       .then(response => response.json())
       .then(data => this.setState({ dataset: name, specs: data }));
+  }
+
+  setCurrentSpec(event, spec) {
+    this.setState({
+      currentSpec: spec,
+      specX: event.pageX,
+      specY: event.pageY
+    });
+  }
+
+  removeCurrentSpec() {
+    this.setState({
+      currentSpec: undefined
+    });
   }
 }
 
