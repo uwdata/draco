@@ -35,6 +35,7 @@ def main():
   for i in tqdm(range(len(interactions))):
     interaction = interactions[i]
     if (interaction['include']):
+      print(interaction['name'])
       groups = []
       
       for j in tqdm(range(NUM_GROUPS)):
