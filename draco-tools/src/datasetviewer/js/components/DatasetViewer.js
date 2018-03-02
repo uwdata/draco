@@ -94,7 +94,7 @@ class DatasetViewer extends Component {
 
       if (this.state.currentSpec) {
         specView = (
-          <div className="spec-view" style={{
+          <div className="spec-view" onClick={(e) => { e.stopPropagation(); }} style={{
             left: this.state.specX - 100 + 'px', top: this.state.specY + 50 + 'px'
           }}>
             <pre>{JSON.stringify(this.state.currentSpec, null, 2)}</pre>
@@ -135,7 +135,7 @@ class DatasetViewer extends Component {
     });
   }
 
-  removeCurrentSpec() {
+  removeCurrentSpec(e) {
     this.setState({
       currentSpec: undefined
     });

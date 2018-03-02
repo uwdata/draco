@@ -10,6 +10,7 @@ def test_is_valid():
             'x': {'field': 'foo', 'type': 'quantitative'}
         }
     })
+
     assert is_valid(Task(data, invalid)) == False
 
     valid = Query.from_vegalite({
