@@ -49,8 +49,6 @@ def main(args):
 
             with open(args.output_dir, 'w') as out:
                 json.dump(groups, out, indent=2)
-                print('wrote {0}'.format(args.output_dir))
-
 
 def load_json(file_path):
     with open(file_path) as data:
