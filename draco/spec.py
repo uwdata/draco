@@ -10,9 +10,11 @@ from typing import Any, Dict, Iterable, List, Optional, Union
 
 import agate
 import numpy as np
+import pandas as pd
 import scipy.stats as stats
 from agate.table import Table
 from clyngor.answers import Answers
+from random_words import RandomWords
 
 HOLE = '?' # I want the system to fill something for this
 NULL = 'null' # I don't want the system fill anything in this place
@@ -39,6 +41,13 @@ class Field():
                  cardinality: Optional[int] = None,
                  entropy: Optional[float] = None,
                  interesting: Optional[bool] = None) -> None:
+
+        if cardinality is not None:
+            assert cardinality > 0
+
+        if entropy is not None:
+            assert entropy >= 0
+
         self.name = name
 
         # column data type, should be a string represented type,
@@ -81,6 +90,10 @@ class Data():
                  size: Optional[int] = None,
                  content: Optional[Iterable[Any]] = None,
                  url: Optional[str] = None) -> None:
+
+        if size is not None:
+            assert size > 0
+
         self.fields = fields
         self.size = size
         self.content = content if content is not None else {}
@@ -173,22 +186,30 @@ class Data():
         if not (self.content == {} and self.url == None) and not override:
             return
 
-        size = self.size if self.size is not None else defaut_size
+        size = self.size or defaut_size
 
-        self.content = []
-        for _ in range(size):
-            row = {}
-            for f in self.fields:
-                if f.ty == "number":
-                    v = np.random.uniform(low=0.0, high=1.0)
-                    row[f.name] = float(f'{v:.3f}')
-                elif f.ty == "string":
-                    card = f.cardinality or 10
-                    v = np.random.randint(low=0, high=card)
-                    row[f.name] = float(f'{v:.3f}')
-                elif f.ty == "boolean":
-                    row[f.name] = np.random.choice([True, False])
-            self.content.append(row)
+        df = pd.DataFrame()
+
+        rw = RandomWords()
+
+        for f in self.fields:
+            cardinality = f.cardinality
+            if not cardinality:
+                cardinality = size
+            if f.ty == "number":
+                if f.cardinality == size:
+                    data = list(map(lambda v: f'{v:.3f}', np.random.normal(loc=1, scale=2, size=size)))
+                else:
+                    l = np.random.randint(cardinality)
+                    data = np.random.choice(l, size=size)
+            elif f.ty == "string":
+                l = rw.random_words(count=cardinality)
+                data = np.random.choice(l, size=size)
+            elif f.ty == "boolean":
+                data = np.random.choice([True, False], size=size)
+            df[f.name] = data
+
+        self.content = list(df.T.to_dict().values())
 
 
     def __len__(self):
