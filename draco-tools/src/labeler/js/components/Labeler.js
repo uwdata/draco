@@ -37,6 +37,7 @@ class Labeler extends Component {
       id: null,
       left: null,
       right: null,
+      task: null,
       chosen: null,
       hover: UNK,
     };
@@ -145,7 +146,7 @@ class Labeler extends Component {
           <pre className="diff">{specDiff}</pre>
           <pre>{stringify(rightSpec, {space: 2})}</pre>
         </div>
-        <div>Task: No Task</div>
+        <div>Task: {this.state.task || 'NO TASK'}</div>
         <div className="table">
           { table }
         </div>
@@ -198,6 +199,7 @@ class Labeler extends Component {
             id: data.id,
             left: data.left,
             right: data.right,
+            task: data.task,
             chosen: null,
             hover: UNK,
           });
