@@ -31,16 +31,18 @@
   .dimensions {
     display: flex;
     flex-direction: row;
+    background-color: $light-grey;
+    border-radius: 0 4px 4px 0;
 
     .dim-option {
       padding-left: 8px;
       padding-right: 8px;
-      background-color: $light-grey;
       cursor: pointer;
     }
 
     .dim-option.selected {
       background-color: $med-blue;
+      border-radius: 4px;
     }
   }
 

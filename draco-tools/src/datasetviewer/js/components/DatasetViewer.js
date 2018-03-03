@@ -87,7 +87,10 @@ class DatasetViewer extends Component {
         );
 
         count += group.length;
-        pairs += factorial(group.length) / (2 * factorial(group.length - 2));
+
+        if (group.length > 0) {
+          pairs += factorial(group.length) / (2 * factorial(group.length - 2));
+        }
       }
 
       info = <div className="summary">{count} visualizations and {pairs} pairs</div>;
@@ -170,6 +173,10 @@ class DatasetViewer extends Component {
 }
 
 function factorial(n) {
+  if (n === 0) {
+    return 1;
+  }
+
   let result = 1;
   for (let i = 2; i <= n; i++) {
     result *= i;
