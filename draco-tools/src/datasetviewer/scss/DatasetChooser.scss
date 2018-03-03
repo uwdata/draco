@@ -1,9 +1,12 @@
+@import 'shared/scss/base.scss';
+
 .DatasetChooser {
   height: 35px;
   line-height: 35px;
   vertical-align: middle;
   margin-top: 1px;
   display: flex;
+  flex-direction: row;
   margin-bottom: 16px;
   width: 500px;
 
@@ -22,7 +25,23 @@
     position: relative;
     flex-direction: column;
     border: 1px solid #e8e8e8;
-    border-radius: 0 4px 4px 0;
+    border-radius: 0;
+  }
+
+  .dimensions {
+    display: flex;
+    flex-direction: row;
+
+    .dim-option {
+      padding-left: 8px;
+      padding-right: 8px;
+      background-color: $light-grey;
+      cursor: pointer;
+    }
+
+    .dim-option.selected {
+      background-color: $med-blue;
+    }
   }
 
   .search-input {

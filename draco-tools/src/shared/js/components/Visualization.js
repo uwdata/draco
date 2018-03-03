@@ -31,7 +31,11 @@ class Visualization extends Component {
    * @param {Object} vlSpec The Vega-Lite spec to use.
    */
   updateView(vlSpec) {
-    vl2view(vlSpec, this.refs.vis);
+    if (this.props.renderer) {
+      vl2view(vlSpec, this.refs.vis, this.props.renderer);
+    } else {
+      vl2view(vlSpec, this.refs.vis);
+    }
   }
 }
 

@@ -59,6 +59,8 @@ class Generator:
 
                     if (not before is None):
                         encodings[index][prop_to_mutate] = before
+                else:
+                    Generator.mutate_spec(model, dummy_data, base_spec, props, specs)
 
     @staticmethod
     def to_vegalite(spec):

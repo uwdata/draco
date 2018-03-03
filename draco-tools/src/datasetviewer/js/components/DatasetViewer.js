@@ -18,7 +18,8 @@ class DatasetViewer extends Component {
       data: undefined,
       dataset: DEFAULT_DATASET,
       datasets: undefined,
-      specs: undefined
+      specs: undefined,
+      currentDimension: undefined
     };
 
   }
@@ -28,13 +29,11 @@ class DatasetViewer extends Component {
       .then(response => response.json())
       .then(data => this.setState({ 'datasets': data }));
 
-    fetch(SPEC_DIR + DEFAULT_DATASET)
-      .then(response => response.json())
-      .then(data => this.setState({ specs: data }));
-
     fetch(DATA)
       .then(response => response.json())
       .then(data => this.setState({ data: data }));
+
+    this.fetchDataset(DEFAULT_DATASET);
 
     document.body.addEventListener('click', this.removeCurrentSpec.bind(this));
   }
@@ -58,7 +57,7 @@ class DatasetViewer extends Component {
       let count = 0;
 
 
-      const groups = this.state.specs;
+      const groups = this.state.specs[this.state.currentDimension];
 
       vizGroups = [];
       for (let i = 0; i < groups.length; i++) {
@@ -76,7 +75,7 @@ class DatasetViewer extends Component {
 
           visualizations.push(
             <div className="visualization" key={j} onClick={ (e) => this.setCurrentSpec(e, specNoData) }>
-              <Visualization vlSpec={spec} />
+              <Visualization vlSpec={spec} renderer="canvas"/>
             </div>
           );
         }
@@ -108,7 +107,10 @@ class DatasetViewer extends Component {
       <div className="DatasetViewer">
         <div className="header">
           <DatasetChooser dataset={this.state.dataset} datasets={this.state.datasets}
-                          setDataset={this.setDataset.bind(this)}/>
+                          setDataset={this.setDataset.bind(this)}
+                          availableDimensions={this.state.availableDimensions}
+                          selectedDimension={this.state.currentDimension}
+                          setDimension={this.setCurrentDimension.bind(this)} />
           {info}
         </div>
         {vizGroups}
@@ -128,6 +130,24 @@ class DatasetViewer extends Component {
       .then(data => this.setState({ dataset: name, specs: data }));
   }
 
+  fetchDataset(name) {
+    fetch(SPEC_DIR + name)
+      .then(response => response.json())
+      .then(data => {
+        const dimensions = [];
+        for (let d in data) {
+          dimensions.push(d);
+        }
+        dimensions.sort();
+
+        this.setState({
+          dataset: name,
+          specs: data,
+          availableDimensions: dimensions,
+          currentDimension: dimensions[0] });
+      });
+  }
+
   setCurrentSpec(event, spec) {
     this.setState({
       currentSpec: spec,
@@ -139,6 +159,12 @@ class DatasetViewer extends Component {
   removeCurrentSpec(e) {
     this.setState({
       currentSpec: undefined
+    });
+  }
+
+  setCurrentDimension(d) {
+    this.setState({
+      currentDimension: d
     });
   }
 }

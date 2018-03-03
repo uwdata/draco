@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import 'datasetviewer/scss/DatasetChooser.css';
 
+const classnames = require('classnames');
+
 class DatasetChooser extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +29,23 @@ class DatasetChooser extends Component {
       </ol>
     );
 
+
+    const dimensions = [];
+    if (this.props.availableDimensions) {
+      for (let i = 0; i < this.props.availableDimensions.length; i++) {
+        const d = this.props.availableDimensions[i];
+
+        const dimClasses = classnames({
+          'dim-option': true,
+          'selected': d === this.props.selectedDimension
+        });
+
+        dimensions.push(
+          <div className={dimClasses} key={i} onClick={() => this.props.setDimension(d) }>{d}</div>
+        );
+      }
+    }
+
     return (
       <div className="DatasetChooser">
           <div className="search-title">
@@ -36,6 +55,9 @@ class DatasetChooser extends Component {
               <input className="search-input" type="text" placeholder="choose an interaction"
                      onChange={(e) => { this.setInputText(e); }}></input>
               {dropdown}
+          </div>
+          <div className="dimensions">
+            {dimensions}
           </div>
       </div>
     );

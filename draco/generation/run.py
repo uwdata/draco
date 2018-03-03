@@ -40,8 +40,9 @@ def main(args):
 
         specified = interaction['name'] == chosen or chosen == 'all'
         if (interaction['include'] and specified):
-            groups = []
+            out = {}
             for d in range(1, MAX_DIMENSIONS + 1):
+                groups = []
                 for group_num in range(num_groups):
                     specs = generator.generate_interaction(interaction['props'], d)
 
@@ -51,9 +52,11 @@ def main(args):
                         tries += 1
                     groups.append(specs)
 
+                out[d] = groups
+
             output_name = '{0}/{1}.json'.format(args.output_dir, interaction['name'])
-            with open(output_name, 'w') as out:
-                json.dump(groups, out, indent=2)
+            with open(output_name, 'w') as outfile:
+                json.dump(out, outfile, indent=2)
 
 def load_json(file_path):
     with open(file_path) as data:

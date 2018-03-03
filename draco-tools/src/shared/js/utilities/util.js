@@ -14,7 +14,7 @@ const datasets = {
  * @param {Spec} vlSpec The vega-lite spec to
  *        translate.
  */
-export function vl2view(vlSpec, parent) {
+export function vl2view(vlSpec, parent, renderer='svg') {
   const spec =  vl.compile(vlSpec).spec;
 
   const loader = vega.loader();
@@ -30,7 +30,7 @@ export function vl2view(vlSpec, parent) {
   };
 
   new vega.View(vega.parse(spec), {loader})
-    .renderer('svg')
+    .renderer(renderer)
     .initialize(parent)
     .run();
 }
