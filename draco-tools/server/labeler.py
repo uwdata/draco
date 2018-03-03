@@ -31,12 +31,12 @@ def fetch_pair():
     db = get_db()
     c = db.cursor()
 
-    c.execute('''SELECT * FROM unlabeled 
-                 WHERE NOT EXISTS (SELECT id FROM labels WHERE labels.id = unlabeled.id) 
+    c.execute('''SELECT * FROM unlabeled
+                 WHERE NOT EXISTS (SELECT id FROM labels WHERE labels.id = unlabeled.id)
                  ORDER BY unlabeled.id ASC LIMIT 1''')
 
     row = c.fetchone()
-    
+
     data = {
         "id": row[0],
         "left": json.loads(row[1]),
