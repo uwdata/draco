@@ -6,7 +6,6 @@ from draco.generation.model import Model
 from draco.generation.helper import is_valid
 from draco.spec import Task, Data, Query, Field
 
-
 class Generator:
     def __init__(self, distributions, definitions, data_schema):
         top_level_props = definitions['topLevelProps']

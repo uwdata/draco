@@ -5,6 +5,7 @@ import Visualization from 'shared/js/components/Visualization';
 import DatasetChooser from 'datasetviewer/js/components/DatasetChooser';
 
 const BASE_DIR = '/generated_visualizations/';
+const SPEC_DIR = BASE_DIR + 'specs/';
 const INTERACTIONS = BASE_DIR + 'interactions.json';
 const DATA = BASE_DIR + 'cars.json';
 const DEFAULT_DATASET = 'mark.json';
@@ -27,7 +28,7 @@ class DatasetViewer extends Component {
       .then(response => response.json())
       .then(data => this.setState({ 'datasets': data }));
 
-    fetch(BASE_DIR + DEFAULT_DATASET)
+    fetch(SPEC_DIR + DEFAULT_DATASET)
       .then(response => response.json())
       .then(data => this.setState({ specs: data }));
 
@@ -57,12 +58,12 @@ class DatasetViewer extends Component {
       let count = 0;
 
 
-      const groups = this.state.specs.groups;
+      const groups = this.state.specs;
 
       vizGroups = [];
       for (let i = 0; i < groups.length; i++) {
         const group = groups[i];
-  
+
         const visualizations = [];
         for (let j = 0; j < group.length; j++) {
           const spec = group[j];
@@ -72,14 +73,14 @@ class DatasetViewer extends Component {
           Object.assign(specNoData, spec);
           delete specNoData['data'];
 
-  
+
           visualizations.push(
             <div className="visualization" key={j} onClick={ (e) => this.setCurrentSpec(e, specNoData) }>
               <Visualization vlSpec={spec} />
             </div>
           );
         }
-  
+
         vizGroups.push(
           <div className="group" key={i}>
             {visualizations}
@@ -122,7 +123,7 @@ class DatasetViewer extends Component {
       specs: undefined
     });
 
-    fetch(BASE_DIR + name)
+    fetch(SPEC_DIR + name)
       .then(response => response.json())
       .then(data => this.setState({ dataset: name, specs: data }));
   }
