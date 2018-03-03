@@ -41,6 +41,13 @@ class Field():
                  cardinality: Optional[int] = None,
                  entropy: Optional[float] = None,
                  interesting: Optional[bool] = None) -> None:
+
+        if cardinality is not None:
+            assert cardinality > 0
+
+        if entropy is not None:
+            assert entropy >= 0
+
         self.name = name
 
         # column data type, should be a string represented type,
@@ -83,6 +90,10 @@ class Data():
                  size: Optional[int] = None,
                  content: Optional[Iterable[Any]] = None,
                  url: Optional[str] = None) -> None:
+
+        if size is not None:
+            assert size > 0
+
         self.fields = fields
         self.size = size
         self.content = content if content is not None else {}
@@ -175,7 +186,7 @@ class Data():
         if not (self.content == {} and self.url == None) and not override:
             return
 
-        size = self.size if self.size is not None else defaut_size
+        size = self.size or defaut_size
 
         df = pd.DataFrame()
 
