@@ -155,7 +155,7 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
     pool.close()
     pool.join()
 
-    return df
+    return df.sort_index()
 
 def get_pos_neg_data() -> pd.DataFrame:
     '''
