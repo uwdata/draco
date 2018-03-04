@@ -122,7 +122,7 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
         neg_feature_vec = count_violations_memoized(example.data, example.task, example.negative)
         pos_feature_vec = count_violations_memoized(example.data, example.task, example.positive)
 
-        # Reformat the json data so that we can insert it int a multi index data frame.
+        # Reformat the json data so that we can insert it into a multi index data frame.
         # https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
         specs = {('negative', key): values for key, values in neg_feature_vec.items()}
         specs.update({('positive', key): values for key, values in pos_feature_vec.items()})
