@@ -8,6 +8,7 @@ import os
 from collections import namedtuple
 from multiprocessing import Pool, cpu_count
 from typing import Dict, List, Tuple
+import math
 
 import numpy as np
 import pandas as pd
@@ -149,7 +150,7 @@ def featurize_partition(partiton_data):
 def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
     """ given neg_pos_data, convert them into feature vectors """
 
-    splits = min([cpu_count() * 20, int(len(neg_pos_data) / 10) + 1])
+    splits = min([cpu_count() * 20, math.ceil(len(neg_pos_data) / 10)])
     df_split = np.array_split(neg_pos_data, splits)
 
     logger.info(f'Running {splits} partitions of {len(neg_pos_data)} items in parallel on {cpu_count()} processes.')
@@ -161,7 +162,7 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
 
     df = df.sort_index()
 
-    logger.info(f'Hash of dataframe: {hash_pandas_object(df)}')
+    logger.info(f'Hash of dataframe: {hash_pandas_object(df).sum()}')
 
     return df
 
