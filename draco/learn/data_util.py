@@ -145,7 +145,7 @@ def featurize_partition(partiton_data):
 def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
     """ given neg_pos_data, convert them into feature vectors """
 
-    splits = min([cpu_count() * 20, len(neg_pos_data) / 10])
+    splits = min([cpu_count() * 20, int(len(neg_pos_data) / 10) + 1])
     df_split = np.array_split(neg_pos_data, splits)
 
     logger.info(f'Running {splits} partitions in parallel on {cpu_count()} processes.')
