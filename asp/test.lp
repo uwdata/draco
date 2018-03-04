@@ -135,6 +135,10 @@
 
 % === Type checks ===
 
+% check mark
+
+:- mark(M), not marktype(M).
+
 % check types of encoding properties
 :- channel(_,C), not channel(C).
 :- field(_,F), not field(F).
