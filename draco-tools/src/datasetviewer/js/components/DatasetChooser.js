@@ -57,6 +57,7 @@ class DatasetChooser extends Component {
               {dropdown}
           </div>
           <div className="dimensions">
+            <span style={{paddingLeft: '8px', paddingRight: '8px'}}>dimensions:</span>
             {dimensions}
           </div>
       </div>
