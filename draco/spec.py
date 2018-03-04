@@ -5,8 +5,7 @@ Tasks, Encoding, and Query helper classes for draco.
 import json
 import os
 from collections import defaultdict
-from pprint import pprint
-from typing import Any, Dict, Iterable, List, Optional, Union
+from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
 
 import agate
 import numpy as np
@@ -40,6 +39,7 @@ class Field():
     def __init__(self, name: str, ty: str,
                  cardinality: Optional[int] = None,
                  entropy: Optional[float] = None,
+                 extent: Optional[Tuple[float, float]] = None,
                  interesting: Optional[bool] = None) -> None:
 
         if cardinality is not None:
@@ -55,6 +55,7 @@ class Field():
         self.ty = ty
         self.cardinality = cardinality
         self.entropy = entropy
+        self.extent = extent
         self.interesting = interesting
 
     @staticmethod
@@ -65,6 +66,7 @@ class Field():
             obj['type'],
             obj.get('cardinality'),
             obj.get('entropy'),
+            obj.get('extent'),
             obj.get('interesting'))
 
     def to_asp(self) -> str:
@@ -96,7 +98,7 @@ class Data():
 
         self.fields = fields
         self.size = size
-        self.content = content if content is not None else {}
+        self.content = content
         self.url = url
 
     @staticmethod
@@ -149,6 +151,7 @@ class Data():
             data = column.values_without_nulls()
 
             entropy = None
+            extent = None
 
             if isinstance(agate_type, agate.Text):
                 type_name = 'string'
@@ -159,6 +162,7 @@ class Data():
                 type_name = 'number'
                 h = np.histogram(np.array(data).astype(float), 100)
                 entropy = stats.entropy(h[0])
+                extent = [np.min(data), np.max(data)]
             elif isinstance(agate_type, agate.Boolean):
                 type_name = 'boolean'
                 _, dist = np.unique(data, return_counts=True)
@@ -169,7 +173,7 @@ class Data():
             elif isinstance(agate_type, agate.DateTime):
                 type_name = 'date' # take care!
 
-            fields.append(Field(column.name, type_name, len(set(data)), entropy))
+            fields.append(Field(column.name, type_name, len(set(data)), entropy, extent))
 
         # store the table into a dict
         content = []
@@ -183,8 +187,8 @@ class Data():
     def fill_with_random_content(self, defaut_size=10, override=False):
         """ Fill the data with randomly generated data if the content its content is empty """
 
-        if not (self.content == {} and self.url == None) and not override:
-            return
+        if not override:
+            assert self.content is None
 
         size = self.size or defaut_size
 
@@ -193,14 +197,21 @@ class Data():
         rw = RandomWords()
 
         for f in self.fields:
-            cardinality = f.cardinality
-            if not cardinality:
-                cardinality = size
+            cardinality = f.cardinality or size
             if f.ty == "number":
-                if f.cardinality == size:
-                    data = list(map(lambda v: f'{v:.3f}', np.random.normal(loc=1, scale=2, size=size)))
-                else:
-                    l = np.random.randint(cardinality)
+                if f.cardinality > 0.9*size:  # almost unique
+                    if f.extent:
+                        lower, upper = f.extent
+                        mu, sigma = 5, 0.7
+                        data = stats.truncnorm((lower - mu) / sigma, (upper - mu) / sigma, loc=mu, scale=sigma).rvs(size)
+                    else:
+                        data = np.random.normal(loc=1, scale=2, size=size)
+                    data = list(map(lambda v: round(v, 4), data))
+                else:  # probably some kind of ordinal
+                    if f.extent:
+                        l = np.random.randint(low=f.extent[0], high=f.extent[1], size=cardinality)
+                    else:
+                        l = np.random.randint(size=cardinality)
                     data = np.random.choice(l, size=size)
             elif f.ty == "string":
                 l = rw.random_words(count=cardinality)

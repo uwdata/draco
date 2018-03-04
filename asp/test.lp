@@ -151,3 +151,12 @@
 
 % task has to be one of the tasks
 :- task(T), not tasks(T).
+
+% data_size has to be larger than 0
+:- data_size(S), S <= 0.
+
+% cardinality has to be larger than 0
+:- cardinality(_,C), C <= 0.
+
+% entropy has to be positive
+:- entropy(_,E), E < 0.

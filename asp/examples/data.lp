@@ -13,7 +13,11 @@ entropy(s1,12).
 fieldtype(n1,number).
 cardinality(n1,12).
 entropy(n1,21).
+min(n1,0).
+max(n1,10).
 
 fieldtype(n2,number).
 cardinality(n2,100).
 entropy(n2,8).
+min(n2,10).
+max(n2,11).

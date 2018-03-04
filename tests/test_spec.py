@@ -1,21 +1,28 @@
-import unittest
-
 from draco.spec import Data, Encoding, Field
+
 
 class TestField():
     def test_number_to_asp(self):
         assert Field('foo', 'number', 100, 0.3).to_asp() == 'fieldtype(foo,number).\ncardinality(foo,100).\nentropy(foo,3).\n'
 
     def test_string_to_asp(self):
-        assert Field('xxx', 'string', 5).to_asp() == 'fieldtype(xxx,string).\ncardinality(xxx,1).\n'
+        assert Field('xxx', 'string', 5).to_asp() == 'fieldtype(xxx,string).\ncardinality(xxx,5).\n'
 
     def test_date_to_asp(self):
-        assert Field('yyy', 'datetime', 10).to_asp() == 'fieldtype(yyy,datetime).\ncardinality(yyy,0).\n'
+        assert Field('yyy', 'datetime', 10).to_asp() == 'fieldtype(yyy,datetime).\ncardinality(yyy,10).\n'
 
 
 class TestData():
     def test_to_asp(self):
-        assert Data([Field('foo', 'number', 10, 0.4)], 42).to_asp() == 'data_size(42).\n\nfieldtype(foo,number).\ncardinality(foo,10).\nentropy(foo,4).\n'
+        data = Data([Field('foo', 'number', 10, 0.4)], 42)
+
+        assert data.to_asp() == 'data_size(42).\n\nfieldtype(foo,number).\ncardinality(foo,10).\nentropy(foo,4).\n'
+
+    def test_generate(self):
+        data = Data(fields=[Field('foo', 'number', 10, 2.1, [1,2])])
+        assert data.content == None
+        data.fill_with_random_content()
+        assert data.content != None
 
 
 class TestEncoding():

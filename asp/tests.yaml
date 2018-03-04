@@ -60,6 +60,10 @@ Test valid values:
         Program: |
             :- not mark(bar).
 
+    Test data size:
+        Program: |
+            data_size(10).
+
 Test invalid values:
     Modules: no_opt
     Expect: UNSAT
@@ -91,6 +95,10 @@ Test invalid values:
     Test mark:
         Program: |
             :- not mark(foo).
+
+    Test data size:
+        Program: |
+            data_size(-10).
 
 Test constraints:
     Modules: no_opt
