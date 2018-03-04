@@ -99,8 +99,8 @@ processed_specs: Dict[str, Dict] = {}
 def count_violations_memoized(data, task, spec):
     key = data.to_asp() + ',' + json.dumps(spec)
     if key not in processed_specs:
-        task = Task(data, Query.from_vegalite(spec), task)
-        processed_specs[key] = count_violations(task)
+        t = Task(data, Query.from_vegalite(spec), task)
+        processed_specs[key] = count_violations(t)
     return processed_specs[key]
 
 
@@ -148,7 +148,7 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
     splits = min([cpu_count() * 20, int(len(neg_pos_data) / 10) + 1])
     df_split = np.array_split(neg_pos_data, splits)
 
-    logger.info(f'Running {splits} partitions in parallel on {cpu_count()} processes.')
+    logger.info(f'Running {splits} partitions of {len(neg_pos_data)} items in parallel on {cpu_count()} processes.')
 
     pool = Pool(processes=cpu_count())
     df = pd.concat(pool.map(featurize_partition, df_split))
