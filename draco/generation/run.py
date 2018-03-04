@@ -1,15 +1,14 @@
-import json
-import os
-import random
-import math
 import argparse
-from copy import deepcopy
+import json
 import logging
+import os
+from copy import deepcopy
+
+from draco.generation.generator import Generator
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.WARN)
 
-from draco.generation.generator import Generator
 
 INTERACTIONS_PATH = os.path.join(
     os.path.dirname(__file__), 'interactions.json')
@@ -62,7 +61,7 @@ def load_json(file_path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('interaction')
+    parser.add_argument('interaction', default='all')
     parser.add_argument('groups')
     parser.add_argument('output_dir')
     args = parser.parse_args()

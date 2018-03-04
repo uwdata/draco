@@ -1,6 +1,7 @@
-import numpy as np
 import random
 from copy import deepcopy
+
+import numpy as np
 
 from prop_objects import PropObjects
 
@@ -63,7 +64,7 @@ class Model:
             if (self.include(prop)):
                 spec[prop] = self.sample_enum(prop)
 
-        for d in range(n_dimensions):
+        for _ in range(n_dimensions):
             enc = self.generate_enc()
             spec['encodings'].append(enc)
 

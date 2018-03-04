@@ -1,10 +1,10 @@
-from copy import deepcopy
 import random
-import math
+from copy import deepcopy
 
-from draco.generation.model import Model
 from draco.generation.helper import is_valid
-from draco.spec import Task, Data, Query, Field
+from draco.generation.model import Model
+from draco.spec import Data, Field, Query, Task
+
 
 class Generator:
     def __init__(self, distributions, definitions, data_schema):

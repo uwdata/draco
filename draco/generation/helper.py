@@ -1,6 +1,8 @@
+import json
+
 from draco.run import run_draco
 from draco.spec import Task
-import json
+
 
 def is_valid(task: Task) -> bool:
     ''' Check a task.
