@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import subprocess
+import tempfile
 from typing import Dict, List, Tuple
 
 import clyngor
@@ -18,7 +19,19 @@ logger = logging.getLogger(__name__)
 DRACO_LP = ['define.lp', 'generate.lp', 'test.lp', 'features.lp', 'weights.lp', 'assign_weights.lp', 'optimize.lp', 'output.lp']
 DRACO_LP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../asp'))
 
-def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False) -> Tuple[str, str]:
+
+file_cache: Dict = {}
+
+def load_file(path):
+    content =  file_cache.get(path)
+    if content is not None:
+        return content
+    with open(path) as f:
+        content = f.read()
+        file_cache[path] = content
+        return content
+
+def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False) -> Tuple[str, str]:
     '''
     Run draco and return stderr and stdout
     '''
@@ -27,26 +40,40 @@ def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = N
     files = files or DRACO_LP
     constants = constants or {}
 
-    run_command = clyngor.command(
-        files=[os.path.join(DRACO_LP_DIR, f) for f in files],
-        inline=task.to_asp(),
-        constants=constants,
-        stats=False,
-        options=['--outf=2'] + (['--warn=no-atom-undefined'] if silence_warnings else []))
+    options = ['--outf=2']
+    if silence_warnings:
+        options.append('--warn=no-atom-undefined')
+    for name, value in constants.items():
+        options.append(f'-c {name}={value}')
 
-    logger.info('Command: %s', ' '.join(run_command))
+    cmd = 'clingo ' + ' '.join(options)
 
-    clingo = subprocess.run(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    logger.info('Command: %s', cmd)
 
-    stderr = clingo.stderr.decode('utf-8')
-    stdout = clingo.stdout.decode('utf-8')
+    proc = subprocess.Popen(
+        cmd,
+        shell=True,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE)
+
+    file_names = [os.path.join(DRACO_LP_DIR, f) for f in files]
+    asp_program = '\n'.join(map(load_file, file_names)) + task.to_asp()
+
+    if debug:
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as fd:
+            fd.write(task.to_asp())
+
+            logger.warn('Debug ASP with "clingo %s %s"', ' '.join(file_names), fd.name)
+
+    stdout, stderr = proc.communicate(asp_program.encode('utf8'))
 
     return (stderr, stdout)
 
-def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False) -> Task:
+def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False) -> Task:
     ''' Run clingo to compute a completion of a partial spec or violations. '''
 
-    stderr, stdout = run_draco(task, constants, files, silence_warnings)
+    stderr, stdout = run_draco(task, constants, files, silence_warnings, debug)
 
     try:
         json_result = json.loads(stdout)

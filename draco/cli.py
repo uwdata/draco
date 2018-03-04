@@ -62,7 +62,7 @@ def main():  # pragma: no cover
     elif args.type == QueryType.vl:
         input_task = Task.from_vegalite(query_spec, d)
 
-    task = run(input_task)
+    task = run(input_task, debug=True)
 
     if task:
         print(task.to_vegalite_json(), file=args.out)
