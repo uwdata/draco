@@ -101,7 +101,7 @@ def load_partial_full_data(path=compassql_data_path):
 
 processed_specs: Dict[str, Dict] = {}
 def count_violations_memoized(data, task, spec):
-    key = data.to_asp() + ',' + json.dumps(spec)
+    key = data.to_asp() + ',' + json.dumps(spec) + ',' + (task or 'no task')
     if key not in processed_specs:
         t = Task(data, Query.from_vegalite(spec), task)
         processed_specs[key] = count_violations(t)
