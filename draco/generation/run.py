@@ -6,8 +6,6 @@ import argparse
 from copy import deepcopy
 import logging
 
-from tqdm import tqdm
-
 logging.basicConfig()
 logging.getLogger().setLevel(logging.WARN)
 
@@ -35,8 +33,7 @@ def main(args):
     chosen = str(args.interaction)
     num_groups = int(args.groups)
 
-    for i in tqdm(range(len(interactions))):
-        interaction = interactions[i]
+    for i, interaction in enumerate(interactions):
 
         specified = interaction['name'] == chosen or chosen == 'all'
         if (interaction['include'] and specified):
