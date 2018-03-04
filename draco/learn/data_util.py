@@ -41,7 +41,7 @@ def load_neg_pos_data() -> List[PosNegExample]:
         with open(path) as f:
             json_data = json.load(f)
 
-            for row in enumerate(json_data['data']):
+            for row in json_data['data']:
                 fields = list(map(Field.from_obj, row['fields']))
                 spec_schema = Data(fields, row.get('num_rows'))
                 raw_data.append(PosNegExample(
