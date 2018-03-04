@@ -1,0 +1,81 @@
+### Task related columns
+- questionName : Minor task type for differentiate two types of Comparing Values task.
+"value_q1" = Reading Value task
+"aggregate_avg_q1" = Comparing Averages task
+"aggregate_q1" = Finding Maximum task
+"compareValue_q1_across" = Comparing Value task with sampling two from different two categories
+"compareValue_q1_within" = Comparing Value task with sampling two from the same category
+- taskGroup : Major task type
+"readValue" = Reading Value task
+"compareValue" = Comparing Values task
+"findExtremum" = Finding Maximum task
+"compareAggregatedValue" = Comparing Averages task
+- question
+- options0
+- options1
+- correctOption
+- userChoice
+- questionDifficulty
+- questionTurn : the turn of the question
+- isCorrect
+- startTime
+- endTime
+- completionTime
+- stimuliTurn : the turn of the spec
+- specID : (see stimuli/specs.json)
+- userAgent : WebBrowser info
+
+### Data distribution related columns
+- assignmentID : A string corresponding to a data distriution.
+{cardinality}_{#/category}/{Entropy_Q1}{Entropy_Q2}{Entropy_N}_{Clusteredness}__{Correlation}
+For example, "3_30/HHH_H__W" means the data distribution having 3 cardinalities, 30 records per category, high Q1 entropy, high Q2 entropy, high N entropy, high clusteredness, and weak correlation.
+- dataset : a corresponding data set in the "stimuli" folder
+- Q1 : the primary quantitative field of the dataset
+- Q2 : the secondary quantitative field of the dataset
+- N : the categorical field of the dataset
+- Q1_entropy
+- Q2_entropy
+- Nentropy : Entropy of N
+- correlation : Pearson correlation between Q1 and Q2
+- cluster : the sum of z-distances of each category
+- cardinality
+- nPerCategory
+- clusteredness_class
+- correlation_class
+- Q1_entropy_class
+- Q2_entropy_class
+- N_entropy_class
+- stratum
+
+### Visualization related columns
+- channel : the visual encoding that maps Q1, Q2, N to first, second, and third channels respectively in "channel".
+For example, "x y color" means Q1:x, Q2:y, N:color.
+- Q1_channel : the channel encoding Q1
+- Q2_channel : the channel encoding Q2
+- name_channel : the channel encoding N (name).
+- containerHeight : the height of the div element containing the visualization
+- containerWidth  : the width of the div element containing the visualization
+- height : the height of the visualization
+- width  : the width of the visualization
+- windowInnerHeight : Javascript window.innerHeight value
+- windowInnerWidth  : Javascript window.innerWidth value
+- windowOuterHeight : Javascript window.outerHeight value
+- windowOuterWidth  : Javascript window.outerWidth value
+
+#### Javscript `window.screen` object's properties
+- windowScreenAvailHeight
+- windowScreenAvailLeft
+- windowScreenAvailTop
+- windowScreenAvailWidth
+- windowScreenColorDepth
+- windowScreenHeight
+- windowScreenPixelDepth
+- windowScreenWidth
+
+### Participant info
+- userID
+- gender
+- education
+- age
+- vision_deficiency
+- vision_impairment_description
