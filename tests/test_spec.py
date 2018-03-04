@@ -7,10 +7,10 @@ class TestField():
         assert Field('foo', 'number', 100, 0.3).to_asp() == 'fieldtype(foo,number).\ncardinality(foo,100).\nentropy(foo,3).\n'
 
     def test_string_to_asp(self):
-        assert Field('xxx', 'string', 1).to_asp() == 'fieldtype(xxx,string).\ncardinality(xxx,1).\n'
+        assert Field('xxx', 'string', 5).to_asp() == 'fieldtype(xxx,string).\ncardinality(xxx,1).\n'
 
     def test_date_to_asp(self):
-        assert Field('yyy', 'datetime', 0).to_asp() == 'fieldtype(yyy,datetime).\ncardinality(yyy,0).\n'
+        assert Field('yyy', 'datetime', 10).to_asp() == 'fieldtype(yyy,datetime).\ncardinality(yyy,0).\n'
 
 
 class TestData():
