@@ -11,6 +11,7 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
+from pandas.util import hash_pandas_object
 from sklearn.model_selection import train_test_split
 
 from draco.learn.helper import count_violations, current_weights
@@ -35,7 +36,7 @@ PosNegExample = namedtuple('PosNeg', ['pair_id', 'data', 'task', 'source', 'nega
 def load_neg_pos_data() -> List[PosNegExample]:
     raw_data = []
 
-    for path in [man_data_path, yh_data_path, ba_data_path]:
+    for path in [man_data_path, ba_data_path]:
         with open(path) as f:
             json_data = json.load(f)
 
@@ -155,7 +156,11 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
     pool.close()
     pool.join()
 
-    return df.sort_index()
+    df = df.sort_index()
+
+    logger.info(f'Hash of dataframe: {hash_pandas_object(df)}')
+
+    return df
 
 def get_pos_neg_data() -> pd.DataFrame:
     '''
