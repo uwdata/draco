@@ -3,8 +3,10 @@ Processing data for learning procedures.
 '''
 
 import json
+import logging
 import os
 from collections import namedtuple
+from multiprocessing import Pool, cpu_count
 from typing import Dict, List, Tuple
 
 import numpy as np
@@ -14,6 +16,8 @@ from sklearn.model_selection import train_test_split
 from draco.learn.helper import count_violations, current_weights
 from draco.spec import Data, Encoding, Field, Query, Task
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def absolute_path(p: str) -> str:
     return os.path.join(os.path.dirname(__file__), p)
@@ -25,7 +29,7 @@ ba_data_path = absolute_path('../../data/training/bahador.json')
 compassql_data_path = absolute_path("../../data/compassql_examples")
 
 
-PosNegExample = namedtuple('PosNeg', ['data', 'task', 'source', 'negative', 'positive'])
+PosNegExample = namedtuple('PosNeg', ['pair_id', 'data', 'task', 'source', 'negative', 'positive'])
 
 
 def load_neg_pos_data() -> List[PosNegExample]:
@@ -35,10 +39,11 @@ def load_neg_pos_data() -> List[PosNegExample]:
         with open(path) as f:
             json_data = json.load(f)
 
-            for row in json_data['data']:
+            for i, row in enumerate(json_data['data']):
                 fields = list(map(Field.from_obj, row['fields']))
                 spec_schema = Data(fields, row.get('num_rows'))
                 raw_data.append(PosNegExample(
+                    i,
                     spec_schema,
                     row.get('task'),
                     json_data['source'],
@@ -90,34 +95,36 @@ def load_partial_full_data(path=compassql_data_path):
     return result
 
 
-def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
-    """ given neg_pos_data, convert them into feature vectors """
+processed_specs: Dict[str, Dict] = {}
+def count_violations_memoized(data, task, spec):
+    key = data.to_asp() + ',' + json.dumps(spec)
+    if key not in processed_specs:
+        task = Task(data, Query.from_vegalite(spec), task)
+        processed_specs[key] = count_violations(task)
+    return processed_specs[key]
 
-    def get_index():
-        # it gives you a pandas index that we apply to the data when creating a dataframe
-        weights = current_weights()
-        features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
 
-        iterables = [['negative', 'positive'], features]
-        index = pd.MultiIndex.from_product(iterables, names=['category', 'feature'])
-        index.append(pd.MultiIndex.from_arrays([['source', 'task'], ['', '']]))
-        return index
+def get_index():
+    # it gives you a pandas index that we apply to the data when creating a dataframe
+    weights = current_weights()
+    features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
 
-    def count_violations_memoized(data, task, spec):
-        key = data.to_asp() + ',' + json.dumps(spec)
-        if key not in processed_specs:
-            task = Task(data, Query.from_vegalite(spec), task)
-            processed_specs[key] = count_violations(task)
-        return processed_specs[key]
+    iterables = [['negative', 'positive'], features]
+    index = pd.MultiIndex.from_product(iterables, names=['category', 'feature'])
+    index.append(pd.MultiIndex.from_arrays([['source', 'task'], ['', '']]))
+    return index
 
+
+def featurize_partition(partiton_data):
     index = get_index()
+
     df = pd.DataFrame(columns=index)
 
-    processed_specs: Dict[str, int] = {}
-
-    # convert the specs to feature vectors
-    for idx, example in enumerate(neg_pos_data):
+    for example in partiton_data:
         Encoding.encoding_cnt = 0
+
+        if isinstance(example, np.ndarray):
+            example = PosNegExample(*example)
 
         neg_feature_vec = count_violations_memoized(example.data, example.task, example.negative)
         pos_feature_vec = count_violations_memoized(example.data, example.task, example.positive)
@@ -130,7 +137,23 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
         specs[('source', '')] = example.source
         specs[('task', '')] = example.task
 
-        df = df.append(pd.DataFrame(specs, index=[idx]))  # the idx is the same as the one in load_neg_pos_data
+        df = df.append(pd.DataFrame(specs, index=[example.pair_id]))  # the idx is the same as the one in load_neg_pos_data
+
+    return df
+
+
+def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
+    """ given neg_pos_data, convert them into feature vectors """
+
+    splits = min([cpu_count() * 20, len(neg_pos_data) / 10])
+    df_split = np.array_split(neg_pos_data, splits)
+
+    logger.info(f'Running {splits} partitions in parallel on {cpu_count()} processes.')
+
+    pool = Pool(processes=cpu_count())
+    df = pd.concat(pool.map(featurize_partition, df_split))
+    pool.close()
+    pool.join()
 
     return df
 
