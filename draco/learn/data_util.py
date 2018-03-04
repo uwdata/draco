@@ -35,12 +35,13 @@ PosNegExample = namedtuple('PosNeg', ['pair_id', 'data', 'task', 'source', 'nega
 
 def load_neg_pos_data() -> List[PosNegExample]:
     raw_data = []
+    i = 0
 
     for path in [man_data_path, ba_data_path]:
         with open(path) as f:
             json_data = json.load(f)
 
-            for i, row in enumerate(json_data['data']):
+            for row in enumerate(json_data['data']):
                 fields = list(map(Field.from_obj, row['fields']))
                 spec_schema = Data(fields, row.get('num_rows'))
                 raw_data.append(PosNegExample(
@@ -51,6 +52,8 @@ def load_neg_pos_data() -> List[PosNegExample]:
                     row['negative'],
                     row['positive'])
                 )
+
+                i += 1
 
     return raw_data
 
