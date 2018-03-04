@@ -12,12 +12,15 @@ const UNK = '?';
 const LEFT = '>';
 const EQUALS = '=';
 const RIGHT = '<';
+const TERRIBLE = 'bad';
 
 const KEYS = {
-  37: '>', 40: '=', 39: '<', 38: '='
+  37: LEFT,  // left arrow
+  39: RIGHT,  // right arrow
+  38: EQUALS,  // up arrow
+  40: TERRIBLE  // down arrow
 };
 
-const CONFIRMATION_TIME = 500;
 const REQUEST_PATH = 'http://0.0.0.0:5000/';
 
 function cleanUpSpec(spec) {
@@ -80,6 +83,12 @@ class Labeler extends Component {
       'hover': this.state.hover === EQUALS && !(this.state.chosen === EQUALS)
     });
 
+    const terribleClasses = classnames({
+      'terrible': true,
+      'chosen': this.state.chosen === TERRIBLE,
+      'hover': this.state.hover === TERRIBLE && !(this.state.chosen === TERRIBLE)
+    });
+
     const rightClasses = classnames({
       'visualization': true,
       'chosen': this.state.chosen === RIGHT,
@@ -95,19 +104,24 @@ class Labeler extends Component {
     if (data) {
       const fields = Object.keys(data[0]);
       const header = fields.map(t => <th key={t}>{t}</th>);
-      const tableBody = data.map((r, i) => <tr key={i}>
+      const tableBody = data.slice(0, 20).map((r, i) => <tr key={i}>
         {fields.map(f => <td key={f}>{r[f]}</td>)}
       </tr>);
-      table = <table>
-        <thead>
-          <tr>
-            {header}
-          </tr>
-        </thead>
-        <tbody>
-          {tableBody}
-        </tbody>
-      </table>;
+      const remaining = data.length - tableBody.length;
+
+      table = <div className="table">
+        <table>
+          <thead>
+            <tr>
+              {header}
+            </tr>
+          </thead>
+          <tbody>
+            {tableBody}
+          </tbody>
+        </table>
+        {remaining > 0 ? <span className='remaining'>...{remaining} more rows</span> : ''}
+      </div>;
     }
 
     const specDiff = diffJson(leftSpec, rightSpec).map((part, idx) => {
@@ -120,22 +134,31 @@ class Labeler extends Component {
 
     return (
       <div className="Labeler" onMouseOut={() => {this.hover(UNK);}}>
+        <div className="task">Task: {this.state.task || 'NO TASK'}</div>
         <div className="chooser">
           <div className={displayClasses}>
             <div className={leftClasses}
-                  onClick={() => {this.choose(this.state.id, LEFT);}}
+                  onClick={() => {this.choose(this.state.id, 'left');}}
                   onMouseEnter={() => {this.hover(LEFT);}}>
               {leftViz}
             </div>
-            <div className={equalsClasses}
-                onClick={() => {this.choose(this.state.id, EQUALS);}}
-                onMouseEnter={() => {this.hover(EQUALS);}}>
-              <div className="indicator">
-                {this.state.hover}
+            <div className="same">
+              <div className={equalsClasses}
+                  onClick={() => {this.choose(this.state.id, 'same');}}
+                  onMouseEnter={() => {this.hover(EQUALS);}}>
+                <div className="indicator">
+                  {this.state.hover}
+                </div>
+              </div>
+              <div className={terribleClasses}
+                  onClick={() => {this.choose(this.state.id, 'terrible');}}
+                  onMouseEnter={() => {this.hover(TERRIBLE);}}>
+                Both are<br/>
+                really bad
               </div>
             </div>
             <div className={rightClasses}
-                onClick={() => {this.choose(this.state.id, RIGHT);}}
+                onClick={() => {this.choose(this.state.id, 'right');}}
                 onMouseEnter={() => {this.hover(RIGHT);}}>
               {rightViz}
             </div>
@@ -146,10 +169,7 @@ class Labeler extends Component {
           <pre className="diff">{specDiff}</pre>
           <pre>{stringify(rightSpec, {space: 2})}</pre>
         </div>
-        <div>Task: {this.state.task || 'NO TASK'}</div>
-        <div className="table">
-          { table }
-        </div>
+        { table }
       </div>
     );
   }
@@ -180,9 +200,7 @@ class Labeler extends Component {
     }).then((response) => {
       if (response.ok) {
         // on success, fetch another pair
-        setTimeout(() => {
-          this.fetchPair();
-        }, CONFIRMATION_TIME);
+        this.fetchPair();
       } else {
         alert('failed POST');
       }
@@ -220,6 +238,8 @@ class Labeler extends Component {
         } else {
           this.hover(comparison);
         }
+
+        event.preventDefault();
       }
     }
   }
