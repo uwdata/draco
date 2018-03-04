@@ -77,6 +77,16 @@ class Field():
         if self.entropy is not None:
             # asp only supports integers
             asp_str += f'entropy({name},{int(self.entropy * 10)}).\n'
+        if self.extent is not None:
+            # asp only supports integers
+            lo, hi = self.extent
+            mult = 1
+            if isinstance(lo, float) or isinstance(hi, float) and lo < 10 and hi < 10:
+                # TODO: make this better
+                mult = 100
+                lo *= mult
+                hi *= mult
+            asp_str += f'extent({name},{int(lo)},{int(hi)}).\n'
         if self.interesting == True:
             asp_str += f'interesting({name}).\n'
         return asp_str

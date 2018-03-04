@@ -221,6 +221,61 @@ Test constraints:
             :- not aggregate(e,_).
         Expect: SAT
 
+Test helpers:
+    Modules: no_gen
+
+    Test overlap:
+        Program: |
+            mark(point).
+
+            encoding(e1).
+            field(e1,s1).
+            channel(e1,x).
+            type(e1,ordinal).
+
+            encoding(e2).
+            field(e2,n1).
+            channel(e2,y).
+            type(e2,quantitative).
+
+            :- no_overlap.
+        Expect: SAT
+
+    Test no overlap aggregation:
+        Program: |
+            mark(point).
+
+            encoding(e1).
+            field(e1,s1).
+            channel(e1,x).
+            type(e1,ordinal).
+
+            encoding(e2).
+            field(e2,n1).
+            channel(e2,y).
+            type(e2,quantitative).
+            aggregate(e2,mean).
+
+            :- no_overlap.
+        Expect: UNSAT
+
+    Test no overlap cardinality:
+        Program: |
+            mark(point).
+
+            encoding(e1).
+            field(e1,n2).
+            channel(e1,x).
+            type(e1,ordinal).
+
+            encoding(e2).
+            field(e2,n1).
+            channel(e2,y).
+            type(e2,quantitative).
+
+            :- no_overlap.
+        Expect: UNSAT
+
 Test soft constraints:
     Modules: no_gen
 
@@ -258,3 +313,39 @@ Test soft constraints:
 
             :- not feature_term("only_row_column").
         Expect: SAT
+
+    Test skew with zero:
+        Program: |
+            fieldtype(n3,number).
+            cardinality(n3,10).
+            extent(n3,10,12).
+
+            mark(tick).
+
+            encoding(e).
+            field(e,n3).
+            channel(e,x).
+            type(e,quantitative).
+            zero(e).
+
+            :- not feature_term("zero_skew").
+        Expect: SAT
+
+    Test zero with data that covers it:
+        Program: |
+            fieldtype(n3,number).
+            cardinality(n3,200).
+            entropy(n3,1).
+            extent(n3,-10,10).
+
+            mark(point).
+
+            encoding(e).
+            field(e,n3).
+            channel(e,x).
+            type(e,quantitative).
+            zero(e).
+
+            :- not feature_term("includes_zero").
+
+        Expect: UNSAT

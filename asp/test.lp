@@ -16,9 +16,6 @@
 % can only use zero with quantitative
 :- zero(E), not type(E,quantitative).
 
-% do not use scale zero with discrete (which includes binned)
-:- zero(E), discrete(E).
-
 % cannot use log scale with discrete (which includes binned)
 :- log(E), discrete(E).
 
@@ -93,8 +90,8 @@
 % bar and tick cannot have both x and y discrete
 :- mark(bar;tick), channel_discrete(x), channel_discrete(y).
 
-% bar mark requires scale of continuous to start at zero
-:- mark(bar), channel(E,(x;y)), continuous(E), not zero(E).
+% bar and area mark requires scale of continuous to start at zero
+:- mark(bar;area), channel(E,(x;y)), continuous(E), not zero(E).
 
 % shape channel requires point mark
 :- channel(_,shape), not mark(point).
@@ -160,3 +157,13 @@
 
 % entropy has to be positive
 :- entropy(_,E), E < 0.
+
+% extent only allowed for numbers (for now)
+:- extent(F,_,_), not fieldtype(F,number).
+
+% order has to be correct
+:- extent(_,MIN,MAX), MIN > MAX.
+
+% the name of a field cannot be the name of an encoding
+% this is to prevent errors coming from the shortcuts in define.lp
+:- encoding(N), field(N).

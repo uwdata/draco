@@ -31,29 +31,22 @@ feature_term("same_field_2",F) :- field(F), { field(_,F) } = 2.
 feature_term("same_field_gte3",F) :- field(F), { field(_,F) } >= 3.
 
 % categorical color channel should not have too high cardinality
-feature_term("categorical_cardinality",E) :- channel(E,color), type(E,nominal), cardinality(E,C), C > 20.
+feature_term("categorical_cardinality",E) :- channel(E,color), type(E,nominal), enc_cardinality(E,C), C > 20.
 
 % shape channel should not have too high cardinality
-feature_term("shape_cardinality",E) :- channel(E,shape), cardinality(E,C), C > 6.
+feature_term("shape_cardinality",E) :- channel(E,shape), enc_cardinality(E,C), C > 6.
 
 % numbers should not be nominal
 feature_term("number_nominal",E) :- type(E,nominal), field(E,F), fieldtype(F,number).
 
 % binned quantitative field should not have too low cardinality
-feature_term("bin_cardinality",E) :- type(E,quantitative), bin(E,_), cardinality(E,C), C < 15.
+feature_term("bin_cardinality",E) :- type(E,quantitative), bin(E,_), enc_cardinality(E,C), C < 15.
 
 % prefer quantitative for bin
 feature_term("quant_bin",E) :- bin(E,_), not type(E,quantitative).
 
 % plots with only nominal, ordinal, binned q, or t with time unit should add either an aggregation (e.g. count) or a quantitative field
 feature_term("only_discrete") :- not continuous(_).
-
-% don't use bar, line, or area for raw data as it leads to occulusion
-feature_term("bar_raw") :- mark(bar), not aggregate(_,_).
-
-feature_term("line_raw") :- mark(line), not aggregate(_,_).
-
-feature_term("area_raw") :- mark(area), not aggregate(_,_).
 
 % prefer not to use multiple non-positional encoding channels
 feature_term("multiple_non_pos") :- {channel(_,C): non_positional(C)} > 1.
@@ -67,24 +60,26 @@ feature_term("aggregate_group_by_raw",E) :- aggregate(_,_), continuous(E), not a
 % aggregate should also have a discrete encoding to group by
 feature_term("agg_dim") :- aggregate(_,_), not discrete(_).
 
-% prefer not to use plot with x or y discrete and no aggregate as it leads to occlusion
-feature_term("x_raw",E) :- channel(EX,x), discrete(EX), not aggregate(E,_), continuous(E).
-feature_term("y_raw",E) :- channel(EY,y), discrete(EY), not aggregate(E,_), continuous(E).
-
 % prefer not to use plot with both x and y discrete and no aggregate as it leads to occlusion
 feature_term("x_y_raw",E) :- channel(EX,x), discrete(EX), channel(EY,y), discrete(EY), not aggregate(E,_), continuous(E).
 
 % prefer not to use log scale
 feature_term("log",E) :- log(E).
 
-% prefer to include zero for continuous
+% prefer to include zero for continuous (binned doesn't need zero)
 feature_term("zero",E) :- continuous(E), not zero(E).
 
-% prefer zero for continuous size
+% prefer zero size
 feature_term("zero_size") :- continuous(E), channel(E,size), not zero(E).
 
-% prefer zero for continuous positional
+% prefer zero positional
 feature_term("zero_positional") :- continuous(E), channel(E,(x;y)), not zero(E).
+
+% prefer not to use zero when the difference between min and max is larger than distance to 0
+feature_term("zero_skew") :- enc_extent(E,MIN,MAX), EX = MAX - MIN, |MAX| > EX, |MIN| > EX, zero(E).
+
+% do not include zero when the range of data includes zero
+feature_term("includes_zero") :- zero(E), extent(E,MIN,MAX), MIN < 0, MAX > 0.
 
 % prefer not to use only row and column
 feature_term("only_row_column") :- channel(_,(row;column)), not channel(_,x), not channel(_,y), not channel(_,color), not channel(_,size), not channel(_,opacity), not channel(_,shape).
@@ -98,25 +93,31 @@ feature_term("orientation_binned") :- channel(E,y), bin(E,_), type(E,quantitativ
 feature_term("orientation_discrete") :- channel(E,x), discrete(ordinal;nominal).
 
 % prefer not to use ordinal for fields with high cardinality
-feature_term("high_cardinality_ordinal",E) :- type(E,ordinal), cardinality(E,C), C > 30.
+feature_term("high_cardinality_ordinal",E) :- type(E,ordinal), enc_cardinality(E,C), C > 30.
 
 % prefer not to use nominal for fields with high cardinality
-feature_term("high_cardinality_nominal",E) :- type(E,nominal), cardinality(E,C), C > 12.
+feature_term("high_cardinality_nominal",E) :- type(E,nominal), enc_cardinality(E,C), C > 12.
 
 % avoid high cardinality on x or column as it causes horizontal scrolling
-feature_term("horizontal_scrolling",E) :- channel(E,x), discrete(E), cardinality(E,C), C > 20.
-feature_term("horizontal_scrolling",E) :- channel(E,columm), discrete(E), cardinality(E,C), C > 5.
+feature_term("horizontal_scrolling",E) :- channel(E,x), discrete(E), enc_cardinality(E,C), C > 20.
+feature_term("horizontal_scrolling",E) :- channel(E,columm), discrete(E), enc_cardinality(E,C), C > 5.
 
 % prefer to use temporal type with dates
 feature_term("temporal_date",E) :- field(E,F), fieldtype(F,date), not type(E,temporal).
 
+% prefer quantitative for numbers with high cardinality
+feature_term("quantitative_numbers") :- field(E,F), fieldtype(F,number), cardinality(F,C), C > 20, not bin(E,_), not type(E,quantitative).
+
+% prefer not to use numbers as temporal
+feature_term("number_dates") :- field(E,F), fieldtype(F,number), type(E,temporal).
+
 % Overplotting
 
 % prefer not to use x and y for continuous with high cardinality and low entropy without aggregation because the points will overlap
-feature_term("position_entropy",E) :- channel(E,(x;y)), continuous(E), cardinality(E,C), C > 100, entropy(E,EN), EN <= 12, not aggregate(E,_).
+feature_term("position_entropy",E) :- channel(E,(x;y)), continuous(E), enc_cardinality(E,C), C > 100, enc_entropy(E,EN), EN <= 12, not aggregate(E,_).
 
 % prefer not to use size when the cardinality is large on x or y
-feature_term("high_cardinality_size",E) :- continuous(E), channel(_,size), cardinality(E,C), C > 100, channel(E,(x;y)).
+feature_term("high_cardinality_size",E) :- continuous(E), channel(_,size), enc_cardinality(E,C), C > 100, channel(E,(x;y)).
 
 % prefer to not use stacking when opacity is used
 feature_term("stack") :- stack(_).
@@ -125,10 +126,10 @@ feature_term("stack") :- stack(_).
 feature_term("value_agg") :- task(value), aggregate(_,_).
 
 % positional interactions
-feature_term("x_row") :- channel(_,x), channel(_,row), interesting(x).
-feature_term("y_row") :- channel(_,y), channel(_,row), interesting(y).
-feature_term("x_column") :- channel(_,x), channel(_,column), interesting(x).
-feature_term("y_column") :- channel(_,y), channel(_,column), interesting(y).
+feature_term("x_row") :- channel(_,x), channel(_,row), enc_interesting(x).
+feature_term("y_row") :- channel(_,y), channel(_,row), enc_interesting(y).
+feature_term("x_column") :- channel(_,x), channel(_,column), enc_interesting(x).
+feature_term("y_column") :- channel(_,y), channel(_,column), enc_interesting(y).
 
 % ====== Rankings ======
 
@@ -147,6 +148,7 @@ is_c_d :- channel_continuous(y), not channel_continuous(x).
 
 % the continupus variable is a measure (it is aggregated) and there is no detail -> no overlap
 no_overlap :- continuous(E), channel(E,(x;y)), aggregate(E,_), not channel(_,detail).
+no_overlap :- data_size(S), channel(E,(x;y)), discrete(E), enc_cardinality(E,S).
 
 feature_term("c_d_point") :- is_c_d, not no_overlap, mark(point).
 feature_term("c_d_bar") :- is_c_d, not no_overlap, mark(bar).
@@ -201,16 +203,16 @@ feature_term("nominal_row",E) :- channel(E,row), type(E,nominal).
 feature_term("nominal_column",E) :- channel(E,column), type(E,nominal).
 feature_term("nominal_detail",E) :- channel(E,detail), type(E,nominal).
 
-feature_term("interesting_x",E) :- channel(E,x), interesting(E).
-feature_term("interesting_y",E) :- channel(E,y), interesting(E).
-feature_term("interesting_color",E) :- channel(E,color), interesting(E).
-feature_term("interesting_opacity",E) :- channel(E,opacity), interesting(E).
-feature_term("interesting_size",E) :- channel(E,size), interesting(E).
-feature_term("interesting_shape",E) :- channel(E,shape), interesting(E).
-feature_term("interesting_text",E) :- channel(E,text), interesting(E).
-feature_term("interesting_row",E) :- channel(E,row), interesting(E).
-feature_term("interesting_column",E) :- channel(E,column), interesting(E).
-feature_term("interesting_detail",E) :- channel(E,detail), interesting(E).
+feature_term("interesting_x",E) :- channel(E,x), enc_interesting(E).
+feature_term("interesting_y",E) :- channel(E,y), enc_interesting(E).
+feature_term("interesting_color",E) :- channel(E,color), enc_interesting(E).
+feature_term("interesting_opacity",E) :- channel(E,opacity), enc_interesting(E).
+feature_term("interesting_size",E) :- channel(E,size), enc_interesting(E).
+feature_term("interesting_shape",E) :- channel(E,shape), enc_interesting(E).
+feature_term("interesting_text",E) :- channel(E,text), enc_interesting(E).
+feature_term("interesting_row",E) :- channel(E,row), enc_interesting(E).
+feature_term("interesting_column",E) :- channel(E,column), enc_interesting(E).
+feature_term("interesting_detail",E) :- channel(E,detail), enc_interesting(E).
 
 % aggregations
 
@@ -242,24 +244,24 @@ feature_term("summary_text") :- task(summary), mark(text).
 feature_term("summary_tick") :- task(summary), mark(tick).
 feature_term("summary_rect") :- task(summary), mark(rect).
 
-feature_term("value_channel_x",E) :- task(value), channel(E,x), interesting(E).
-feature_term("value_channel_y",E) :- task(value), channel(E,y), interesting(E).
-feature_term("value_channel_color",E) :- task(value), channel(E,color), interesting(E).
-feature_term("value_channel_opacity",E) :- task(value), channel(E,opacity), interesting(E).
-feature_term("value_channel_size",E) :- task(value), channel(E,size), interesting(E).
-feature_term("value_channel_shape",E) :- task(value), channel(E,shape), interesting(E).
-feature_term("value_channel_text",E) :- task(value), channel(E,text), interesting(E).
-feature_term("value_channel_row",E) :- task(value), channel(E,row), interesting(E).
-feature_term("value_channel_column",E) :- task(value), channel(E,column), interesting(E).
-feature_term("value_channel_detail",E) :- task(value), channel(E,detail), interesting(E).
+feature_term("value_channel_x",E) :- task(value), channel(E,x), enc_interesting(E).
+feature_term("value_channel_y",E) :- task(value), channel(E,y), enc_interesting(E).
+feature_term("value_channel_color",E) :- task(value), channel(E,color), enc_interesting(E).
+feature_term("value_channel_opacity",E) :- task(value), channel(E,opacity), enc_interesting(E).
+feature_term("value_channel_size",E) :- task(value), channel(E,size), enc_interesting(E).
+feature_term("value_channel_shape",E) :- task(value), channel(E,shape), enc_interesting(E).
+feature_term("value_channel_text",E) :- task(value), channel(E,text), enc_interesting(E).
+feature_term("value_channel_row",E) :- task(value), channel(E,row), enc_interesting(E).
+feature_term("value_channel_column",E) :- task(value), channel(E,column), enc_interesting(E).
+feature_term("value_channel_detail",E) :- task(value), channel(E,detail), enc_interesting(E).
 
-feature_term("summary_channel_x",E) :- task(summary), channel(E,x), interesting(E).
-feature_term("summary_channel_y",E) :- task(summary), channel(E,y), interesting(E).
-feature_term("summary_channel_color",E) :- task(summary), channel(E,color), interesting(E).
-feature_term("summary_channel_opacity",E) :- task(summary), channel(E,opacity), interesting(E).
-feature_term("summary_channel_size",E) :- task(summary), channel(E,size), interesting(E).
-feature_term("summary_channel_shape",E) :- task(summary), channel(E,shape), interesting(E).
-feature_term("summary_channel_text",E) :- task(summary), channel(E,text), interesting(E).
-feature_term("summary_channel_row",E) :- task(summary), channel(E,row), interesting(E).
-feature_term("summary_channel_column",E) :- task(summary), channel(E,column), interesting(E).
-feature_term("summary_channel_detail",E) :- task(summary), channel(E,detail), interesting(E).
+feature_term("summary_channel_x",E) :- task(summary), channel(E,x), enc_interesting(E).
+feature_term("summary_channel_y",E) :- task(summary), channel(E,y), enc_interesting(E).
+feature_term("summary_channel_color",E) :- task(summary), channel(E,color), enc_interesting(E).
+feature_term("summary_channel_opacity",E) :- task(summary), channel(E,opacity), enc_interesting(E).
+feature_term("summary_channel_size",E) :- task(summary), channel(E,size), enc_interesting(E).
+feature_term("summary_channel_shape",E) :- task(summary), channel(E,shape), enc_interesting(E).
+feature_term("summary_channel_text",E) :- task(summary), channel(E,text), enc_interesting(E).
+feature_term("summary_channel_row",E) :- task(summary), channel(E,row), enc_interesting(E).
+feature_term("summary_channel_column",E) :- task(summary), channel(E,column), enc_interesting(E).
+feature_term("summary_channel_detail",E) :- task(summary), channel(E,detail), enc_interesting(E).

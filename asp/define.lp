@@ -43,9 +43,16 @@ field(F) :- fieldtype(F,_).
 stack(E,S) :- continuous(E), stack(S).
 
 % data properties
-cardinality(E,C) :- field(E,F), cardinality(F,C).
-entropy(E,EN) :- field(E,F), entropy(F,EN).
-interesting(E) :- field(E,F), interesting(F).
+enc_cardinality(E,C) :- field(E,F), cardinality(F,C).
+enc_entropy(E,EN) :- field(E,F), entropy(F,EN).
+enc_interesting(E) :- field(E,F), interesting(F).
+enc_extent(E,MIN,MAX) :- field(E,F), extent(F,MIN,MAX).
 
 % define a fake feature_term/2 for all feature_term/1.
 feature_term(F,_placeholder) :- feature_term(F).
+
+% silence warnings about properties never appearing in head
+_true(false).
+entropy(0,0) :- _true(true).
+interesting(0) :- _true(true).
+extent(0,0,0) :- _true(true).
