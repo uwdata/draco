@@ -27,7 +27,7 @@ def load_file(path):
     if content is not None:
         return content
     with open(path) as f:
-        content = f.read()
+        content = f.read().encode('utf8')
         file_cache[path] = content
         return content
 
@@ -46,27 +46,26 @@ def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = N
     for name, value in constants.items():
         options.append(f'-c {name}={value}')
 
-    cmd = 'clingo ' + ' '.join(options)
-
-    logger.info('Command: %s', cmd)
+    cmd = ['clingo'] + options
+    logger.debug('Command: %s', ' '.join(cmd))
 
     proc = subprocess.Popen(
-        cmd,
-        shell=True,
+        args=cmd,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
 
+    task_program = task.to_asp()
     file_names = [os.path.join(DRACO_LP_DIR, f) for f in files]
-    asp_program = '\n'.join(map(load_file, file_names)) + task.to_asp()
+    asp_program = b'\n'.join(map(load_file, file_names)) + task_program.encode('utf8')
 
     if debug:
         with tempfile.NamedTemporaryFile(mode='w', delete=False) as fd:
-            fd.write(task.to_asp())
+            fd.write(task_program)
 
-            logger.warn('Debug ASP with "clingo %s %s"', ' '.join(file_names), fd.name)
+            logger.info('Debug ASP with "clingo %s %s"', ' '.join(file_names), fd.name)
 
-    stdout, stderr = proc.communicate(asp_program.encode('utf8'))
+    stdout, stderr = proc.communicate(asp_program)
 
     return (stderr, stdout)
 
@@ -107,7 +106,7 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
 
         assert json_result['Models']['Number'] == 1, 'Should not have more than one model if we don\'t optimize'
 
-        logger.info(answers['Value'])
+        logger.debug(answers['Value'])
 
         query = Query.parse_from_answer(clyngor.Answers(answers['Value']).sorted)
         return Task(task.data, query, violations=violations)

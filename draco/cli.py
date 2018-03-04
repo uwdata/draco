@@ -40,6 +40,7 @@ def create_parser():
                         help='Type of query. draco (Draco, default), cql (CompassQl), vl (Vega-Lite).')
     parser.add_argument('--out', '-o', nargs='?', type=argparse.FileType('w'), default=sys.stdout,
                         help='specify the Vega-Lite output file')
+    parser.add_argument('--debug', '-d', help='Create debugging information.', action='store_true')
     parser.add_argument('--version', action='version',
                         version=__version__)
 
@@ -62,7 +63,7 @@ def main():  # pragma: no cover
     elif args.type == QueryType.vl:
         input_task = Task.from_vegalite(query_spec, d)
 
-    task = run(input_task, debug=True)
+    task = run(input_task, debug=args.debug)
 
     if task:
         print(task.to_vegalite_json(), file=args.out)
