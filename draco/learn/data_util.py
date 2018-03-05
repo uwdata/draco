@@ -38,7 +38,7 @@ def load_neg_pos_data() -> List[PosNegExample]:
     raw_data = []
     i = 0
 
-    for path in [man_data_path, ba_data_path]:
+    for path in [man_data_path, yh_data_path, ba_data_path]:
         with open(path) as f:
             json_data = json.load(f)
 
