@@ -100,6 +100,7 @@ class Model:
         the given spec should be included
         """
         prob = self.distributions[prop]['probability']
+
         return random.random() < prob
 
     def sample_prop(self, prop):
@@ -135,6 +136,46 @@ class Model:
             probs.pop(index)
 
         return result
+
+    def improve(self, spec):
+        """
+        Improves the given spec to fit certain soft constraints
+        """
+        self.improve_aggregate(spec)
+        return
+
+    def improve_aggregate(self, spec):
+        """
+        Increases the likelihood of giving an aggregate to bar, line, area
+        plots that are not qxq
+        """
+        if (not spec['mark'] in ['bar', 'line', 'area']):
+            return
+
+        # 80% chance of adding aggregate
+        if (random.random() < 0.5):
+            return
+
+        x_enc = Model.get_enc_by_channel(spec, 'x')
+        y_enc = Model.get_enc_by_channel(spec, 'y')
+
+        if (x_enc is None or y_enc is None):
+            return
+        if ((x_enc['type'] != 'quantitative') != (y_enc['type'] != 'quantitative')):
+            q_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
+            q_enc['aggregate'] = 'mean'
+
+        return
+
+    @staticmethod
+    def get_enc_by_channel(spec, channel):
+        if (not spec['encodings']):
+            return None
+        for enc in spec['encodings']:
+            if (enc['channel'] == channel):
+                return enc
+
+        return None
 
     @staticmethod
     def get_enums_used_for_prop(model, spec, prop):

@@ -28,6 +28,7 @@ class Generator:
     def mutate_spec(model, dummy_data, base_spec, props, specs):
         if (not props):
             spec = deepcopy(base_spec)
+            model.improve(spec)
             Generator.populate_field_names(spec)
 
             Generator.to_vegalite(spec)
