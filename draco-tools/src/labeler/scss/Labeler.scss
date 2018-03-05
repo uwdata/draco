@@ -95,28 +95,9 @@
     flex-direction: row;
     justify-content: space-around;
 
-    pre {
+    &> pre {
       margin: 0 20px 0 26px;
       white-space: pre-wrap;
-
-      &.diff {
-        color: #999;
-      }
-
-      .added {
-        color: green;
-        &:before {
-          content: "+";
-          margin-left: -1em;
-        }
-      }
-      .removed {
-        color: #b90000;
-        &:before {
-          content: "-";
-          margin-left: -1em;
-        }
-      }
     }
   }
 

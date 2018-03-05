@@ -1,7 +1,8 @@
+import 'labeler/scss/diff.css';
 import 'labeler/scss/Labeler.css';
 
-import { diffJson } from 'diff';
 import * as stringify from 'json-stable-stringify';
+import { create, formatters } from 'jsondiffpatch';
 import React, { Component } from 'react';
 import Visualization from 'shared/js/components/Visualization';
 import { duplicate } from 'vega-lite/build/src/util';
@@ -125,13 +126,12 @@ class Labeler extends Component {
       </div>;
     }
 
-    const specDiff = diffJson(leftSpec, rightSpec).map((part, idx) => {
-      const className = classnames({
-        added: part.added,
-        removed: part.removed
-      });
-      return <span key={idx} className={className}>{part.value}</span>;
+    var patch = create({
+        objectHash: stringify
     });
+
+    const specDiff = <div dangerouslySetInnerHTML={{ __html: formatters.html.format(patch.diff(leftSpec, rightSpec), leftSpec) }}></div>;
+    formatters.html.hideUnchanged();
 
     return (
       <div className="Labeler" onMouseOut={() => {this.hover(UNK);}}>
@@ -167,7 +167,7 @@ class Labeler extends Component {
         </div>
         <div className="specs">
           <pre>{stringify(leftSpec, {space: 2})}</pre>
-          <pre className="diff">{specDiff}</pre>
+          {specDiff}
           <pre>{stringify(rightSpec, {space: 2})}</pre>
         </div>
         { table }
