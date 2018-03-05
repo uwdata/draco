@@ -1,13 +1,14 @@
 import json
 import os
+import pathlib
+import sqlite3
+from typing import Dict
+
 import numpy as np
 
 from draco.learn import data_util
-from draco.spec import *
-from draco.learn.helper import count_violations
+from draco.spec import Query, Task
 
-import pathlib
-import sqlite3
 
 def init_database(db_file):
     ' initialize the databsae and insert default entries into it. '
@@ -30,14 +31,7 @@ def init_database(db_file):
 def insert_user_study_data(db_file):
 
     # generate feature vector and store in database
-    processed_specs = {}
-
-    def count_violations_memoized(data, task, query):
-        key = data.to_asp() + ',' + query.to_asp()
-        if key not in processed_specs:
-            task = Task(data, query, task)
-            processed_specs[key] = count_violations(task)
-        return processed_specs[key]
+    processed_specs: Dict = {}
 
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
@@ -54,19 +48,21 @@ def insert_user_study_data(db_file):
 
         data.fill_with_random_content()
 
+        def query_and_features(spec):
+            q = Query.from_vegalite(spec)
+            f = data_util.count_violations_memoized(processed_specs, data, task, spec)
+            t = Task(data, q, task)
+            return f, t
+
         if np.random.choice([True, False]):
-            q1 = Query.from_vegalite(entry.positive)
-            q2 = Query.from_vegalite(entry.negative)
+            vec1, t1 = query_and_features(entry.positive)
+            vec2, t2 = query_and_features(entry.negative)
         else:
-            q1 = Query.from_vegalite(entry.negative)
-            q2 = Query.from_vegalite(entry.positive)
+            vec1, t1 = query_and_features(entry.negative)
+            vec2, t2 = query_and_features(entry.positive)
 
         tid = f'{entry.source}-{i}'
-        t1 = Task(data, q1, task)
-        t2 = Task(data, q2, task)
 
-        vec1 = count_violations_memoized(data, task, q1)
-        vec2 = count_violations_memoized(data, task, q2)
 
         print(tid)
 
