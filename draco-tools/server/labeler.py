@@ -57,7 +57,10 @@ def fetch_pair():
 
     print("[fetch_pair] Data {} retrieved.".format([row["id"] for row in result]))
 
-    return jsonify(result)
+    if len(result) > 1:
+        return jsonify(result)
+
+    return jsonify(result[0])
 
 
 @app.route('/upload_label', methods=['POST'])
