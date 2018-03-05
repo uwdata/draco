@@ -21,7 +21,7 @@ def create_database(db_file):
     c = conn.cursor()
 
     # Create table
-    c.execute('''CREATE TABLE pairs (id text primary key, task text, left text, right text, 
+    c.execute('''CREATE TABLE pairs (id text primary key, task text, left text, right text,
                                          left_feature text, right_feature text)''')
     c.execute('CREATE TABLE labels (id text, label integer)')
 
@@ -67,7 +67,7 @@ def insert_user_study_data(db_file):
 
         stmt = 'INSERT INTO pairs VALUES (?, ?, ?, ?, ?, ?)'
 
-        c.execute(stmt, (tid, task, t1.to_vegalite_json(), t2.to_vegalite_json(), 
+        c.execute(stmt, (tid, task, t1.to_vegalite_json(), t2.to_vegalite_json(),
                          json.dumps(vec1), json.dumps(vec2)))
 
         conn.commit()
@@ -76,10 +76,10 @@ def insert_user_study_data(db_file):
 
 
 def load_labeled_specs(db_file):
-    """ load all pairs have been labeled 
+    """ load all pairs have been labeled
         Args: the database file containing corresponding entries
         Returns:
-            A list of object files containing pairs and their labels, 
+            A list of object files containing pairs and their labels,
             in the form of {
                 "id": xx,
                 "label": xx,
@@ -94,10 +94,10 @@ def load_labeled_specs(db_file):
     c = conn.cursor()
 
     c.execute('''SELECT pairs.id,
-                        labels.label, 
+                        labels.label,
                         pairs.left,
                         pairs.right,
-                        pairs.left_feature, 
+                        pairs.left_feature,
                         pairs.right_feature
                  FROM labels JOIN pairs
                  WHERE labels.id = pairs.id''')
@@ -116,7 +116,6 @@ def load_labeled_specs(db_file):
 
 if __name__ == '__main__':
     db_file = os.path.join(os.path.dirname(__file__), 'label_data.db')
-    #create_database(db_file)
-    #insert_user_study_data(db_file)
+    create_database(db_file)
+    insert_user_study_data(db_file)
     labeled = load_labeled_specs(db_file)
-
