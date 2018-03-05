@@ -28,24 +28,36 @@ def close_connection(exception):
 @app.route('/fetch_pair', methods=['GET'])
 def fetch_pair():
     """ fetch an unlabeled pair from the server """
+
+    num_pairs = request.args.get('num_pairs', default=1, type=int)
+
+    print("[fetch_pair] Request received.")
+
     db = get_db()
     c = db.cursor()
 
     c.execute('''SELECT pairs.id, pairs.task, pairs.left, pairs.right 
                  FROM pairs
                  WHERE NOT EXISTS (SELECT id FROM labels WHERE labels.id = pairs.id)
-                 ORDER BY pairs.id ASC LIMIT 1''')
+                 ORDER BY RANDOM() ASC LIMIT ?''', (str(num_pairs),))
 
-    row = c.fetchone()
+    print("[fetch_pair] Request DB completed.")
 
-    data = {
-        "id": row[0],
-        "task": row[1],
-        "left": json.loads(row[2]),
-        "right": json.loads(row[3])
-    }
+    content = c.fetchall()
 
-    return jsonify(data)
+    result = []
+    for row in content:
+        data = {
+            "id": row[0],
+            "task": row[1],
+            "left": json.loads(row[2]),
+            "right": json.loads(row[3])
+        }
+        result.append(data)
+
+    print("[fetch_pair] Data {} retrieved.".format([row["id"] for row in result]))
+
+    return jsonify(result)
 
 
 @app.route('/upload_label', methods=['POST'])
