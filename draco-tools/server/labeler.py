@@ -31,16 +31,18 @@ def fetch_pair():
     db = get_db()
     c = db.cursor()
 
-    c.execute('''SELECT * FROM unlabeled
-                 WHERE NOT EXISTS (SELECT id FROM labels WHERE labels.id = unlabeled.id)
-                 ORDER BY unlabeled.id ASC LIMIT 1''')
+    c.execute('''SELECT pairs.id, pairs.task, pairs.left, pairs.right 
+                 FROM pairs
+                 WHERE NOT EXISTS (SELECT id FROM labels WHERE labels.id = pairs.id)
+                 ORDER BY pairs.id ASC LIMIT 1''')
 
     row = c.fetchone()
 
     data = {
         "id": row[0],
-        "left": json.loads(row[1]),
-        "right": json.loads(row[2])
+        "task": row[1],
+        "left": json.loads(row[2]),
+        "right": json.loads(row[3])
     }
 
     return jsonify(data)
