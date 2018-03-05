@@ -4,11 +4,11 @@ Processing data for learning procedures.
 
 import json
 import logging
+import math
 import os
 from collections import namedtuple
 from multiprocessing import Manager, cpu_count
-from typing import Dict, List, Tuple, Iterable
-import math
+from typing import Any, Dict, Iterable, List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -157,8 +157,9 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
     logger.info(f'Running {splits} partitions of {len(neg_pos_data)} items in parallel on {processes} processes.')
 
     with Manager() as manager:
-        d = manager.dict()  # shared dict for memoization
-        pool = manager.Pool(processes=processes)
+        m: Any = manager  # fix for mypy
+        d = m.dict()  # shared dict for memoization
+        pool = m.Pool(processes=processes)
         df = pd.concat(pool.map(featurize_partition, list(map(lambda s: (d,s), df_split))))
         pool.close()
         pool.join()
