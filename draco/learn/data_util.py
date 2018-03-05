@@ -100,11 +100,10 @@ def load_partial_full_data(path=compassql_data_path):
     return result
 
 
-def count_violations_memoized(processed_specs: Dict[str, Dict], data, task, spec):
-    key = data.to_asp() + ',' + json.dumps(spec) + ',' + (task or 'no task')
+def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
+    key = task.to_asp()
     if key not in processed_specs:
-        t = Task(data, Query.from_vegalite(spec), task)
-        processed_specs[key] = count_violations(t)
+        processed_specs[key] = count_violations(task)
     return processed_specs[key]
 
 
@@ -132,8 +131,8 @@ def featurize_partition(input_data: Tuple[Dict, Iterable]):
         if isinstance(example, np.ndarray):
             example = PosNegExample(*example)
 
-        neg_feature_vec = count_violations_memoized(processed_specs, example.data, example.task, example.negative)
-        pos_feature_vec = count_violations_memoized(processed_specs,example.data, example.task, example.positive)
+        neg_feature_vec = count_violations_memoized(processed_specs, Task(example.data, Query.from_vegalite(example.negative), example.task))
+        pos_feature_vec = count_violations_memoized(processed_specs, Task(example.data, Query.from_vegalite(example.positive), example.task))
 
         # Reformat the json data so that we can insert it into a multi index data frame.
         # https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label

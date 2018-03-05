@@ -49,9 +49,9 @@ def insert_user_study_data(db_file):
         data.fill_with_random_content()
 
         def query_and_features(spec):
-            q = Query.from_vegalite(spec)
-            f = data_util.count_violations_memoized(processed_specs, data, task, spec)
-            t = Task(data, q, task)
+            query = Query.from_vegalite(spec)
+            t = Task(data, query, task)
+            f = data_util.count_violations_memoized(processed_specs, t)
             return f, t
 
         if np.random.choice([True, False]):
