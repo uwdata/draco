@@ -6,8 +6,8 @@ import json
 import logging
 import os
 from collections import namedtuple
-from multiprocessing import Pool, cpu_count
-from typing import Dict, List, Tuple
+from multiprocessing import Manager, cpu_count
+from typing import Dict, List, Tuple, Iterable
 import math
 
 import numpy as np
@@ -38,7 +38,7 @@ def load_neg_pos_data() -> List[PosNegExample]:
     raw_data = []
     i = 0
 
-    for path in [man_data_path, yh_data_path, ba_data_path]:
+    for path in [man_data_path, ba_data_path]:
         with open(path) as f:
             json_data = json.load(f)
 
@@ -100,8 +100,7 @@ def load_partial_full_data(path=compassql_data_path):
     return result
 
 
-processed_specs: Dict[str, Dict] = {}
-def count_violations_memoized(data, task, spec):
+def count_violations_memoized(processed_specs: Dict[str, Dict], data, task, spec):
     key = data.to_asp() + ',' + json.dumps(spec) + ',' + (task or 'no task')
     if key not in processed_specs:
         t = Task(data, Query.from_vegalite(spec), task)
@@ -120,7 +119,9 @@ def get_index():
     return index
 
 
-def featurize_partition(partiton_data):
+def featurize_partition(input_data: Tuple[Dict, Iterable]):
+    processed_specs, partiton_data = input_data
+
     index = get_index()
 
     df = pd.DataFrame(columns=index)
@@ -131,8 +132,8 @@ def featurize_partition(partiton_data):
         if isinstance(example, np.ndarray):
             example = PosNegExample(*example)
 
-        neg_feature_vec = count_violations_memoized(example.data, example.task, example.negative)
-        pos_feature_vec = count_violations_memoized(example.data, example.task, example.positive)
+        neg_feature_vec = count_violations_memoized(processed_specs, example.data, example.task, example.negative)
+        pos_feature_vec = count_violations_memoized(processed_specs,example.data, example.task, example.positive)
 
         # Reformat the json data so that we can insert it into a multi index data frame.
         # https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
@@ -152,13 +153,16 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
 
     splits = min([cpu_count() * 20, math.ceil(len(neg_pos_data) / 10)])
     df_split = np.array_split(neg_pos_data, splits)
+    processes = min(cpu_count(), splits)
 
-    logger.info(f'Running {splits} partitions of {len(neg_pos_data)} items in parallel on {cpu_count()} processes.')
+    logger.info(f'Running {splits} partitions of {len(neg_pos_data)} items in parallel on {processes} processes.')
 
-    pool = Pool(processes=cpu_count())
-    df = pd.concat(pool.map(featurize_partition, df_split))
-    pool.close()
-    pool.join()
+    with Manager() as manager:
+        d = manager.dict()  # shared dict for memoization
+        pool = manager.Pool(processes=processes)
+        df = pd.concat(pool.map(featurize_partition, list(map(lambda s: (d,s), df_split))))
+        pool.close()
+        pool.join()
 
     df = df.sort_index()
 
