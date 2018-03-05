@@ -151,7 +151,7 @@ def featurize_partition(input_data: Tuple[Dict, Iterable]):
 def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
     """ given neg_pos_data, convert them into feature vectors """
 
-    splits = min([cpu_count() * 20, math.ceil(len(neg_pos_data) / 5)])
+    splits = min([cpu_count() * 20, math.ceil(len(neg_pos_data) / 10)])
     df_split = np.array_split(neg_pos_data, splits)
     processes = min(cpu_count(), splits)
 
