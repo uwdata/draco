@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, g
 from flask_cors import CORS
 
 import json
+import numpy as np
 import os
 
 import sqlite3
@@ -18,6 +19,43 @@ def get_db():
     return db
 
 
+def get_unlabeled_data():
+    """ load unlabeled data into memory """
+
+    # todo: optimize this process is necessary
+
+    unlabeled_pairs = getattr(g, '_unlabeled', None)
+
+    if unlabeled_pairs is None:
+
+        db = get_db()
+        c = db.cursor()
+
+        c.execute('''SELECT pairs.id, pairs.task, pairs.left, pairs.right, 
+                            pairs.left_feature, pairs.right_feature 
+                     FROM pairs
+                     WHERE NOT EXISTS (SELECT id FROM labels WHERE labels.id = pairs.id)''')
+
+        content = c.fetchall()
+
+        result = {}
+        for row in content:
+            data = {
+                "id": row[0],
+                "task": row[1],
+                "left": json.loads(row[2]),
+                "right": json.loads(row[3]),
+                "left_feature": json.loads(row[4]),
+                "right_feature": json.loads(row[5])
+            }
+        
+            result[row[0]] = data
+
+        unlabeled_pairs = g._unlabeled = result
+
+    return unlabeled_pairs
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -30,37 +68,16 @@ def fetch_pair():
     """ fetch an unlabeled pair from the server """
 
     num_pairs = request.args.get('num_pairs', default=1, type=int)
+    unlabeled_data = get_unlabeled_data()
 
-    print("[fetch_pair] Request received.")
+    id_list = list(unlabeled_data.keys())
 
-    db = get_db()
-    c = db.cursor()
+    rand_indices = np.random.choice(id_list, size=num_pairs, replace=False)
 
-    c.execute('''SELECT pairs.id, pairs.task, pairs.left, pairs.right 
-                 FROM pairs
-                 WHERE NOT EXISTS (SELECT id FROM labels WHERE labels.id = pairs.id)
-                 ORDER BY RANDOM() ASC LIMIT ?''', (str(num_pairs),))
+    if num_pairs > 1:
+        return jsonify([unlabeled_data[i] for i in rand_indices])
 
-    print("[fetch_pair] Request DB completed.")
-
-    content = c.fetchall()
-
-    result = []
-    for row in content:
-        data = {
-            "id": row[0],
-            "task": row[1],
-            "left": json.loads(row[2]),
-            "right": json.loads(row[3])
-        }
-        result.append(data)
-
-    print("[fetch_pair] Data {} retrieved.".format([row["id"] for row in result]))
-
-    if len(result) > 1:
-        return jsonify(result)
-
-    return jsonify(result[0])
+    return jsonify(unlabeled_data[rand_indices[0]])
 
 
 @app.route('/upload_label', methods=['POST'])
@@ -79,6 +96,10 @@ def upload_label():
     c.execute(stmt, (tid, label))
 
     db.commit()
+
+    # update the in memory copy
+    get_unlabeled_data().pop(tid, None)
+
     return 'success'
 
 
