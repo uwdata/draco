@@ -38,9 +38,6 @@
 % detail requires nominal
 :- channel(E,detail), not type(E,nominal).
 
-% row and column require discrete
-:- channel_continuous(row;column).
-
 % size, and opacity impy order so nominal is misleading
 :- channel(E,(size;opacity)), type(E,nominal).
 
@@ -50,6 +47,11 @@
 % can only aggregate ordinal with min and max
 :- aggregate(E,A), type(E,ordinal), A != min, A != max.
 
+% detail cannot be aggregated
+:- channel(E,detail), aggregate(E,_).
+
+% nominal cannot be aggregated
+:- type(E,nominal), aggregate(E,_).
 
 % === Across encodings and between encodings and marks ===
 
@@ -59,12 +61,13 @@
 % there has to be at least one encoding
 :- not encoding(_).
 
+% row and column require discrete
+:- channel_continuous(row;column).
+
 % all encodings (if they have a channel) require field except if we have a count aggregate
 :- not field(E,_), not aggregate(E,count), encoding(E).
 % count should not have a field
 :- aggregate(E,count), field(E,_).
-
-% TODO: check channelPermittedByMarkType
 
 % text mark requires text channel
 :- mark(text), not channel(_,text).
@@ -102,9 +105,6 @@
 % detail requires aggregation
 :- channel(_,detail), not aggregate(_,_).
 
-% detail cannot be aggregated
-:- channel(E,detail), aggregate(E,_).
-
 % do not use log for bar or area mark
 :- mark(bar;area), log(E), channel(E,(x;y)).
 
@@ -112,12 +112,13 @@
 :- mark(rect), not channel_discrete(x).
 :- mark(rect), not channel_discrete(y).
 
-% nominal cannot be aggregated
-:- type(E,nominal), aggregate(E,_).
-
 % don't use size with line
 :- mark(line), channel(E,size).
 
+% don't use the same field on x and y
+:- channel(EX,x), channel(EY,y), field(EX,F), field(EY,F).
+% don't use count on x and y
+:- channel(EX,x), channel(EY,y), aggregate(EX,count), aggregate(EY,count).
 
 % === Global properties ===
 

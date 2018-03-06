@@ -11,6 +11,7 @@ feature_weight(encoding,encoding_weight).
 feature_weight(encoding_field,encoding_field_weight).
 feature_weight(same_field_2,same_field_2_weight).
 feature_weight(same_field_gte3,same_field_gte3_weight).
+feature_weight(count_twice,count_twice_weight).
 feature_weight(categorical_cardinality,categorical_cardinality_weight).
 feature_weight(shape_cardinality,shape_cardinality_weight).
 feature_weight(number_nominal,number_nominal_weight).
@@ -27,6 +28,7 @@ feature_weight(zero,zero_weight).
 feature_weight(zero_size,zero_size_weight).
 feature_weight(zero_positional,zero_positional_weight).
 feature_weight(zero_skew,zero_skew_weight).
+feature_weight(includes_zero,includes_zero_weight).
 feature_weight(only_row_column,only_row_column_weight).
 feature_weight(only_x,only_x_weight).
 feature_weight(orientation_binned,orientation_binned_weight).

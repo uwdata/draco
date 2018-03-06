@@ -1,15 +1,23 @@
+import json
+import logging
+import os
+
 import numpy as np
 
 from draco.learn import data_util, linear
 from draco.learn.helper import current_weights
 from draco.run import run
 
-import os
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-import json
+
+def absolute_path(p: str) -> str:
+    return os.path.join(os.path.dirname(__file__), p)
+
 
 def play(partial_full_data, train_weights=True, output_file=None):
-    
+
     init_weights = current_weights()
 
     if train_weights:
@@ -33,16 +41,17 @@ def play(partial_full_data, train_weights=True, output_file=None):
     else:
         weights = init_weights
 
-    pairs = generate_visaul_pairs(partial_full_data, weights)
+    pairs = generate_visual_pairs(partial_full_data, weights)
 
     if output_file is not None:
         with open(output_file, "w+") as f:
+            print(f'Writing pairs to {output_file}')
             json.dump(pairs, f)
     else:
         print(json.dumps(pairs))
 
 
-def generate_visaul_pairs(partial_full_data, weights):
+def generate_visual_pairs(partial_full_data, weights):
     # Generate pairs that can be visualized by bug finders
     result = {}
     result["headers"] = {
@@ -63,9 +72,11 @@ def generate_visaul_pairs(partial_full_data, weights):
         draco_rec = run(partial_spec, constants=weights)
 
         if draco_rec is None:
+            logger.warning(f'Could not find a spec for {partial_spec}')
             continue
 
-        if len(result) > 15:
+        if len(result) > 25:
+            logger.warning('Stopped at 25')
             break
 
         if draco_rec.data.url is not None:
@@ -84,20 +95,22 @@ def generate_visaul_pairs(partial_full_data, weights):
 
 
 if __name__ == '__main__':
-    import logging
-    logging.basicConfig()
-    logging.getLogger().setLevel(logging.WARN)
+    # spec_dir = absolute_path("../../data/synthetic")
+    # dataset = data_util.load_partial_full_data(spec_dir)
+    # output_file = absolute_path("../../data/spec_pairs/synthetic.json")
+    # play(dataset, train_weights=True, output_file=output_file)
 
-    spec_dir = os.path.join(os.path.dirname(__file__), "../../data/synthetic")
-    output_file = os.path.join(os.path.dirname(__file__), "../../data/spec_pairs/synthetic.json")
-    #output_file = os.path.join(os.path.dirname(__file__), "../../data/spec_pairs/synthetic_default_weights.json")
+    # spec_dir = absolute_path("../../data/synthetic")
+    # dataset = data_util.load_partial_full_data(spec_dir)
+    # output_file = absolute_path("../../data/spec_pairs/synthetic_default_weights.json")
+    # play(dataset, train_weights=False, output_file=output_file)
 
-    #spec_dir = os.path.join(os.path.dirname(__file__), "../../data/compassql_examples")
-    #output_file = os.path.join(os.path.dirname(__file__), "../../data/spec_pairs/draco_cql.json")
-    #output_file = os.path.join(os.path.dirname(__file__), "../../data/spec_pairs/draco_cql_default_weights.json")
+    # spec_dir = absolute_path("../../data/compassql_examples")
+    # dataset = data_util.load_partial_full_data(spec_dir)
+    # output_file = absolute_path("../../data/spec_pairs/draco_cql.json")
+    # play(dataset, train_weights=True, output_file=output_file)
 
+    spec_dir = absolute_path("../../data/compassql_examples")
     dataset = data_util.load_partial_full_data(spec_dir)
-
-    play(dataset, train_weights=True, output_file=output_file)
-
-
+    output_file = absolute_path("../../data/spec_pairs/draco_cql_default_weights.json")
+    play(dataset, train_weights=False, output_file=output_file)

@@ -11,6 +11,7 @@
 #const encoding_field_weight = 6.
 #const same_field_2_weight = 8.
 #const same_field_gte3_weight = 16.
+#const count_twice_weight = 50.
 #const categorical_cardinality_weight = 5.
 #const shape_cardinality_weight = 5.
 #const number_nominal_weight = 10.
@@ -27,7 +28,7 @@
 #const zero_size_weight = 3.
 #const zero_positional_weight = 1.
 #const zero_skew_weight = 5.
-#const includes_zero = 10.
+#const includes_zero_weight = 10.
 
 #const only_row_column_weight = 2.
 #const only_x_weight = 1.

@@ -30,6 +30,9 @@ feature_term(encoding_field,E) :- encoding(E), field(E,_).
 feature_term(same_field_2,F) :- field(F), { field(_,F) } = 2.
 feature_term(same_field_gte3,F) :- field(F), { field(_,F) } >= 3.
 
+% prefer not to use count more than once
+feature_term(count_twice) :- { aggregate(_,count) } = 2.
+
 % categorical color channel should not have too high cardinality
 feature_term(categorical_cardinality,E) :- channel(E,color), type(E,nominal), enc_cardinality(E,C), C > 20.
 
