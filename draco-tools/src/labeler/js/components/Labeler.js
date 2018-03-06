@@ -59,12 +59,12 @@ class Labeler extends Component {
   render() {
     let leftViz;
     if (this.state.left) {
-      leftViz = <Visualization vlSpec={this.state.left} id="left"/>;
+      leftViz = <Visualization vlSpec={this.state.left} renderer='svg' id='left'/>;
     }
 
     let rightViz;
     if (this.state.right) {
-      rightViz = <Visualization vlSpec={this.state.right} id="right"/>;
+      rightViz = <Visualization vlSpec={this.state.right} renderer='svg' id='right'/>;
     }
 
     const displayClasses = classnames({
@@ -110,7 +110,7 @@ class Labeler extends Component {
       </tr>);
       const remaining = data.length - tableBody.length;
 
-      table = <div className="table">
+      table = <div className='table'>
         <table>
           <thead>
             <tr>
@@ -134,20 +134,20 @@ class Labeler extends Component {
     });
 
     return (
-      <div className="Labeler" onMouseOut={() => {this.hover(UNK);}}>
-        <div className="task">Task: {this.state.task || 'NO TASK'}</div>
-        <div className="chooser">
+      <div className='Labeler' onMouseOut={() => {this.hover(UNK);}}>
+        <div className='task'>Task: {this.state.task || 'NO TASK'}</div>
+        <div className='chooser'>
           <div className={displayClasses}>
             <div className={leftClasses}
                   onClick={() => {this.choose(this.state.id, 'left');}}
                   onMouseEnter={() => {this.hover(LEFT);}}>
               {leftViz}
             </div>
-            <div className="same">
+            <div className='same'>
               <div className={equalsClasses}
                   onClick={() => {this.choose(this.state.id, 'same');}}
                   onMouseEnter={() => {this.hover(EQUALS);}}>
-                <div className="indicator">
+                <div className='indicator'>
                   {this.state.hover}
                 </div>
               </div>
@@ -165,9 +165,9 @@ class Labeler extends Component {
             </div>
           </div>
         </div>
-        <div className="specs">
+        <div className='specs'>
           <pre>{stringify(leftSpec, {space: 2})}</pre>
-          <pre className="diff">{specDiff}</pre>
+          <pre className='diff'>{specDiff}</pre>
           <pre>{stringify(rightSpec, {space: 2})}</pre>
         </div>
         { table }
