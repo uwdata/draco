@@ -1,0 +1,390 @@
+{
+    "1": [
+        [
+            {
+                "mark": "bar",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "rule",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "tick",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "mark": "point",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "rule",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "tick",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            }
+        ]
+    ],
+    "2": [
+        [
+            {
+                "mark": "point",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "type": "ordinal",
+                        "field": "o1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "x"
+                    }
+                }
+            },
+            {
+                "mark": "rect",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "type": "ordinal",
+                        "field": "o1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "x"
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "mark": "line",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "x"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "x"
+                    }
+                }
+            },
+            {
+                "mark": "tick",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "x"
+                    }
+                }
+            }
+        ]
+    ],
+    "3": [
+        [
+            {
+                "mark": "line",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "type": "log"
+                        },
+                        "stack": "zero",
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "sort": "ascending",
+                        "type": "quantitative",
+                        "field": "q2",
+                        "channel": "x"
+                    },
+                    "color": {
+                        "type": "temporal",
+                        "field": "t1",
+                        "channel": "color"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "task": "value",
+                "encoding": {
+                    "y": {
+                        "scale": {
+                            "type": "log"
+                        },
+                        "stack": "zero",
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "sort": "ascending",
+                        "type": "quantitative",
+                        "field": "q2",
+                        "channel": "x"
+                    },
+                    "color": {
+                        "type": "temporal",
+                        "field": "t1",
+                        "channel": "color"
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "mark": "line",
+                "task": "value",
+                "encoding": {
+                    "x": {
+                        "stack": "zero",
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "x"
+                    },
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "column": {
+                        "type": "nominal",
+                        "field": "n2",
+                        "channel": "column"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "task": "value",
+                "encoding": {
+                    "x": {
+                        "stack": "zero",
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "x"
+                    },
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "column": {
+                        "type": "nominal",
+                        "field": "n2",
+                        "channel": "column"
+                    }
+                }
+            },
+            {
+                "mark": "tick",
+                "task": "value",
+                "encoding": {
+                    "x": {
+                        "stack": "zero",
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "x"
+                    },
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "column": {
+                        "type": "nominal",
+                        "field": "n2",
+                        "channel": "column"
+                    }
+                }
+            }
+        ]
+    ],
+    "4": [
+        [],
+        [
+            {
+                "mark": "line",
+                "task": "value",
+                "encoding": {
+                    "x": {
+                        "type": "ordinal",
+                        "field": "o1",
+                        "channel": "x"
+                    },
+                    "detail": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "detail"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "y"
+                    },
+                    "color": {
+                        "sort": "descending",
+                        "type": "quantitative",
+                        "field": "q2",
+                        "channel": "color"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "task": "value",
+                "encoding": {
+                    "x": {
+                        "type": "ordinal",
+                        "field": "o1",
+                        "channel": "x"
+                    },
+                    "detail": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "detail"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "y"
+                    },
+                    "color": {
+                        "sort": "descending",
+                        "type": "quantitative",
+                        "field": "q2",
+                        "channel": "color"
+                    }
+                }
+            },
+            {
+                "mark": "tick",
+                "task": "value",
+                "encoding": {
+                    "x": {
+                        "type": "ordinal",
+                        "field": "o1",
+                        "channel": "x"
+                    },
+                    "detail": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "detail"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "y"
+                    },
+                    "color": {
+                        "sort": "descending",
+                        "type": "quantitative",
+                        "field": "q2",
+                        "channel": "color"
+                    }
+                }
+            }
+        ]
+    ]
+}

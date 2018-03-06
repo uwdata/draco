@@ -43,6 +43,7 @@ class Labeler extends Component {
       task: null,
       chosen: null,
       hover: UNK,
+      next: []
     };
   }
 
@@ -190,6 +191,28 @@ class Labeler extends Component {
       label: label
     };
 
+    // apply next state
+    let next_state, next;
+    if (this.state.next.length) {
+      next_state = this.state.next[0];
+      next = this.state.next.slice(1);
+    } else {
+      next_state = {};
+      next = [];
+    }
+
+    this.setState({
+      id: null,
+      left: null,
+      right: null,
+      task: null,
+      chosen: null,
+      ...next_state,
+      next
+    });
+
+    this.fetchPair();
+
     fetch(REQUEST_PATH + 'upload_label', {
       body: JSON.stringify(message),
       method: 'post',
@@ -199,8 +222,6 @@ class Labeler extends Component {
       },
     }).then((response) => {
       if (response.ok) {
-        // on success, fetch another pair
-        this.fetchPair();
       } else {
         alert('failed POST');
       }
@@ -213,14 +234,16 @@ class Labeler extends Component {
     }).then((response) => {
       if (response.ok) {
         response.json().then((data) => {
-          this.setState({
-            id: data.id,
-            left: data.left,
-            right: data.right,
-            task: data.task,
-            chosen: null,
-            hover: UNK,
-          });
+          if (this.state.id === null) {
+            this.setState(data);
+            // fetch another pair as we don't have enough data yet
+            console.warn('Network is too slow....');
+            this.fetchPair();
+          } else {
+            this.setState({
+              next: this.state.next.concat([data])
+            });
+          }
         });
       } else {
         alert('failed GET');
@@ -234,6 +257,9 @@ class Labeler extends Component {
       const comparison = KEYS[event.keyCode];
       if (comparison) {
         if (comparison === this.state.hover) {
+          this.setState({
+            hover: UNK
+          });
           this.choose(this.state.id, comparison);
         } else {
           this.hover(comparison);

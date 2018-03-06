@@ -16,7 +16,7 @@ def main(prg):
 
         for atom in model.symbols(atoms=True):
             if atom.name == 'feature_term' and len(atom.arguments) == 2:
-                name = atom.arguments[0].string
+                name = str(atom.arguments[0])
                 counts[name] += 1
     print(json.dumps(counts), file=sys.stderr)
 

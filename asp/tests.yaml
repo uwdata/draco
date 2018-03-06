@@ -292,7 +292,7 @@ Test soft constraints:
             channel(e,x).
             type(e,quantitative).
 
-            :- not feature_term("position_entropy", e).
+            :- not feature_term(position_entropy, e).
         Expect: SAT
 
     Test only row and column:
@@ -311,7 +311,7 @@ Test soft constraints:
             field(e2,n3).
             channel(e3,text).
 
-            :- not feature_term("only_row_column").
+            :- not feature_term(only_row_column).
         Expect: SAT
 
     Test skew with zero:
@@ -328,7 +328,7 @@ Test soft constraints:
             type(e,quantitative).
             zero(e).
 
-            :- not feature_term("zero_skew").
+            :- not feature_term(zero_skew).
         Expect: SAT
 
     Test zero with data that covers it:
@@ -346,6 +346,6 @@ Test soft constraints:
             type(e,quantitative).
             zero(e).
 
-            :- not feature_term("includes_zero").
+            :- not feature_term(includes_zero).
 
         Expect: UNSAT

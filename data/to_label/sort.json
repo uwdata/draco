@@ -1,0 +1,366 @@
+{
+    "1": [
+        [
+            {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "type": "quantitative",
+                        "sort": "ascending",
+                        "field": "q1",
+                        "channel": "x"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "type": "quantitative",
+                        "sort": "descending",
+                        "field": "q1",
+                        "channel": "x"
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "mark": "bar",
+                "encoding": {
+                    "y": {
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "type": "quantitative",
+                        "sort": "ascending",
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "bar",
+                "encoding": {
+                    "y": {
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "type": "quantitative",
+                        "sort": "descending",
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            }
+        ]
+    ],
+    "2": [
+        [
+            {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "x"
+                    },
+                    "y": {
+                        "type": "quantitative",
+                        "aggregate": "sum",
+                        "sort": "ascending",
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "x"
+                    },
+                    "y": {
+                        "type": "quantitative",
+                        "aggregate": "sum",
+                        "sort": "descending",
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "sort": "ascending",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "type": "nominal",
+                        "field": "n2",
+                        "channel": "x"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "sort": "ascending",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "type": "nominal",
+                        "sort": "descending",
+                        "field": "n2",
+                        "channel": "x"
+                    }
+                }
+            }
+        ]
+    ],
+    "3": [
+        [
+            {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "type": "nominal",
+                        "stack": "zero",
+                        "sort": "ascending",
+                        "field": "n1",
+                        "channel": "x"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 5
+                        },
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q1",
+                        "channel": "y"
+                    },
+                    "color": {
+                        "type": "quantitative",
+                        "field": "q2",
+                        "channel": "color"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "type": "nominal",
+                        "stack": "zero",
+                        "sort": "ascending",
+                        "field": "n1",
+                        "channel": "x"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 5
+                        },
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q1",
+                        "channel": "y"
+                    },
+                    "color": {
+                        "type": "quantitative",
+                        "sort": "descending",
+                        "field": "q2",
+                        "channel": "color"
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "mark": "line",
+                "encoding": {
+                    "x": {
+                        "type": "quantitative",
+                        "sort": "ascending",
+                        "field": "q1",
+                        "channel": "x"
+                    },
+                    "color": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "type": "quantitative",
+                        "field": "q2",
+                        "channel": "color"
+                    },
+                    "y": {
+                        "type": "ordinal",
+                        "field": "o1",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "line",
+                "encoding": {
+                    "x": {
+                        "type": "quantitative",
+                        "sort": "descending",
+                        "field": "q1",
+                        "channel": "x"
+                    },
+                    "color": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "type": "quantitative",
+                        "field": "q2",
+                        "channel": "color"
+                    },
+                    "y": {
+                        "type": "ordinal",
+                        "field": "o1",
+                        "channel": "y"
+                    }
+                }
+            }
+        ]
+    ],
+    "4": [
+        [
+            {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "type": "quantitative",
+                        "aggregate": "median",
+                        "field": "q1",
+                        "channel": "y"
+                    },
+                    "detail": {
+                        "type": "nominal",
+                        "sort": "descending",
+                        "stack": "zero",
+                        "field": "n1",
+                        "channel": "detail"
+                    },
+                    "x": {
+                        "type": "nominal",
+                        "sort": "ascending",
+                        "field": "n2",
+                        "channel": "x"
+                    },
+                    "size": {
+                        "type": "temporal",
+                        "sort": "descending",
+                        "field": "t1",
+                        "channel": "size"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "type": "quantitative",
+                        "aggregate": "median",
+                        "field": "q1",
+                        "channel": "y"
+                    },
+                    "detail": {
+                        "type": "nominal",
+                        "sort": "descending",
+                        "stack": "zero",
+                        "field": "n1",
+                        "channel": "detail"
+                    },
+                    "x": {
+                        "type": "nominal",
+                        "sort": "ascending",
+                        "field": "n2",
+                        "channel": "x"
+                    },
+                    "size": {
+                        "type": "temporal",
+                        "sort": "descending",
+                        "field": "t1",
+                        "channel": "size"
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "sort": "ascending",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "type": "ordinal",
+                        "sort": "ascending",
+                        "aggregate": "min",
+                        "field": "o1",
+                        "channel": "x"
+                    },
+                    "color": {
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "color"
+                    },
+                    "shape": {
+                        "type": "nominal",
+                        "field": "n2",
+                        "channel": "shape"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "sort": "ascending",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "type": "ordinal",
+                        "sort": "descending",
+                        "aggregate": "min",
+                        "field": "o1",
+                        "channel": "x"
+                    },
+                    "color": {
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "color"
+                    },
+                    "shape": {
+                        "type": "nominal",
+                        "field": "n2",
+                        "channel": "shape"
+                    }
+                }
+            }
+        ]
+    ]
+}

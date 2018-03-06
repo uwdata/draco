@@ -1,0 +1,325 @@
+{
+    "1": [
+        [
+            {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "log"
+                        },
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "mark": "tick",
+                "encoding": {
+                    "y": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "tick",
+                "encoding": {
+                    "y": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "log"
+                        },
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            }
+        ]
+    ],
+    "2": [
+        [
+            {
+                "mark": "point",
+                "encoding": {
+                    "shape": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "shape"
+                    },
+                    "y": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "encoding": {
+                    "shape": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "shape"
+                    },
+                    "y": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "log"
+                        },
+                        "field": "q1",
+                        "channel": "y"
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "type": "quantitative",
+                        "field": "q1",
+                        "channel": "x"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q2",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "encoding": {
+                    "x": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "log"
+                        },
+                        "field": "q1",
+                        "channel": "x"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q2",
+                        "channel": "y"
+                    }
+                }
+            }
+        ]
+    ],
+    "3": [
+        [
+            {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q1",
+                        "channel": "x"
+                    },
+                    "color": {
+                        "type": "quantitative",
+                        "field": "q2",
+                        "channel": "color"
+                    }
+                }
+            },
+            {
+                "mark": "point",
+                "encoding": {
+                    "y": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "y"
+                    },
+                    "x": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q1",
+                        "channel": "x"
+                    },
+                    "color": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "log"
+                        },
+                        "field": "q2",
+                        "channel": "color"
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "mark": "line",
+                "encoding": {
+                    "color": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "log"
+                        },
+                        "field": "q1",
+                        "channel": "color"
+                    },
+                    "x": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q2",
+                        "channel": "x"
+                    },
+                    "y": {
+                        "type": "quantitative",
+                        "field": "q3",
+                        "channel": "y"
+                    }
+                }
+            },
+            {
+                "mark": "line",
+                "encoding": {
+                    "color": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "log"
+                        },
+                        "field": "q1",
+                        "channel": "color"
+                    },
+                    "x": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q2",
+                        "channel": "x"
+                    },
+                    "y": {
+                        "type": "quantitative",
+                        "field": "q3",
+                        "channel": "y"
+                    }
+                }
+            }
+        ]
+    ],
+    "4": [
+        [
+            {
+                "mark": "line",
+                "encoding": {
+                    "y": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "linear",
+                            "zero": true
+                        },
+                        "field": "q1",
+                        "channel": "y"
+                    },
+                    "color": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "color"
+                    },
+                    "opacity": {
+                        "type": "quantitative",
+                        "field": "q2",
+                        "channel": "opacity"
+                    },
+                    "x": {
+                        "type": "quantitative",
+                        "field": "q3",
+                        "channel": "x"
+                    }
+                }
+            },
+            {
+                "mark": "line",
+                "encoding": {
+                    "y": {
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "log"
+                        },
+                        "field": "q1",
+                        "channel": "y"
+                    },
+                    "color": {
+                        "type": "nominal",
+                        "field": "n1",
+                        "channel": "color"
+                    },
+                    "opacity": {
+                        "type": "quantitative",
+                        "field": "q2",
+                        "channel": "opacity"
+                    },
+                    "x": {
+                        "type": "quantitative",
+                        "field": "q3",
+                        "channel": "x"
+                    }
+                }
+            }
+        ],
+        []
+    ]
+}

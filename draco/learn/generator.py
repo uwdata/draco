@@ -18,7 +18,8 @@ def sample_partial_specs(specs):
     results = []
 
     for entry in specs:
-        data, task, query = entry[0], entry[1], Query.from_vegalite(entry[3])
+
+        data, task, query = entry.data, entry.task, Query.from_vegalite(entry.positive)
         partial_query = insert_holes(query)
 
         if (not data.content) and (data.url is None):

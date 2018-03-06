@@ -11,7 +11,7 @@ from draco.spec import Query, Task
 
 
 def create_database(db_file):
-    ' initialize the databsae and insert default entries into it. '
+    ''' initialize the databsae and insert default entries into it. '''
 
     if pathlib.Path(db_file).exists():
         print('[Err] The database {} exists, won\'t create one.'.format(db_file))
@@ -22,15 +22,15 @@ def create_database(db_file):
 
     # Create table
     c.execute('''CREATE TABLE pairs (id text primary key, task text, left text, right text,
-                                         left_feature text, right_feature text)''')
+                                     left_feature text, right_feature text)''')
     c.execute('CREATE TABLE labels (id text, label integer)')
 
     conn.close()
 
 
 def insert_user_study_data(db_file):
-
     # generate feature vector and store in database
+    
     processed_specs: Dict = {}
 
     conn = sqlite3.connect(db_file)

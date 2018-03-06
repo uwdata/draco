@@ -7,7 +7,7 @@
 #const bin_weight = 1.
 #const bin_high_weight = 6.
 #const bin_low_weight = 6.
-#const encoding_weight = 2.
+#const encoding_weight = 0.
 #const encoding_field_weight = 6.
 #const same_field_2_weight = 8.
 #const same_field_gte3_weight = 16.
@@ -47,6 +47,7 @@
 #const y_row_weight = 1.
 #const x_column_weight = 1.
 #const y_column_weight = 1.
+#const temporal_y_weight = 2.
 
 #const c_c_point_weight = 0.
 #const c_c_line_weight = 20.
