@@ -207,7 +207,6 @@ class Labeler extends Component {
       right: null,
       task: null,
       chosen: null,
-      hover: UNK,
       ...next_state,
       next
     });
@@ -258,6 +257,9 @@ class Labeler extends Component {
       const comparison = KEYS[event.keyCode];
       if (comparison) {
         if (comparison === this.state.hover) {
+          this.setState({
+            hover: UNK
+          });
           this.choose(this.state.id, comparison);
         } else {
           this.hover(comparison);
