@@ -22,7 +22,7 @@ def create_database(db_file):
 
     # Create table
     c.execute('''CREATE TABLE pairs (id text primary key, task text, left text, right text,
-                                         left_feature text, right_feature text)''')
+                                     left_feature text, right_feature text)''')
     c.execute('CREATE TABLE labels (id text, label integer)')
 
     conn.close()

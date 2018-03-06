@@ -5,6 +5,7 @@ Processing data for learning procedures.
 import json
 import logging
 import math
+import itertools
 import os
 from collections import namedtuple
 from multiprocessing import Manager, cpu_count
@@ -29,6 +30,8 @@ man_data_path = absolute_path('../../data/training/manual.json')
 yh_data_path = absolute_path('../../data/training/younghoon.json')
 ba_data_path = absolute_path('../../data/training/bahador.json')
 compassql_data_path = absolute_path("../../data/compassql_examples")
+
+halden_data_path = absolute_path("../../data/to_label")
 
 
 PosNegExample = namedtuple('PosNeg', ['pair_id', 'data', 'task', 'source', 'negative', 'positive'])
@@ -100,6 +103,26 @@ def load_partial_full_data(path=compassql_data_path):
     return result
 
 
+def load_halden_data():
+    """ load halden's data into memory the result is a list of unlabeled pairs """
+
+    files = [os.path.join(halden_data_path, f) 
+                for f in os.listdir(halden_data_path) 
+                if f.endswith(".json")]
+
+    to_label_pairs = []
+    for fname in files:
+        with open(fname, "r") as f:
+            content = json.load(f)
+            for num_channel in content:
+                for spec_list in content[num_channel]:
+                    #TODO: change this some time later to make it more efficient?
+                    to_label_pairs.extend(list(itertools.combinations(spec_list, 2)))
+
+    return to_label_pairs
+
+
+
 def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
     key = task.to_asp()
     if key not in processed_specs:
@@ -131,8 +154,10 @@ def featurize_partition(input_data: Tuple[Dict, Iterable]):
         if isinstance(example, np.ndarray):
             example = PosNegExample(*example)
 
-        neg_feature_vec = count_violations_memoized(processed_specs, Task(example.data, Query.from_vegalite(example.negative), example.task))
-        pos_feature_vec = count_violations_memoized(processed_specs, Task(example.data, Query.from_vegalite(example.positive), example.task))
+        neg_feature_vec = count_violations_memoized(processed_specs, 
+                            Task(example.data, Query.from_vegalite(example.negative), example.task))
+        pos_feature_vec = count_violations_memoized(processed_specs, 
+                            Task(example.data, Query.from_vegalite(example.positive), example.task))
 
         # Reformat the json data so that we can insert it into a multi index data frame.
         # https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
