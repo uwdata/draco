@@ -103,24 +103,41 @@ def load_partial_full_data(path=compassql_data_path):
     return result
 
 
-def load_halden_data():
-    ''' load halden's data into memory the result is a list of unlabeled pairs '''
+def load_halden_data(include_features=True):
+    ''' load halden's data into memory the result is a list of unlabeled pairs 
+        Returns:
+            A generator yielding entires one at a time
+    '''
 
     files = [os.path.join(halden_data_path, f)
                 for f in os.listdir(halden_data_path)
                 if f.endswith('.json')]
 
-    to_label_pairs = []
+    spec_to_task = lambda spec: Task(None, spec, spec["task"] if "task" in spec else "value")
+
+    pair_process_func = lambda p: {"source": f"halden", 
+                                   "data": None,
+                                   "task": p[0]["spec"]["task"] if "task" in p[0]["spec"] else "value", 
+                                   "left": p[0]["spec"], 
+                                   "right": p[1]["spec"],
+                                   "left_feature": p[0]["feature"],
+                                   "right_feature": p[1]["feature"]}
+    to_label_pairs = None
     for fname in files:
         with open(fname, 'r') as f:
             content = json.load(f)
             for num_channel in content:
                 for spec_list in content[num_channel]:
-                    #TODO: change this some time later to make it more efficient?
-                    to_label_pairs.extend(list(itertools.combinations(spec_list, 2)))
 
-    return to_label_pairs
+                    if include_features:
+                        features = tasks_to_vec([spec_to_task(spec) for spec in spec_list])
+                    else:
+                        features = [None for spec in spec_list]
 
+                    specs_and_features = [{"spec": spec_list[i], "feature": features[i]} for i in range(len(spec_list))]
+
+                    for pair in map(pair_process_func, itertools.combinations(specs_and_features, 2)):
+                        yield pair
 
 
 def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
@@ -147,7 +164,6 @@ def get_feature_names():
     features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
 
     return features
-
 
 
 def pair_partition_to_vec(input_data: Tuple[Dict, Iterable[Union[PosNegExample, np.ndarray]]]):
@@ -245,7 +261,6 @@ def load_data(test_size: float=0.3, random_state=1) -> Tuple[pd.DataFrame, pd.Da
             a tuple containing: train_dev, test.
     '''
     data = get_pos_neg_data()
-
     return train_test_split(data, test_size=test_size, random_state=random_state)
 
 
