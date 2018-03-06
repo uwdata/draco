@@ -136,6 +136,14 @@ class Model:
 
         return result
 
+    def improve(self, spec):
+        """
+        Improves the given spec to fit certain soft constraints
+        """
+        Improve.improve_aggregate(spec)
+        Improve.improve_bar(spec)
+        return
+
     @staticmethod
     def get_enums_used_for_prop(model, spec, prop):
         used = set()
@@ -159,3 +167,39 @@ class Model:
             return Model.SPECIAL_ENUMS[prop](enum)
         else:
             return enum
+
+class Improve:
+    @staticmethod
+    def improve_aggregate(spec):
+        """
+        Increases the likelihood of giving an aggregate to bar, line, area
+        plots that are not qxq
+        """
+        if (not spec['mark'] in ['bar', 'line', 'area']):
+            return
+
+        # 50% chance of adding aggregate
+        if (random.random() < 0.5):
+            return
+
+        x_enc = Model.get_enc_by_channel(spec, 'x')
+        y_enc = Model.get_enc_by_channel(spec, 'y')
+
+        if (x_enc is None or y_enc is None):
+            return
+        if ((x_enc['type'] != 'quantitative') != (y_enc['type'] != 'quantitative')):
+            q_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
+            q_enc['aggregate'] = 'mean'
+
+        return
+
+    @staticmethod
+    def improve_bar(spec):
+        """
+        Adds `scale: { 'zero': True }` to the given spec
+        if the mark is a bar.
+        """
+        if (spec['mark'] == 'rect'):
+            spec['scale'] = { 'zero': True }
+
+        return

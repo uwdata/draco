@@ -22,7 +22,7 @@ class PropObjects:
         type -- `zero` or `log`
         """
         if (scale_enum == 'zero'):
-            return { 'type': 'linear', 'zero': True }
+            return { 'zero': True }
         elif (scale_enum == 'log'):
             return { 'type': 'log' }
         else:
@@ -32,7 +32,7 @@ class PropObjects:
     def unpack_scale(scale_obj):
         scale_type = scale_obj['type']
 
-        if (scale_type == 'linear' and 'zero' in scale_obj and scale_obj['zero']):
+        if ('zero' in scale_obj and scale_obj['zero']):
             return 'zero'
         elif (scale_type == 'log'):
             return 'log'

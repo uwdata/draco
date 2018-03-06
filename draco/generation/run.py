@@ -63,7 +63,7 @@ def load_json(file_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--interaction', '-i', default='all')
-    parser.add_argument('--groups', '-g', default=2)
+    parser.add_argument('--groups', '-g', default=20)
     parser.add_argument('--output_dir', '-o', default=absolute_path('../../data/to_label'))
 
     args = parser.parse_args()
