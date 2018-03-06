@@ -47,10 +47,10 @@ def create_parser():
                         help='The input query.')
     parser.add_argument('--type', '-t', type=QueryType, choices=list(QueryType), default=QueryType.draco,
                         help='Type of query. draco (Draco, default), cql (CompassQl), vl (Vega-Lite), asp (Answer Set Program).')
-    parser.add_argument('--out', '-o', nargs='?', type=argparse.FileType('w'), default=sys.stdout,
-                        help='specify the Vega-Lite output file')
     parser.add_argument('--mode', '-m', type=Mode, choices=list(Mode), default=Mode.optimize,
                         help='Mode to run draco in.',)
+    parser.add_argument('--out', '-o', nargs='?', type=argparse.FileType('w'), default=sys.stdout,
+                        help='specify the Vega-Lite output file')
     parser.add_argument('--debug', '-d', help='Create debugging information.', action='store_true')
     parser.add_argument('--version', action='version',
                         version=__version__)
