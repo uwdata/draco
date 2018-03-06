@@ -2,8 +2,9 @@ import os
 
 import numpy as np
 import pytest
+import pandas as pd
 
-from draco.learn.data_util import load_data, pickle_path
+from draco.learn.data_util import load_data, pickle_path, run_in_parallel
 
 
 def test_load_data():
@@ -15,3 +16,21 @@ def test_load_data():
     size = len(train) + len(test)
     assert len(train) - int(0.7 * size) <= 1
     assert len(test) - int(0.3 * size) <= 1
+
+def square(x):
+    return x**2
+
+def batch_square(d):
+    _, xs = d
+
+    s = pd.Series()
+    for i, x in xs:
+        s = s.append(pd.Series([x**2], index=[i]))
+    return s
+
+def test_run_in_parallel():
+    a = range(100)
+    expected = list(map(square, a))
+    actual = run_in_parallel(batch_square, list(enumerate(a)))
+
+    assert list(actual.values) == expected

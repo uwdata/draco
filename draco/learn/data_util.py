@@ -2,14 +2,14 @@
 Processing data for learning procedures.
 '''
 
+import itertools
 import json
 import logging
 import math
-import itertools
 import os
 from collections import namedtuple
 from multiprocessing import Manager, cpu_count
-from typing import Any, Dict, Iterable, List, Tuple
+from typing import Any, Dict, Iterable, List, Tuple, Union
 
 import numpy as np
 import pandas as pd
@@ -29,9 +29,9 @@ pickle_path = absolute_path('../../__tmp__/data.pickle')
 man_data_path = absolute_path('../../data/training/manual.json')
 yh_data_path = absolute_path('../../data/training/younghoon.json')
 ba_data_path = absolute_path('../../data/training/bahador.json')
-compassql_data_path = absolute_path("../../data/compassql_examples")
+compassql_data_path = absolute_path('../../data/compassql_examples')
 
-halden_data_path = absolute_path("../../data/to_label")
+halden_data_path = absolute_path('../../data/to_label')
 
 
 PosNegExample = namedtuple('PosNeg', ['pair_id', 'data', 'task', 'source', 'negative', 'positive'])
@@ -63,39 +63,39 @@ def load_neg_pos_data() -> List[PosNegExample]:
 
 
 def load_partial_full_data(path=compassql_data_path):
-    """ load partial-full spec pairs from the directory
+    ''' load partial-full spec pairs from the directory
         Args:
             compassql_data_dir: the directory containing compassql data with
-                 "input" and "output" directories specifying compassql input and output
+                 'input' and 'output' directories specifying compassql input and output
         Returns:
             A dictionary mapping each case name into a pair of partial spec - full spec.
-    """
+    '''
 
-    def load_spec(input_dir, format="compassql"):
-        """ load compassql data
+    def load_spec(input_dir, format='compassql'):
+        ''' load compassql data
             Args: input_dir: the directory containing a set of json compassql specs
-                  format: one of "compassql" and "vegalite"
+                  format: one of 'compassql' and 'vegalite'
             Returns:
                 a dictionary containing name and the Task object representing the spec
-        """
+        '''
         files = [os.path.join(input_dir, f) for f in os.listdir(input_dir)]
         result = {}
         for fname in files:
-            if not fname.endswith(".json"):
+            if not fname.endswith('.json'):
                 continue
             with open(fname, 'r') as f:
                 content = json.load(f)
-                if "url" in content["data"] and content["data"]["url"] is not None:
-                    content["data"]["url"] = os.path.join(input_dir, content["data"]["url"])
-                if format == "compassql":
-                    spec = Task.from_cql(content, ".")
-                elif format == "vegalite":
+                if 'url' in content['data'] and content['data']['url'] is not None:
+                    content['data']['url'] = os.path.join(input_dir, content['data']['url'])
+                if format == 'compassql':
+                    spec = Task.from_cql(content, '.')
+                elif format == 'vegalite':
                     spec = Task.from_vegalite(content)
                 result[os.path.basename(fname)] = spec
         return result
 
-    partial_specs = load_spec(os.path.join(path, "input"), "compassql")
-    compassql_outs = load_spec(os.path.join(path, "output"), "vegalite")
+    partial_specs = load_spec(os.path.join(path, 'input'), 'compassql')
+    compassql_outs = load_spec(os.path.join(path, 'output'), 'vegalite')
 
     result = {}
     for k in partial_specs:
@@ -104,15 +104,15 @@ def load_partial_full_data(path=compassql_data_path):
 
 
 def load_halden_data():
-    """ load halden's data into memory the result is a list of unlabeled pairs """
+    ''' load halden's data into memory the result is a list of unlabeled pairs '''
 
-    files = [os.path.join(halden_data_path, f) 
-                for f in os.listdir(halden_data_path) 
-                if f.endswith(".json")]
+    files = [os.path.join(halden_data_path, f)
+                for f in os.listdir(halden_data_path)
+                if f.endswith('.json')]
 
     to_label_pairs = []
     for fname in files:
-        with open(fname, "r") as f:
+        with open(fname, 'r') as f:
             content = json.load(f)
             for num_channel in content:
                 for spec_list in content[num_channel]:
@@ -130,10 +130,11 @@ def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
     return processed_specs[key]
 
 
-def get_index():
-    # it gives you a pandas index that we apply to the data when creating a dataframe
-    weights = current_weights()
-    features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
+def get_nested_index():
+    '''
+    Gives you a nested pandas index that we apply to the data when creating a dataframe.
+    '''
+    features = get_feature_names()
 
     iterables = [['negative', 'positive'], features]
     index = pd.MultiIndex.from_product(iterables, names=['category', 'feature'])
@@ -141,12 +142,18 @@ def get_index():
     return index
 
 
-def featurize_partition(input_data: Tuple[Dict, Iterable]):
+def get_feature_names():
+    weights = current_weights()
+    features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
+
+    return features
+
+
+
+def pair_partition_to_vec(input_data: Tuple[Dict, Iterable[Union[PosNegExample, np.ndarray]]]):
     processed_specs, partiton_data = input_data
 
-    index = get_index()
-
-    df = pd.DataFrame(columns=index)
+    df = pd.DataFrame(columns=get_nested_index())
 
     for example in partiton_data:
         Encoding.encoding_cnt = 0
@@ -154,9 +161,9 @@ def featurize_partition(input_data: Tuple[Dict, Iterable]):
         if isinstance(example, np.ndarray):
             example = PosNegExample(*example)
 
-        neg_feature_vec = count_violations_memoized(processed_specs, 
+        neg_feature_vec = count_violations_memoized(processed_specs,
                             Task(example.data, Query.from_vegalite(example.negative), example.task))
-        pos_feature_vec = count_violations_memoized(processed_specs, 
+        pos_feature_vec = count_violations_memoized(processed_specs,
                             Task(example.data, Query.from_vegalite(example.positive), example.task))
 
         # Reformat the json data so that we can insert it into a multi index data frame.
@@ -172,20 +179,35 @@ def featurize_partition(input_data: Tuple[Dict, Iterable]):
     return df
 
 
-def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
-    """ given neg_pos_data, convert them into feature vectors """
+def task_partition_to_vec(input_data: Tuple[Dict, Iterable[Tuple[int, Task]]]):
+    processed_specs, partiton_data = input_data
 
-    splits = min([cpu_count() * 20, math.ceil(len(neg_pos_data) / 10)])
-    df_split = np.array_split(neg_pos_data, splits)
+    df = pd.DataFrame(columns=get_feature_names())
+
+    for idx, task in partiton_data:
+        Encoding.encoding_cnt = 0
+
+        vec = count_violations_memoized(processed_specs, task)
+
+        df = df.append(pd.DataFrame(vec), index=idx)
+
+    return df
+
+
+def run_in_parallel(func, data: List[Any]) -> pd.DataFrame:
+    ''' Like map, but parallel. '''
+
+    splits = min([cpu_count() * 20, math.ceil(len(data) / 10)])
+    df_split = np.array_split(data, splits)
     processes = min(cpu_count(), splits)
 
-    logger.info(f'Running {splits} partitions of {len(neg_pos_data)} items in parallel on {processes} processes.')
+    logger.info(f'Running {splits} partitions of {len(data)} items in parallel on {processes} processes.')
 
     with Manager() as manager:
         m: Any = manager  # fix for mypy
         d = m.dict()  # shared dict for memoization
         pool = m.Pool(processes=processes)
-        df = pd.concat(pool.map(featurize_partition, list(map(lambda s: (d,s), df_split))))
+        df = pd.concat(pool.map(func, list(map(lambda s: (d,s), df_split))))
         pool.close()
         pool.join()
 
@@ -194,6 +216,18 @@ def to_feature_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
     logger.info(f'Hash of dataframe: {hash_pandas_object(df).sum()}')
 
     return df
+
+
+def pairs_to_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
+    ''' given neg_pos_data, convert them into feature vectors. '''
+
+    return run_in_parallel(pair_partition_to_vec, neg_pos_data)
+
+
+def tasks_to_vec(specs: List[Task]) -> pd.DataFrame:
+    ''' Turn a list of tasks into a feature vecor. '''
+    return run_in_parallel(task_partition_to_vec, list(enumerate(specs)))
+
 
 def get_pos_neg_data() -> pd.DataFrame:
     '''
@@ -204,6 +238,7 @@ def get_pos_neg_data() -> pd.DataFrame:
 
     return data
 
+
 def load_data(test_size: float=0.3, random_state=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
     '''
         Returns:
@@ -213,8 +248,9 @@ def load_data(test_size: float=0.3, random_state=1) -> Tuple[pd.DataFrame, pd.Da
 
     return train_test_split(data, test_size=test_size, random_state=random_state)
 
+
 if __name__ == '__main__':
     ''' Generate and store data in default path. '''
     neg_pos_data = load_neg_pos_data()
-    data = to_feature_vec(neg_pos_data)
+    data = pairs_to_vec(neg_pos_data)
     data.to_pickle(pickle_path)
