@@ -189,7 +189,7 @@ def task_partition_to_vec(input_data: Tuple[Dict, Iterable[Tuple[int, Task]]]):
 
         vec = count_violations_memoized(processed_specs, task)
 
-        df = df.append(pd.DataFrame(vec), index=idx)
+        df = df.append(pd.DataFrame(vec, index=[idx]))
 
     return df
 

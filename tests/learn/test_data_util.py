@@ -4,7 +4,8 @@ import numpy as np
 import pytest
 import pandas as pd
 
-from draco.learn.data_util import load_data, pickle_path, run_in_parallel
+from draco.spec import Task
+from draco.learn.data_util import load_data, pickle_path, run_in_parallel, tasks_to_vec
 
 
 def test_load_data():
@@ -34,3 +35,16 @@ def test_run_in_parallel():
     actual = run_in_parallel(batch_square, list(enumerate(a)))
 
     assert list(actual.values) == expected
+
+def test_tasks_to_vec():
+    task = Task.from_vegalite({
+        'data': {
+            'values': [{'a': 10}, {'a': 42}]
+        },
+        'mark': 'point',
+        'encoding': {
+            'x': {'field': 'a', 'type': 'quantitative'}
+        }
+    })
+
+    tasks_to_vec([task, task, task])
