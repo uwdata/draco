@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
-import { vl2view, equals } from 'shared/js/utilities/util';
+import { equals } from 'shared/js/utilities/util';
+import vegaEmbed, { vega } from 'vega-embed';
 
 import 'shared/scss/Visualization.css';
+
+const datasets = {
+  'data/cars.json': require('../../data/cars.json'),
+  'data/movies.json': require('../../data/movies.json'),
+  'data/weather.json': require('../../data/weather.json')
+};
 
 /**
  * A Visualization component accepts a `vlSpec` as a prop
@@ -31,11 +38,19 @@ class Visualization extends Component {
    * @param {Object} vlSpec The Vega-Lite spec to use.
    */
   updateView(vlSpec) {
-    if (this.props.renderer) {
-      vl2view(vlSpec, this.refs.vis, this.props.renderer);
-    } else {
-      vl2view(vlSpec, this.refs.vis);
-    }
+    const loader = vega.loader();
+
+    const original_http = loader.http;
+    loader.http = (url, options) => {
+      console.debug(url);
+
+      if (url in datasets) {
+        return datasets[url];
+      }
+      return original_http(url, options);
+    };
+
+    vegaEmbed(this.refs.vis, vlSpec, { renderer: this.props.renderer, loader: loader, mode: 'vega-lite', actions: { editor: false, export: false } });
   }
 }
 

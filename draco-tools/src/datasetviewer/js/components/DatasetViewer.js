@@ -34,12 +34,6 @@ class DatasetViewer extends Component {
       .then(data => this.setState({ data: data }));
 
     this.fetchDataset(DEFAULT_DATASET);
-
-    document.body.addEventListener('click', this.removeCurrentSpec.bind(this));
-  }
-
-  componentWillUnmount() {
-    document.body.removeEventListener('click', this.removeCurrentSpec.bind(this));
   }
 
   render() {
@@ -74,7 +68,7 @@ class DatasetViewer extends Component {
 
 
           visualizations.push(
-            <div className="visualization" key={j} onClick={ (e) => this.setCurrentSpec(e, specNoData) }>
+            <div className="visualization" key={j}>
               <Visualization vlSpec={spec} renderer="canvas"/>
             </div>
           );
@@ -94,16 +88,6 @@ class DatasetViewer extends Component {
       }
 
       info = <div className="summary">{count} visualizations and {pairs} pairs</div>;
-
-      if (this.state.currentSpec) {
-        specView = (
-          <div className="spec-view" onClick={(e) => { e.stopPropagation(); }} style={{
-            left: this.state.specX - 100 + 'px', top: this.state.specY + 50 + 'px'
-          }}>
-            <pre>{JSON.stringify(this.state.currentSpec, null, 2)}</pre>
-          </div>
-        );
-      }
     }
 
     return (
@@ -149,20 +133,6 @@ class DatasetViewer extends Component {
           availableDimensions: dimensions,
           currentDimension: dimensions[0] });
       });
-  }
-
-  setCurrentSpec(event, spec) {
-    this.setState({
-      currentSpec: spec,
-      specX: event.pageX,
-      specY: event.pageY
-    });
-  }
-
-  removeCurrentSpec(e) {
-    this.setState({
-      currentSpec: undefined
-    });
   }
 
   setCurrentDimension(d) {

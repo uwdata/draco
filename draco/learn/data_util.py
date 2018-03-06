@@ -30,6 +30,7 @@ man_data_path = absolute_path('../../data/training/manual.json')
 yh_data_path = absolute_path('../../data/training/younghoon.json')
 ba_data_path = absolute_path('../../data/training/bahador.json')
 compassql_data_path = absolute_path('../../data/compassql_examples')
+compassql_data_dir = absolute_path('../../data/')
 
 halden_data_path = absolute_path('../../data/to_label')
 
@@ -62,7 +63,7 @@ def load_neg_pos_data() -> List[PosNegExample]:
     return raw_data
 
 
-def load_partial_full_data(path=compassql_data_path):
+def load_partial_full_data(path=compassql_data_path, data_dir=compassql_data_dir):
     ''' load partial-full spec pairs from the directory
         Args:
             compassql_data_dir: the directory containing compassql data with
@@ -71,7 +72,7 @@ def load_partial_full_data(path=compassql_data_path):
             A dictionary mapping each case name into a pair of partial spec - full spec.
     '''
 
-    def load_spec(input_dir, format='compassql'):
+    def load_spec(input_dir, data_dir, format='compassql'):
         ''' load compassql data
             Args: input_dir: the directory containing a set of json compassql specs
                   format: one of 'compassql' and 'vegalite'
@@ -86,7 +87,7 @@ def load_partial_full_data(path=compassql_data_path):
             with open(fname, 'r') as f:
                 content = json.load(f)
                 if 'url' in content['data'] and content['data']['url'] is not None:
-                    content['data']['url'] = os.path.join(input_dir, content['data']['url'])
+                    content['data']['url'] = os.path.join(data_dir, os.path.basename(content['data']['url']))
                 if format == 'compassql':
                     spec = Task.from_cql(content, '.')
                 elif format == 'vegalite':
@@ -94,8 +95,8 @@ def load_partial_full_data(path=compassql_data_path):
                 result[os.path.basename(fname)] = spec
         return result
 
-    partial_specs = load_spec(os.path.join(path, 'input'), 'compassql')
-    compassql_outs = load_spec(os.path.join(path, 'output'), 'vegalite')
+    partial_specs = load_spec(os.path.join(path, 'input'), data_dir, 'compassql')
+    compassql_outs = load_spec(os.path.join(path, 'output'), data_dir, 'vegalite')
 
     result = {}
     for k in partial_specs:
