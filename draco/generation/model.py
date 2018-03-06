@@ -58,7 +58,7 @@ class Model:
         n_dimensions -- the number of encodings to generate
         """
         self.ready()
-        spec = {'encodings': []}
+        spec = {'encoding': {}}
 
         for prop in self.top_level_props:
             if (self.include(prop)):
@@ -66,7 +66,9 @@ class Model:
 
         for _ in range(n_dimensions):
             enc = self.generate_enc()
-            spec['encodings'].append(enc)
+
+            channel = self.sample_prop('channel')
+            spec['encoding'][channel] = enc
 
         return spec
 

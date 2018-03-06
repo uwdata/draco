@@ -30,6 +30,29 @@ class Generator:
             spec = deepcopy(base_spec)
             Generator.populate_field_names(spec)
 
+            model.improve(spec)
+            query = Query.from_vegalite(spec)
+            if (is_valid(Task(dummy_data, query))):
+                specs.append(spec)
+        else:
+            prop_to_mutate = props.pop(0)
+            is_top_level_prop = prop_to_mutate in model.get_top_level_props()
+            is_channel = prop_to_mutate == 'channel'
+
+            for enum in model.get_enums(prop_to_mutate):
+                if (is_top_level_prop):
+                    base_spec[prop_to_mutate] = enum
+                    Generator.mutate_spec(model, dummy_data, base_spec, props, specs)
+                elif (is_channel):
+                    if (not enum in base_spec['encoding']):
+                        # pick a random encoding to swap out
+
+    @staticmethod
+    def mutate_spec(model, dummy_data, base_spec, props, specs):
+        if (not props):
+            spec = deepcopy(base_spec)
+            Generator.populate_field_names(spec)
+
             Generator.to_vegalite(spec)
             query = Query.from_vegalite(spec)
             if (is_valid(Task(dummy_data, query))):
@@ -46,7 +69,7 @@ class Generator:
                     base_spec[prop_to_mutate] = enum
                     Generator.mutate_spec(model, dummy_data, base_spec, props, specs)
                 elif (not enum in used_enums):
-                    encodings = base_spec['encodings']
+                    encodings = base_spec['encoding']
                     index = random.randint(0, len(encodings) - 1)
 
                     before = None
@@ -62,17 +85,6 @@ class Generator:
                 else:
                     Generator.mutate_spec(model, dummy_data, base_spec, props, specs)
 
-    @staticmethod
-    def to_vegalite(spec):
-        old_encodings = spec['encodings']
-        del spec['encodings']
-        spec['encoding'] = {}
-        for enc in old_encodings:
-            channel = enc['channel']
-            del enc['channel']
-            spec['encoding'][channel] = enc
-        return
-
 
     @staticmethod
     def populate_field_names(spec):
@@ -80,7 +92,7 @@ class Generator:
             'n': 1, 'o': 1, 'q': 1, 't': 1
         }
 
-        encodings = spec['encodings']
+        encodings = spec['encoding']
         for enc in encodings:
             field_type = enc['type'][:1]
             field_name = field_type + str(counts[field_type])
