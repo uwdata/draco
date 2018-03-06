@@ -1,11 +1,11 @@
 import os
 
-import numpy as np
-import pytest
 import pandas as pd
+import pytest
 
+from draco.learn.data_util import (load_data, pickle_path, run_in_parallel,
+                                   tasks_to_vec)
 from draco.spec import Task
-from draco.learn.data_util import load_data, pickle_path, run_in_parallel, tasks_to_vec
 
 
 def test_load_data():
@@ -47,4 +47,5 @@ def test_tasks_to_vec():
         }
     })
 
-    tasks_to_vec([task, task, task])
+    vecs = tasks_to_vec([task, task, task])
+    assert len(vecs) == 3
