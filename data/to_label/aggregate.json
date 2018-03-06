@@ -2,287 +2,4527 @@
     "1": [
         [
             {
-                "mark": "rule",
                 "encoding": {
                     "x": {
-                        "aggregate": "sum",
-                        "type": "quantitative",
-                        "field": "q1",
+                        "aggregate": "min", 
+                        "field": "o1", 
+                        "type": "ordinal", 
                         "channel": "x"
                     }
-                }
-            },
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
             {
-                "mark": "rule",
                 "encoding": {
                     "x": {
-                        "aggregate": "mean",
-                        "type": "quantitative",
-                        "field": "q1",
+                        "aggregate": "max", 
+                        "field": "o1", 
+                        "type": "ordinal", 
                         "channel": "x"
                     }
-                }
-            },
-            {
-                "mark": "rule",
-                "encoding": {
-                    "x": {
-                        "aggregate": "stdev",
-                        "type": "quantitative",
-                        "field": "q1",
-                        "channel": "x"
-                    }
-                }
-            },
-            {
-                "mark": "rule",
-                "encoding": {
-                    "x": {
-                        "aggregate": "median",
-                        "type": "quantitative",
-                        "field": "q1",
-                        "channel": "x"
-                    }
-                }
-            },
-            {
-                "mark": "rule",
-                "encoding": {
-                    "x": {
-                        "aggregate": "min",
-                        "type": "quantitative",
-                        "field": "q1",
-                        "channel": "x"
-                    }
-                }
-            },
-            {
-                "mark": "rule",
-                "encoding": {
-                    "x": {
-                        "aggregate": "max",
-                        "type": "quantitative",
-                        "field": "q1",
-                        "channel": "x"
-                    }
-                }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
             }
-        ],
+        ], 
         [
             {
-                "mark": "point",
                 "encoding": {
                     "x": {
-                        "type": "quantitative",
-                        "aggregate": "sum",
-                        "field": "q1",
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "x"
                     }
-                }
-            },
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
             {
-                "mark": "point",
                 "encoding": {
                     "x": {
-                        "type": "quantitative",
-                        "aggregate": "mean",
-                        "field": "q1",
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "x"
                     }
-                }
-            },
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
             {
-                "mark": "point",
                 "encoding": {
                     "x": {
-                        "type": "quantitative",
-                        "aggregate": "stdev",
-                        "field": "q1",
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "x"
                     }
-                }
-            },
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
             {
-                "mark": "point",
                 "encoding": {
                     "x": {
-                        "type": "quantitative",
-                        "aggregate": "median",
-                        "field": "q1",
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "x"
                     }
-                }
-            },
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
             {
-                "mark": "point",
                 "encoding": {
                     "x": {
-                        "type": "quantitative",
-                        "aggregate": "min",
-                        "field": "q1",
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "x"
                     }
-                }
-            },
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
             {
-                "mark": "point",
                 "encoding": {
                     "x": {
-                        "type": "quantitative",
-                        "aggregate": "max",
-                        "field": "q1",
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "x"
                     }
-                }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "o1", 
+                        "type": "ordinal", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "o1", 
+                        "type": "ordinal", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "sum", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "stdev", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "median", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "min", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "max", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "o1", 
+                        "type": "ordinal", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "o1", 
+                        "type": "ordinal", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending", 
+                        "aggregate": "min", 
+                        "type": "ordinal", 
+                        "channel": "y", 
+                        "field": "o1"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending", 
+                        "aggregate": "max", 
+                        "type": "ordinal", 
+                        "channel": "y", 
+                        "field": "o1"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "o1", 
+                        "type": "ordinal", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "o1", 
+                        "type": "ordinal", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
             }
         ]
-    ],
+    ], 
+    "3": [
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q2", 
+                        "aggregate": "sum", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "detail": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "detail"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q2", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "detail": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "detail"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q2", 
+                        "aggregate": "stdev", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "detail": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "detail"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "x"
+                    }, 
+                    "size": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "size"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "x"
+                    }, 
+                    "size": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "size"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "x"
+                    }, 
+                    "size": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "size"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [], 
+        [
+            {
+                "encoding": {
+                    "color": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "color"
+                    }, 
+                    "x": {
+                        "field": "n2", 
+                        "type": "nominal", 
+                        "channel": "x"
+                    }, 
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "color": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "color"
+                    }, 
+                    "x": {
+                        "field": "n2", 
+                        "type": "nominal", 
+                        "channel": "x"
+                    }, 
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        [], 
+        [], 
+        [], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "o1", 
+                        "type": "ordinal", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "o1", 
+                        "type": "ordinal", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "median", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "detail": {
+                        "sort": "ascending", 
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "detail"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "detail": {
+                        "sort": "ascending", 
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "detail"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "color": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "detail": {
+                        "sort": "ascending", 
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "detail"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "color": {
+                        "aggregate": "median", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "detail": {
+                        "sort": "ascending", 
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "detail"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "ascending", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "ascending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "ascending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "ascending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "color": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "stack": "zero", 
+                        "channel": "y"
+                    }, 
+                    "size": {
+                        "sort": "descending", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "size", 
+                        "field": "q3"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }, 
+            {
+                "encoding": {
+                    "color": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "stack": "zero", 
+                        "channel": "y"
+                    }, 
+                    "size": {
+                        "sort": "descending", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "size", 
+                        "field": "q3"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "rule"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "stdev", 
+                        "field": "t1", 
+                        "type": "temporal", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "stdev", 
+                        "field": "t1", 
+                        "type": "temporal", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        [], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "sort": "ascending", 
+                        "type": "quantitative", 
+                        "channel": "y", 
+                        "field": "q2"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q3", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "sort": "ascending", 
+                        "type": "quantitative", 
+                        "channel": "y", 
+                        "field": "q2"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q3", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "sort": "ascending", 
+                        "type": "quantitative", 
+                        "channel": "y", 
+                        "field": "q2"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q3", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "sort": "ascending", 
+                        "type": "quantitative", 
+                        "channel": "y", 
+                        "field": "q2"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q3", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "sort": "ascending", 
+                        "type": "quantitative", 
+                        "channel": "y", 
+                        "field": "q2"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q3", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "sort": "ascending", 
+                        "type": "quantitative", 
+                        "channel": "y", 
+                        "field": "q2"
+                    }, 
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q3", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        [], 
+        [], 
+        [], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "o1", 
+                        "type": "ordinal", 
+                        "channel": "x"
+                    }, 
+                    "detail": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "detail"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "o1", 
+                        "type": "ordinal", 
+                        "channel": "x"
+                    }, 
+                    "detail": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "detail"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        []
+    ], 
     "2": [
         [
             {
-                "mark": "line",
                 "encoding": {
-                    "y": {
-                        "type": "ordinal",
-                        "aggregate": "min",
-                        "field": "o1",
-                        "channel": "y"
-                    },
-                    "x": {
-                        "type": "temporal",
-                        "aggregate": "stdev",
-                        "field": "t1",
-                        "channel": "x"
+                    "text": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "text"
+                    }, 
+                    "size": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "size"
                     }
-                }
-            },
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "text"
+            }, 
             {
-                "mark": "line",
                 "encoding": {
-                    "y": {
-                        "type": "ordinal",
-                        "aggregate": "max",
-                        "field": "o1",
-                        "channel": "y"
-                    },
-                    "x": {
-                        "type": "temporal",
-                        "aggregate": "stdev",
-                        "field": "t1",
-                        "channel": "x"
+                    "text": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "text"
+                    }, 
+                    "size": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "size"
                     }
-                }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "text"
             }
-        ],
+        ], 
         [
             {
-                "mark": "line",
                 "encoding": {
                     "y": {
-                        "type": "quantitative",
-                        "aggregate": "stdev",
-                        "field": "q1",
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "y"
-                    },
+                    }, 
                     "x": {
-                        "type": "quantitative",
-                        "aggregate": "sum",
-                        "field": "q2",
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "x"
                     }
-                }
-            },
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
             {
-                "mark": "line",
                 "encoding": {
                     "y": {
-                        "type": "quantitative",
-                        "aggregate": "min",
-                        "field": "q1",
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "y"
-                    },
+                    }, 
                     "x": {
-                        "type": "quantitative",
-                        "aggregate": "sum",
-                        "field": "q2",
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "x"
                     }
-                }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "median", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
             }
-        ]
-    ],
-    "3": [
-        [],
+        ], 
         [
             {
-                "mark": "line",
                 "encoding": {
-                    "color": {
-                        "aggregate": "sum",
-                        "type": "quantitative",
-                        "field": "q1",
-                        "channel": "color"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "field": "q2",
-                        "channel": "x"
-                    },
+                    "opacity": {
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "opacity"
+                    }, 
                     "y": {
-                        "type": "quantitative",
-                        "field": "q3",
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "y"
                     }
-                }
-            },
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
             {
-                "mark": "line",
                 "encoding": {
-                    "color": {
-                        "aggregate": "mean",
-                        "type": "quantitative",
-                        "field": "q1",
-                        "channel": "color"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "field": "q2",
-                        "channel": "x"
-                    },
+                    "opacity": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "opacity"
+                    }, 
                     "y": {
-                        "type": "quantitative",
-                        "field": "q3",
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "y"
                     }
-                }
-            },
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
             {
-                "mark": "line",
                 "encoding": {
-                    "color": {
-                        "aggregate": "max",
-                        "type": "quantitative",
-                        "field": "q1",
-                        "channel": "color"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "aggregate": "min",
-                        "field": "q2",
-                        "channel": "x"
-                    },
+                    "opacity": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "opacity"
+                    }, 
                     "y": {
-                        "type": "quantitative",
-                        "aggregate": "stdev",
-                        "field": "q3",
+                        "aggregate": "median", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
                         "channel": "y"
                     }
-                }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "opacity": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "opacity"
+                    }, 
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        [], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "descending", 
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "descending", 
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "descending", 
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "bar"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q2", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q2", 
+                        "aggregate": "stdev", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q2", 
+                        "aggregate": "median", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q2", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q2", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "median", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "min", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "descending", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "field": "q1", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "type": "log"
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "type": "log"
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "type": "log"
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "scale": {
+                            "type": "log"
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "type": "log"
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "scale": {
+                            "type": "log"
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "field": "t1", 
+                        "type": "temporal", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "field": "t1", 
+                        "type": "temporal", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "field": "t1", 
+                        "type": "temporal", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "color": {
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "color": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "y": {
+                        "aggregate": "stdev", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "color": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "color": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "y": {
+                        "aggregate": "max", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "tick"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "ascending", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "stdev", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "ascending", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "x", 
+                        "field": "q2"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "sort": "ascending", 
+                        "aggregate": "mean", 
+                        "type": "quantitative", 
+                        "channel": "x", 
+                        "field": "q2"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "line"
+            }
+        ], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "size": {
+                        "aggregate": "sum", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "size"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "size": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "size"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "size": {
+                        "aggregate": "min", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "size"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "size": {
+                        "aggregate": "max", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "size"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
             }
         ]
-    ],
+    ], 
     "4": [
-        [],
-        []
+        [], 
+        [], 
+        [], 
+        [], 
+        [], 
+        [], 
+        [], 
+        [], 
+        [], 
+        [], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending", 
+                        "aggregate": "stdev", 
+                        "type": "quantitative", 
+                        "channel": "y", 
+                        "field": "q2"
+                    }, 
+                    "x": {
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q3", 
+                        "scale": {
+                            "type": "log"
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "size": {
+                        "aggregate": "mean", 
+                        "field": "q4", 
+                        "type": "quantitative", 
+                        "channel": "size"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending", 
+                        "aggregate": "median", 
+                        "type": "quantitative", 
+                        "channel": "y", 
+                        "field": "q2"
+                    }, 
+                    "x": {
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q3", 
+                        "scale": {
+                            "type": "log"
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "size": {
+                        "aggregate": "mean", 
+                        "field": "q4", 
+                        "type": "quantitative", 
+                        "channel": "size"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [], 
+        [], 
+        [], 
+        [], 
+        [], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q1", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "opacity": {
+                        "aggregate": "sum", 
+                        "field": "q2", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "opacity"
+                    }, 
+                    "shape": {
+                        "field": "n1", 
+                        "type": "nominal", 
+                        "channel": "shape"
+                    }, 
+                    "x": {
+                        "field": "q3", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ], 
+        [], 
+        [], 
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "mean", 
+                        "field": "q3", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q4", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "size": {
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "size"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }, 
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "min", 
+                        "field": "q3", 
+                        "scale": {
+                            "zero": true
+                        }, 
+                        "type": "quantitative", 
+                        "channel": "y"
+                    }, 
+                    "x": {
+                        "aggregate": "median", 
+                        "field": "q1", 
+                        "type": "quantitative", 
+                        "channel": "x"
+                    }, 
+                    "color": {
+                        "aggregate": "sum", 
+                        "field": "q4", 
+                        "type": "quantitative", 
+                        "channel": "color"
+                    }, 
+                    "size": {
+                        "field": "q2", 
+                        "type": "quantitative", 
+                        "channel": "size"
+                    }
+                }, 
+                "data": {
+                    "url": "data/random_data.json"
+                }, 
+                "mark": "point"
+            }
+        ]
     ]
 }
