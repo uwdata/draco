@@ -597,6 +597,29 @@ class Task():
             asp_str += f'task({self.task}).\n\n'
         return asp_str
 
+
+class AspTask(Task):
+    '''
+    Mock task that has the ASP in it already.
+    '''
+
+    def __init__(self, asp: str) -> None:
+        self.asp = asp
+        super(AspTask, self).__init__(Data([], url='__none__'), None, None, None, None)
+
+    def to_asp(self):
+        return self.asp
+
+    def to_vegalite_json(self):
+        raise NotImplementedError
+
+    def to_vegalite(self):
+        raise NotImplementedError
+
+    def to_compassql(self):
+        raise NotImplementedError
+
+
 if __name__ == '__main__':
     e = Encoding(channel='x', field='xx', ty='quantitative', binning=True, idx='e1')
     print(e.to_asp())

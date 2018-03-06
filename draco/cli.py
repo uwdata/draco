@@ -8,7 +8,7 @@ import json
 import os
 
 from draco.run import run
-from draco.spec import Task
+from draco.spec import Task, AspTask
 from draco import __version__
 from enum import Enum
 
@@ -19,6 +19,7 @@ class QueryType(Enum):
     draco = 'draco'
     cql = 'cql'
     vl = 'vl'
+    asp = 'asp'
 
     def __str__(self):
         return self.value
@@ -53,15 +54,18 @@ def main():  # pragma: no cover
 
     logger.info(f'Processing query: {args.query.name} ...')
 
-    # load a task from a spec provided by the user
-    query_spec = json.load(args.query)
-    d = os.path.dirname(args.query.name)
-    if args.type == QueryType.draco:
-        input_task = Task.from_obj(query_spec, d)
-    elif args.type == QueryType.cql:
-        input_task = Task.from_cql(query_spec, d)
-    elif args.type == QueryType.vl:
-        input_task = Task.from_vegalite(query_spec, d)
+    if args.type == QueryType.asp:
+        input_task = AspTask(args.query.read())
+    else:
+        # load a task from a spec provided by the user
+        query_spec = json.load(args.query)
+        d = os.path.dirname(args.query.name)
+        if args.type == QueryType.draco:
+            input_task = Task.from_obj(query_spec, d)
+        elif args.type == QueryType.cql:
+            input_task = Task.from_cql(query_spec, d)
+        elif args.type == QueryType.vl:
+            input_task = Task.from_vegalite(query_spec, d)
 
     task = run(input_task, debug=args.debug)
 
