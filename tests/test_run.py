@@ -11,7 +11,7 @@ EXAMPLES_DIR = os.path.join('examples')
 class TestFull():
     def test_output_schema(self):
         json_files = [os.path.join(EXAMPLES_DIR, fname)
-                      for fname in os.listdir(EXAMPLES_DIR) if fname.endswith('.json')]
+                      for fname in os.listdir(EXAMPLES_DIR) if fname.endswith('.json') and not fname.endswith('.vl.json')]
 
         with open('node_modules/vega-lite/build/vega-lite-schema.json') as sf:
             schema = json.load(sf)

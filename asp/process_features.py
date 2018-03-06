@@ -25,7 +25,7 @@ def main():
 
                 weights[f'{name}_weight'] = value
 
-                assign.write(f'feature_weight("{name}",{name}_weight).\n')
+                assign.write(f'feature_weight({name},{name}_weight).\n')
 
         json.dump(weights, weights_json, indent=2)
 

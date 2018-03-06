@@ -456,7 +456,7 @@ class Query():
     def from_obj(query_spec: Dict) -> 'Query':
         ''' Parse from a query object that uses a list for encoding. '''
         mark = query_spec.get('mark')
-        # compassql use "encodings" by some of our previous versions use encoding
+        # compassql uses "encodings" but some of our previous versions use encoding
         encoding_key = "encoding" if ("encoding" in query_spec) else "encodings"
         encodings = list(map(Encoding.from_obj, query_spec.get(encoding_key, [])))
         return Query(mark, encodings)
