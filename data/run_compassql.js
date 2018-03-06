@@ -9,6 +9,7 @@ var path = require('path');
 const inputDir = './compassql_examples/input/';
 // the folder for output full specs
 const outputDir = './compassql_examples/output/';
+const dataDir = './';
 
 files = fs.readdirSync(inputDir);
 
@@ -24,7 +25,7 @@ for (var i = 0; i < files.length; i ++) {
   var spec = JSON.parse(raw_spec);
 
   // compile data schema for compassql
-  var data = dl.json(path.join(inputDir, spec.data.url));
+  var data = dl.json(spec.data.url.replace("data/", dataDir));
   var schema = cql.schema.build(data);
 
   const query = {
