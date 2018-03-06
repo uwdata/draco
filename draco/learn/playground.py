@@ -89,11 +89,15 @@ if __name__ == '__main__':
     logging.getLogger().setLevel(logging.WARN)
 
     spec_dir = os.path.join(os.path.dirname(__file__), "../../data/synthetic")
-    output_file = os.path.join(os.path.dirname(__file__), "../../data/spec_pairs/synthetic_default_weights.json")
+    output_file = os.path.join(os.path.dirname(__file__), "../../data/spec_pairs/synthetic.json")
+    #output_file = os.path.join(os.path.dirname(__file__), "../../data/spec_pairs/synthetic_default_weights.json")
+
+    #spec_dir = os.path.join(os.path.dirname(__file__), "../../data/compassql_examples")
+    #output_file = os.path.join(os.path.dirname(__file__), "../../data/spec_pairs/draco_cql.json")
+    #output_file = os.path.join(os.path.dirname(__file__), "../../data/spec_pairs/draco_cql_default_weights.json")
 
     dataset = data_util.load_partial_full_data(spec_dir)
-    #spec_dir = os.path.join(os.path.dirname(__file__), "../../data/compassql_examples")
 
-    play(dataset, train_weights=False, output_file=output_file)
+    play(dataset, train_weights=True, output_file=output_file)
 
 

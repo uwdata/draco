@@ -477,7 +477,7 @@ class Query():
             enc['channel'] = channel
 
             # fix binning as the default is 10
-            if enc.get('bin') == True:
+            if enc.get('bin') == True or enc.get('bin') == {}:
                 enc['bin'] = {'maxbins': 10}
 
             # TODO: other defaults
