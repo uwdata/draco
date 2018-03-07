@@ -22,6 +22,8 @@ NUM_TRIES = 100
 MAX_DIMENSIONS = 4
 
 def main(args):
+    logger = logging.getLogger(__name__)
+
     interactions = load_json(INTERACTIONS_PATH)
     distributions = load_json(DISTRIBUTIONS_PATH)
     definitions = load_json(DEFINITIONS_PATH)
@@ -39,14 +41,22 @@ def main(args):
         if (interaction['include'] and specified):
             out = {}
             for d in range(1, MAX_DIMENSIONS + 1):
+                n = num_groups // 4 if d == 1 else num_groups
+
                 groups = []
-                for _ in range(num_groups):
+                for _ in range(n):
                     specs = generator.generate_interaction(interaction['props'], d)
 
                     tries = 0
                     while (len(specs) < 2 and tries < NUM_TRIES):
                         specs = generator.generate_interaction(interaction['props'], d)
                         tries += 1
+
+                    if (tries == NUM_TRIES):
+                        logger.warning('exceeded maximum tries for {0} with d={1}'
+                                       .format(interaction['name'], d))
+                        continue
+
                     groups.append(specs)
 
                 out[d] = groups

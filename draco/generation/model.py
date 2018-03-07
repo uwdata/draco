@@ -4,7 +4,8 @@ from copy import deepcopy
 
 import numpy as np
 
-from prop_objects import PropObjects
+from draco.generation.spec import Spec
+from draco.generation.prop_objects import PropObjects
 
 
 class Model:
@@ -50,7 +51,7 @@ class Model:
         n_dimensions -- the number of encodings to generate
         """
         self.__ready()
-        spec = {'encoding': {}}
+        spec = Spec()
 
         for prop in self.top_level_props:
             if (self.__include(prop)):
@@ -65,8 +66,13 @@ class Model:
         return spec
 
     def mutate_prop(self, spec, prop, enum):
+        if not (prop in self.top_level_props or prop == 'channel' or
+                prop in self.encoding_props):
+            raise ValueError('invalid prop {0}'.format(prop))
+
         if (prop in self.top_level_props):
             spec[prop] = Model.build_value_from_enum(prop, enum)
+
         elif (prop == 'channel' and not enum in spec['encoding']):
             used_channels = list(spec['encoding'].keys())
 
@@ -74,9 +80,10 @@ class Model:
             probs = [(1 - self.enum_probs['channel'][x]) for x in used_channels]
             to_replace, _ = Model.sample(used_channels, probs)
 
-            enc = spec[to_replace]
-            del spec[to_replace]
+            enc = spec['encoding'][to_replace]
+            del spec['encoding'][to_replace]
             spec['encoding'][enum] = enc
+
         elif (prop in self.encoding_props):
             used_channels = list(spec['encoding'].keys())
 
@@ -84,10 +91,8 @@ class Model:
             probs = [self.enum_probs['channel'][x] for x in used_channels]
             to_modify, _ = Model.sample(used_channels, probs)
 
-            enc = spec[to_modify]
+            enc = spec['encoding'][to_modify]
             enc[prop] = Model.build_value_from_enum(prop, enum)
-        else:
-            raise ValueError('invalid prop')
 
         return
 

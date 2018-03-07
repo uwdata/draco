@@ -20,25 +20,29 @@ class Generator:
         base_spec = self.model.generate_spec(dimensions)
 
         specs = []
-        self.__mutate_spec(base_spec, props.copy(), specs)
+        self.__mutate_spec(base_spec, props.copy(), specs, set())
         return specs
 
 
-    def __mutate_spec(self, base_spec, props, specs):
+    def __mutate_spec(self, base_spec, props, specs, seen):
         if (not props):
-            self.__populate_field_names(base_spec)
-            query = Query.from_vegalite(base_spec)
-
             self.model.improve(base_spec)
-            if (is_valid(Task(self.data, query))):
-                specs.append(base_spec)
+
+            if not (base_spec in seen):
+                seen.add(base_spec)
+
+                self.__populate_field_names(base_spec)
+                query = Query.from_vegalite(base_spec)
+
+                if (is_valid(Task(self.data, query))):
+                    specs.append(base_spec)
         else:
             prop_to_mutate = props.pop(0)
             for enum in self.model.get_enums(prop_to_mutate):
                 spec = deepcopy(base_spec)
                 self.model.mutate_prop(spec, prop_to_mutate, enum)
 
-                self.__mutate_spec(spec, props, specs)
+                self.__mutate_spec(spec, props, specs, seen)
 
         return
 
