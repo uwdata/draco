@@ -17,6 +17,7 @@ INTERACTIONS_PATH = absolute_path('define/interactions.json')
 DISTRIBUTIONS_PATH = absolute_path('define/distributions.json')
 DEFINITIONS_PATH = absolute_path('define/definitions.json')
 DUMMY_SCHEMA_PATH = absolute_path('define/dummy_schema.json')
+DATA_URL = 'data/random_data.json'
 
 NUM_TRIES = 100
 MAX_DIMENSIONS = 4
@@ -31,7 +32,7 @@ def main(args):
 
     out_dir = args.output_dir
 
-    generator = Generator(distributions, definitions, dummy_schema)
+    generator = Generator(distributions, definitions, dummy_schema, DATA_URL)
 
     chosen = str(args.interaction)
     num_groups = int(args.groups)

@@ -7,14 +7,14 @@ from draco.spec import Data, Field, Query, Task
 
 
 class Generator:
-    def __init__(self, distributions, definitions, data_schema):
+    def __init__(self, distributions, definitions, data_schema, data_url):
         top_level_props = definitions['topLevelProps']
         encoding_props = definitions['encodingProps']
         data_fields = [Field(x['name'], x['type']) for x in data_schema]
 
         self.model = Model(distributions, top_level_props, encoding_props)
         self.data = Data(data_fields)
-
+        self.data_url = data_url
 
     def generate_interaction(self, props, dimensions):
         base_spec = self.model.generate_spec(dimensions)
@@ -35,6 +35,7 @@ class Generator:
                 query = Query.from_vegalite(base_spec)
 
                 if (is_valid(Task(self.data, query))):
+                    base_spec['data'] = { 'url': self.data_url }
                     specs.append(base_spec)
         else:
             prop_to_mutate = props.pop(0)
