@@ -1,4 +1,5 @@
 import random
+import inspect
 from copy import deepcopy
 
 import numpy as np
@@ -16,8 +17,6 @@ class Model:
         'bin': PropObjects.unpack_bin,
         'scale': PropObjects.unpack_scale
     }
-
-    UNIQUE_ENCODING_PROPS = set(['channel'])
 
     def __init__(self, distributions, top_level_props, encoding_props):
         self.distributions = distributions
@@ -44,57 +43,95 @@ class Model:
 
         return
 
-    def ready(self):
-        """
-        Prepares this to generate a spec
-        """
-        self.curr_enums = deepcopy(self.enums)
-        self.curr_probs = deepcopy(self.probs)
-
     def generate_spec(self, n_dimensions):
         """
         Returns a spec, randomizing props.
 
         n_dimensions -- the number of encodings to generate
         """
-        self.ready()
-        spec = {'encodings': []}
+        self.__ready()
+        spec = {'encoding': {}}
 
         for prop in self.top_level_props:
-            if (self.include(prop)):
-                spec[prop] = self.sample_enum(prop)
+            if (self.__include(prop)):
+                spec[prop] = self.__sample_prop(prop)
 
         for _ in range(n_dimensions):
-            enc = self.generate_enc()
-            spec['encodings'].append(enc)
+            enc = self.__generate_enc()
+
+            channel = self.__sample_prop('channel')
+            spec['encoding'][channel] = enc
 
         return spec
 
-    def generate_enc(self):
+    def mutate_prop(self, spec, prop, enum):
+        if (prop in self.top_level_props):
+            spec[prop] = Model.build_value_from_enum(prop, enum)
+        elif (prop == 'channel' and not enum in spec['encoding']):
+            used_channels = list(spec['encoding'].keys())
+
+            # the least likely channel has the highest prob of being replaced
+            probs = [(1 - self.enum_probs['channel'][x]) for x in used_channels]
+            to_replace, _ = Model.sample(used_channels, probs)
+
+            enc = spec[to_replace]
+            del spec[to_replace]
+            spec['encoding'][enum] = enc
+        elif (prop in self.encoding_props):
+            used_channels = list(spec['encoding'].keys())
+
+            # the most likely channel has the highest prob of being modified
+            probs = [self.enum_probs['channel'][x] for x in used_channels]
+            to_modify, _ = Model.sample(used_channels, probs)
+
+            enc = spec[to_modify]
+            enc[prop] = Model.build_value_from_enum(prop, enum)
+        else:
+            raise ValueError('invalid prop')
+
+        return
+
+    def improve(self, spec):
+        """
+        Improves the given spec to fit certain soft constraints
+        """
+
+        # gets all functions from class Improve to call on spec
+        attr_names = [attr for attr in dir(Improvements)]
+        improvements = []
+        for name in attr_names:
+            attr = getattr(Improvements, name)
+            if (inspect.isfunction(attr)):
+                improvements.append(attr)
+
+        for imp in improvements:
+            imp(spec)
+
+        return
+
+    def get_enums(self, prop):
+        return self.enums[prop]
+
+    def __ready(self):
+        """
+        Prepares this to generate a spec
+        """
+        self.curr_enums = deepcopy(self.enums)
+        self.curr_probs = deepcopy(self.probs)
+
+    def __generate_enc(self):
         """
         Returns an encoding, randomizing props.
         """
         enc = {}
 
         for prop in self.encoding_props:
-            if (self.include(prop)):
-                enc[prop] = self.sample_prop(prop)
+            if (self.__include(prop)):
+                enc[prop] = self.__sample_prop(prop)
 
         return enc
 
-    def get_enum_probabilities(self, prop):
-        return self.enum_probs[prop]
-
-    def get_enums(self, prop):
-        return self.enums[prop]
-
-    def get_top_level_props(self):
-        return self.top_level_props
-
-    def get_encoding_props(self):
-        return self.encoding_props
-
-    def include(self, prop):
+    def __include(self, prop):
         """
         Decides randomly from `self.distributions` whether or not
         the given spec should be included
@@ -102,14 +139,14 @@ class Model:
         prob = self.distributions[prop]['probability']
         return random.random() < prob
 
-    def sample_prop(self, prop):
-        enum = self.sample_enum(prop)
+    def __sample_prop(self, prop):
+        enum = self.__sample_enum(prop)
         if (prop in Model.SPECIAL_ENUMS):
             return Model.SPECIAL_ENUMS[prop](enum)
 
         return enum
 
-    def sample_enum(self, prop):
+    def __sample_enum(self, prop):
         """
         Returns a random value for the given prop.
 
@@ -120,6 +157,16 @@ class Model:
         enums = self.curr_enums[prop]
         probs = self.curr_probs[prop]
 
+        result, index = Model.sample(enums, probs)
+
+        if (prop == 'channel'):
+            enums.pop(index)
+            probs.pop(index)
+
+        return result
+
+    @staticmethod
+    def sample(enums, probs):
         cumulative = np.cumsum(probs)
 
         choice = random.uniform(0, cumulative[-1])
@@ -130,19 +177,7 @@ class Model:
 
         result = enums[index]
 
-        if (prop in Model.UNIQUE_ENCODING_PROPS):
-            enums.pop(index)
-            probs.pop(index)
-
-        return result
-
-    def improve(self, spec):
-        """
-        Improves the given spec to fit certain soft constraints
-        """
-        Improve.improve_aggregate(spec)
-        Improve.improve_bar(spec)
-        return
+        return result, index
 
     @staticmethod
     def get_enums_used_for_prop(model, spec, prop):
@@ -168,7 +203,13 @@ class Model:
         else:
             return enum
 
-class Improve:
+    @staticmethod
+    def get_enc_by_channel(spec, channel):
+        if (channel in spec['encoding']):
+            return spec['encoding'][channel]
+        return None
+
+class Improvements:
     @staticmethod
     def improve_aggregate(spec):
         """

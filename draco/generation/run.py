@@ -13,10 +13,10 @@ logging.getLogger().setLevel(logging.WARN)
 def absolute_path(path):
     return os.path.join(os.path.dirname(__file__), path)
 
-INTERACTIONS_PATH = absolute_path('interactions.json')
-DISTRIBUTIONS_PATH = absolute_path('distributions.json')
-DEFINITIONS_PATH = absolute_path('definitions.json')
-DUMMY_SCHEMA_PATH = absolute_path('dummy_schema.json')
+INTERACTIONS_PATH = absolute_path('define/interactions.json')
+DISTRIBUTIONS_PATH = absolute_path('define/distributions.json')
+DEFINITIONS_PATH = absolute_path('define/definitions.json')
+DUMMY_SCHEMA_PATH = absolute_path('define/dummy_schema.json')
 
 NUM_TRIES = 100
 MAX_DIMENSIONS = 4
