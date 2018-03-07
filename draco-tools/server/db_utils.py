@@ -54,10 +54,8 @@ def insert_user_study_data(db_file):
             query = Query.from_vegalite(spec)
             t = Task(data, query, task)
 
-            feature_names = data_util.get_feature_names()
             f = data_util.count_violations_memoized(processed_specs, t)
-
-            vec = [f[name] if name in f else 0 for name in feature_names]
+            vec = data_util.violation_dict_to_vec(f)
             
             return vec, t
 
@@ -75,6 +73,37 @@ def insert_user_study_data(db_file):
         stmt = 'INSERT INTO pairs VALUES (?, ?, ?, ?, ?, ?)'
 
         c.execute(stmt, (tid, task, t1.to_vegalite_json(), t2.to_vegalite_json(),
+                         json.dumps(vec1), json.dumps(vec2)))
+
+        conn.commit()
+
+    conn.close()
+
+
+def insert_halden_data(db_file):
+    # generate feature vector and store in database
+
+    processed_specs: Dict = {}
+
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
+
+    for i, entry in enumerate(data_util.load_halden_data()):
+
+        source = entry['source']
+        task = entry['task']
+        left_spec = entry['left']
+        right_spec = entry['right']
+        vec1 = entry['left_feature']
+        vec2 = entry['right_feature']
+
+        tid = f'{source}-{i}'
+
+        print(tid + task)
+
+        stmt = 'INSERT INTO pairs VALUES (?, ?, ?, ?, ?, ?)'
+
+        c.execute(stmt, (tid, task, json.dumps(left_spec), json.dumps(right_spec),
                          json.dumps(vec1), json.dumps(vec2)))
 
         conn.commit()
@@ -122,7 +151,8 @@ def load_labeled_specs(db_file):
 
 
 if __name__ == '__main__':
-    db_file = os.path.join(os.path.dirname(__file__), 'tmp_label_data.db')
+    db_file = os.path.join(os.path.dirname(__file__), 'label_data.db')
     create_database(db_file)
     insert_user_study_data(db_file)
+    insert_halden_data(db_file)
     labeled = load_labeled_specs(db_file)

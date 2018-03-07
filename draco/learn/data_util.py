@@ -30,7 +30,7 @@ man_data_path = absolute_path('../../data/training/manual.json')
 yh_data_path = absolute_path('../../data/training/younghoon.json')
 ba_data_path = absolute_path('../../data/training/bahador.json')
 compassql_data_path = absolute_path('../../data/compassql_examples')
-compassql_data_dir = absolute_path('../../data/')
+data_dir = absolute_path('../../data/') # the dir containing data used in visualization
 
 halden_data_path = absolute_path('../../data/to_label')
 
@@ -63,7 +63,7 @@ def load_neg_pos_data() -> List[PosNegExample]:
     return raw_data
 
 
-def load_partial_full_data(path=compassql_data_path, data_dir=compassql_data_dir):
+def load_partial_full_data(path=compassql_data_path, data_dir=data_dir):
     ''' load partial-full spec pairs from the directory
         Args:
             compassql_data_dir: the directory containing compassql data with
@@ -104,7 +104,7 @@ def load_partial_full_data(path=compassql_data_path, data_dir=compassql_data_dir
     return result
 
 
-def load_halden_data(include_features=True):
+def load_halden_data(include_features=True, data_dir=data_dir):
     ''' load halden's data into memory the result is a list of unlabeled pairs
         Returns:
             A generator yielding entires one at a time
@@ -114,15 +114,25 @@ def load_halden_data(include_features=True):
                 for f in os.listdir(halden_data_path)
                 if f.endswith('.json')]
 
-    spec_to_task = lambda spec: Task(None, spec, spec["task"] if "task" in spec else "value")
+    data_cache = {}
+    def acquire_data(url):
+        if url not in data_cache:
+            data_cache[url] = Data.from_json(os.path.join(data_dir, os.path.basename(url)))
+            # set the url to short name, since the one above set it to full name in the current machine
+            data_cache[url].url = url 
+        return data_cache[url]
+
+    spec_to_task = lambda spec: Task(acquire_data(spec["data"]["url"]), Query.from_vegalite(spec), spec["task"] if "task" in spec else "value")
 
     pair_process_func = lambda p: {"source": f"halden",
-                                   "data": None,
                                    "task": p[0]["spec"]["task"] if "task" in p[0]["spec"] else "value",
                                    "left": p[0]["spec"],
                                    "right": p[1]["spec"],
                                    "left_feature": p[0]["feature"],
                                    "right_feature": p[1]["feature"]}
+
+    memoized_violations = {}
+
     to_label_pairs = None
     for fname in files:
         with open(fname, 'r') as f:
@@ -130,12 +140,26 @@ def load_halden_data(include_features=True):
             for num_channel in content:
                 for spec_list in content[num_channel]:
 
-                    if include_features:
-                        features = tasks_to_vec([spec_to_task(spec) for spec in spec_list])
-                    else:
-                        features = [None for spec in spec_list]
+                    task_list = [spec_to_task(spec) for spec in spec_list]
 
-                    specs_and_features = [{"spec": spec_list[i], "feature": features[i]} for i in range(len(spec_list))]
+                    if include_features:
+                        features = [violation_dict_to_vec(
+                                        count_violations_memoized(memoized_violations, task)) 
+                                    for task in task_list]
+                        #features = tasks_to_vec([spec_to_task(spec) for spec in spec_list])
+                    else:
+                        features = [None for task in task_list]
+
+                    #print(spec_list[0]["data"])
+                    #print(len(spec_list))
+                    #print(len(features))
+
+                    #for i in range(len(spec_list)):
+                    #    print(spec_list[i])
+                    #    print(tasks_to_vec([spec_to_task(spec_list[0])])[0])
+                    #    print(features[i])
+
+                    specs_and_features = [{"spec": task_list[i].to_vegalite(), "feature": features[i]} for i in range(len(task_list))]
 
                     for pair in map(pair_process_func, itertools.combinations(specs_and_features, 2)):
                         yield pair
@@ -147,6 +171,12 @@ def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
         processed_specs[key] = count_violations(task)
     return processed_specs[key]
 
+
+def violation_dict_to_vec(violation_dict):
+    # convert dict format violation result into a vector
+    feature_names = get_feature_names()
+    vec = [violation_dict[name] if name in violation_dict else 0 for name in feature_names]
+    return vec
 
 def get_nested_index():
     '''
@@ -267,6 +297,11 @@ def load_data(test_size: float=0.3, random_state=1) -> Tuple[pd.DataFrame, pd.Da
 
 if __name__ == '__main__':
     ''' Generate and store data in default path. '''
-    neg_pos_data = load_neg_pos_data()
-    data = pairs_to_vec(neg_pos_data)
-    data.to_pickle(pickle_path)
+    #neg_pos_data = load_neg_pos_data()
+    #data = pairs_to_vec(neg_pos_data)
+    #data.to_pickle(pickle_path)
+
+    for i, x in enumerate(load_halden_data()):
+        print(i)
+        print(x)
+        break
