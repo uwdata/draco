@@ -1,17 +1,17 @@
 {
   "data": {
-    "url": "examples/data/cars.csv"
+    "url": "data/cars.json"
   },
   "mark": "bar",
   "encoding": {
     "x": {
       "aggregate": "mean",
-      "field": "horsepower",
+      "field": "Horsepower",
       "type": "quantitative"
     },
     "y": {
-      "field": "cylinders",
-      "type": "nominal"
+      "field": "Cylinders",
+      "type": "ordinal"
     }
   }
 }

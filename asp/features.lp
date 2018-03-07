@@ -134,6 +134,9 @@ feature_term(y_row) :- channel(_,y), channel(_,row), enc_interesting(y).
 feature_term(x_column) :- channel(_,x), channel(_,column), enc_interesting(x).
 feature_term(y_column) :- channel(_,y), channel(_,column), enc_interesting(y).
 
+% prefer not to use continuous on x, discrete on y, and column
+feature_term(c_d_column) :- channel_continuous(x), channel_discrete(y), channel(_,column).
+
 % prefer time on x
 feature_term(temporal_y) :- type(E,temporal), channel(E,x).
 

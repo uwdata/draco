@@ -281,9 +281,15 @@ class Encoding():
 
         scale = obj.get('scale')
 
+        # bin can be bool or object
         binning = obj.get('bin')
         if isinstance(binning, dict):
             binning = binning['maxbins']
+
+        # set log to true if set, and false if type type is not log
+        log = None
+        if scale and 'type' in scale.keys():
+            log = scale['type'] == 'log'
 
         return Encoding(
             obj.get('channel'),
@@ -291,7 +297,7 @@ class Encoding():
             obj.get('type'),
             obj.get('aggregate'),
             binning,
-            scale.get('type') == 'log' if scale else None,
+            log,
             scale.get('zero') if scale else None,
             obj.get('stack'))
 
@@ -394,9 +400,13 @@ class Encoding():
             encoding['bin'] = {'maxbins' : self.binning}
         if self.log_scale:
             encoding['scale']['type'] = 'log'
-        encoding['scale']['zero'] = False if self.zero == None else self.zero
+        if self.ty == 'quantitative':
+            encoding['scale']['zero'] = False if self.zero == None else self.zero
         if self.stack:
             encoding['stack'] = self.stack
+
+        if not encoding['scale']:
+            del encoding['scale']
 
         return encoding
 

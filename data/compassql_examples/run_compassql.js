@@ -3,19 +3,19 @@
 const cql = require('compassql');
 const dl = require('datalib');
 const fs = require('fs');
+
 var path = require('path');
 
 // the folder containing input partial specs
-const inputDir = './compassql_examples/input/';
+const inputDir = 'data/compassql_examples/input/';
 // the folder for output full specs
-const outputDir = './compassql_examples/output/';
-const dataDir = './';
+const outputDir = 'data/compassql_examples/output/';
 
 files = fs.readdirSync(inputDir);
 
 for (var i = 0; i < files.length; i ++) {
 
-  console.log('[OK] Processing ' + files[i] + '...');
+  console.log('[OK] Processing ' + files[i]);
 
   input = path.join(inputDir, files[i]);
   output = path.join(outputDir, files[i]);
@@ -25,7 +25,7 @@ for (var i = 0; i < files.length; i ++) {
   var spec = JSON.parse(raw_spec);
 
   // compile data schema for compassql
-  var data = dl.json(spec.data.url.replace("data/", dataDir));
+  var data = dl.json(spec.data.url);
   var schema = cql.schema.build(data);
 
   const query = {
