@@ -210,24 +210,23 @@ class Improvements:
     @staticmethod
     def improve_aggregate(spec, props):
         """
-        Increases the likelihood of giving an aggregate to bar, line, area
-        plots that are not qxq
+        Give an aggregate to bar, line, area
+        plots that are not qxq unless we are inspecting
+        aggregate.
         """
         if (not spec['mark'] in ['bar', 'line', 'area']):
             return
 
         # 50% chance of adding aggregate
-        if (random.random() < 0.5):
-            return
+        if ('aggregate' not in props):
+            x_enc = Model.get_enc_by_channel(spec, 'x')
+            y_enc = Model.get_enc_by_channel(spec, 'y')
 
-        x_enc = Model.get_enc_by_channel(spec, 'x')
-        y_enc = Model.get_enc_by_channel(spec, 'y')
-
-        if (x_enc is None or y_enc is None):
-            return
-        if ((x_enc['type'] != 'quantitative') != (y_enc['type'] != 'quantitative')):
-            q_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
-            q_enc['aggregate'] = 'mean'
+            if (x_enc is None or y_enc is None):
+                return
+            if ((x_enc['type'] != 'quantitative') != (y_enc['type'] != 'quantitative')):
+                q_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
+                q_enc['aggregate'] = 'mean'
 
         return
 

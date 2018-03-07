@@ -7,4 +7,4 @@ class Spec(dict):
         self['encoding'] = {}
 
     def __hash__(self):
-        return json.dumps(self).__hash__()
+        return json.dumps(self, sort_keys=True).__hash__()

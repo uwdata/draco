@@ -39,10 +39,12 @@ def main(args):
 
     for interaction in interactions:
         specified = interaction['name'] == chosen or chosen == 'all'
+
+        base_num_groups = interaction['groups'] if num_groups == -1 else num_groups
         if (interaction['include'] and specified):
             out = {}
             for d in range(1, MAX_DIMENSIONS + 1):
-                n = num_groups // 4 if d == 1 else num_groups
+                n = base_num_groups // 4 if d == 1 else base_num_groups
 
                 groups = []
                 for _ in range(n):
@@ -74,7 +76,7 @@ def load_json(file_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--interaction', '-i', default='all')
-    parser.add_argument('--groups', '-g', default=40)
+    parser.add_argument('--groups', '-g', default=-1)
     parser.add_argument('--output_dir', '-o', default=absolute_path('../../data/to_label'))
 
     args = parser.parse_args()
