@@ -185,23 +185,6 @@ class Model:
         return result, index
 
     @staticmethod
-    def get_enums_used_for_prop(model, spec, prop):
-        used = set()
-        if (prop in model.get_top_level_props() and prop in spec):
-            used.add(spec[prop])
-        elif (prop in model.get_encoding_props()):
-            encodings = spec['encodings']
-
-            for enc in encodings:
-                if (prop in enc):
-                    if (prop in Model.UNPACK_SPECIAL_ENUM):
-                        used.add(Model.UNPACK_SPECIAL_ENUM[prop](enc[prop]))
-                    else:
-                        used.add(enc[prop])
-
-        return used
-
-    @staticmethod
     def build_value_from_enum(prop, enum):
         if (prop in Model.SPECIAL_ENUMS):
             return Model.SPECIAL_ENUMS[prop](enum)
