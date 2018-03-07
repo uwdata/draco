@@ -490,6 +490,16 @@ class Query():
             if enc.get('bin') == True or enc.get('bin') == {}:
                 enc['bin'] = {'maxbins': 10}
 
+            if not enc.get('scale'):
+                enc['scale'] = {}
+
+            # zero is the default for quantitative not binned (and always for size)
+            if enc.get('type') == 'quantitative':
+                if channel == 'size':
+                    enc['scale']['zero'] = True
+                elif not enc.get('bin'):
+                    enc['scale']['zero'] = True
+
             # TODO: other defaults
 
             encodings.append(Encoding.from_obj(enc))
