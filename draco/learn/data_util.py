@@ -72,7 +72,7 @@ def load_partial_full_data(path=compassql_data_path, data_dir=compassql_data_dir
             A dictionary mapping each case name into a pair of partial spec - full spec.
     '''
 
-    def load_spec(input_dir, data_dir, format='compassql'):
+    def load_spec(input_dir, data_dir, format):
         ''' load compassql data
             Args: input_dir: the directory containing a set of json compassql specs
                   format: one of 'compassql' and 'vegalite'
@@ -105,7 +105,7 @@ def load_partial_full_data(path=compassql_data_path, data_dir=compassql_data_dir
 
 
 def load_halden_data(include_features=True):
-    ''' load halden's data into memory the result is a list of unlabeled pairs 
+    ''' load halden's data into memory the result is a list of unlabeled pairs
         Returns:
             A generator yielding entires one at a time
     '''
@@ -116,10 +116,10 @@ def load_halden_data(include_features=True):
 
     spec_to_task = lambda spec: Task(None, spec, spec["task"] if "task" in spec else "value")
 
-    pair_process_func = lambda p: {"source": f"halden", 
+    pair_process_func = lambda p: {"source": f"halden",
                                    "data": None,
-                                   "task": p[0]["spec"]["task"] if "task" in p[0]["spec"] else "value", 
-                                   "left": p[0]["spec"], 
+                                   "task": p[0]["spec"]["task"] if "task" in p[0]["spec"] else "value",
+                                   "left": p[0]["spec"],
                                    "right": p[1]["spec"],
                                    "left_feature": p[0]["feature"],
                                    "right_feature": p[1]["feature"]}
