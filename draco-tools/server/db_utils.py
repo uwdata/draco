@@ -6,6 +6,8 @@ from typing import Dict
 
 import numpy as np
 
+import pandas as pd
+
 from draco.learn import data_util
 from draco.spec import Query, Task
 
@@ -30,7 +32,7 @@ def create_database(db_file):
 
 def insert_user_study_data(db_file):
     # generate feature vector and store in database
-    
+
     processed_specs: Dict = {}
 
     conn = sqlite3.connect(db_file)
@@ -51,8 +53,13 @@ def insert_user_study_data(db_file):
         def query_and_features(spec):
             query = Query.from_vegalite(spec)
             t = Task(data, query, task)
+
+            feature_names = data_util.get_feature_names()
             f = data_util.count_violations_memoized(processed_specs, t)
-            return f, t
+
+            vec = [f[name] if name in f else 0 for name in feature_names]
+            
+            return vec, t
 
         if np.random.choice([True, False]):
             vec1, t1 = query_and_features(entry.positive)
@@ -115,7 +122,7 @@ def load_labeled_specs(db_file):
 
 
 if __name__ == '__main__':
-    db_file = os.path.join(os.path.dirname(__file__), 'label_data.db')
+    db_file = os.path.join(os.path.dirname(__file__), 'tmp_label_data.db')
     create_database(db_file)
     insert_user_study_data(db_file)
     labeled = load_labeled_specs(db_file)

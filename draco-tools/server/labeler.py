@@ -19,6 +19,45 @@ def get_db():
     return db
 
 
+def get_leverage_score():
+    """ get leverage score """
+
+    lev_scores = getattr(g, '_leverage_scores', None)
+
+    if lev_scores is None:
+
+        db = get_db()
+        c = db.cursor()
+
+        c.execute('''SELECT pairs.id, pairs.left_feature, pairs.right_feature 
+                     FROM pairs''')
+
+        content = c.fetchall()
+
+        keys = []
+        vecs = []
+
+        for row in content:
+            keys.append(row[0])
+            vec1 = json.loads(row[1])
+            vec2 = json.loads(row[2])
+            vecs.append(np.array(vec1) - np.array(vec2))
+
+        X = np.array(vecs)
+
+        u, s, vh = np.linalg.svd(X, full_matrices=False)
+
+        raw_lev_scores = (np.sum(u*u, 1) * 1000).tolist()
+
+        lev_scores = {}
+        for i, key in enumerate(keys):
+            lev_scores[key] = raw_lev_scores[i]
+
+        g._leverage_scores = lev_scores
+
+    return lev_scores
+
+
 def get_unlabeled_data():
     """ load unlabeled data into memory """
 
@@ -54,6 +93,13 @@ def get_unlabeled_data():
         unlabeled_pairs = g._unlabeled = result
 
     return unlabeled_pairs
+
+
+@app.route('/backdoor', methods=['GET'])
+def backdoor():
+    """ something will happen... """
+    lev_score = get_leverage_score()
+    return jsonify(lev_score)
 
 
 @app.teardown_appcontext

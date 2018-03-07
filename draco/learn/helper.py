@@ -33,7 +33,7 @@ def count_violations(task: Task) -> Dict[str, int]:
     '''
     task = run(task, files=['define.lp', 'features.lp', 'output.lp', 'count.lp'], silence_warnings=True)
     return task.violations
-
+    
 
 def contingency_table(labels_1: np.array, labels_2: np.array) -> np.array:
     '''
