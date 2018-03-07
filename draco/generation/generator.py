@@ -20,13 +20,13 @@ class Generator:
         base_spec = self.model.generate_spec(dimensions)
 
         specs = []
-        self.__mutate_spec(base_spec, props.copy(), specs, set())
+        self.__mutate_spec(base_spec, props, 0, set(), specs)
         return specs
 
 
-    def __mutate_spec(self, base_spec, props, specs, seen):
-        if (not props):
-            self.model.improve(base_spec)
+    def __mutate_spec(self, base_spec, props, prop_index, seen, specs):
+        if (prop_index == len(props)):
+            self.model.improve(base_spec, props)
 
             if not (base_spec in seen):
                 seen.add(base_spec)
@@ -38,12 +38,12 @@ class Generator:
                     base_spec['data'] = { 'url': self.data_url }
                     specs.append(base_spec)
         else:
-            prop_to_mutate = props.pop(0)
+            prop_to_mutate = props[prop_index]
             for enum in self.model.get_enums(prop_to_mutate):
                 spec = deepcopy(base_spec)
                 self.model.mutate_prop(spec, prop_to_mutate, enum)
 
-                self.__mutate_spec(spec, props, specs, seen)
+                self.__mutate_spec(spec, props, prop_index + 1, seen, specs)
 
         return
 

@@ -19,6 +19,8 @@ class Model:
         'scale': PropObjects.unpack_scale
     }
 
+    UNIQUE_ENCODING_PROPS = set(['stack'])
+
     def __init__(self, distributions, top_level_props, encoding_props):
         self.distributions = distributions
         self.top_level_props = set(top_level_props)
@@ -96,7 +98,7 @@ class Model:
 
         return
 
-    def improve(self, spec):
+    def improve(self, spec, props):
         """
         Improves the given spec to fit certain soft constraints
         """
@@ -110,7 +112,7 @@ class Model:
                 improvements.append(attr)
 
         for imp in improvements:
-            imp(spec)
+            imp(spec, props)
 
         return
 
@@ -123,6 +125,7 @@ class Model:
         """
         self.curr_enums = deepcopy(self.enums)
         self.curr_probs = deepcopy(self.probs)
+        self.used_enc_props = set()
 
     def __generate_enc(self):
         """
@@ -132,6 +135,7 @@ class Model:
 
         for prop in self.encoding_props:
             if (self.__include(prop)):
+                self.used_enc_props.add(prop)
                 enc[prop] = self.__sample_prop(prop)
 
         return enc
@@ -142,7 +146,12 @@ class Model:
         the given spec should be included
         """
         prob = self.distributions[prop]['probability']
-        return random.random() < prob
+        picked = random.random() < prob
+
+        allowed = (prop not in Model.UNIQUE_ENCODING_PROPS or
+                   prop not in self.used_enc_props)
+
+        return picked and allowed
 
     def __sample_prop(self, prop):
         enum = self.__sample_enum(prop)
@@ -199,7 +208,7 @@ class Model:
 
 class Improvements:
     @staticmethod
-    def improve_aggregate(spec):
+    def improve_aggregate(spec, props):
         """
         Increases the likelihood of giving an aggregate to bar, line, area
         plots that are not qxq
@@ -223,7 +232,7 @@ class Improvements:
         return
 
     @staticmethod
-    def improve_bar(spec):
+    def improve_bar(spec, props):
         """
         Adds `scale: { 'zero': True }` to the given spec
         if the mark is a bar.
@@ -232,3 +241,25 @@ class Improvements:
             spec['scale'] = { 'zero': True }
 
         return
+
+    @staticmethod
+    def improve_stack(spec, props):
+        """
+        If we are trying to inspect 'stack' in an interaction,
+        we force bar or area marks. In any case,
+        We also only want to stack on x and y, and stack should
+        be accompanied by aggregate.
+        """
+        if ('stack' in props):
+            mark = 'bar' if random.random() < 0.5 else 'area'
+            spec['mark'] = mark
+
+
+        for channel in spec['encoding']:
+            enc = spec['encoding'][channel]
+            if ('stack' in enc):
+                if (not (channel == 'x' or channel == 'y')):
+                    del enc['stack']
+                elif ('aggregate' not in enc):
+                    aggregate = 'sum' if random.random() < 0.5 else 'count'
+                    enc['aggregate'] = aggregate
