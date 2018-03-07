@@ -29,18 +29,14 @@ class Generator:
             self.model.improve(base_spec)
 
             if not (base_spec in seen):
-                print('before: {0}'.format(base_spec))
                 seen.add(base_spec)
 
                 self.__populate_field_names(base_spec)
-                print('after populate: {0}'.format(base_spec))
                 query = Query.from_vegalite(base_spec)
-                print('after from_vegalite: {0}'.format(base_spec))
 
                 if (is_valid(Task(self.data, query))):
                     base_spec['data'] = { 'url': self.data_url }
                     specs.append(base_spec)
-                    print('after: {0}'.format(base_spec))
         else:
             prop_to_mutate = props.pop(0)
             for enum in self.model.get_enums(prop_to_mutate):
