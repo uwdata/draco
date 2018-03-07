@@ -123,7 +123,7 @@ feature_term(position_entropy,E) :- channel(E,(x;y)), continuous(E), enc_cardina
 feature_term(high_cardinality_size,E) :- continuous(E), channel(_,size), enc_cardinality(E,C), C > 100, channel(E,(x;y)).
 
 % prefer to not use stacking when opacity is used
-feature_term(stack) :- stack(_).
+feature_term(stack_opacity) :- stack(_), channel(_,opacity).
 
 % prefer not to aggregate for value tasks
 feature_term(value_agg) :- task(value), aggregate(_,_).
@@ -155,9 +155,11 @@ feature_term(c_c_tick) :- is_c_c, mark(tick).
 is_c_d :- channel_continuous(x), not channel_continuous(y).
 is_c_d :- channel_continuous(y), not channel_continuous(x).
 
-% the continupus variable is a measure (it is aggregated) and there is no detail -> no overlap
-no_overlap :- continuous(E), channel(E,(x;y)), aggregate(E,_), not channel(_,detail).
-no_overlap :- data_size(S), channel(E,(x;y)), discrete(E), enc_cardinality(E,S).
+% the continuous variable is a measure (it is aggregated) and all other channels are aggregated -> no overlap
+non_pos_unaggregated :- channel(E,C), non_positional(C), not aggregate(E,_).
+no_overlap :- is_c_d, continuous(E), channel(E,(x;y)), aggregate(E,_),not non_pos_unaggregated.
+% data size is as small as discrete dimension -> no overlap
+no_overlap :- is_c_d, data_size(S), channel(E,(x;y)), discrete(E), enc_cardinality(E,S).
 
 feature_term(c_d_point) :- is_c_d, not no_overlap, mark(point).
 feature_term(c_d_bar) :- is_c_d, not no_overlap, mark(bar).
@@ -181,9 +183,16 @@ feature_term(c_d_no_overlap_tick) :- is_c_d, no_overlap, mark(tick).
 % discrete by discrete
 is_d_d :- channel_discrete(x), channel_discrete(y).
 
+% no overlap if all other dimensions are aggregated
+no_overlap :- is_d_d, not non_pos_unaggregated.
+
 feature_term(d_d_point) :- is_d_d, mark(point).
 feature_term(d_d_text) :- is_d_d, mark(text).
 feature_term(d_d_rect) :- is_d_d, mark(rect).
+
+feature_term(d_d_no_overlap_point) :- is_d_d, mark(point).
+feature_term(d_d_no_overlap_text) :- is_d_d, mark(text).
+feature_term(d_d_no_overlap_rect) :- is_d_d, mark(rect).
 
 % channel rankings à la APT
 
@@ -225,13 +234,13 @@ feature_term(interesting_detail,E) :- channel(E,detail), enc_interesting(E).
 
 % aggregations
 
-feature_term(aggregate_count,E) :- aggregate(E, count).
-feature_term(aggregate_sum,E) :- aggregate(E, sum).
-feature_term(aggregate_mean,E) :- aggregate(E, mean).
-feature_term(aggregate_median,E) :- aggregate(E, median).
-feature_term(aggregate_min,E) :- aggregate(E, min).
-feature_term(aggregate_max,E) :- aggregate(E, max).
-feature_term(aggregate_stdev,E) :- aggregate(E, stdev).
+feature_term(aggregate_count,E) :- aggregate(E,count).
+feature_term(aggregate_sum,E) :- aggregate(E,sum).
+feature_term(aggregate_mean,E) :- aggregate(E,mean).
+feature_term(aggregate_median,E) :- aggregate(E,median).
+feature_term(aggregate_min,E) :- aggregate(E,min).
+feature_term(aggregate_max,E) :- aggregate(E,max).
+feature_term(aggregate_stdev,E) :- aggregate(E,stdev).
 
 % task - marktype correlations
 
