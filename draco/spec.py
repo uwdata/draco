@@ -6,7 +6,6 @@ import json
 import os
 from collections import defaultdict
 from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
-from copy import deepcopy
 
 import agate
 import numpy as np
@@ -482,8 +481,6 @@ class Query():
     @staticmethod
     def from_vegalite(full_spec: Dict) -> 'Query':
         ''' Parse from Vega-Lite spec that uses map for encoding. '''
-        full_spec = deepcopy(full_spec)
-
         encodings: List[Encoding] = []
 
         for channel, enc in full_spec.get('encoding', {}).items():
