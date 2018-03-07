@@ -18,7 +18,6 @@ def get_db():
         db = g._database = sqlite3.connect(DATABASE)
     return db
 
-
 def get_leverage_score():
     """ get leverage score """
 
@@ -116,9 +115,18 @@ def fetch_pair():
     num_pairs = request.args.get('num_pairs', default=1, type=int)
     unlabeled_data = get_unlabeled_data()
 
+    mode = np.random.choice([0, 1])
     id_list = list(unlabeled_data.keys())
 
-    rand_indices = np.random.choice(id_list, size=num_pairs, replace=False)
+    if mode == 0:
+        # sampling randomly
+        rand_indices = np.random.choice(id_list, size=num_pairs, replace=False)
+    elif mode == 1:
+        # sampling base on leverage scores
+        lev_scores = get_leverage_score()
+        probs = np.array([lev_scores[key] for key in id_list])
+        probs = probs / np.sum(probs)
+        rand_indices = np.random.choice(id_list, size=num_pairs, replace=False, p=probs)
 
     if num_pairs > 1:
         return jsonify([unlabeled_data[i] for i in rand_indices])

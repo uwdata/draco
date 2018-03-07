@@ -42,7 +42,7 @@
 #const number_dates_weight = 5.
 #const position_entropy_weight = 2.
 #const high_cardinality_size_weight = 1.
-#const stack_weight = 1.
+#const stack_opacity_weight = 5.
 #const value_agg_weight = 1.
 #const x_row_weight = 1.
 #const y_row_weight = 1.
@@ -73,33 +73,37 @@
 #const c_d_no_overlap_text_weight = 30.
 #const c_d_no_overlap_tick_weight = 25.
 
-#const d_d_point_weight = 0.
-#const d_d_text_weight = 1.
-#const d_d_rect_weight = 0.
+#const d_d_point_weight = 4.
+#const d_d_text_weight = 7.
+#const d_d_rect_weight = 8.
+
+#const d_d_no_overlap_point_weight = 0.
+#const d_d_no_overlap_text_weight = 3.
+#const d_d_no_overlap_rect_weight = 2.
 
 #const continuous_x_weight = 0.
 #const continuous_y_weight = 0.
-#const continuous_color_weight = 7.
+#const continuous_color_weight = 5.
 #const continuous_opacity_weight = 30.
-#const continuous_size_weight = 5.
+#const continuous_size_weight = 3.
 #const continuous_text_weight = 20.
 
-#const ordered_x_weight = 0.
+#const ordered_x_weight = 1.
 #const ordered_y_weight = 0.
-#const ordered_color_weight = 5.
+#const ordered_color_weight = 8.
 #const ordered_opacity_weight = 30.
-#const ordered_size_weight = 7.
+#const ordered_size_weight = 10.
 #const ordered_text_weight = 32.
-#const ordered_row_weight = 7.
-#const ordered_column_weight = 7.
+#const ordered_row_weight = 10.
+#const ordered_column_weight = 10.
 
-#const nominal_x_weight = 0.
+#const nominal_x_weight = 1.
 #const nominal_y_weight = 0.
 #const nominal_color_weight = 6.
 #const nominal_shape_weight = 7.
 #const nominal_text_weight = 8.
-#const nominal_row_weight = 7.
-#const nominal_column_weight = 7.
+#const nominal_row_weight = 5.
+#const nominal_column_weight = 6.
 #const nominal_detail_weight = 20.
 
 #const interesting_x_weight = 0.
