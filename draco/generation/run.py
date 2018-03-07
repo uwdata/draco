@@ -17,7 +17,7 @@ INTERACTIONS_PATH = absolute_path('define/interactions.json')
 DISTRIBUTIONS_PATH = absolute_path('define/distributions.json')
 DEFINITIONS_PATH = absolute_path('define/definitions.json')
 DUMMY_SCHEMA_PATH = absolute_path('define/dummy_schema.json')
-DATA_URL = 'data/random_data.json'
+DATA_URL = 'data/cars_mod.json'
 
 NUM_TRIES = 100
 MAX_DIMENSIONS = 4
@@ -74,7 +74,7 @@ def load_json(file_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--interaction', '-i', default='all')
-    parser.add_argument('--groups', '-g', default=20)
+    parser.add_argument('--groups', '-g', default=40)
     parser.add_argument('--output_dir', '-o', default=absolute_path('../../data/to_label'))
 
     args = parser.parse_args()
