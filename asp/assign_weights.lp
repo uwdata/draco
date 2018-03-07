@@ -41,7 +41,7 @@ feature_weight(quantitative_numbers,quantitative_numbers_weight).
 feature_weight(number_dates,number_dates_weight).
 feature_weight(position_entropy,position_entropy_weight).
 feature_weight(high_cardinality_size,high_cardinality_size_weight).
-feature_weight(stack,stack_weight).
+feature_weight(stack_opacity,stack_opacity_weight).
 feature_weight(value_agg,value_agg_weight).
 feature_weight(x_row,x_row_weight).
 feature_weight(y_row,y_row_weight).
@@ -71,6 +71,9 @@ feature_weight(c_d_no_overlap_tick,c_d_no_overlap_tick_weight).
 feature_weight(d_d_point,d_d_point_weight).
 feature_weight(d_d_text,d_d_text_weight).
 feature_weight(d_d_rect,d_d_rect_weight).
+feature_weight(d_d_no_overlap_point,d_d_no_overlap_point_weight).
+feature_weight(d_d_no_overlap_text,d_d_no_overlap_text_weight).
+feature_weight(d_d_no_overlap_rect,d_d_no_overlap_rect_weight).
 feature_weight(continuous_x,continuous_x_weight).
 feature_weight(continuous_y,continuous_y_weight).
 feature_weight(continuous_color,continuous_color_weight).
