@@ -283,3 +283,8 @@ feature_term(summary_channel_text,E) :- task(summary), channel(E,text), enc_inte
 feature_term(summary_channel_row,E) :- task(summary), channel(E,row), enc_interesting(E).
 feature_term(summary_channel_column,E) :- task(summary), channel(E,column), enc_interesting(E).
 feature_term(summary_channel_detail,E) :- task(summary), channel(E,detail), enc_interesting(E).
+
+% stack
+
+feature_term(stack_zero) :- stack(zero).
+feature_term(stack_normalize) :- stack(normalize).

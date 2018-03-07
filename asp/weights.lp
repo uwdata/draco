@@ -163,3 +163,6 @@
 #const summary_channel_row_weight = 0.
 #const summary_channel_column_weight = 0.
 #const summary_channel_detail_weight = 0.
+
+#const stack_zero_weight = 0.
+#const stack_normalize_weight = 1.

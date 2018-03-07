@@ -221,6 +221,49 @@ Test constraints:
             :- not aggregate(e,_).
         Expect: SAT
 
+    Test need stack if no opacity but color:
+        Program: |
+            encoding(e1).
+            channel(e1,x).
+            field(e1,s1).
+            type(e1,ordinal).
+
+            encoding(e2).
+            channel(e2,y).
+            field(e2,n1).
+            type(e2,quantitative).
+            zero(e2).
+
+            encoding(e3).
+            channel(e3,color).
+            field(e3,s2).
+            type(e3,nominal).
+
+            mark(bar).
+        Expect: UNSAT
+
+    Test need stack if no opacity but color:
+        Program: |
+            encoding(e1).
+            channel(e1,x).
+            field(e1,s1).
+            type(e1,ordinal).
+
+            encoding(e2).
+            channel(e2,y).
+            field(e2,n1).
+            type(e2,quantitative).
+            zero(e2).
+
+            encoding(e3).
+            channel(e3,color).
+            field(e3,s2).
+            type(e3,nominal).
+
+            mark(bar).
+            stack(zero).
+        Expect: SAT
+
 Test helpers:
     Modules: no_gen
 

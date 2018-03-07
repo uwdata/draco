@@ -122,14 +122,14 @@
 
 % === Global properties ===
 
-% only use stacking for bar, area, line
-:- stack(_), not mark(bar), not mark(area), not mark(line).
+% only use stacking for bar and area
+:- stack(_), not mark(bar), not mark(area).
 
 % don't stack if aggregation is not summative (summative are count, sum, distinct, valid, missing)
 :- stack(E,_), aggregate(E,A), not summative_aggregate_op(A).
 
-% stack if no opacity is used for bar and area
-:- not channel(_,opacity), mark(bar;area), channel(_,(detail;color;opacity)), not stack(_).
+% can only use stack if we also use discrete color or opacity
+:- stack(_), not channel_discrete((opacity;color)).
 
 % === Type checks ===
 

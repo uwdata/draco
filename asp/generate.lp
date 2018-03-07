@@ -5,6 +5,7 @@
 % maximum number for each multi channel encoding
 #const max_extra_encs = 5.
 
+%TODO: make this 1
 obj_id(0..max_extra_encs).
 
 { encoding(E): obj_id(E) }.

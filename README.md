@@ -67,7 +67,7 @@ You should also be able to run the tests (and coverage report)
 
 #### Test types
 
-`mypy draco --ignore-missing-imports`
+`mypy draco tests --ignore-missing-imports`
 
 ### Running Draco
 
@@ -79,13 +79,15 @@ The output would be a .vl.json file (for Vega-Lite spec) and a .png file to prev
 
 ### Use CompassQL to generate examples
 
-Run `data/generate.js`. Then check out the examples named `qcl_*` in `data/input` and `data/output`.
+Run `yarn build_cql_examples`.
 
 ### Run draco directly on a set of ASP constraints
 
-You can use the helper file `asp/all.lp`.
+You can use the helper file `asp/_all.lp`.
 
-`clingo asp/all.lp test.lp`
+`clingo asp/_all.lp test.lp`
+
+Alternatively, you can invoke draco with `draco -m asp test.lp`.
 
 ## To run the notebook in a conda environment
 

@@ -148,3 +148,5 @@ feature_weight(summary_channel_text,summary_channel_text_weight).
 feature_weight(summary_channel_row,summary_channel_row_weight).
 feature_weight(summary_channel_column,summary_channel_column_weight).
 feature_weight(summary_channel_detail,summary_channel_detail_weight).
+feature_weight(stack_zero,stack_zero_weight).
+feature_weight(stack_normalize,stack_normalize_weight).

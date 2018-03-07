@@ -21,7 +21,7 @@ def test_is_valid():
     })
     assert is_valid(Task(data, valid)) == True
 
-    data = Data(fields=[Field('n1', 'string'), Field('q1', 'number'), Field('q2', 'number')])
+    data = Data(fields=[Field('n1', 'string'), Field('n2', 'string'), Field('q1', 'number'), Field('q2', 'number')])
 
     stack_color = Query.from_vegalite({
         'mark': 'bar',
@@ -37,8 +37,8 @@ def test_is_valid():
                 'aggregate': 'sum'
             },
             'color': {
-                'type': 'quantitative',
-                'field': 'q2'
+                'type': 'nominal',
+                'field': 'n2'
             }
         }
     })
