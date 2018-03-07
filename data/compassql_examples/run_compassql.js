@@ -3,13 +3,14 @@
 const cql = require('compassql');
 const dl = require('datalib');
 const fs = require('fs');
+
 var path = require('path');
 
 // the folder containing input partial specs
-const inputDir = './compassql_examples/input/';
+const inputDir = './data/compassql_examples/input/';
 // the folder for output full specs
-const outputDir = './compassql_examples/output/';
-const dataDir = './';
+const outputDir = './data/compassql_examples/output/';
+const dataDir = '../';
 
 files = fs.readdirSync(inputDir);
 

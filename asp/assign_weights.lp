@@ -48,6 +48,7 @@ feature_weight(y_row,y_row_weight).
 feature_weight(x_column,x_column_weight).
 feature_weight(y_column,y_column_weight).
 feature_weight(temporal_y,temporal_y_weight).
+feature_weight(c_d_column,c_d_column_weight).
 feature_weight(c_c_point,c_c_point_weight).
 feature_weight(c_c_line,c_c_line_weight).
 feature_weight(c_c_area,c_c_area_weight).
