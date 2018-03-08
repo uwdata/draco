@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 class PropObjects:
     """
     Functions to retrieve objects for fields that require object values
@@ -8,7 +10,7 @@ class PropObjects:
         """
         Returns a bin object with given max_bins
         """
-        return { 'maxbins': max_bins }
+        return OrderedDict({ 'maxbins': max_bins })
 
     @staticmethod
     def unpack_bin(bin_obj):
@@ -22,9 +24,9 @@ class PropObjects:
         type -- `zero` or `log`
         """
         if (scale_enum == 'zero'):
-            return { 'zero': True }
+            return  OrderedDict({ 'zero': True })
         elif (scale_enum == 'log'):
-            return { 'type': 'log' }
+            return  OrderedDict({ 'type': 'log' })
         else:
             raise ValueError('scale should be zero or log')
 
