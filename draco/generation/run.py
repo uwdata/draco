@@ -3,6 +3,7 @@ import json
 import logging
 import os
 from copy import deepcopy
+import itertools
 
 from draco.generation.generator import Generator
 
@@ -17,10 +18,11 @@ INTERACTIONS_PATH = absolute_path('define/interactions.json')
 DISTRIBUTIONS_PATH = absolute_path('define/distributions.json')
 DEFINITIONS_PATH = absolute_path('define/definitions.json')
 DUMMY_SCHEMA_PATH = absolute_path('define/dummy_schema.json')
+OUTPUT_LIST_PATH = absolute_path('../../draco-tools/public/generated_visualizations/interactions.json')
 DATA_URL = 'data/cars_mod.json'
 
 NUM_TRIES = 100
-MAX_DIMENSIONS = 4
+MAX_DIMENSIONS = 2
 
 def main(args):
     logger = logging.getLogger(__name__)
@@ -31,42 +33,68 @@ def main(args):
     dummy_schema = load_json(DUMMY_SCHEMA_PATH)
 
     out_dir = args.output_dir
+    num_groups = int(args.groups)
+
+    field_names = [x['name'] for x in dummy_schema]
 
     generator = Generator(distributions, definitions, dummy_schema, DATA_URL)
 
-    chosen = str(args.interaction)
-    num_groups = int(args.groups)
+    written = []
 
-    for interaction in interactions:
-        specified = interaction['name'] == chosen or chosen == 'all'
+    for d in range(2, MAX_DIMENSIONS + 1):
+        field_subsets = generate_field_subsets(field_names, d)
 
-        base_num_groups = interaction['groups'] if num_groups == -1 else num_groups
-        if (interaction['include'] and specified):
+        for subset in field_subsets:
+            name = field_list_to_string(subset)
+
             out = {}
-            for d in range(1, MAX_DIMENSIONS + 1):
-                n = base_num_groups // 4 if d == 1 else base_num_groups
+            group = []
+            seen = set()
 
-                groups = []
-                for _ in range(n):
-                    specs = generator.generate_interaction(interaction['props'], d)
+            for _ in range(num_groups):
+                specs = generator.generate_visualizations(subset, seen)
 
-                    tries = 0
-                    while (len(specs) < 2 and tries < NUM_TRIES):
-                        specs = generator.generate_interaction(interaction['props'], d)
-                        tries += 1
+                tries = 0
+                while (len(specs) == 0 and tries < NUM_TRIES):
+                    specs = generator.generate_visualizations(subset, seen)
+                    tries += 1
 
-                    if (tries == NUM_TRIES):
-                        logger.warning('exceeded maximum tries for {0} with d={1}'
-                                       .format(interaction['name'], d))
-                        continue
+                if (tries == NUM_TRIES):
+                    logger.warning('exceeded maximum tries for {0} exceeded'.format(name))
+                    continue
 
-                    groups.append(specs)
+                group.extend(specs)
 
-                out[d] = groups
+            if (len(group) < 2):
+                continue
 
-            output_name = '{0}/{1}.json'.format(out_dir, interaction['name'])
+            out['1'] = [group]
+
+            output_name = '{0}/{1}.json'.format(out_dir, name)
             with open(output_name, 'w') as outfile:
+                written.append('{0}.json'.format(name))
                 json.dump(out, outfile, indent=4)
+
+        with open(OUTPUT_LIST_PATH, 'w') as f:
+            json.dump(written, f, indent=4)
+
+def field_list_to_string(fields):
+    result = str(fields[0])
+    for field in fields[1:]:
+        result += 'x{0}'.format(field)
+
+    return result
+
+
+
+def generate_field_subsets(field_names, dimensions):
+    """
+    Returns a list of subsets of field names with number of dimensions.
+    """
+    subsets = itertools.combinations(field_names, dimensions)
+
+    return [x for x in subsets if len(x) == dimensions]
+
 
 def load_json(file_path):
     with open(file_path) as data:
@@ -75,9 +103,7 @@ def load_json(file_path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--interaction', '-i', default='all')
-    parser.add_argument('--groups', '-g', default=-1)
     parser.add_argument('--output_dir', '-o', default=absolute_path('../../data/to_label'))
-
+    parser.add_argument('--groups', '-g', default=1)
     args = parser.parse_args()
     main(args)

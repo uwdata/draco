@@ -1,5 +1,6 @@
 import random
 from copy import deepcopy
+import itertools
 
 from draco.generation.helper import is_valid
 from draco.generation.model import Model
@@ -12,52 +13,42 @@ class Generator:
         encoding_props = definitions['encodingProps']
         data_fields = [Field(x['name'], x['type']) for x in data_schema]
 
-        self.model = Model(distributions, top_level_props, encoding_props)
+        self.model = Model(data_fields, distributions, top_level_props, encoding_props)
         self.data = Data(data_fields)
         self.data_url = data_url
 
-    def generate_interaction(self, props, dimensions):
+
+    def generate_visualizations(self, field_names, seen=set()):
+        """
+        A base_spec contains ONLY field names.
+        """
+        specs = []
+
+        dimensions = len(field_names)
         base_spec = self.model.generate_spec(dimensions)
 
-        specs = []
-        self.__mutate_spec(base_spec, props, 0, set(), specs)
+        permutations = itertools.permutations(field_names)
+
+        for perm in permutations:
+            spec = deepcopy(base_spec)
+
+            for index, channel in enumerate(spec['encoding']):
+                enc = spec['encoding'][channel]
+                enc['field'] = perm[index]
+
+            self.model.populate_types(spec)
+            self.model.improve(spec)
+
+            if not (spec in seen):
+                seen.add(spec)
+
+                query = Query.from_vegalite(spec)
+
+                if (is_valid(Task(self.data, query))):
+                    spec['data'] = { 'url': self.data_url }
+                    specs.append(spec)
+
         return specs
 
 
-    def __mutate_spec(self, base_spec, props, prop_index, seen, specs):
-        if (prop_index == len(props)):
-            self.model.improve(base_spec, props)
 
-            if not (base_spec in seen):
-                seen.add(base_spec)
-
-                self.__populate_field_names(base_spec)
-                query = Query.from_vegalite(base_spec)
-
-                if (is_valid(Task(self.data, query))):
-                    base_spec['data'] = { 'url': self.data_url }
-                    specs.append(base_spec)
-        else:
-            prop_to_mutate = props[prop_index]
-            for enum in self.model.get_enums(prop_to_mutate):
-                spec = deepcopy(base_spec)
-                self.model.mutate_prop(spec, prop_to_mutate, enum)
-
-                self.__mutate_spec(spec, props, prop_index + 1, seen, specs)
-
-        return
-
-    def __populate_field_names(self, spec):
-        counts = {
-            'n': 1, 'o': 1, 'q': 1, 't': 1
-        }
-
-        encodings = spec['encoding']
-        for channel in encodings:
-            enc = encodings[channel]
-
-            field_type = enc['type'][:1]
-            field_name = field_type + str(counts[field_type])
-            counts[field_type] += 1
-
-            enc['field'] = field_name

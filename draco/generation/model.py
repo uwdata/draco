@@ -21,7 +21,31 @@ class Model:
 
     UNIQUE_ENCODING_PROPS = set(['stack'])
 
-    def __init__(self, distributions, top_level_props, encoding_props):
+    TYPE_PROBABILITIES = {
+        'number': {
+            'quantitative': 0.7,
+            'ordinal': 0.25,
+            'nominal': 0.05,
+            'temporal': 0
+        },
+        'string': {
+            'nominal': 0.9,
+            'ordinal': 0.1,
+            'quantitative': 0,
+            'temporal': 0
+        },
+        'datetime': {
+            'temporal': 1,
+            'quantitative': 0,
+            'nominal': 0,
+            'ordinal': 0
+        }
+    }
+
+    def __init__(self, data_fields, distributions, top_level_props, encoding_props):
+        self.fields = {x.name:x.ty for x in data_fields}
+
+        print(self.fields)
         self.distributions = distributions
         self.top_level_props = set(top_level_props)
         self.encoding_props = set(encoding_props)
@@ -67,38 +91,22 @@ class Model:
 
         return spec
 
-    def mutate_prop(self, spec, prop, enum):
-        if not (prop in self.top_level_props or prop == 'channel' or
-                prop in self.encoding_props):
-            raise ValueError('invalid prop {0}'.format(prop))
+    def populate_types(self, spec):
+        for channel in spec['encoding']:
+            enc = spec['encoding'][channel]
 
-        if (prop in self.top_level_props):
-            spec[prop] = Model.build_value_from_enum(prop, enum)
+            field_name = enc['field']
+            field_value_type = self.fields[field_name]
+            distribution = Model.TYPE_PROBABILITIES[field_value_type]
 
-        elif (prop == 'channel' and not enum in spec['encoding']):
-            used_channels = list(spec['encoding'].keys())
+            types = list(distribution.keys())
+            probs = [distribution[x] for x in types]
 
-            # the least likely channel has the highest prob of being replaced
-            probs = [(1 - self.enum_probs['channel'][x]) for x in used_channels]
-            to_replace, _ = Model.sample(used_channels, probs)
-
-            enc = spec['encoding'][to_replace]
-            del spec['encoding'][to_replace]
-            spec['encoding'][enum] = enc
-
-        elif (prop in self.encoding_props):
-            used_channels = list(spec['encoding'].keys())
-
-            # the most likely channel has the highest prob of being modified
-            probs = [self.enum_probs['channel'][x] for x in used_channels]
-            to_modify, _ = Model.sample(used_channels, probs)
-
-            enc = spec['encoding'][to_modify]
-            enc[prop] = Model.build_value_from_enum(prop, enum)
-
+            field_type, _ = Model.sample(types, probs)
+            enc['type'] = field_type
         return
 
-    def improve(self, spec, props):
+    def improve(self, spec):
         """
         Improves the given spec to fit certain soft constraints
         """
@@ -112,7 +120,7 @@ class Model:
                 improvements.append(attr)
 
         for imp in improvements:
-            imp(spec, props)
+            imp(spec)
 
         return
 
@@ -208,7 +216,7 @@ class Model:
 
 class Improvements:
     @staticmethod
-    def improve_aggregate(spec, props):
+    def improve_aggregate(spec):
         """
         Give an aggregate to bar, line, area
         plots that are not qxq unless we are inspecting
@@ -217,21 +225,19 @@ class Improvements:
         if (not spec['mark'] in ['bar', 'line', 'area']):
             return
 
-        # 50% chance of adding aggregate
-        if ('aggregate' not in props):
-            x_enc = Model.get_enc_by_channel(spec, 'x')
-            y_enc = Model.get_enc_by_channel(spec, 'y')
+        x_enc = spec.get_enc_by_channel('x')
+        y_enc = spec.get_enc_by_channel('y')
 
-            if (x_enc is None or y_enc is None):
-                return
-            if ((x_enc['type'] != 'quantitative') != (y_enc['type'] != 'quantitative')):
-                q_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
-                q_enc['aggregate'] = 'mean'
+        if (x_enc is None or y_enc is None):
+            return
+        if ((x_enc['type'] != 'quantitative') != (y_enc['type'] != 'quantitative')):
+            q_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
+            q_enc['aggregate'] = 'mean'
 
         return
 
     @staticmethod
-    def improve_bar(spec, props):
+    def improve_bar(spec):
         """
         Adds `scale: { 'zero': True }` to the given spec
         if the mark is a bar.
@@ -242,14 +248,14 @@ class Improvements:
         return
 
     @staticmethod
-    def improve_stack(spec, props):
+    def improve_stack(spec):
         """
         If we are trying to inspect 'stack' in an interaction,
         we force bar or area marks. In any case,
         We also only want to stack on x and y, and stack should
         be accompanied by aggregate.
         """
-        if ('stack' in props):
+        if (spec.contains_prop('stack')):
             mark = 'bar' if random.random() < 0.5 else 'area'
             spec['mark'] = mark
 

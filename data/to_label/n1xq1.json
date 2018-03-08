@@ -1,0 +1,226 @@
+{
+    "1": [
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "field": "n1",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "q1",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "sort": "ascending",
+                        "aggregate": "mean",
+                        "field": "q1",
+                        "type": "quantitative"
+                    },
+                    "detail": {
+                        "field": "n1",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "n1",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "field": "q1",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "q1",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "y": {
+                        "field": "n1",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "n1",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "field": "q1",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q1",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "x": {
+                        "field": "n1",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "n1",
+                        "type": "ordinal"
+                    },
+                    "color": {
+                        "field": "q1",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q1",
+                        "type": "quantitative"
+                    },
+                    "color": {
+                        "field": "n1",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "n1",
+                        "type": "nominal"
+                    },
+                    "size": {
+                        "field": "q1",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q1",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "field": "n1",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "opacity": {
+                        "field": "q1",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "field": "n1",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "q1",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "x": {
+                        "field": "n1",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "q1",
+                        "type": "quantitative",
+                        "aggregate": "mean"
+                    },
+                    "y": {
+                        "sort": "descending",
+                        "field": "n1",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ]
+    ]
+}

@@ -8,7 +8,7 @@ const BASE_DIR = '/generated_visualizations/';
 const SPEC_DIR = BASE_DIR + 'specs/';
 const INTERACTIONS = BASE_DIR + 'interactions.json';
 const DATA = BASE_DIR + 'cars.json';
-const DEFAULT_DATASET = 'mark.json';
+const DEFAULT_DATASET = 'n1xn2.json';
 
 class DatasetViewer extends Component {
   constructor(props) {
