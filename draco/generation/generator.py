@@ -43,9 +43,11 @@ class Generator:
 
     def __mutate_spec(self, base_spec: Spec, props: List[str], prop_index: int,
                             seen: Set[Spec], specs: List[Spec]):
+        # base case
         if (prop_index == len(props)):
             self.model.post_improve(base_spec, props)
 
+            # within a group, don't repeat the same specs
             if not (base_spec in seen):
                 seen.add(base_spec)
 
@@ -55,12 +57,14 @@ class Generator:
                 if (is_valid(Task(self.data, query))):
                     base_spec['data'] = { 'url': self.data_url }
                     specs.append(base_spec)
+         # recursive case
         else:
             prop_to_mutate = props[prop_index]
             for enum in self.model.get_enums(prop_to_mutate):
                 spec = deepcopy(base_spec)
                 self.model.mutate_prop(spec, prop_to_mutate, enum)
 
+                # recursive call
                 self.__mutate_spec(spec, props, prop_index + 1, seen, specs)
 
         return

@@ -21,12 +21,6 @@ class Model:
         'scale': PropObjects.get_scale,
     }
 
-    # unpacking methods for special enums (from object -> primitive)
-    UNPACK_SPECIAL_ENUM = {
-        'bin': PropObjects.unpack_bin,
-        'scale': PropObjects.unpack_scale
-    }
-
     # only 1 of these can appear in all encodings
     UNIQUE_ENCODING_PROPS = set(['stack'])
 
@@ -287,18 +281,16 @@ class PostImprovements:
         plots that are not qxq unless we are inspecting
         aggregate.
         """
-        if (not spec['mark'] in ['bar', 'line', 'area']):
-            return
+        if (spec['mark'] in ['bar', 'line', 'area']):
+            if ('aggregate' not in props):
+                x_enc = spec.get_enc_by_channel('x')
+                y_enc = spec.get_enc_by_channel('y')
 
-        if ('aggregate' not in props):
-            x_enc = spec.get_enc_by_channel('x')
-            y_enc = spec.get_enc_by_channel('y')
-
-            if (x_enc is None or y_enc is None):
-                return
-            if ((x_enc['type'] != 'quantitative') != (y_enc['type'] != 'quantitative')):
-                q_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
-                q_enc['aggregate'] = 'mean'
+                if (x_enc is None or y_enc is None or len(spec['encoding']) > 2):
+                    return
+                if ((x_enc['type'] != 'quantitative') != (y_enc['type'] != 'quantitative')):
+                    q_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
+                    q_enc['aggregate'] = 'mean'
 
         return
 
@@ -308,7 +300,7 @@ class PostImprovements:
         Adds `scale: { 'zero': True }` to the given spec
         if the mark is a bar.
         """
-        if (spec['mark'] == 'rect'):
+        if (spec['mark'] == 'bar'):
             spec['scale'] = OrderedDict({'zero': True })
 
         return

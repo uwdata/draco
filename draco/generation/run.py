@@ -44,6 +44,7 @@ def main(args):
         if (interaction['include'] and specified):
             out = {}
             for d in range(1, MAX_DIMENSIONS + 1):
+                # to not generate too many 1D visualizations
                 n = base_num_groups // 4 if d == 1 else base_num_groups
 
                 seen_base_specs = set()
