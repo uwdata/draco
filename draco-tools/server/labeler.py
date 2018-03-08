@@ -12,18 +12,29 @@ CORS(app)
 
 DATABASE = os.path.join(os.path.dirname(__file__), 'label_data.db')
 
+# not thread safe, not process safe
+global_state = {
+    "db": None,
+    "lev_scores": None,
+    "unlabeled": None
+}
+
 def get_db():
-    db = getattr(g, '_database', None)
+    db = global_state["db"]
     if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
+        print("connect to db")
+        global_state["db"] = sqlite3.connect(DATABASE)
+        db = global_state["db"]
     return db
 
 def get_leverage_score():
     """ get leverage score """
 
-    lev_scores = getattr(g, '_leverage_scores', None)
+    lev_scores = global_state["lev_scores"]
 
     if lev_scores is None:
+
+        print("calculating lev scores")
 
         db = get_db()
         c = db.cursor()
@@ -52,7 +63,7 @@ def get_leverage_score():
         for i, key in enumerate(keys):
             lev_scores[key] = raw_lev_scores[i]
 
-        g._leverage_scores = lev_scores
+        global_state["lev_scores"] = lev_scores
 
     return lev_scores
 
@@ -62,9 +73,11 @@ def get_unlabeled_data():
 
     # todo: optimize this process is necessary
 
-    unlabeled_pairs = getattr(g, '_unlabeled', None)
+    unlabeled_pairs = global_state["unlabeled"]
 
     if unlabeled_pairs is None:
+
+        print("fetching unlabeled data...")
 
         db = get_db()
         c = db.cursor()
@@ -89,7 +102,7 @@ def get_unlabeled_data():
         
             result[row[0]] = data
 
-        unlabeled_pairs = g._unlabeled = result
+        unlabeled_pairs = global_state["unlabeled"] = result
 
     return unlabeled_pairs
 
@@ -155,4 +168,4 @@ def upload_label():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', threaded=False, processes=1)
