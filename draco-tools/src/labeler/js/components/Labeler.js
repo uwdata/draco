@@ -4,7 +4,7 @@ import { diffJson } from 'diff';
 import * as stringify from 'json-stable-stringify';
 import React, { Component } from 'react';
 import Visualization, {datasets} from 'shared/js/components/Visualization';
-import { duplicate } from 'vega-lite/build/src/util';
+import { duplicate, unique } from 'vega-lite/build/src/util';
 
 const classnames = require('classnames');
 
@@ -113,7 +113,10 @@ class Labeler extends Component {
     let table = '';
 
     if (data) {
-      const fields = Object.keys(data[0]);
+      const l = Object.values(this.state.left.encoding).map(e => e.field).filter(d => d);
+      const r = Object.values(this.state.right.encoding).map(e => e.field).filter(d => d);
+      const fields = unique(l.concat(r), f => f);  // Object.keys(data[0]);
+
       const header = fields.map(t => <th key={t}>{t}</th>);
       const tableBody = data.slice(0, 20).map((r, i) => <tr key={i}>
         {fields.map(f => <td key={f}>{r[f]}</td>)}
