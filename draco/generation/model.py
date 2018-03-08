@@ -23,8 +23,8 @@ class Model:
 
     TYPE_PROBABILITIES = {
         'number': {
-            'quantitative': 0.7,
-            'ordinal': 0.25,
+            'quantitative': 0.85,
+            'ordinal': 0.1,
             'nominal': 0.05,
             'temporal': 0
         },
