@@ -3,3 +3,4 @@
 
 #include "asp/define.lp".
 #include "asp/test.lp".
+#include "asp/features.lp".

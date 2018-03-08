@@ -106,13 +106,10 @@ feature_term(horizontal_scrolling,E) :- channel(E,x), discrete(E), enc_cardinali
 feature_term(horizontal_scrolling,E) :- channel(E,columm), discrete(E), enc_cardinality(E,C), C > 5.
 
 % prefer to use temporal type with dates
-feature_term(temporal_date,E) :- field(E,F), fieldtype(F,date), not type(E,temporal).
+feature_term(temporal_date,E) :- field(E,F), fieldtype(F,datetime), not type(E,temporal).
 
 % prefer quantitative for numbers with high cardinality
 feature_term(quantitative_numbers) :- field(E,F), fieldtype(F,number), cardinality(F,C), C > 20, not bin(E,_), not type(E,quantitative).
-
-% prefer not to use numbers as temporal
-feature_term(number_dates) :- field(E,F), fieldtype(F,number), type(E,temporal).
 
 % Overplotting
 
@@ -157,7 +154,7 @@ is_c_d :- channel_continuous(y), not channel_continuous(x).
 
 % the continuous variable is a measure (it is aggregated) and all other channels are aggregated -> no overlap
 non_pos_unaggregated :- channel(E,C), non_positional(C), not aggregate(E,_).
-no_overlap :- is_c_d, continuous(E), channel(E,(x;y)), aggregate(E,_),not non_pos_unaggregated.
+no_overlap :- is_c_d, continuous(E), channel(E,(x;y)), aggregate(E,_), not non_pos_unaggregated.
 % data size is as small as discrete dimension -> no overlap
 no_overlap :- is_c_d, data_size(S), channel(E,(x;y)), discrete(E), enc_cardinality(E,S).
 

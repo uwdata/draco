@@ -2,20 +2,24 @@
 
 data_size(100).
 
-fieldtype(s1,string).
-cardinality(s1,10).
-entropy(s1,8).  % entropy is in 0.1 units because asp only supports integers
+fieldtype(n1,string).
+cardinality(n1,20).
+entropy(n1,8).  % entropy is in 0.1 units because asp only supports integers
 
-fieldtype(s2,string).
-cardinality(s2,3).
-entropy(s1,12).
+fieldtype(n2,string).
+cardinality(n2,3).
+entropy(n2,12).
 
-fieldtype(n1,number).
-cardinality(n1,12).
-entropy(n1,21).
-extent(n1,0,10).
+fieldtype(o1,string).
+cardinality(o2,7).
+entropy(o2,1).
 
-fieldtype(n2,number).
-cardinality(n2,100).
-entropy(n2,8).
-extent(n2,10,30).
+fieldtype(q1,number).
+cardinality(q1,12).
+entropy(q1,21).
+extent(q1,0,10).
+
+fieldtype(q2,number).
+cardinality(q2,100).
+entropy(q2,8).
+extent(q2,10,30).

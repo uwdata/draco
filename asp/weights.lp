@@ -39,7 +39,6 @@
 #const horizontal_scrolling_weight = 20.
 #const temporal_date_weight = 1.
 #const quantitative_numbers_weight = 2.
-#const number_dates_weight = 5.
 #const position_entropy_weight = 2.
 #const high_cardinality_size_weight = 1.
 #const stack_opacity_weight = 5.

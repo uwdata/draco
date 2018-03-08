@@ -34,7 +34,7 @@ Test valid values:
 
     Test field:
         Program: |
-            :- not field(_,s1).
+            :- not field(_,n1).
 
     Test type:
         Program: |
@@ -126,20 +126,20 @@ Test constraints:
         Program: |
             encoding(e).
             :- not aggregate(e,count).
-            :- not field(e,n1).
+            :- not field(e,q1).
         Expect: UNSAT
 
     Test can use string as o:
         Program: |
             encoding(e).
-            :- not field(e,s1).
+            :- not field(e,n1).
             :- not type(e,ordinal).
         Expect: SAT
 
     Test cannot use string as q:
         Program: |
             encoding(e).
-            :- not field(e,s1).
+            :- not field(e,n1).
             :- not type(e,quantitative).
         Expect: UNSAT
 
@@ -155,14 +155,14 @@ Test constraints:
     Test cannot use log with string:
         Program: |
             encoding(e).
-            :- not field(e,s1).
+            :- not field(e,n1).
             :- not log(e).
         Expect: UNSAT
 
     Test can log number:
         Program: |
             encoding(e).
-            :- not field(e,n1).
+            :- not field(e,q1).
             :- not log(e).
         Expect: SAT
 
@@ -176,14 +176,14 @@ Test constraints:
     Test cannot use zero with string:
         Program: |
             encoding(e).
-            :- not field(e,s1).
+            :- not field(e,n1).
             :- not zero(e).
         Expect: UNSAT
 
     Test can zero number:
         Program: |
             encoding(e).
-            :- not field(e,n1).
+            :- not field(e,q1).
             :- not zero(e).
         Expect: SAT
 
@@ -197,14 +197,14 @@ Test constraints:
     Test can compute average of a number:
         Program: |
             encoding(e).
-            :- not field(e,n1).
+            :- not field(e,q1).
             :- not aggregate(e,mean).
         Expect: SAT
 
     Test cannot compute average of a string:
         Program: |
             encoding(e).
-            :- not field(e,s1).
+            :- not field(e,n1).
             :- not aggregate(e,mean).
         Expect: UNSAT
 
@@ -237,12 +237,12 @@ Test helpers:
             mark(point).
 
             encoding(e1).
-            field(e1,s1).
+            field(e1,n1).
             channel(e1,x).
             type(e1,ordinal).
 
             encoding(e2).
-            field(e2,n1).
+            field(e2,q1).
             channel(e2,y).
             type(e2,quantitative).
 
@@ -254,12 +254,12 @@ Test helpers:
             mark(point).
 
             encoding(e1).
-            field(e1,s1).
+            field(e1,n1).
             channel(e1,x).
             type(e1,ordinal).
 
             encoding(e2).
-            field(e2,n1).
+            field(e2,q1).
             channel(e2,y).
             type(e2,quantitative).
             aggregate(e2,mean).
@@ -272,12 +272,12 @@ Test helpers:
             mark(point).
 
             encoding(e1).
-            field(e1,n2).
+            field(e1,q2).
             channel(e1,x).
             type(e1,ordinal).
 
             encoding(e2).
-            field(e2,n1).
+            field(e2,q1).
             channel(e2,y).
             type(e2,quantitative).
 
