@@ -221,7 +221,7 @@ Test constraints:
             :- not aggregate(e,_).
         Expect: SAT
 
-    Test need stack if no opacity but color:
+    Test without stack if color:
         Program: |
             encoding(e1).
             channel(e1,x).
@@ -242,7 +242,7 @@ Test constraints:
             mark(bar).
         Expect: UNSAT
 
-    Test need stack if no opacity but color:
+    Test with stack if color:
         Program: |
             encoding(e1).
             channel(e1,x).
