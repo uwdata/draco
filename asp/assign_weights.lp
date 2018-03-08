@@ -29,7 +29,6 @@ feature_weight(zero_size,zero_size_weight).
 feature_weight(zero_positional,zero_positional_weight).
 feature_weight(zero_skew,zero_skew_weight).
 feature_weight(includes_zero,includes_zero_weight).
-feature_weight(only_row_column,only_row_column_weight).
 feature_weight(only_x,only_x_weight).
 feature_weight(orientation_binned,orientation_binned_weight).
 feature_weight(orientation_discrete,orientation_discrete_weight).
@@ -38,7 +37,6 @@ feature_weight(high_cardinality_nominal,high_cardinality_nominal_weight).
 feature_weight(horizontal_scrolling,horizontal_scrolling_weight).
 feature_weight(temporal_date,temporal_date_weight).
 feature_weight(quantitative_numbers,quantitative_numbers_weight).
-feature_weight(number_dates,number_dates_weight).
 feature_weight(position_entropy,position_entropy_weight).
 feature_weight(high_cardinality_size,high_cardinality_size_weight).
 feature_weight(stack_opacity,stack_opacity_weight).
