@@ -119,7 +119,7 @@ def load_halden_data(include_features=True, data_dir=data_dir):
         if url not in data_cache:
             data_cache[url] = Data.from_json(os.path.join(data_dir, os.path.basename(url)))
             # set the url to short name, since the one above set it to full name in the current machine
-            data_cache[url].url = url 
+            data_cache[url].url = url
         return data_cache[url]
 
     spec_to_task = lambda spec: Task(acquire_data(spec["data"]["url"]), Query.from_vegalite(spec), spec["task"] if "task" in spec else "value")
@@ -144,7 +144,7 @@ def load_halden_data(include_features=True, data_dir=data_dir):
 
                     if include_features:
                         features = [violation_dict_to_vec(
-                                        count_violations_memoized(memoized_violations, task)) 
+                                        count_violations_memoized(memoized_violations, task))
                                     for task in task_list]
                         #features = tasks_to_vec([spec_to_task(spec) for spec in spec_list])
                     else:
@@ -297,11 +297,6 @@ def load_data(test_size: float=0.3, random_state=1) -> Tuple[pd.DataFrame, pd.Da
 
 if __name__ == '__main__':
     ''' Generate and store data in default path. '''
-    #neg_pos_data = load_neg_pos_data()
-    #data = pairs_to_vec(neg_pos_data)
-    #data.to_pickle(pickle_path)
-
-    for i, x in enumerate(load_halden_data()):
-        print(i)
-        print(x)
-        break
+    neg_pos_data = load_neg_pos_data()
+    data = pairs_to_vec(neg_pos_data)
+    data.to_pickle(pickle_path)
