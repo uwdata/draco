@@ -26,7 +26,7 @@ class TestValidSpecs():
             }
         })
 
-        assert is_valid(Task(self.data, query)) == True
+        assert is_valid(Task(self.data, query), True) == True
 
     def test_bar(self):
         query = Query.from_vegalite({
@@ -43,7 +43,7 @@ class TestValidSpecs():
             }
         })
 
-        assert is_valid(Task(self.data, query)) == True
+        assert is_valid(Task(self.data, query), True) == True
 
     def one_bar(self):
         query = Query.from_vegalite({
@@ -56,7 +56,7 @@ class TestValidSpecs():
             }
         })
 
-        assert is_valid(Task(self.data, query)) == True
+        assert is_valid(Task(self.data, query), True) == True
 
     def test_scatter(self):
         query = Query.from_vegalite({
@@ -81,7 +81,7 @@ class TestValidSpecs():
             }
         })
 
-        assert is_valid(Task(self.data, query)) == True
+        assert is_valid(Task(self.data, query), True) == True
 
 
     def test_stack(self):
@@ -105,11 +105,11 @@ class TestValidSpecs():
             }
         })
 
-        assert is_valid(Task(self.data, query)) == True
+        assert is_valid(Task(self.data, query), True) == True
 
     def test_heatmap(self):
         query = Query.from_vegalite({
-            'mark': 'react',
+            'mark': 'rect',
             'encoding': {
                 'x': {
                     'type': 'nominal',

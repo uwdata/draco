@@ -40,7 +40,8 @@ ordered(E) :- type(E,(ordinal;quantitative)).
 field(F) :- fieldtype(F,_).
 
 % stacking is applied to the continuous x or y
-stack(E,S) :- continuous(E), stack(S).
+stack(E,S) :- channel(E,(x;y)), continuous(E), stack(S).
+stack(S) :- stack(_,S).
 
 % data properties
 enc_cardinality(E,C) :- field(E,F), cardinality(F,C).

@@ -76,22 +76,19 @@
 :- channel(_,text), not mark(text).
 
 % point, tick, and bar require x or y channel
-:- mark(point;tick;bar;rule), not channel(_,x), not channel(_,y).
-
-% do not use rule if we have x and y
-:- mark(rule), channel(_,x), channel(_,y).
+:- mark(point;tick;bar), not channel(_,x), not channel(_,y).
 
 % line and area require x and y channel
 :- mark(line;area), not channel(_,(x;y)).
 
-% line and area cannot have two continuous
+% line and area cannot have two discrete
 :- mark(line;area), channel_discrete(x), channel_discrete(y).
 
 % bar and tick cannot have both x and y continuous
 :- mark(bar;tick), channel_continuous(x), channel_continuous(y).
 
-% bar and tick cannot have both x and y discrete
-:- mark(bar;tick), channel_discrete(x), channel_discrete(y).
+% bar, tick, line, area require some continuous variable on x or y
+:- mark(bar;tick;area;line), not channel_continuous(x), not channel_continuous(y).
 
 % bar and area mark requires scale of continuous to start at zero
 :- mark(bar;area), channel(E,(x;y)), continuous(E), not zero(E).
@@ -100,7 +97,7 @@
 :- channel(_,shape), not mark(point).
 
 % size only works with some marks
-:- channel(_,size), not mark(point), not mark(rule), not mark(text), not mark(line).
+:- channel(_,size), not mark(point), not mark(text), not mark(line).
 
 % detail requires aggregation
 :- channel(_,detail), not aggregate(_,_).
@@ -109,8 +106,7 @@
 :- mark(bar;area), log(E), channel(E,(x;y)).
 
 % rect mark needs discrete x and y
-:- mark(rect), not channel_discrete(x).
-:- mark(rect), not channel_discrete(y).
+:- mark(rect), not channel_discrete(x;y).
 
 % don't use size with line
 :- mark(line), channel(E,size).
@@ -128,8 +124,11 @@
 % don't stack if aggregation is not summative (summative are count, sum, distinct, valid, missing)
 :- stack(E,_), aggregate(E,A), not summative_aggregate_op(A).
 
+% need to stack if we use bar, area with discrete color or opacity
+:- mark(bar;area), channel(E,(color;opacity)), discrete(E), not stack(_).
+
 % can only use stack if we also use discrete color or opacity
-:- stack(_), not channel_discrete((opacity;color)).
+:- stack(_), not channel_discrete(opacity), not channel_discrete(color).
 
 % === Type checks ===
 
