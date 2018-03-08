@@ -262,7 +262,7 @@ class Labeler extends Component {
             });
           } else {
             this.setState({
-              next: this.state.next.concat(data)
+              next: unique(this.state.next.concat(data), stringify)
             });
           }
         });
