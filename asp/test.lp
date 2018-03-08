@@ -19,6 +19,9 @@
 % cannot use log scale with discrete (which includes binned)
 :- log(E), discrete(E).
 
+% cannot use log and zero together
+:- log(E), zero(E).
+
 % cannot bin and aggregate
 :- bin(E,_), aggregate(E,_).
 
