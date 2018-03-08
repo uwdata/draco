@@ -235,7 +235,14 @@ class Labeler extends Component {
       if (response.ok) {
         response.json().then((data) => {
           if (this.state.id === null) {
-            this.setState(data);
+            if (this.state.next.length) {
+              alert('bad state');
+            }
+
+            this.setState({
+              ...data[0],
+              next: data.slice(1)
+            });
             // fetch another pair as we don't have enough data yet
             console.warn('Network is too slow....');
             this.fetchPair();

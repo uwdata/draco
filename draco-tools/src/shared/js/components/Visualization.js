@@ -6,6 +6,7 @@ import 'shared/scss/Visualization.css';
 
 const datasets = {
   'data/cars.json': require('../../data/cars.json'),
+  'data/cars_mod.json': require('../../data/cars_mod.json'),
   'data/movies.json': require('../../data/movies.json'),
   'data/weather.json': require('../../data/weather.json')
 };
