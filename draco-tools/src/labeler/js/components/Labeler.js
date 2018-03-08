@@ -211,7 +211,9 @@ class Labeler extends Component {
       next
     });
 
-    this.fetchPair();
+    if (this.state.next.length < 5) {
+      this.fetchPair();
+    }
 
     fetch(REQUEST_PATH + 'upload_label', {
       body: JSON.stringify(message),
@@ -229,23 +231,18 @@ class Labeler extends Component {
   }
 
   fetchPair() {
-    fetch(REQUEST_PATH + 'fetch_pair', {
+    fetch(REQUEST_PATH + 'fetch_pair?num_pairs=10', {
       method: 'get'
     }).then((response) => {
       if (response.ok) {
         response.json().then((data) => {
           if (this.state.id === null) {
-            if (this.state.next.length) {
-              alert('bad state');
-            }
+            if (this.state.next.length) { alert('bad state'); }
 
             this.setState({
               ...data[0],
               next: data.slice(1)
             });
-            // fetch another pair as we don't have enough data yet
-            console.warn('Network is too slow....');
-            this.fetchPair();
           } else {
             this.setState({
               next: this.state.next.concat(data)
