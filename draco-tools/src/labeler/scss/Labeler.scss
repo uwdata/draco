@@ -24,11 +24,12 @@
       }
 
       .visualization {
-        flex: 1;
+        flex-grow: 1;
+        flex-basis: 0;
         display: flex;
         justify-content: center;
         cursor: pointer;
-
+        overflow: hidden;
 
         .Visualization {
           height: 900px;
@@ -44,6 +45,7 @@
 
           svg {
             max-height: 100%;
+            max-width: 100%;
           }
         }
       }
@@ -51,6 +53,9 @@
       .same {
         display: flex;
         flex-direction: column;
+        flex-shrink: 0;
+        flex-grow: 0;
+        width: 128px;
 
         .equals {
           flex: 1;

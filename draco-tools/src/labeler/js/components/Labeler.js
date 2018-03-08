@@ -3,8 +3,8 @@ import 'labeler/scss/Labeler.css';
 import { diffJson } from 'diff';
 import * as stringify from 'json-stable-stringify';
 import React, { Component } from 'react';
-import Visualization from 'shared/js/components/Visualization';
-import { duplicate } from 'vega-lite/build/src/util';
+import Visualization, {datasets} from 'shared/js/components/Visualization';
+import { duplicate, unique } from 'vega-lite/build/src/util';
 
 const classnames = require('classnames');
 
@@ -43,12 +43,13 @@ class Labeler extends Component {
       task: null,
       chosen: null,
       hover: UNK,
+      requesting: false,
       next: []
     };
   }
 
   componentDidMount() {
-    this.fetchPair();
+    this.fetchPairIfNecessary();
     document.body.addEventListener('keydown', this.handleKeyDown.bind(this));
   }
 
@@ -99,11 +100,24 @@ class Labeler extends Component {
     const leftSpec = cleanUpSpec(this.state.left);
     const rightSpec = cleanUpSpec(this.state.right);
 
-    const data = this.state.left && this.state.left.data.values;
+    let data;
+
+    if (this.state.left) {
+      const d = this.state.left.data;
+      if (d.values) {
+        data = d.values;
+      } else {
+        data = datasets[d.url];
+      }
+    }
+
     let table = '';
 
     if (data) {
-      const fields = Object.keys(data[0]);
+      const l = Object.values(this.state.left.encoding).map(e => e.field).filter(d => d);
+      const r = Object.values(this.state.right.encoding).map(e => e.field).filter(d => d);
+      const fields = unique(l.concat(r), f => f);  // Object.keys(data[0]);
+
       const header = fields.map(t => <th key={t}>{t}</th>);
       const tableBody = data.slice(0, 20).map((r, i) => <tr key={i}>
         {fields.map(f => <td key={f}>{r[f]}</td>)}
@@ -182,6 +196,8 @@ class Labeler extends Component {
   }
 
   choose(id, label) {
+    console.info(`Current cache size: ${this.state.next.length}`);
+
     this.setState({
       chosen: label
     });
@@ -211,7 +227,7 @@ class Labeler extends Component {
       next
     });
 
-    this.fetchPair();
+    this.fetchPairIfNecessary();
 
     fetch(REQUEST_PATH + 'upload_label', {
       body: JSON.stringify(message),
@@ -222,32 +238,49 @@ class Labeler extends Component {
       },
     }).then((response) => {
       if (response.ok) {
+        this.fetchPairIfNecessary();
       } else {
         alert('failed POST');
       }
     });
   }
 
-  fetchPair() {
-    fetch(REQUEST_PATH + 'fetch_pair', {
+  fetchPairIfNecessary() {
+    if (this.state.next.length > 7 || this.state.requesting) {
+      // still have a cache or are requesting
+      return;
+    }
+
+    this.setState({requesting: true});
+    fetch(REQUEST_PATH + 'fetch_pair?num_pairs=5', {
       method: 'get'
     }).then((response) => {
       if (response.ok) {
         response.json().then((data) => {
           if (this.state.id === null) {
-            this.setState(data);
-            // fetch another pair as we don't have enough data yet
-            console.warn('Network is too slow....');
-            this.fetchPair();
+            if (this.state.next.length) { alert('bad state'); }
+
+            this.setState({
+              ...data[0],
+              requesting: false,
+              next: data.slice(1)
+            });
           } else {
             this.setState({
-              next: this.state.next.concat(data)
+              requesting: false,
+              next: unique(this.state.next.concat(data), stringify)
             });
           }
+          // we may not have fetched anything new
+          this.fetchPairIfNecessary();
         });
       } else {
-        alert('failed GET');
+        console.error('failed GET');
+        this.setState({requesting: false});
       }
+    }).catch( e => {
+      console.error(e);
+      this.setState({requesting: false});
     });
   }
 

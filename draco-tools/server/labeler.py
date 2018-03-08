@@ -130,6 +130,7 @@ def fetch_pair():
 
     return jsonify([unlabeled_data[i] for i in rand_indices])
 
+
 @app.route('/upload_label', methods=['POST'])
 def upload_label():
     """ upload a label to the server """
