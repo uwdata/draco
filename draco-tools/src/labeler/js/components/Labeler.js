@@ -3,7 +3,7 @@ import 'labeler/scss/Labeler.css';
 import { diffJson } from 'diff';
 import * as stringify from 'json-stable-stringify';
 import React, { Component } from 'react';
-import Visualization from 'shared/js/components/Visualization';
+import Visualization, {datasets} from 'shared/js/components/Visualization';
 import { duplicate } from 'vega-lite/build/src/util';
 
 const classnames = require('classnames');
@@ -48,7 +48,7 @@ class Labeler extends Component {
   }
 
   componentDidMount() {
-    this.fetchPair();
+    this.fetchPairIfNecessary();
     document.body.addEventListener('keydown', this.handleKeyDown.bind(this));
   }
 
@@ -99,7 +99,17 @@ class Labeler extends Component {
     const leftSpec = cleanUpSpec(this.state.left);
     const rightSpec = cleanUpSpec(this.state.right);
 
-    const data = this.state.left && this.state.left.data.values;
+    let data;
+
+    if (this.state.left) {
+      const d = this.state.left.data;
+      if (d.values) {
+        data = d.values;
+      } else {
+        data = datasets[d.url];
+      }
+    }
+
     let table = '';
 
     if (data) {
@@ -211,9 +221,7 @@ class Labeler extends Component {
       next
     });
 
-    if (this.state.next.length < 5) {
-      this.fetchPair();
-    }
+    this.fetchPairIfNecessary();
 
     fetch(REQUEST_PATH + 'upload_label', {
       body: JSON.stringify(message),
@@ -224,14 +232,20 @@ class Labeler extends Component {
       },
     }).then((response) => {
       if (response.ok) {
+        this.fetchPairIfNecessary();
       } else {
         alert('failed POST');
       }
     });
   }
 
-  fetchPair() {
-    fetch(REQUEST_PATH + 'fetch_pair?num_pairs=10', {
+  fetchPairIfNecessary() {
+    if (this.state.next.length > 5) {
+      // still have a cache
+      return;
+    }
+
+    fetch(REQUEST_PATH + 'fetch_pair?num_pairs=5', {
       method: 'get'
     }).then((response) => {
       if (response.ok) {
