@@ -1,7 +1,7 @@
 % ====== Definitions ======
 
 % types of marks to encode data
-marktype(point;bar;line;area;rule;text;tick;rect).
+marktype(point;bar;line;area;text;tick;rect).
 % high level data types: quantitative, ordinal, nominal, temporal
 type(quantitative;ordinal;nominal;temporal).
 % basic types of the data

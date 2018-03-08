@@ -58,14 +58,12 @@ feature_weight(c_d_point,c_d_point_weight).
 feature_weight(c_d_bar,c_d_bar_weight).
 feature_weight(c_d_line,c_d_line_weight).
 feature_weight(c_d_area,c_d_area_weight).
-feature_weight(c_d_rule,c_d_rule_weight).
 feature_weight(c_d_text,c_d_text_weight).
 feature_weight(c_d_tick,c_d_tick_weight).
 feature_weight(c_d_no_overlap_point,c_d_no_overlap_point_weight).
 feature_weight(c_d_no_overlap_bar,c_d_no_overlap_bar_weight).
 feature_weight(c_d_no_overlap_line,c_d_no_overlap_line_weight).
 feature_weight(c_d_no_overlap_area,c_d_no_overlap_area_weight).
-feature_weight(c_d_no_overlap_rule,c_d_no_overlap_rule_weight).
 feature_weight(c_d_no_overlap_text,c_d_no_overlap_text_weight).
 feature_weight(c_d_no_overlap_tick,c_d_no_overlap_tick_weight).
 feature_weight(d_d_point,d_d_point_weight).
@@ -116,7 +114,6 @@ feature_weight(value_point,value_point_weight).
 feature_weight(value_bar,value_bar_weight).
 feature_weight(value_line,value_line_weight).
 feature_weight(value_area,value_area_weight).
-feature_weight(value_rule,value_rule_weight).
 feature_weight(value_text,value_text_weight).
 feature_weight(value_tick,value_tick_weight).
 feature_weight(value_rect,value_rect_weight).
@@ -124,7 +121,6 @@ feature_weight(summary_point,summary_point_weight).
 feature_weight(summary_bar,summary_bar_weight).
 feature_weight(summary_line,summary_line_weight).
 feature_weight(summary_area,summary_area_weight).
-feature_weight(summary_rule,summary_rule_weight).
 feature_weight(summary_text,summary_text_weight).
 feature_weight(summary_tick,summary_tick_weight).
 feature_weight(summary_rect,summary_rect_weight).

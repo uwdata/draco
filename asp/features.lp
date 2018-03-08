@@ -165,7 +165,6 @@ feature_term(c_d_point) :- is_c_d, not no_overlap, mark(point).
 feature_term(c_d_bar) :- is_c_d, not no_overlap, mark(bar).
 feature_term(c_d_line) :- is_c_d, not no_overlap, mark(line).
 feature_term(c_d_area) :- is_c_d, not no_overlap, mark(area).
-feature_term(c_d_rule) :- is_c_d, not no_overlap, mark(rule).
 feature_term(c_d_text) :- is_c_d, not no_overlap, mark(text).
 feature_term(c_d_tick) :- is_c_d, not no_overlap, mark(tick).
 
@@ -175,7 +174,6 @@ feature_term(c_d_no_overlap_point) :- is_c_d, no_overlap, mark(point).
 feature_term(c_d_no_overlap_bar) :- is_c_d, no_overlap, mark(bar).
 feature_term(c_d_no_overlap_line) :- is_c_d, no_overlap, mark(line).
 feature_term(c_d_no_overlap_area) :- is_c_d, no_overlap, mark(area).
-feature_term(c_d_no_overlap_rule) :- is_c_d, no_overlap, mark(rule).
 feature_term(c_d_no_overlap_text) :- is_c_d, no_overlap, mark(text).
 feature_term(c_d_no_overlap_tick) :- is_c_d, no_overlap, mark(tick).
 
@@ -248,7 +246,6 @@ feature_term(value_point) :- task(value), mark(point).
 feature_term(value_bar) :- task(value), mark(bar).
 feature_term(value_line) :- task(value), mark(line).
 feature_term(value_area) :- task(value), mark(area).
-feature_term(value_rule) :- task(value), mark(rule).
 feature_term(value_text) :- task(value), mark(text).
 feature_term(value_tick) :- task(value), mark(tick).
 feature_term(value_rect) :- task(value), mark(rect).
@@ -257,7 +254,6 @@ feature_term(summary_point) :- task(summary), mark(point).
 feature_term(summary_bar) :- task(summary), mark(bar).
 feature_term(summary_line) :- task(summary), mark(line).
 feature_term(summary_area) :- task(summary), mark(area).
-feature_term(summary_rule) :- task(summary), mark(rule).
 feature_term(summary_text) :- task(summary), mark(text).
 feature_term(summary_tick) :- task(summary), mark(tick).
 feature_term(summary_rect) :- task(summary), mark(rect).
