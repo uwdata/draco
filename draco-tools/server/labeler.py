@@ -128,11 +128,7 @@ def fetch_pair():
         probs = probs / np.sum(probs)
         rand_indices = np.random.choice(id_list, size=num_pairs, replace=False, p=probs)
 
-    if num_pairs > 1:
-        return jsonify([unlabeled_data[i] for i in rand_indices])
-
-    return jsonify(unlabeled_data[rand_indices[0]])
-
+    return jsonify([unlabeled_data[i] for i in rand_indices])
 
 @app.route('/upload_label', methods=['POST'])
 def upload_label():

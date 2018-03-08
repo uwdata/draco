@@ -241,7 +241,7 @@ class Labeler extends Component {
             this.fetchPair();
           } else {
             this.setState({
-              next: this.state.next.concat([data])
+              next: this.state.next.concat(data)
             });
           }
         });
