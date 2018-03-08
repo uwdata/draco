@@ -5,12 +5,11 @@
 % maximum number for each multi channel encoding
 #const max_extra_encs = 5.
 
-%TODO: make this 1
-obj_id(0..max_extra_encs).
+obj_id(1..max_extra_encs).
 
 { encoding(E): obj_id(E) }.
 
-encoding(Id-1) :- encoding(Id), obj_id(Id), Id > 0.
+:- not encoding(ID1), encoding(ID2), obj_id(ID1), obj_id(ID2), ID1 < ID2.
 
 % properties of encodings
 
