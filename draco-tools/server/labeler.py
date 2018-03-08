@@ -10,6 +10,8 @@ import sqlite3
 app = Flask(__name__)
 CORS(app)
 
+lock = Lock()
+
 DATABASE = os.path.join(os.path.dirname(__file__), 'label_data.db')
 
 # not thread safe, not process safe
