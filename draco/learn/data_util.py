@@ -131,6 +131,8 @@ def load_halden_data(include_features=True, data_dir=data_dir):
                                    "left_feature": p[0]["feature"],
                                    "right_feature": p[1]["feature"]}
 
+    result = []
+
     memoized_violations = {}
 
     to_label_pairs = None
@@ -138,8 +140,8 @@ def load_halden_data(include_features=True, data_dir=data_dir):
         with open(fname, 'r') as f:
             content = json.load(f)
             for num_channel in content:
-                for spec_list in content[num_channel]:
-
+                for i, spec_list in enumerate(content[num_channel]):
+                    
                     task_list = [spec_to_task(spec) for spec in spec_list]
 
                     if include_features:
@@ -162,7 +164,12 @@ def load_halden_data(include_features=True, data_dir=data_dir):
                     specs_and_features = [{"spec": task_list[i].to_vegalite(), "feature": features[i]} for i in range(len(task_list))]
 
                     for pair in map(pair_process_func, itertools.combinations(specs_and_features, 2)):
-                        yield pair
+                    
+                        if pair["left"] != pair["right"]:
+                            yield pair
+                        else:
+                            print('[Err] find pairs with the same content file:{} - num_channel:{} - group:{}'.format(os.path.basename(fname), num_channel, i))
+
 
 
 def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
