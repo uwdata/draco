@@ -13,7 +13,7 @@ class Generator:
     A Generator can be used to generate specs that represent
     mutations over a list of properties.
     """
-    def __init__(self, distributions: Dict, definitions: Dict, data_schema: Dict, data_url: str):
+    def __init__(self, distributions: Dict, definitions: Dict, data_schema: Dict, data_url: str) -> None:
         top_level_props = definitions['topLevelProps']
         encoding_props = definitions['encodingProps']
         data_fields = [Field(x['name'], x['type']) for x in data_schema]
@@ -36,7 +36,7 @@ class Generator:
 
         seen_base_specs.add(base_spec)
 
-        specs = []
+        specs: List[Spec] = []
         self.__mutate_spec(base_spec, props, 0, set(), specs)
         return specs
 

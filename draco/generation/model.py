@@ -30,7 +30,7 @@ class Model:
     # only 1 of these can appear in all encodings
     UNIQUE_ENCODING_PROPS = set(['stack'])
 
-    def __init__(self, distributions: Dict, top_level_props: List[str], encoding_props: List[str]):
+    def __init__(self, distributions: Dict, top_level_props: List[str], encoding_props: List[str]) -> None:
         """
         distributions -- see distributions.json
         top_level_props -- a list of top level properties
@@ -135,7 +135,7 @@ class Model:
         self.__improve(spec, props, PostImprovements)
         return
 
-    def get_enums(self, prop: List[str]) -> list:
+    def get_enums(self, prop: str) -> List[str]:
         """
         Returns the enums for the given prop
         """

@@ -167,3 +167,20 @@ class TestInvalidSpecs():
         })
 
         assert is_valid(Task(data, query), True) == False
+
+    def q_q_bar(self):
+        query = Query.from_vegalite({
+            'mark': 'bar',
+            'encoding': {
+                'x': {
+                    'type': 'quantitative',
+                    'field': 'q1'
+                },
+                'y': {
+                    'type': 'quantitative',
+                    'field': 'q2'
+                }
+            }
+        })
+
+        assert is_valid(Task(data, query), True) == False
