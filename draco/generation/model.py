@@ -1,6 +1,7 @@
 import random
 import inspect
 from copy import deepcopy
+from typing import Any, Dict, List
 
 import numpy as np
 
@@ -9,19 +10,26 @@ from draco.generation.prop_objects import PropObjects
 
 
 class Model:
+    """
+    A model handles the generation and improvement
+    of random specs.
+    """
+
+    # enums that require non-primitive values
     SPECIAL_ENUMS = {
         'bin': PropObjects.get_bin,
         'scale': PropObjects.get_scale,
     }
 
-    UNPACK_SPECIAL_ENUM = {
-        'bin': PropObjects.unpack_bin,
-        'scale': PropObjects.unpack_scale
-    }
-
+    # only 1 of these can appear in all encodings
     UNIQUE_ENCODING_PROPS = set(['stack'])
 
-    def __init__(self, distributions, top_level_props, encoding_props):
+    def __init__(self, distributions: Dict, top_level_props: List[str], encoding_props: List[str]) -> None:
+        """
+        distributions -- see distributions.json
+        top_level_props -- a list of top level properties
+        encoding_props -- a list of encoding level properties
+        """
         self.distributions = distributions
         self.top_level_props = set(top_level_props)
         self.encoding_props = set(encoding_props)
@@ -46,7 +54,7 @@ class Model:
 
         return
 
-    def generate_spec(self, n_dimensions):
+    def generate_spec(self, n_dimensions: int):
         """
         Returns a spec, randomizing props.
 
@@ -67,7 +75,10 @@ class Model:
 
         return spec
 
-    def mutate_prop(self, spec, prop, enum):
+    def mutate_prop(self, spec: Spec, prop: str, enum: str):
+        """
+        Mutates the prop in the given spec to the given enum.
+        """
         if not (prop in self.top_level_props or prop == 'channel' or
                 prop in self.encoding_props):
             raise ValueError('invalid prop {0}'.format(prop))
@@ -98,26 +109,45 @@ class Model:
 
         return
 
-    def improve(self, spec, props):
+    def pre_improve(self, spec: Spec, props: List[str]):
         """
-        Improves the given spec to fit certain soft constraints
+        Improves the given spec to fit a small set of hard constraints
+        and improve comparisons
+        This will run all methods found in class PreImprovements.
+        """
+        self.__improve(spec, props, PreImprovements)
+        return
+
+    def post_improve(self, spec: Spec, props: List[str]):
+        """
+        Improves the given spec to fit a small set of hard constraints
+        and improve comparisons
+        This will run all methods found in class PostImprovements.
         """
 
         # gets all functions from class Improve to call on spec
-        attr_names = [attr for attr in dir(Improvements)]
+        self.__improve(spec, props, PostImprovements)
+        return
+
+    def get_enums(self, prop: str) -> List[str]:
+        """
+        Returns the enums for the given prop
+        """
+        return self.enums[prop]
+
+    def __improve(self, spec: Spec, props: List[str], improvement_class):
+        """
+        Runs all improvements in the given improvement_class over the given spec.
+        """
+        attr_names = [attr for attr in dir(improvement_class)]
         improvements = []
         for name in attr_names:
-            attr = getattr(Improvements, name)
+            attr = getattr(improvement_class, name)
             if (inspect.isfunction(attr)):
                 improvements.append(attr)
 
         for imp in improvements:
             imp(spec, props)
-
-        return
-
-    def get_enums(self, prop):
-        return self.enums[prop]
 
     def __ready(self):
         """
@@ -140,7 +170,7 @@ class Model:
 
         return enc
 
-    def __include(self, prop):
+    def __include(self, prop: str):
         """
         Decides randomly from `self.distributions` whether or not
         the given spec should be included
@@ -153,16 +183,19 @@ class Model:
 
         return picked and allowed
 
-    def __sample_prop(self, prop):
-        enum = self.__sample_enum(prop)
+    def __sample_prop(self, prop: str):
+        """
+        Returns a random value (enum or object) for the given prop.
+        """
+        enum = self.__sample_enum_value(prop)
         if (prop in Model.SPECIAL_ENUMS):
             return Model.SPECIAL_ENUMS[prop](enum)
 
         return enum
 
-    def __sample_enum(self, prop):
+    def __sample_enum_value(self, prop: str):
         """
-        Returns a random value for the given prop.
+        Returns a random enum for the given prop.
 
         Params:
         distributions -- {object} see `distributions.json`
@@ -180,7 +213,11 @@ class Model:
         return result
 
     @staticmethod
-    def sample(enums, probs):
+    def sample(enums: List[str], probs: List[float]):
+        """
+        Returns a probabilistic choice and index from the given list
+        of enums, where probs[i] = probability for enums[i]. Expects sum(probs) = 1
+        """
         cumulative = np.cumsum(probs)
 
         choice = random.uniform(0, cumulative[-1])
@@ -194,53 +231,28 @@ class Model:
         return result, index
 
     @staticmethod
-    def build_value_from_enum(prop, enum):
+    def build_value_from_enum(prop: str, enum: Any):
+        """
+        Builds a value for the given prop using given enum
+        value. For example scale requires an object as its value,
+        even as the enums for scale are strings.
+        """
         if (prop in Model.SPECIAL_ENUMS):
             return Model.SPECIAL_ENUMS[prop](enum)
         else:
             return enum
 
     @staticmethod
-    def get_enc_by_channel(spec, channel):
+    def get_enc_by_channel(spec: Spec, channel: str):
         if (channel in spec['encoding']):
             return spec['encoding'][channel]
         return None
 
-class Improvements:
-    @staticmethod
-    def improve_aggregate(spec, props):
-        """
-        Give an aggregate to bar, line, area
-        plots that are not qxq unless we are inspecting
-        aggregate.
-        """
-        if (not spec['mark'] in ['bar', 'line', 'area']):
-            return
-
-        # 50% chance of adding aggregate
-        if ('aggregate' not in props):
-            x_enc = Model.get_enc_by_channel(spec, 'x')
-            y_enc = Model.get_enc_by_channel(spec, 'y')
-
-            if (x_enc is None or y_enc is None):
-                return
-            if ((x_enc['type'] != 'quantitative') != (y_enc['type'] != 'quantitative')):
-                q_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
-                q_enc['aggregate'] = 'mean'
-
-        return
-
-    @staticmethod
-    def improve_bar(spec, props):
-        """
-        Adds `scale: { 'zero': True }` to the given spec
-        if the mark is a bar.
-        """
-        if (spec['mark'] == 'rect'):
-            spec['scale'] = { 'zero': True }
-
-        return
-
+class PreImprovements:
+    """
+    Optimizations to base specs to avoid failing hard constraints
+    and increase quality of comparison
+    """
     @staticmethod
     def improve_stack(spec, props):
         """
@@ -250,15 +262,59 @@ class Improvements:
         be accompanied by aggregate.
         """
         if ('stack' in props):
-            mark = 'bar' if random.random() < 0.5 else 'area'
+            mark = 'bar' if random.random() < 0.7 else 'area'
             spec['mark'] = mark
 
+        # TODO: add a 'memory' to the spec for the aggregate type
+        # such that mutations of the same base spec can be improved
+        # in the same manner in post.
 
+class PostImprovements:
+    """
+    Optimizations to completed specs to avoid failing hard constraints and
+    to increase quality of comparison.
+    """
+    @staticmethod
+    def improve_aggregate(spec: Spec, props: List[str]):
+        """
+        Give an aggregate to bar, line, area
+        plots that are not qxq unless we are inspecting
+        aggregate.
+        """
+        if (spec['mark'] in ['bar', 'line', 'area']):
+            if ('aggregate' not in props):
+                x_enc = spec.get_enc_by_channel('x')
+                y_enc = spec.get_enc_by_channel('y')
+
+                if (x_enc is None or y_enc is None or len(spec['encoding']) > 2):
+                    return
+                if ((x_enc['type'] != 'quantitative') != (y_enc['type'] != 'quantitative')):
+                    q_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
+                    q_enc['aggregate'] = 'mean'
+
+        return
+
+    @staticmethod
+    def improve_bar(spec: Spec, props: List[str]):
+        """
+        Adds `scale: { 'zero': True }` to the given spec
+        if the mark is a bar.
+        """
+        if (spec['mark'] == 'bar'):
+            spec['scale'] = OrderedDict({'zero': True })
+
+        return
+
+    @staticmethod
+    def improve_stack(spec: Spec, props: List[str]):
+        """
+        Ensures stack encodings are aggregated as well.
+        """
         for channel in spec['encoding']:
             enc = spec['encoding'][channel]
             if ('stack' in enc):
                 if (not (channel == 'x' or channel == 'y')):
                     del enc['stack']
                 elif ('aggregate' not in enc):
-                    aggregate = 'sum' if random.random() < 0.5 else 'count'
+                    aggregate = 'sum'
                     enc['aggregate'] = aggregate

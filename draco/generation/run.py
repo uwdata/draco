@@ -44,15 +44,17 @@ def main(args):
         if (interaction['include'] and specified):
             out = {}
             for d in range(1, MAX_DIMENSIONS + 1):
+                # to not generate too many 1D visualizations
                 n = base_num_groups // 4 if d == 1 else base_num_groups
 
+                seen_base_specs = set()
                 groups = []
                 for _ in range(n):
-                    specs = generator.generate_interaction(interaction['props'], d)
+                    specs = generator.generate_interaction(interaction['props'], d, seen_base_specs)
 
                     tries = 0
                     while (len(specs) < 2 and tries < NUM_TRIES):
-                        specs = generator.generate_interaction(interaction['props'], d)
+                        specs = generator.generate_interaction(interaction['props'], d, seen_base_specs)
                         tries += 1
 
                     if (tries == NUM_TRIES):
