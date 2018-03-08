@@ -43,6 +43,7 @@ class Labeler extends Component {
       task: null,
       chosen: null,
       hover: UNK,
+      requesting: false,
       next: []
     };
   }
@@ -245,11 +246,12 @@ class Labeler extends Component {
   }
 
   fetchPairIfNecessary() {
-    if (this.state.next.length > 7) {
-      // still have a cache
+    if (this.state.next.length > 7 || this.state.requesting) {
+      // still have a cache or are requesting
       return;
     }
 
+    this.setState({requesting: true});
     fetch(REQUEST_PATH + 'fetch_pair?num_pairs=5', {
       method: 'get'
     }).then((response) => {
@@ -260,10 +262,12 @@ class Labeler extends Component {
 
             this.setState({
               ...data[0],
+              requesting: false,
               next: data.slice(1)
             });
           } else {
             this.setState({
+              requesting: false,
               next: unique(this.state.next.concat(data), stringify)
             });
           }
@@ -271,8 +275,12 @@ class Labeler extends Component {
           this.fetchPairIfNecessary();
         });
       } else {
-        alert('failed GET');
+        console.error('failed GET');
+        this.setState({requesting: false});
       }
+    }).catch( e => {
+      console.error(e);
+      this.setState({requesting: false});
     });
   }
 
