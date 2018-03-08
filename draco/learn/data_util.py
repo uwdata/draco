@@ -200,7 +200,8 @@ def get_feature_names():
 def pair_partition_to_vec(input_data: Tuple[Dict, Iterable[Union[PosNegExample, np.ndarray]]]):
     processed_specs, partiton_data = input_data
 
-    df = pd.DataFrame(columns=get_nested_index())
+    columns = get_nested_index()
+    dfs = []
 
     for example in partiton_data:
         Encoding.encoding_cnt = 0
@@ -221,24 +222,25 @@ def pair_partition_to_vec(input_data: Tuple[Dict, Iterable[Union[PosNegExample, 
         specs[('source', '')] = example.source
         specs[('task', '')] = example.task
 
-        df = df.append(pd.DataFrame(specs, index=[example.pair_id]))  # the idx is the same as the one in load_neg_pos_data
+        dfs.append(pd.DataFrame(specs, columns=columns, index=[example.pair_id]))  # the idx is the same as the one in load_neg_pos_data
 
-    return df
+    return pd.concat(dfs)
 
 
 def task_partition_to_vec(input_data: Tuple[Dict, Iterable[Tuple[int, Task]]]):
     processed_specs, partiton_data = input_data
 
-    df = pd.DataFrame(columns=get_feature_names())
+    columns=get_feature_names()
+    dfs = []
 
     for idx, task in partiton_data:
         Encoding.encoding_cnt = 0
 
         vec = count_violations_memoized(processed_specs, task)
 
-        df = df.append(pd.DataFrame(vec, index=[idx]))
+        dfs.append(pd.DataFrame(vec, index=[idx]))
 
-    return df
+    return pd.concat(dfs)
 
 
 def run_in_parallel(func, data: List[Any]) -> pd.DataFrame:
