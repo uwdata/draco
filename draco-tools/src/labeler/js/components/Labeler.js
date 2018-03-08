@@ -195,6 +195,8 @@ class Labeler extends Component {
   }
 
   choose(id, label) {
+    console.info(`Current cache size: ${this.state.next.length}`);
+
     this.setState({
       chosen: label
     });
@@ -243,7 +245,7 @@ class Labeler extends Component {
   }
 
   fetchPairIfNecessary() {
-    if (this.state.next.length > 5) {
+    if (this.state.next.length > 7) {
       // still have a cache
       return;
     }
@@ -265,6 +267,8 @@ class Labeler extends Component {
               next: unique(this.state.next.concat(data), stringify)
             });
           }
+          // we may not have fetched anything new
+          this.fetchPairIfNecessary();
         });
       } else {
         alert('failed GET');
