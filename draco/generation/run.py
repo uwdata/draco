@@ -39,6 +39,7 @@ def main(args):
 
     for interaction in interactions:
         specified = interaction['name'] == chosen or chosen == 'all'
+        cross = 'nonCross' not in interaction  # TODO: change to cross
 
         base_num_groups = interaction['groups'] if num_groups == -1 else num_groups
         if (interaction['include'] and specified):
@@ -50,11 +51,11 @@ def main(args):
                 seen_base_specs = set()
                 groups = []
                 for _ in range(n):
-                    specs = generator.generate_interaction(interaction['props'], d, seen_base_specs)
+                    specs = generator.generate_interaction(interaction['props'], d, seen_base_specs, cross)
 
                     tries = 0
                     while (len(specs) < 2 and tries < NUM_TRIES):
-                        specs = generator.generate_interaction(interaction['props'], d, seen_base_specs)
+                        specs = generator.generate_interaction(interaction['props'], d, seen_base_specs, cross)
                         tries += 1
 
                     if (tries == NUM_TRIES):

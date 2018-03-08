@@ -23,7 +23,7 @@ class Generator:
         self.data_url = data_url
 
     def generate_interaction(self, props: List[str], dimensions: int,
-                                   seen_base_specs: Set[Spec]) -> List[Spec]:
+                                   seen_base_specs: Set[Spec], cross: bool) -> List[Spec]:
         """
         Generates a list of specs by enumerating over the given properties' enums.
         """
@@ -37,7 +37,11 @@ class Generator:
         seen_base_specs.add(base_spec)
 
         specs: List[Spec] = []
-        self.__mutate_spec(base_spec, props, 0, set(), specs)
+
+        if (cross):
+            self.__mutate_spec(base_spec, props, 0, set(), specs)
+        else:
+            raise NotImplementedError('noncross not implement')
         return specs
 
 

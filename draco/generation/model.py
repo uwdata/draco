@@ -2,6 +2,7 @@ import random
 import inspect
 from copy import deepcopy
 from typing import Any, Dict, List
+from collections import OrderedDict
 
 import numpy as np
 
@@ -241,12 +242,6 @@ class Model:
             return Model.SPECIAL_ENUMS[prop](enum)
         else:
             return enum
-
-    @staticmethod
-    def get_enc_by_channel(spec: Spec, channel: str):
-        if (channel in spec['encoding']):
-            return spec['encoding'][channel]
-        return None
 
 class PreImprovements:
     """
