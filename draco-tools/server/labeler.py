@@ -10,8 +10,6 @@ import sqlite3
 app = Flask(__name__)
 CORS(app)
 
-lock = Lock()
-
 DATABASE = os.path.join(os.path.dirname(__file__), 'label_data.db')
 
 # not thread safe, not process safe
@@ -133,10 +131,10 @@ def fetch_pair():
     mode = np.random.choice([0, 1])
     id_list = list(unlabeled_data.keys())
 
-    if mode == 2:
+    if mode == 0:
         # sampling randomly
         rand_indices = np.random.choice(id_list, size=num_pairs, replace=False)
-    elif mode == 0 or mode == 1:
+    elif mode == 1:
         # sampling base on leverage scores
         lev_scores = get_leverage_score()
         probs = np.array([lev_scores[key] for key in id_list])
@@ -170,4 +168,4 @@ def upload_label():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', threaded=False)
+    app.run(debug=True, host='0.0.0.0', threaded=False, processes=1)
