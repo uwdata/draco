@@ -30,7 +30,6 @@
 #const zero_skew_weight = 5.
 #const includes_zero_weight = 10.
 
-#const only_row_column_weight = 2.
 #const only_x_weight = 1.
 #const orientation_binned_weight = 1.
 #const orientation_discrete_weight = 1.

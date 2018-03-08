@@ -72,8 +72,8 @@ feature_term(log,E) :- log(E).
 % prefer to include zero for continuous (binned doesn't need zero)
 feature_term(zero,E) :- continuous(E), not zero(E).
 
-% prefer zero size
-feature_term(zero_size) :- continuous(E), channel(E,size), not zero(E).
+% prefer zero size (even when binned)
+feature_term(zero_size) :- channel(E,size), not zero(E).
 
 % prefer zero positional
 feature_term(zero_positional) :- continuous(E), channel(E,(x;y)), not zero(E).
@@ -83,9 +83,6 @@ feature_term(zero_skew) :- enc_extent(E,MIN,MAX), EX = MAX - MIN, |MAX| > EX, |M
 
 % do not include zero when the range of data includes zero
 feature_term(includes_zero) :- zero(E), extent(E,MIN,MAX), MIN < 0, MAX > 0.
-
-% prefer not to use only row and column
-feature_term(only_row_column) :- channel(_,(row;column)), not channel(_,x), not channel(_,y), not channel(_,color), not channel(_,size), not channel(_,opacity), not channel(_,shape).
 
 % prefer to use only x instead of only y
 feature_term(only_x) :- channel(_,y), not channel(_,x).
@@ -113,7 +110,7 @@ feature_term(quantitative_numbers) :- field(E,F), fieldtype(F,number), cardinali
 
 % Overplotting
 
-% prefer not to use x and y for continuous with high cardinality and low entropy without aggregation because the points will overlap
+% prefer not to use x and y for continuous with high cardinality and low entropy without aggregation because the points will overplot
 feature_term(position_entropy,E) :- channel(E,(x;y)), continuous(E), enc_cardinality(E,C), C > 100, enc_entropy(E,EN), EN <= 12, not aggregate(E,_).
 
 % prefer not to use size when the cardinality is large on x or y

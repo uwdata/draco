@@ -71,14 +71,25 @@ is_c_d :- channel_continuous(y), not channel_continuous(x).
 is_d_d :- channel_discrete(x), channel_discrete(y).
 
 % == Overlap ==
-% TODO: improve
 
-% the continuous variable is a measure (it is aggregated) and all other channels are aggregated -> no overlap
+% the continuous variable is a measure (it is aggregated) and all other channels are aggregated, or we use stack -> no overlap
 non_pos_unaggregated :- channel(E,C), non_positional(C), not aggregate(E,_).
 no_overlap :- is_c_d, continuous(E), channel(E,(x;y)), aggregate(E,_), not non_pos_unaggregated.
+no_overlap :- is_c_d, stack(_).
+
+discrete_size(S) :- is_c_d, channel(E,(x;y)), discrete(E), enc_cardinality(E,S).
+discrete_size(1) :-  is_c_d, channel_continuous(x), not channel(_,y).
+discrete_size(1) :-  is_c_d, channel_continuous(y), not channel(_,x).
 
 % data size is as small as discrete dimension -> no overlap
-no_overlap :- is_c_d, data_size(S), channel(E,(x;y)), discrete(E), enc_cardinality(E,S).
+no_overlap :- is_c_d, data_size(S), discrete_size(S).
+
+% we definitely overlap if the data size > discrete size
+overlap :- is_c_d, not no_overlap, data_size(S1), discrete_size(S2), S1 > S2.
 
 % no overlap if all other dimensions are aggregated
+discrete_size(S) :- is_d_d, channel(EX,x), channel(EY,y), enc_cardinality(EX,SX), enc_cardinality(EY,SY), S = SX*SY.
 no_overlap :- is_d_d, not non_pos_unaggregated.
+no_overlap :- is_d_d, data_size(S1), discrete_size(S2), S1 <= S2.
+
+overlap :- is_d_d, not no_overlap, data_size(S1), discrete_size(S2), S1 > S2.

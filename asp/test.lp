@@ -53,6 +53,12 @@
 % nominal cannot be aggregated
 :- type(E,nominal), aggregate(E,_).
 
+% do not use log or zero when data is negative
+
+
+% do not use size when data is negative
+
+
 % === Across encodings and between encodings and marks ===
 
 % cannot use single channels twice
@@ -112,7 +118,7 @@
 :- mark(bar;area), log(E), channel(E,(x;y)).
 
 % rect mark needs discrete x and y
-:- mark(rect), not channel_discrete(x;y).
+:- mark(rect), not is_d_d.
 
 % don't use size with line
 :- mark(line), channel(E,size).
@@ -123,6 +129,12 @@
 :- channel(EX,x), channel(EY,y), aggregate(EX,count), aggregate(EY,count).
 
 % === Global properties ===
+
+% bars and area cannot overlap
+:- mark(bar;area), overlap.
+
+% unless we use size, we should not overlap rect
+:- mark(rect), overlap, not channel(_,size).
 
 % == Stacking ==
 
