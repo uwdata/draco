@@ -7,8 +7,8 @@ import DatasetChooser from 'datasetviewer/js/components/DatasetChooser';
 const BASE_DIR = '/generated_visualizations/';
 const SPEC_DIR = BASE_DIR + 'specs/';
 const INTERACTIONS = BASE_DIR + 'interactions.json';
-const DATA = BASE_DIR + 'cars.json';
-const DEFAULT_DATASET = 'n1xn2.json';
+const DATA = BASE_DIR + 'cars_mod.json';
+const DEFAULT_DATASET = '2.json';
 
 class DatasetViewer extends Component {
   constructor(props) {

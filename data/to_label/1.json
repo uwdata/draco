@@ -1,0 +1,1046 @@
+{
+    "1": [
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "text": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "opacity": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "shape": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending",
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "detail": {
+                        "scale": {
+                            "type": "log"
+                        },
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "color": {
+                        "sort": "ascending",
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "aggregate": "count",
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "stack": "zero",
+                        "field": "Cylinders",
+                        "type": "ordinal",
+                        "aggregate": "count"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "shape": {
+                        "sort": "descending",
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "detail": {
+                        "scale": {
+                            "zero": true
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "color": {
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "sort": "descending",
+                        "bin": {
+                            "maxbins": 3
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "row": {
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "sort": "ascending",
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "color": {
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "opacity": {
+                        "bin": {
+                            "maxbins": 5
+                        },
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "shape": {
+                        "field": "Cylinders",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "size": {
+                        "field": "Rating",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "sort": "ascending",
+                        "stack": "zero",
+                        "field": "Rating",
+                        "type": "ordinal",
+                        "aggregate": "count"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "size": {
+                        "field": "Rating",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "text",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Rating",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Rating",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "count",
+                        "field": "Rating",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Rating",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "color": {
+                        "sort": "ascending",
+                        "field": "Rating",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "aggregate": "count",
+                        "field": "Rating",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "text",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "color": {
+                        "field": "Rating",
+                        "type": "ordinal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "shape": {
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "shape": {
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "size": {
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "rect",
+                "scale": {
+                    "zero": true
+                },
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "rect",
+                "scale": {
+                    "zero": true
+                },
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "color": {
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "bin": {
+                            "maxbins": 200
+                        },
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "shape": {
+                        "field": "Dealer Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "detail": {
+                        "field": "Dealer Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Dealer Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "text": {
+                        "field": "Dealer Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Dealer Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Dealer Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Dealer Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Dealer Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Dealer Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "detail": {
+                        "field": "Dealer Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Sell Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "stack": null,
+                        "field": "Sell Date",
+                        "type": "temporal",
+                        "aggregate": "count"
+                    }
+                },
+                "mark": "rect",
+                "scale": {
+                    "zero": true
+                },
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "sort": "descending",
+                        "field": "Sell Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "sort": "descending",
+                        "stack": "zero",
+                        "field": "Sell Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Sell Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Sell Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Sell Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "tick",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "opacity": {
+                        "field": "Sell Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Sell Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "size": {
+                        "field": "Sell Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "shape": {
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "rect",
+                "scale": {
+                    "zero": true
+                },
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "size": {
+                        "sort": "ascending",
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "area",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "stack": "zero",
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "rect",
+                "scale": {
+                    "zero": true
+                },
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "size": {
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "detail": {
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "point",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "size": {
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    }
+                },
+                "mark": "line",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ]
+    ]
+}

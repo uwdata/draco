@@ -43,8 +43,8 @@ class Model:
     }
 
     def __init__(self, data_fields, distributions, top_level_props, encoding_props):
-        self.fields = {x.name:x.ty for x in data_fields}
-
+        # self.fields = {x.name:x.ty for x in data_fields}
+        self.fields = data_fields
         print(self.fields)
         self.distributions = distributions
         self.top_level_props = set(top_level_props)
@@ -91,20 +91,29 @@ class Model:
 
         return spec
 
+    # def populate_types(self, spec):
+    #     for channel in spec['encoding']:
+    #         enc = spec['encoding'][channel]
+
+    #         field_name = enc['field']
+    #         field_value_type = self.fields[field_name]
+    #         distribution = Model.TYPE_PROBABILITIES[field_value_type]
+
+    #         types = list(distribution.keys())
+    #         probs = [distribution[x] for x in types]
+
+    #         field_type, _ = Model.sample(types, probs)
+    #         enc['type'] = field_type
+    #     return
+
     def populate_types(self, spec):
         for channel in spec['encoding']:
             enc = spec['encoding'][channel]
 
             field_name = enc['field']
-            field_value_type = self.fields[field_name]
-            distribution = Model.TYPE_PROBABILITIES[field_value_type]
+            field_type = self.fields[field_name]
 
-            types = list(distribution.keys())
-            probs = [distribution[x] for x in types]
-
-            field_type, _ = Model.sample(types, probs)
             enc['type'] = field_type
-        return
 
     def improve(self, spec):
         """
@@ -119,6 +128,7 @@ class Model:
             if (inspect.isfunction(attr)):
                 improvements.append(attr)
 
+        improvable = True
         for imp in improvements:
             imp(spec)
 
@@ -215,6 +225,18 @@ class Model:
         return None
 
 class Improvements:
+    @staticmethod
+    def remove_number_aggregate_for_nonq(spec):
+        """
+        Removes number aggregates (e.g. 'sum', 'mean') from non quantitative
+        encodings.
+        """
+        for channel in spec['encoding']:
+            enc = spec['encoding'][channel]
+            if (enc['type'] != 'quantitative'):
+                if ('aggregate' in enc and not enc['aggregate'] in ['count']):
+                    del enc['aggregate']
+
     @staticmethod
     def improve_aggregate(spec):
         """

@@ -22,7 +22,7 @@ OUTPUT_LIST_PATH = absolute_path('../../draco-tools/public/generated_visualizati
 DATA_URL = 'data/cars_mod.json'
 
 NUM_TRIES = 100
-MAX_DIMENSIONS = 2
+MAX_DIMENSIONS = 3
 
 def main(args):
     logger = logging.getLogger(__name__)
@@ -41,16 +41,16 @@ def main(args):
 
     written = []
 
-    for d in range(2, MAX_DIMENSIONS + 1):
+    for d in range(1, MAX_DIMENSIONS + 1):
         field_subsets = generate_field_subsets(field_names, d)
 
+        out = {}
+        groups = []
         for subset in field_subsets:
             name = field_list_to_string(subset)
-
-            out = {}
             group = []
-            seen = set()
 
+            seen = set()
             for _ in range(num_groups):
                 specs = generator.generate_visualizations(subset, seen)
 
@@ -68,15 +68,16 @@ def main(args):
             if (len(group) < 2):
                 continue
 
-            out['1'] = [group]
+            groups.append(group)
 
-            output_name = '{0}/{1}.json'.format(out_dir, name)
-            with open(output_name, 'w') as outfile:
-                written.append('{0}.json'.format(name))
-                json.dump(out, outfile, indent=4)
+        out[1] = groups
+        output_name = '{0}/{1}.json'.format(out_dir, d)
+        with open(output_name, 'w') as outfile:
+            written.append(str(d) + '.json')
+            json.dump(out, outfile, indent=4)
 
-        with open(OUTPUT_LIST_PATH, 'w') as f:
-            json.dump(written, f, indent=4)
+    with open(OUTPUT_LIST_PATH, 'w') as f:
+        json.dump(written, f, indent=4)
 
 def field_list_to_string(fields):
     result = str(fields[0])
