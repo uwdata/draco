@@ -145,9 +145,9 @@ Test constraints:
 
     Test cannot bin temporal:
         Program: |
-            fieldtype(d,date).
+            fieldtype(d,datetime).
             encoding(e).
-            field(e,d).
+            :- not field(e,d).
             :- not type(e,temporal).
             :- not bin(e,_).
         Expect: UNSAT
@@ -219,6 +219,14 @@ Test constraints:
         Program: |
             encoding(e).
             :- not aggregate(e,_).
+        Expect: SAT
+
+    Test temporal requires datetime:
+        Program: |
+            fieldtype(t,datetime).
+            encoding(e).
+            :- not field(e,t).
+            :- not type(e,temporal).
         Expect: SAT
 
 Test helpers:

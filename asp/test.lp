@@ -5,7 +5,7 @@
 
 % primitive type has to support data type
 :- type(E,quantitative), field(E,F), fieldtype(F,(string;boolean)).
-:- type(E,temporal), field(E,F), not fieldtype(F,date).
+:- type(E,temporal), field(E,F), not fieldtype(F,datetime).
 
 % can only bin quantitative or ordinal
 :- type(E,T), bin(E,_), T != quantitative, T != ordinal.

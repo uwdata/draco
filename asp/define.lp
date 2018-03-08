@@ -5,7 +5,7 @@ marktype(point;bar;line;area;text;tick;rect).
 % high level data types: quantitative, ordinal, nominal, temporal
 type(quantitative;ordinal;nominal;temporal).
 % basic types of the data
-primitive_type(string;number;boolean;date).
+primitive_type(string;number;boolean;datetime).
 % supported aggregation functions
 aggregate_op(count;mean;median;min;max;stdev;sum).
 summative_aggregate_op(count;sum).

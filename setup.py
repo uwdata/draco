@@ -29,10 +29,10 @@ class RunTests(Command):
 
         print('=> Running Ansunit Tests:')
 
-        errno_ansunit = call(['ansunit', 'asp/tests.yaml', '-vv'])
+        errno_ansunit = call(['ansunit', 'asp/tests.yaml', '-v'])
 
         print('\n\n=> Running Python Tests:')
-        errno_pytest = call(['pytest', 'tests', '--cov=draco', '--cov-report=term-missing', '--verbose'])
+        errno_pytest = call(['pytest', 'tests', '--cov=draco', '--cov-report=term-missing'])
 
         print('\n\n=> Running MyPy:')
         errno_mypy = call(['mypy', 'draco', 'tests', '--ignore-missing-imports'])

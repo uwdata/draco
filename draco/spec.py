@@ -52,7 +52,7 @@ class Field():
         self.name = name
 
         # column data type, should be a string represented type,
-        # one of ('string', 'number', 'datetime', 'date', 'boolean')
+        # one of ('string', 'number', 'datetime', 'boolean')
         self.ty = ty
         self.cardinality = cardinality
         self.entropy = entropy
@@ -180,9 +180,9 @@ class Data():
                 dist = dist / np.sum(dist)
                 entropy = stats.entropy(dist)
             elif isinstance(agate_type, agate.Date):
-                type_name = 'date'
+                type_name = 'datetime' # FIXME
             elif isinstance(agate_type, agate.DateTime):
-                type_name = 'date' # take care!
+                type_name = 'datetime'
 
             fields.append(Field(column.name, type_name, len(set(data)), entropy, extent))
 
