@@ -64,6 +64,12 @@
 % row and column require discrete
 :- channel_continuous(row;column).
 
+% don't use row without y
+:- channel(_,row), not channel(_,y).
+
+% don't use column without x
+:- channel(_,column), not channel(_,x).
+
 % all encodings (if they have a channel) require field except if we have a count aggregate
 :- not field(E,_), not aggregate(E,count), encoding(E).
 % count should not have a field
@@ -118,6 +124,8 @@
 
 % === Global properties ===
 
+% == Stacking ==
+
 % only use stacking for bar and area
 :- stack(_), not mark(bar), not mark(area).
 
@@ -127,8 +135,17 @@
 % need to stack if we use bar, area with discrete color or opacity
 :- mark(bar;area), channel(E,(color;opacity)), discrete(E), not stack(_).
 
-% can only use stack if we also use discrete color or opacity
-:- stack(_), not channel_discrete(opacity), not channel_discrete(color).
+% can only use stack if we also use discrete color, opacity, or detail
+:- stack(_), not channel_discrete(opacity), not channel_discrete(color), not channel(_,detail).
+
+% stack can only be on continuous
+:- stack(E,_), discrete(E).
+
+% stack can only be on x or y
+:- stack(E,_), not channel(E,x), not channel(E,y).
+
+% cannot use non positional continuous with stack unless it's aggregated
+:- stack(_), non_positional(C), channel(E,C), not aggregate(E,_), continuous(E).
 
 % === Type checks ===
 

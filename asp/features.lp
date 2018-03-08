@@ -139,24 +139,11 @@ feature_term(temporal_y) :- type(E,temporal), channel(E,x).
 
 % ====== Rankings ======
 
-% continuous by continuous
-is_c_c :- channel_continuous(x), channel_continuous(y).
-
 feature_term(c_c_point) :- is_c_c, mark(point).
 feature_term(c_c_line) :- is_c_c, mark(line).
 feature_term(c_c_area) :- is_c_c, mark(area).
 feature_term(c_c_text) :- is_c_c, mark(text).
 feature_term(c_c_tick) :- is_c_c, mark(tick).
-
-% continuous by discrete (or continuous only)
-is_c_d :- channel_continuous(x), not channel_continuous(y).
-is_c_d :- channel_continuous(y), not channel_continuous(x).
-
-% the continuous variable is a measure (it is aggregated) and all other channels are aggregated -> no overlap
-non_pos_unaggregated :- channel(E,C), non_positional(C), not aggregate(E,_).
-no_overlap :- is_c_d, continuous(E), channel(E,(x;y)), aggregate(E,_), not non_pos_unaggregated.
-% data size is as small as discrete dimension -> no overlap
-no_overlap :- is_c_d, data_size(S), channel(E,(x;y)), discrete(E), enc_cardinality(E,S).
 
 feature_term(c_d_point) :- is_c_d, not no_overlap, mark(point).
 feature_term(c_d_bar) :- is_c_d, not no_overlap, mark(bar).
@@ -173,13 +160,6 @@ feature_term(c_d_no_overlap_line) :- is_c_d, no_overlap, mark(line).
 feature_term(c_d_no_overlap_area) :- is_c_d, no_overlap, mark(area).
 feature_term(c_d_no_overlap_text) :- is_c_d, no_overlap, mark(text).
 feature_term(c_d_no_overlap_tick) :- is_c_d, no_overlap, mark(tick).
-
-
-% discrete by discrete
-is_d_d :- channel_discrete(x), channel_discrete(y).
-
-% no overlap if all other dimensions are aggregated
-no_overlap :- is_d_d, not non_pos_unaggregated.
 
 feature_term(d_d_point) :- is_d_d, mark(point).
 feature_term(d_d_text) :- is_d_d, mark(text).

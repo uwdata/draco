@@ -1,15 +1,15 @@
 from draco.spec import Data, Field, Query, Task
 from draco.generation.helper import is_valid
 
-class TestValidSpecs():
-    data = Data(fields=[
-        Field('n1', 'string'),
-        Field('n2', 'string'),
-        Field('q1', 'number'),
-        Field('q2', 'number'),
-        Field('q3', 'number')
-    ])
+data = Data(fields=[
+    Field('n1', 'string'),
+    Field('n2', 'string'),
+    Field('q1', 'number'),
+    Field('q2', 'number'),
+    Field('q3', 'number')
+])
 
+class TestValidSpecs():
     def test_hist(self):
         query = Query.from_vegalite({
             'mark': 'bar',
@@ -26,7 +26,7 @@ class TestValidSpecs():
             }
         })
 
-        assert is_valid(Task(self.data, query), True) == True
+        assert is_valid(Task(data, query), True) == True
 
     def test_bar(self):
         query = Query.from_vegalite({
@@ -43,7 +43,7 @@ class TestValidSpecs():
             }
         })
 
-        assert is_valid(Task(self.data, query), True) == True
+        assert is_valid(Task(data, query), True) == True
 
     def one_bar(self):
         query = Query.from_vegalite({
@@ -56,7 +56,7 @@ class TestValidSpecs():
             }
         })
 
-        assert is_valid(Task(self.data, query), True) == True
+        assert is_valid(Task(data, query), True) == True
 
     def test_scatter(self):
         query = Query.from_vegalite({
@@ -81,7 +81,7 @@ class TestValidSpecs():
             }
         })
 
-        assert is_valid(Task(self.data, query), True) == True
+        assert is_valid(Task(data, query), True) == True
 
 
     def test_stack(self):
@@ -105,7 +105,35 @@ class TestValidSpecs():
             }
         })
 
-        assert is_valid(Task(self.data, query), True) == True
+        assert is_valid(Task(data, query), True) == True
+
+    def test_stack_agg(self):
+        query = Query.from_vegalite({
+            'mark': 'bar',
+            'encoding': {
+                'x': {
+                    'type': 'nominal',
+                    'field': 'n1',
+                },
+                'y': {
+                    'type': 'quantitative',
+                    'field': 'q1',
+                    'stack': 'zero',
+                    'aggregate': 'sum'
+                },
+                'detail': {
+                    'type': 'nominal',
+                    'field': 'n2'
+                },
+                'color': {
+                    'type': 'quantitative',
+                    'field': 'q2',
+                    'aggregate': 'mean'
+                }
+            }
+        })
+
+        assert is_valid(Task(data, query), True) == True
 
     def test_heatmap(self):
         query = Query.from_vegalite({
@@ -123,4 +151,19 @@ class TestValidSpecs():
             }
         })
 
-        assert is_valid(Task(self.data, query), True) == True
+        assert is_valid(Task(data, query), True) == True
+
+
+class TestInvalidSpecs():
+    def test_row_only(self):
+        query = Query.from_vegalite({
+            'mark': 'point',
+            'encoding': {
+                'row': {
+                    'type': 'nominal',
+                    'field': 'n1'
+                }
+            }
+        })
+
+        assert is_valid(Task(data, query), True) == False

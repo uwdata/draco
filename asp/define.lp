@@ -57,3 +57,28 @@ _true(false).
 entropy(0,0) :- _true(true).
 interesting(0) :- _true(true).
 extent(0,0,0) :- _true(true).
+
+% == Chart Types ==
+
+% continuous by continuous
+is_c_c :- channel_continuous(x), channel_continuous(y).
+
+% continuous by discrete (or continuous only)
+is_c_d :- channel_continuous(x), not channel_continuous(y).
+is_c_d :- channel_continuous(y), not channel_continuous(x).
+
+% discrete by discrete
+is_d_d :- channel_discrete(x), channel_discrete(y).
+
+% == Overlap ==
+% TODO: improve
+
+% the continuous variable is a measure (it is aggregated) and all other channels are aggregated -> no overlap
+non_pos_unaggregated :- channel(E,C), non_positional(C), not aggregate(E,_).
+no_overlap :- is_c_d, continuous(E), channel(E,(x;y)), aggregate(E,_), not non_pos_unaggregated.
+
+% data size is as small as discrete dimension -> no overlap
+no_overlap :- is_c_d, data_size(S), channel(E,(x;y)), discrete(E), enc_cardinality(E,S).
+
+% no overlap if all other dimensions are aggregated
+no_overlap :- is_d_d, not non_pos_unaggregated.
