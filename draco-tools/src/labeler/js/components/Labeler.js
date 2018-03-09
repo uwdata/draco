@@ -46,7 +46,8 @@ class Labeler extends Component {
       chosen: null,
       hover: UNK,
       requesting: false,
-      next: []
+      next: [],
+      user: (new URL(window.location.href)).searchParams.get('user') || 'anonymous'
     };
   }
 
@@ -151,6 +152,7 @@ class Labeler extends Component {
 
     return (
       <div className='Labeler' onMouseOut={() => {this.hover(UNK);}}>
+        {this.state.user === 'anonymous' ? <div className='anonymous'>Labeling as Anonymous!<br/><span>Please add <code>?user=NAME</code> to the URL!</span></div> : ''}
         <div className='task'>Task: {this.state.task || 'NO TASK'}</div>
         <div className='chooser'>
           <div className={displayClasses}>
@@ -206,7 +208,8 @@ class Labeler extends Component {
 
     const message = {
       id: id,
-      label: label
+      label: label,
+      user: this.state.user
     };
 
     // apply next state
