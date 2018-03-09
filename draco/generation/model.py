@@ -96,10 +96,11 @@ class Model:
             # the least likely channel has the highest prob of being replaced
             probs = [(1 - self.enum_probs['channel'][x]) for x in used_channels]
 
-            try:
-                to_replace, _ = Model.sample(used_channels, probs)
-            except ValueError:
-                raise ValueError('empty spec {0}'.format(spec))
+
+            print(spec)
+            print(prop)
+            to_replace, _ = Model.sample(used_channels, probs)
+
 
             enc = spec['encoding'][to_replace]
             del spec['encoding'][to_replace]
