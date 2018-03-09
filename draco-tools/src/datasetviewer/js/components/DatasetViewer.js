@@ -7,7 +7,6 @@ import DatasetChooser from 'datasetviewer/js/components/DatasetChooser';
 const BASE_DIR = '/generated_visualizations/';
 const SPEC_DIR = BASE_DIR + 'specs/';
 const INTERACTIONS = BASE_DIR + 'interactions.json';
-const DATA = BASE_DIR + 'cars_mod.json';
 const DEFAULT_DATASET = 'mark.json';
 
 class DatasetViewer extends Component {
@@ -29,15 +28,11 @@ class DatasetViewer extends Component {
       .then(response => response.json())
       .then(data => this.setState({ 'datasets': data }));
 
-    fetch(DATA)
-      .then(response => response.json())
-      .then(data => this.setState({ data: data }));
-
     this.fetchDataset(DEFAULT_DATASET);
   }
 
   render() {
-    if (!this.state.data || !this.state.datasets) {
+    if (!this.state.datasets) {
       return <div>loading...</div>;
     }
 
@@ -60,7 +55,6 @@ class DatasetViewer extends Component {
         const visualizations = [];
         for (let j = 0; j < group.length; j++) {
           const spec = group[j];
-          spec['data'] = { values: this.state.data };
 
           const specNoData = {};
           Object.assign(specNoData, spec);
