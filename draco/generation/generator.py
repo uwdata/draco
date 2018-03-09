@@ -51,6 +51,7 @@ class Generator:
         # base case
         if (prop_index == len(props)):
             self.model.post_improve(base_spec, props)
+            base_spec['data'] = { 'url': self.data_url }
 
             # within a group, don't repeat the same specs
             if not (base_spec in seen):
@@ -59,7 +60,6 @@ class Generator:
                 query = Query.from_vegalite(base_spec)
 
                 if (is_valid(Task(self.data, query))):
-                    base_spec['data'] = { 'url': self.data_url }
                     specs.append(base_spec)
          # recursive case
         else:
