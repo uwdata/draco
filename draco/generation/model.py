@@ -237,7 +237,11 @@ class Model:
         enums = self.curr_enums[prop]
         probs = self.curr_probs[prop]
 
-        result, index = Model.sample(enums, probs)
+        try:
+            result, index = Model.sample(enums, probs)
+        except ValueError:
+            print(prop)
+            raise ValueError()
 
         if (prop == 'channel'):
             enums.pop(index)
@@ -251,6 +255,9 @@ class Model:
         Returns a probabilistic choice and index from the given list
         of enums, where probs[i] = probability for enums[i]. Expects sum(probs) = 1
         """
+        if (not probs):
+            raise ValueError()
+
         cumulative = np.cumsum(probs)
 
         choice = random.uniform(0, cumulative[-1])
