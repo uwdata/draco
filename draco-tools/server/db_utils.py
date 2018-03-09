@@ -91,7 +91,7 @@ def insert_halden_data(db_file: str):
 
         tid = f'{source}-{i}'
 
-        print(tid + task)
+        print(tid + (task or 'No Task'))
 
         stmt = 'INSERT INTO pairs VALUES (?, ?, ?, ?, ?, ?)'
 
