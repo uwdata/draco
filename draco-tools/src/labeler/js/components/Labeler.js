@@ -100,6 +100,11 @@ class Labeler extends Component {
       'hover': this.state.hover === RIGHT && !(this.state.chosen === RIGHT)
     });
 
+    const taskClasses = classnames({
+      'task': true,
+      'active': !!this.state.task
+    });
+
     const leftSpec = cleanUpSpec(this.state.left);
     const rightSpec = cleanUpSpec(this.state.right);
 
@@ -153,7 +158,7 @@ class Labeler extends Component {
     return (
       <div className='Labeler' onMouseOut={() => {this.hover(UNK);}}>
         {this.state.user === 'anonymous' ? <div className='anonymous'>Labeling as Anonymous!<br/><span>Please add <code>?user=NAME</code> to the URL!</span></div> : ''}
-        <div className='task'>Task: {this.state.task || 'NO TASK'}</div>
+        <div className={taskClasses}>Task: {this.state.task || 'NO TASK'}</div>
         <div className='chooser'>
           <div className={displayClasses}>
             <div className={leftClasses}

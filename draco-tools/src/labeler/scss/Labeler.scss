@@ -170,11 +170,15 @@
 
   .task {
     font-size: 1.2em;
-    color: #999;
+    color: $light-grey;
     font-weight: bold;
     position: absolute;
     top: 10px;
     left: 16px;
+
+    &.active {
+      color: $dark-grey;
+    }
   }
 
   .anonymous {
