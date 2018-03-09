@@ -40,8 +40,8 @@ PosNegExample = namedtuple('PosNeg', ['pair_id', 'data', 'task', 'source', 'nega
 UnlabeledExample = namedtuple('Unlabeled', ['pair_id', 'data', 'task', 'source', 'left', 'right'])
 
 
-def load_neg_pos_specs() -> List[PosNegExample]:
-    raw_data = []
+def load_neg_pos_specs() -> Dict[str, PosNegExample]:
+    raw_data = {}
 
     for path in [man_data_path, yh_data_path, ba_data_path, label_data_path]:
         with open(path) as f:
@@ -52,13 +52,15 @@ def load_neg_pos_specs() -> List[PosNegExample]:
                 fields = list(map(Field.from_obj, row['fields']))
                 spec_schema = Data(fields, row.get('num_rows'))
                 src = json_data['source']
-                raw_data.append(PosNegExample(
-                    f'{src}-{i}',
+
+                key = f'{src}-{i}'
+                raw_data[key] = PosNegExample(
+                    key,
                     spec_schema,
                     row.get('task'),
                     src,
                     row['negative'],
-                    row['positive'])
+                    row['positive']
                 )
 
                 i += 1
@@ -111,12 +113,12 @@ def load_partial_full_data(path=compassql_data_path, data_dir=data_dir):
     return result
 
 
-def load_unlabeled_specs() -> List[UnlabeledExample]:
+def load_unlabeled_specs() -> Dict[str, UnlabeledExample]:
     files = [os.path.join(halden_data_path, f)
                 for f in os.listdir(halden_data_path)
                 if f.endswith('.json')]
 
-    data_cache = {}
+    data_cache: Dict[str, Data] = {}
     def acquire_data(url):
         if url not in data_cache:
             data_cache[url] = Data.from_json(os.path.join(data_dir, os.path.basename(url)))
@@ -124,7 +126,7 @@ def load_unlabeled_specs() -> List[UnlabeledExample]:
             data_cache[url].url = url
         return data_cache[url]
 
-    raw_data: List[UnlabeledExample] = []
+    raw_data: Dict[str, UnlabeledExample] = {}
 
     cnt = 0
 
@@ -132,21 +134,22 @@ def load_unlabeled_specs() -> List[UnlabeledExample]:
         with open(fname, 'r') as f:
             content = json.load(f)
             for num_channel in content:
-                for spec_list in content[num_channel]:
+                for i, spec_list in enumerate(content[num_channel]):
                     for left, right in itertools.combinations(spec_list, 2):
                         assert left != right, '[Err] find pairs with the same content file:{} - num_channel:{} - group:{}'.format(os.path.basename(fname), num_channel, i)
                         assert left['data']['url'] == right['data']['url']
 
                         url = left["data"]["url"]
 
-                        raw_data.append(UnlabeledExample(
-                            f'halden-{cnt}',
+                        key = f'halden-{cnt}'
+                        raw_data[key] = UnlabeledExample(
+                            key,
                             None,
                             acquire_data(url),
                             'halden',
                             left,
                             right
-                        ))
+                        )
                         cnt += 1
 
     return raw_data
@@ -258,7 +261,7 @@ def load_data(test_size: float=0.3, random_state=1) -> Tuple[pd.DataFrame, pd.Da
 
 
 
-def get_labeled_data() -> Tuple[List[PosNegExample], pd.DataFrame]:
+def get_labeled_data() -> Tuple[Dict[str, PosNegExample], pd.DataFrame]:
     specs = load_neg_pos_specs()
     vecs = _get_pos_neg_data()
 
@@ -267,9 +270,9 @@ def get_labeled_data() -> Tuple[List[PosNegExample], pd.DataFrame]:
     return specs, vecs
 
 
-def get_unlabeled_data() -> Tuple[List[UnlabeledExample], pd.DataFrame]:
+def get_unlabeled_data() -> Tuple[Dict[str, UnlabeledExample], pd.DataFrame]:
     specs = load_unlabeled_specs()
-    vecs = pairs_to_vec(specs)
+    vecs = pairs_to_vec(list(specs.values()))
 
     assert len(specs) == len(vecs)
 
@@ -278,6 +281,6 @@ def get_unlabeled_data() -> Tuple[List[UnlabeledExample], pd.DataFrame]:
 
 if __name__ == '__main__':
     ''' Generate and store vectors for labeled data in default path. '''
-    neg_pos_data = load_neg_pos_specs()
-    data = pairs_to_vec(neg_pos_data)
+    specs = load_neg_pos_specs()
+    data = pairs_to_vec(list(specs.values()))
     data.to_pickle(pickle_path)
