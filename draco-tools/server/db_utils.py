@@ -17,35 +17,38 @@ def create_database(db_file: str):
     c = conn.cursor()
 
     # Create table
-    c.execute('''CREATE TABLE pairs (id text primary key, task text, left text, right text,
-                                     left_feature text, right_feature text)''')
-    c.execute('CREATE TABLE labels (id text, label integer)')
+    c.execute('''CREATE TABLE pairs (id text primary key, source text, task text, left text, right text)''')
+    c.execute('CREATE TABLE labels (id text, label integer, user text)')
 
     conn.close()
 
 
-def insert_halden_data(db_file: str):
+def insert_unlabeled_data(db_file: str):
     # generate feature vector and store in database
 
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
 
-    for i, entry in enumerate(data_util.load_halden_data()):
-        source = entry['source']
-        task = entry['task']
-        left_spec = entry['left']
-        right_spec = entry['right']
-        vec1 = entry['left_feature']
-        vec2 = entry['right_feature']
+    specs, features = data_util.get_unlabeled_data()
 
-        tid = f'{source}-{i}'
+    for key in specs:
 
-        print(tid + (task or 'No Task'))
+        entry = specs[key]
+        feature = features.loc[key]
 
-        stmt = 'INSERT INTO pairs VALUES (?, ?, ?, ?, ?, ?)'
+        pair_id = entry.pair_id
+        source = entry.source
+        task = entry.task
+        left_spec = entry.left
+        right_spec = entry.right
+        #vec1 = feature.negative
+        #vec2 = feature.positive
 
-        c.execute(stmt, (tid, task, json.dumps(left_spec), json.dumps(right_spec),
-                         json.dumps(vec1), json.dumps(vec2)))
+        print(pair_id + (task or 'No Task'))
+
+        stmt = 'INSERT INTO pairs VALUES (?, ?, ?, ?, ?)'
+
+        c.execute(stmt, (pair_id, source, task, json.dumps(left_spec), json.dumps(right_spec)))
 
         conn.commit()
 
@@ -71,11 +74,12 @@ def load_labeled_specs(db_file: str):
     c = conn.cursor()
 
     c.execute('''SELECT pairs.id,
-                        labels.label,
+                        pairs.task,
+                        pairs.source,
                         pairs.left,
                         pairs.right,
-                        pairs.left_feature,
-                        pairs.right_feature
+                        labels.label,
+                        labels.user
                  FROM labels JOIN pairs
                  WHERE labels.id = pairs.id''')
 
@@ -83,22 +87,28 @@ def load_labeled_specs(db_file: str):
 
     return [{
         "id": r[0],
-        "label": r[1],
-        "left_spec": json.loads(r[2]),
-        "right_spec": json.loads(r[3]),
-        "left_feature": json.loads(r[4]),
-        "right_feature": json.loads(r[5])
+        "task": r[1],
+        "source": r[2],
+        "left": json.loads(r[3]),
+        "right": json.loads(r[4]),
+        "label": r[5],
+        "labeler": r[6]
     } for r in label_and_features]
 
 
-if __name__ == '__main__':
-    db_file = os.path.join(os.path.dirname(__file__), 'label_data.db')
-
+def build_database(db_file):
+    """ init and insert data """
     if pathlib.Path(db_file).exists():
         print('[Err] The database {} exists, won\'t create one.'.format(db_file))
         sys.exit(-1)
 
     create_database(db_file)
-    # insert_user_study_data(db_file)
-    insert_halden_data(db_file)
+    insert_unlabeled_data(db_file)
+
+
+if __name__ == '__main__':
+    db_file = os.path.join(os.path.dirname(__file__), 'label_data.db')
+    build_database(db_file)
     labeled = load_labeled_specs(db_file)
+    print(labeled)
+    

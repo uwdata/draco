@@ -245,8 +245,7 @@ def _get_pos_neg_data() -> pd.DataFrame:
 
 
 def load_data(test_size: float=0.3, random_state=1) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    '''
-        Returns:
+    ''' Returns:
             a tuple containing: train_dev, test.
     '''
     data = _get_pos_neg_data()

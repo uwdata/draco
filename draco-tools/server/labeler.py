@@ -4,6 +4,7 @@ from flask_cors import CORS
 import json
 import numpy as np
 import os
+from draco.learn import data_util
 
 import sqlite3
 
@@ -16,8 +17,10 @@ DATABASE = os.path.join(os.path.dirname(__file__), 'label_data.db')
 global_state = {
     "db": None,
     "lev_scores": None,
-    "unlabeled": None
+    "unlabeled": None,
+    "features": None
 }
+
 
 def get_db():
     db = global_state["db"]
@@ -27,40 +30,35 @@ def get_db():
         db = global_state["db"]
     return db
 
+
+def get_features():
+    features = global_state["features"]
+    if features is None:
+        _, features = data_util.get_unlabeled_data()
+        global_state["features"] = features
+    return features
+
+
 def get_leverage_score():
     """ get leverage score """
 
     lev_scores = global_state["lev_scores"]
+    
+    features = get_features()
 
     if lev_scores is None:
 
         print("calculating lev scores")
 
-        db = get_db()
-        c = db.cursor()
-
-        c.execute('''SELECT pairs.id, pairs.left_feature, pairs.right_feature 
-                     FROM pairs''')
-
-        content = c.fetchall()
-
-        keys = []
-        vecs = []
-
-        for row in content:
-            keys.append(row[0])
-            vec1 = json.loads(row[1])
-            vec2 = json.loads(row[2])
-            vecs.append(np.array(vec1) - np.array(vec2))
-
-        X = np.array(vecs)
+        X = features.negative - features.positive
 
         u, s, vh = np.linalg.svd(X, full_matrices=False)
 
-        raw_lev_scores = (np.sum(u*u, 1) * 1000).tolist()
+        raw_lev_scores = list((np.sum(u*u, 1) * 1000))
 
         lev_scores = {}
-        for i, key in enumerate(keys):
+
+        for i, key in enumerate(list(X.index)):
             lev_scores[key] = raw_lev_scores[i]
 
         global_state["lev_scores"] = lev_scores
@@ -82,8 +80,7 @@ def get_unlabeled_data():
         db = get_db()
         c = db.cursor()
 
-        c.execute('''SELECT pairs.id, pairs.task, pairs.left, pairs.right, 
-                            pairs.left_feature, pairs.right_feature 
+        c.execute('''SELECT pairs.id, pairs.source, pairs.task, pairs.left, pairs.right
                      FROM pairs
                      WHERE NOT EXISTS (SELECT id FROM labels WHERE labels.id = pairs.id)''')
 
@@ -91,13 +88,13 @@ def get_unlabeled_data():
 
         result = {}
         for row in content:
+            pair_id = row[0]
             data = {
                 "id": row[0],
-                "task": row[1],
-                "left": json.loads(row[2]),
-                "right": json.loads(row[3]),
-                "left_feature": json.loads(row[4]),
-                "right_feature": json.loads(row[5])
+                "source": row[1],
+                "task": row[2],
+                "left": json.loads(row[3]),
+                "right": json.loads(row[4])
             }
         
             result[row[0]] = data
@@ -128,7 +125,7 @@ def fetch_pair():
     num_pairs = request.args.get('num_pairs', default=1, type=int)
     unlabeled_data = get_unlabeled_data()
 
-    mode = np.random.choice([0, 1])
+    mode = np.random.choice([0, 1], p=[0.9, 0.1])
     id_list = list(unlabeled_data.keys())
 
     if mode == 0:
@@ -150,19 +147,27 @@ def upload_label():
     if not request or not 'id' in request.json or not 'label' in request.json:
         abort(400)
 
+    # get user / a string
+    if not 'user' in request.json:
+        user = 'anonymous'
+    else:
+        user = request.json['user']
+
     db = get_db()
     c = db.cursor()
 
-    tid = request.json['id']
+    pair_id = request.json['id']
     label = 0 if request.json['label'] == '=' else (-1 if request.json['label'] == '<' else 1)
 
-    stmt = "INSERT INTO labels VALUES (?, ?)"
-    c.execute(stmt, (tid, label))
+    stmt = "INSERT INTO labels VALUES (?, ?, ?)"
+    c.execute(stmt, (pair_id, label, user))
 
     db.commit()
 
     # update the in memory copy
-    get_unlabeled_data().pop(tid, None)
+    get_unlabeled_data().pop(pair_id, None)
+
+    print(f"[OK] Insert pair {pair_id} with label {label} by user {user}.")
 
     return 'success'
 
