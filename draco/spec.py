@@ -173,7 +173,8 @@ class Data():
                 type_name = 'number'
                 h = np.histogram(np.array(data).astype(float), 100)
                 entropy = stats.entropy(h[0])
-                extent = [np.min(data), np.max(data)]
+                # clip to int32
+                extent = [max(np.min(data), -2147483647), min(np.max(data), 2147483647)]
             elif isinstance(agate_type, agate.Boolean):
                 type_name = 'boolean'
                 _, dist = np.unique(data, return_counts=True)
