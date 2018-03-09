@@ -2,23 +2,17 @@ import json
 import os
 import pathlib
 import sqlite3
+import sys
 from typing import Dict
 
 import numpy as np
-
-import pandas as pd
 
 from draco.learn import data_util
 from draco.spec import Query, Task
 
 
-def create_database(db_file):
+def create_database(db_file: str):
     ''' initialize the databsae and insert default entries into it. '''
-
-    if pathlib.Path(db_file).exists():
-        print('[Err] The database {} exists, won\'t create one.'.format(db_file))
-        return
-
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
 
@@ -30,7 +24,7 @@ def create_database(db_file):
     conn.close()
 
 
-def insert_user_study_data(db_file):
+def insert_user_study_data(db_file: str):
     # generate feature vector and store in database
 
     processed_specs: Dict = {}
@@ -80,10 +74,8 @@ def insert_user_study_data(db_file):
     conn.close()
 
 
-def insert_halden_data(db_file):
+def insert_halden_data(db_file: str):
     # generate feature vector and store in database
-
-    processed_specs: Dict = {}
 
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
@@ -111,7 +103,7 @@ def insert_halden_data(db_file):
     conn.close()
 
 
-def load_labeled_specs(db_file):
+def load_labeled_specs(db_file: str):
     """ load all pairs have been labeled
         Args: the database file containing corresponding entries
         Returns:
@@ -152,6 +144,11 @@ def load_labeled_specs(db_file):
 
 if __name__ == '__main__':
     db_file = os.path.join(os.path.dirname(__file__), 'label_data.db')
+
+    if pathlib.Path(db_file).exists():
+        print('[Err] The database {} exists, won\'t create one.'.format(db_file))
+        sys.exit(-1)
+
     create_database(db_file)
     # insert_user_study_data(db_file)
     insert_halden_data(db_file)
