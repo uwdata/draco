@@ -53,11 +53,11 @@ def main(args):
                 seen_base_specs = set()
                 groups = []
                 for _ in range(n):
-                    specs = generator.generate_interaction(interaction['props'], d, seen_base_specs, cross)
+                    specs = generator.generate_interaction(interaction['props'], d, seen_base_specs)
 
                     tries = 0
                     while (len(specs) < 2 and tries < NUM_TRIES):
-                        specs = generator.generate_interaction(interaction['props'], d, seen_base_specs, cross)
+                        specs = generator.generate_interaction(interaction['props'], d, seen_base_specs)
                         tries += 1
 
                     if (tries == NUM_TRIES):

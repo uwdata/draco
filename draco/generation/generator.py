@@ -1,6 +1,6 @@
 import random
 from copy import deepcopy
-from typing import Any, Dict, List, Set
+from typing import Any, Dict, List, Set, Union
 
 from draco.generation.helper import is_valid
 from draco.generation.model import Model
@@ -23,8 +23,8 @@ class Generator:
         self.data = Data(data_fields)
         self.data_url = data_url
 
-    def generate_interaction(self, props: List[str], dimensions: int,
-                                   seen_base_specs: Set[Spec], cross: bool) -> List[Spec]:
+    def generate_cross_interaction(self, props: List[str], dimensions: int,
+                seen_base_specs: Set[Spec]) -> List[Spec]:
         """
         Generates a list of specs by enumerating over the given properties' enums.
         """
@@ -38,15 +38,41 @@ class Generator:
         seen_base_specs.add(base_spec)
 
         specs: List[Spec] = []
+        self.__mutate_spec_cross(base_spec, props, 0, set(), specs)
 
-        if (cross):
-            self.__mutate_spec(base_spec, props, 0, set(), specs)
-        else:
-            raise NotImplementedError('noncross not implement')
         return specs
 
+    def __mutate_spec_no_cross(self, base_spec: Spec, props: List[str], prop_index: int,
+                            seen: Set[Spec], groups: List[List[Spec]]):
+        # base case
+        if (prop_index == len(props)):
+            self.model.post_improve(base_spec, props)
 
-    def __mutate_spec(self, base_spec: Spec, props: List[str], prop_index: int,
+            # within a group, don't repeat the same specs
+            if not (base_spec in seen):
+                seen.add(base_spec)
+
+                query = Query.from_vegalite(base_spec)
+
+                if (is_valid(Task(self.data, query))):
+                    base_spec['data'] = { 'url': self.data_url }
+                    groups[-1].append(base_spec)
+        else:
+            if (prop_index == len(props) - 1):
+                groups.append([])
+
+            prop_to_mutate = props[prop_index]
+            for enum in self.model.get_enums(prop_to_mutate):
+                spec = deepcopy(base_spec)
+                self.model.mutate_prop_cross(spec, prop_to_mutate, enum)
+
+                # recursive call
+                self.__mutate_spec_cross(spec, props, prop_index + 1, seen, groups)
+
+        return
+
+
+    def __mutate_spec_cross(self, base_spec: Spec, props: List[str], prop_index: int,
                             seen: Set[Spec], specs: List[Spec]):
         # base case
         if (prop_index == len(props)):
@@ -66,9 +92,9 @@ class Generator:
             prop_to_mutate = props[prop_index]
             for enum in self.model.get_enums(prop_to_mutate):
                 spec = deepcopy(base_spec)
-                self.model.mutate_prop(spec, prop_to_mutate, enum)
+                self.model.mutate_prop_cross(spec, prop_to_mutate, enum)
 
                 # recursive call
-                self.__mutate_spec(spec, props, prop_index + 1, seen, specs)
+                self.__mutate_spec_cross(spec, props, prop_index + 1, seen, specs)
 
         return
