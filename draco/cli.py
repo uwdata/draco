@@ -49,8 +49,9 @@ def create_parser():
                         help='Type of query. draco (Draco, default), cql (CompassQl), vl (Vega-Lite), asp (Answer Set Program).')
     parser.add_argument('--mode', '-m', type=Mode, choices=list(Mode), default=Mode.optimize,
                         help='Mode to run draco in.',)
-    parser.add_argument('--out', '-o', nargs='?', type=argparse.FileType('w'), default=sys.stdout,
+    parser.add_argument('--out', '-o', type=argparse.FileType('w'), default=sys.stdout,
                         help='specify the Vega-Lite output file')
+    parser.add_argument('--base', '-b', default=None, help='Base directory.')
     parser.add_argument('--debug', '-d', help='Create debugging information.', action='store_true')
     parser.add_argument('--version', action='version',
                         version=__version__)
@@ -72,7 +73,7 @@ def main():  # pragma: no cover
         else:
             # load a task from a spec provided by the user
             query_spec = json.load(args.query)
-            d = os.path.dirname(args.query.name)
+            d = args.base or os.path.dirname(args.query.name)
             if args.type == QueryType.draco:
                 input_task = Task.from_obj(query_spec, d)
             elif args.type == QueryType.cql:
