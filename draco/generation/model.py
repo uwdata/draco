@@ -35,9 +35,9 @@ class Model:
         self.top_level_props = set(top_level_props)
         self.encoding_props = set(encoding_props)
 
-        self.enums = {}
-        self.probs = {}
-        self.enum_probs = {}
+        self.enums: Dict[str, List[str]] = {}
+        self.probs: Dict = {}
+        self.enum_probs: Dict = {}
 
         for spec in distributions:
             self.enums[spec] = [x['name']

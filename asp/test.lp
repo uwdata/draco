@@ -131,6 +131,9 @@
 % don't use count on x and y
 :- channel(EX,x), channel(EY,y), aggregate(EX,count), aggregate(EY,count).
 
+% if we use aggregation, then all continuous fields need to be aggeragted
+:- aggregate(_,_), continuous(E), not aggregate(E,_).
+
 % === Global properties ===
 
 % bars and area cannot overlap
@@ -161,6 +164,9 @@
 
 % cannot use non positional continuous with stack unless it's aggregated
 :- stack(_), non_positional(C), channel(E,C), not aggregate(E,_), continuous(E).
+
+% stack only works with c_d
+:- stack(_), not is_c_d.
 
 % === Type checks ===
 

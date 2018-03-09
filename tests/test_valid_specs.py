@@ -45,7 +45,7 @@ class TestValidSpecs():
 
         assert is_valid(Task(data, query), True) == True
 
-    def one_bar(self):
+    def test_one_bar(self):
         query = Query.from_vegalite({
             'mark': 'bar',
             'encoding': {
@@ -168,7 +168,7 @@ class TestInvalidSpecs():
 
         assert is_valid(Task(data, query), True) == False
 
-    def q_q_bar(self):
+    def test_q_q_bar(self):
         query = Query.from_vegalite({
             'mark': 'bar',
             'encoding': {
@@ -182,5 +182,48 @@ class TestInvalidSpecs():
                 }
             }
         })
+
+        assert is_valid(Task(data, query), True) == False
+
+    def test_only_one_agg(self):
+        query = Query.from_vegalite({
+            'mark': 'point',
+            'encoding': {
+                'x': {
+                    'type': 'quantitative',
+                    'field': 'q1'
+                },
+                'y': {
+                    'type': 'quantitative',
+                    'field': 'q2',
+                    'aggregate': 'mean'
+                }
+            }
+        })
+
+        assert is_valid(Task(data, query), True) == False
+
+    def test_stack_multiple(self):
+        query = Query.from_vegalite({
+            'mark': 'bar',
+            'encoding': {
+                'x': {
+                    'type': 'quantitative',
+                    'field': 'q1',
+                    'stack': 'zero',
+                    'aggregate': 'sum'
+                },
+                'y': {
+                    'type': 'quantitative',
+                    'field': 'q2',
+                    'stack': 'zero',
+                    'aggregate': 'sum'
+                },
+                'color': {
+                    'type': 'nominal',
+                    'field': 'n2'
+                }
+            }
+        });
 
         assert is_valid(Task(data, query), True) == False
