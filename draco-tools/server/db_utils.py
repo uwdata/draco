@@ -17,7 +17,7 @@ def create_database(db_file: str):
     c = conn.cursor()
 
     # Create table
-    c.execute('''CREATE TABLE pairs (id text primary key, source text, task text, left text, right text)''')
+    c.execute('CREATE TABLE pairs (id text primary key, source text, task text, left text, right text)')
     c.execute('CREATE TABLE labels (id text, label text, user text)')
 
     conn.close()
@@ -69,6 +69,8 @@ def load_labeled_specs(db_file: str):
                 "right_feature": xx
             }
     """
+
+    # todo: complete this function
 
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
