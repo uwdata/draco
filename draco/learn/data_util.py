@@ -209,7 +209,12 @@ def run_in_parallel(func, data: List[Any]) -> pd.DataFrame:
         m: Any = manager  # fix for mypy
         d = m.dict()  # shared dict for memoization
         pool = m.Pool(processes=processes)
-        df = pd.concat(pool.map(func, list(map(lambda s: (d,s), df_split))))
+
+        splits: List[Tuple[Dict,Any]] = []
+        for s in df_split:
+            splits.append((d, s))
+
+        df = pd.concat(pool.map(func, splits))
         pool.close()
         pool.join()
 
