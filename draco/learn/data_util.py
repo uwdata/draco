@@ -119,7 +119,7 @@ def load_unlabeled_specs() -> Dict[str, UnlabeledExample]:
                 for i, spec_list in enumerate(content[num_channel]):
                     for left, right in itertools.combinations(spec_list, 2):
                         if left == right:
-                            logger.warning('Found pair with the same content file:{} - num_channel:{} - group:{}', os.path.basename(fname), num_channel, i)
+                            logger.warning('Found pair with the same content file:{} - num_channel:{} - group:{}', (os.path.basename(fname), num_channel, i))
                             continue
 
                         assert left['data']['url'] == right['data']['url']
