@@ -3,62 +3,32 @@
         [
             {
                 "encoding": {
-                    "y": {
+                    "x": {
+                        "field": "Horsepower",
                         "type": "quantitative",
+                        "aggregate": "stdev",
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
+                        }
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
             },
             {
                 "encoding": {
-                    "y": {
+                    "x": {
+                        "field": "Horsepower",
                         "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
+                        "aggregate": "stdev",
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
+                        }
                     }
                 },
-                "mark": "tick",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    }
-                },
-                "mark": "tick",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -68,15 +38,14 @@
             {
                 "encoding": {
                     "x": {
-                        "sort": "ascending",
+                        "field": "Retail Price",
                         "type": "quantitative",
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
+                        }
                     }
                 },
-                "mark": "tick",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -84,15 +53,14 @@
             {
                 "encoding": {
                     "x": {
-                        "sort": "ascending",
+                        "field": "Retail Price",
                         "type": "quantitative",
                         "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
+                            "zero": true
+                        }
                     }
                 },
-                "mark": "tick",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -102,15 +70,14 @@
             {
                 "encoding": {
                     "x": {
-                        "sort": "ascending",
+                        "field": "Cylinders",
                         "type": "quantitative",
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
+                        }
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -118,15 +85,14 @@
             {
                 "encoding": {
                     "x": {
-                        "sort": "ascending",
+                        "field": "Cylinders",
                         "type": "quantitative",
                         "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
+                            "zero": true
+                        }
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -135,30 +101,64 @@
         [
             {
                 "encoding": {
-                    "y": {
+                    "x": {
+                        "field": "Retail Price",
                         "type": "quantitative",
+                        "aggregate": "mean",
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
+                        }
                     }
                 },
-                "mark": "tick",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
             },
             {
                 "encoding": {
-                    "y": {
+                    "x": {
+                        "field": "Retail Price",
                         "type": "quantitative",
+                        "aggregate": "mean",
                         "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
+                            "zero": true
+                        }
                     }
                 },
-                "mark": "tick",
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Engine Size",
+                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        }
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Engine Size",
+                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        }
+                    }
+                },
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -169,38 +169,44 @@
         [
             {
                 "encoding": {
-                    "size": {
+                    "x": {
+                        "field": "Cylinders",
                         "type": "quantitative",
+                        "bin": {
+                            "maxbins": 100
+                        },
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
+                        }
                     },
-                    "x": {
-                        "type": "nominal",
-                        "field": "n1"
+                    "y": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
             },
             {
                 "encoding": {
-                    "size": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
                     "x": {
-                        "type": "nominal",
-                        "field": "n1"
+                        "field": "Cylinders",
+                        "type": "quantitative",
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "scale": {
+                            "zero": true
+                        }
+                    },
+                    "y": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -210,20 +216,21 @@
             {
                 "encoding": {
                     "x": {
-                        "sort": "descending",
-                        "type": "ordinal",
-                        "field": "o1"
-                    },
-                    "y": {
+                        "field": "Retail Price",
                         "type": "quantitative",
                         "scale": {
                             "zero": true
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
+                        }
+                    },
+                    "color": {
+                        "field": "Cylinders",
+                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        }
                     }
                 },
-                "mark": "line",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -231,62 +238,21 @@
             {
                 "encoding": {
                     "x": {
-                        "sort": "descending",
-                        "type": "ordinal",
-                        "field": "o1"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "detail": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "y": {
-                        "aggregate": "mean",
+                        "field": "Retail Price",
                         "type": "quantitative",
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "detail": {
-                        "type": "nominal",
-                        "field": "n1"
+                        }
                     },
-                    "y": {
-                        "aggregate": "mean",
+                    "color": {
+                        "field": "Cylinders",
                         "type": "quantitative",
                         "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
+                            "zero": true
+                        }
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -296,19 +262,19 @@
             {
                 "encoding": {
                     "x": {
+                        "field": "Horsepower",
                         "type": "quantitative",
                         "scale": {
                             "zero": true
                         },
-                        "aggregate": "mean",
-                        "field": "q1"
+                        "aggregate": "mean"
                     },
                     "y": {
-                        "type": "nominal",
-                        "field": "n1"
+                        "field": "Make",
+                        "type": "nominal"
                     }
                 },
-                "mark": "line",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -316,19 +282,19 @@
             {
                 "encoding": {
                     "x": {
+                        "field": "Horsepower",
                         "type": "quantitative",
                         "scale": {
-                            "type": "log"
+                            "zero": true
                         },
-                        "aggregate": "mean",
-                        "field": "q1"
+                        "aggregate": "mean"
                     },
                     "y": {
-                        "type": "nominal",
-                        "field": "n1"
+                        "field": "Make",
+                        "type": "nominal"
                     }
                 },
-                "mark": "line",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -338,18 +304,18 @@
             {
                 "encoding": {
                     "color": {
-                        "type": "nominal",
-                        "field": "n1"
+                        "field": "Engine Size",
+                        "type": "quantitative"
                     },
                     "x": {
+                        "field": "Cylinders",
                         "type": "quantitative",
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
+                        }
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -357,18 +323,18 @@
             {
                 "encoding": {
                     "color": {
-                        "type": "nominal",
-                        "field": "n1"
+                        "field": "Engine Size",
+                        "type": "quantitative"
                     },
                     "x": {
+                        "field": "Cylinders",
                         "type": "quantitative",
                         "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
+                            "zero": true
+                        }
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -378,18 +344,18 @@
             {
                 "encoding": {
                     "x": {
+                        "field": "Retail Price",
                         "type": "quantitative",
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
+                        }
                     },
-                    "size": {
-                        "type": "quantitative",
-                        "field": "q2"
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -397,18 +363,18 @@
             {
                 "encoding": {
                     "x": {
+                        "field": "Retail Price",
                         "type": "quantitative",
                         "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
+                            "zero": true
+                        }
                     },
-                    "size": {
-                        "type": "quantitative",
-                        "field": "q2"
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -417,19 +383,141 @@
         [
             {
                 "encoding": {
-                    "color": {
+                    "x": {
+                        "field": "Rating",
                         "type": "quantitative",
-                        "field": "q1"
+                        "scale": {
+                            "zero": true
+                        }
+                    },
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Rating",
+                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        }
+                    },
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        }
+                    },
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        }
+                    },
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Engine Size",
+                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        },
+                        "aggregate": "mean"
                     },
                     "y": {
+                        "field": "Rating",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "x": {
+                        "field": "Engine Size",
                         "type": "quantitative",
                         "scale": {
                             "zero": true
                         },
-                        "field": "q2"
+                        "aggregate": "mean"
+                    },
+                    "y": {
+                        "field": "Rating",
+                        "type": "nominal"
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "color": {
+                        "field": "Sell Date",
+                        "type": "temporal"
+                    },
+                    "x": {
+                        "field": "Horsepower",
+                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        }
+                    }
+                },
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -437,18 +525,60 @@
             {
                 "encoding": {
                     "color": {
-                        "type": "quantitative",
-                        "field": "q1"
+                        "field": "Sell Date",
+                        "type": "temporal"
                     },
-                    "y": {
+                    "x": {
+                        "field": "Horsepower",
                         "type": "quantitative",
                         "scale": {
-                            "type": "log"
-                        },
-                        "field": "q2"
+                            "zero": true
+                        }
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            }
+        ],
+        [
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "field": "Cylinders",
+                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        },
+                        "aggregate": "mean"
+                    }
+                },
+                "mark": "bar",
+                "data": {
+                    "url": "data/cars_mod.json"
+                }
+            },
+            {
+                "encoding": {
+                    "y": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "field": "Cylinders",
+                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        },
+                        "aggregate": "mean"
+                    }
+                },
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -458,19 +588,18 @@
             {
                 "encoding": {
                     "x": {
-                        "aggregate": "median",
+                        "field": "Rating",
                         "type": "quantitative",
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
+                        }
                     },
                     "opacity": {
-                        "type": "quantitative",
-                        "field": "q2"
+                        "field": "Horsepower",
+                        "type": "quantitative"
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -478,105 +607,18 @@
             {
                 "encoding": {
                     "x": {
-                        "aggregate": "median",
+                        "field": "Rating",
                         "type": "quantitative",
                         "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
+                            "zero": true
+                        }
                     },
                     "opacity": {
-                        "type": "quantitative",
-                        "field": "q2"
+                        "field": "Horsepower",
+                        "type": "quantitative"
                     }
                 },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "aggregate": "mean",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "x": {
-                        "type": "nominal",
-                        "field": "n1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "aggregate": "mean",
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "x": {
-                        "type": "nominal",
-                        "field": "n1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "temporal",
-                        "field": "t1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "stack": null,
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "temporal",
-                        "field": "t1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "stack": null,
-                        "scale": {
-                            "type": "log"
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    }
-                },
-                "mark": "line",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -586,21 +628,18 @@
             {
                 "encoding": {
                     "x": {
+                        "field": "Engine Size",
                         "type": "quantitative",
-                        "bin": {
-                            "maxbins": 10
-                        },
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
+                        }
                     },
-                    "y": {
-                        "type": "quantitative",
-                        "field": "q2"
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
                     }
                 },
-                "mark": "line",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -608,187 +647,18 @@
             {
                 "encoding": {
                     "x": {
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 10
-                        },
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q2"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "field": "q1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 5
-                        },
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q2"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 5
-                        },
-                        "field": "q2"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
+                        "field": "Engine Size",
                         "type": "quantitative",
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
+                        }
                     },
-                    "x": {
-                        "type": "nominal",
-                        "field": "n1"
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
                     }
                 },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "x": {
-                        "type": "nominal",
-                        "field": "n1"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "size": {
-                        "type": "quantitative",
-                        "field": "q2"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "size": {
-                        "type": "quantitative",
-                        "field": "q2"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "shape": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "shape": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    }
-                },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -798,18 +668,20 @@
             {
                 "encoding": {
                     "x": {
+                        "field": "Horsepower",
                         "type": "quantitative",
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "quantitative",
+                        "stack": "normalize",
                         "scale": {
                             "zero": true
                         },
-                        "field": "q2"
+                        "aggregate": "sum"
+                    },
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
                     }
                 },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -817,184 +689,20 @@
             {
                 "encoding": {
                     "x": {
+                        "field": "Horsepower",
                         "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "field": "q2"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "temporal",
-                        "field": "t1"
-                    },
-                    "x": {
-                        "type": "quantitative",
+                        "stack": "normalize",
                         "scale": {
                             "zero": true
                         },
-                        "field": "q1"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "temporal",
-                        "field": "t1"
+                        "aggregate": "sum"
                     },
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
                     }
                 },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "nominal",
-                        "field": "n1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "nominal",
-                        "field": "n1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "temporal",
-                        "field": "t1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "temporal",
-                        "field": "t1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    },
-                    "x": {
-                        "sort": "descending",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    },
-                    "x": {
-                        "sort": "descending",
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    }
-                },
-                "mark": "point",
+                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
@@ -1005,275 +713,23 @@
         [
             {
                 "encoding": {
-                    "x": {
-                        "sort": "ascending",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
+                    "y": {
+                        "field": "Make",
+                        "type": "nominal"
                     },
                     "color": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "y": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "sort": "ascending",
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    },
-                    "color": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "y": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "size": {
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "color": {
+                        "field": "Retail Price",
                         "type": "quantitative",
                         "bin": {
                             "maxbins": 5
-                        },
-                        "field": "q3"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "field": "q1"
+                        }
                     },
-                    "size": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q2"
-                    },
-                    "color": {
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 5
-                        },
-                        "field": "q3"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
                     "x": {
+                        "field": "Engine Size",
                         "type": "quantitative",
                         "scale": {
                             "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "y": {
-                        "sort": "ascending",
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "size": {
-                        "type": "quantitative",
-                        "field": "q3"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "field": "q1"
-                    },
-                    "y": {
-                        "sort": "ascending",
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "size": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q3"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "color": {
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "field": "q3"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "color": {
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "field": "q3"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "temporal",
-                        "field": "t1"
-                    },
-                    "color": {
-                        "sort": "descending",
-                        "type": "quantitative",
-                        "field": "q2"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "temporal",
-                        "field": "t1"
-                    },
-                    "color": {
-                        "sort": "descending",
-                        "type": "quantitative",
-                        "field": "q2"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    },
-                    "color": {
-                        "type": "quantitative",
-                        "field": "q2"
+                        }
                     }
                 },
                 "mark": "bar",
@@ -1284,753 +740,30 @@
             {
                 "encoding": {
                     "y": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "aggregate": "mean",
-                        "field": "q1"
+                        "field": "Make",
+                        "type": "nominal"
                     },
                     "color": {
+                        "field": "Retail Price",
+                        "type": "quantitative",
+                        "bin": {
+                            "maxbins": 5
+                        }
+                    },
+                    "x": {
+                        "field": "Engine Size",
                         "type": "quantitative",
                         "scale": {
-                            "type": "log"
-                        },
-                        "field": "q2"
+                            "zero": true
+                        }
                     }
                 },
                 "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "field": "q1"
-                    },
-                    "size": {
-                        "sort": "ascending",
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "y": {
-                        "aggregate": "mean",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q3"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "field": "q1"
-                    },
-                    "size": {
-                        "sort": "ascending",
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "y": {
-                        "aggregate": "mean",
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q3"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "color": {
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 100
-                        },
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q3"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 100
-                        },
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q3"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "color": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "x": {
-                        "type": "temporal",
-                        "field": "t1"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "x": {
-                        "type": "temporal",
-                        "field": "t1"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    },
-                    "color": {
-                        "type": "nominal",
-                        "field": "n1"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    },
-                    "color": {
-                        "type": "nominal",
-                        "field": "n1"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    },
-                    "detail": {
-                        "type": "nominal",
-                        "field": "n2"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    },
-                    "detail": {
-                        "type": "nominal",
-                        "field": "n2"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "aggregate": "sum",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "x": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "color": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    }
-                },
-                "mark": "tick",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "aggregate": "sum",
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "x": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "color": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    }
-                },
-                "mark": "tick",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "field": "q1"
-                    },
-                    "x": {
-                        "aggregate": "max",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q2"
-                    },
-                    "size": {
-                        "type": "quantitative",
-                        "field": "q3"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "field": "q1"
-                    },
-                    "x": {
-                        "aggregate": "max",
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q2"
-                    },
-                    "size": {
-                        "type": "quantitative",
-                        "field": "q3"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "sort": "descending",
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 3
-                        },
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "opacity": {
-                        "type": "temporal",
-                        "field": "t1"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "sort": "descending",
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 3
-                        },
-                        "field": "q1"
-                    },
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q2"
-                    },
-                    "opacity": {
-                        "type": "temporal",
-                        "field": "t1"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "x": {
-                        "sort": "ascending",
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "row": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    }
-                },
-                "mark": "tick",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "x": {
-                        "sort": "ascending",
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "row": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    }
-                },
-                "mark": "tick",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    },
-                    "color": {
-                        "type": "nominal",
-                        "field": "n1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "aggregate": "mean",
-                        "field": "q1"
-                    },
-                    "y": {
-                        "type": "ordinal",
-                        "field": "o1"
-                    },
-                    "color": {
-                        "type": "nominal",
-                        "field": "n1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "color": {
-                        "sort": "descending",
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "y": {
-                        "sort": "descending",
-                        "type": "quantitative",
-                        "field": "q3"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "field": "q1"
-                    },
-                    "color": {
-                        "sort": "descending",
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "y": {
-                        "sort": "descending",
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q3"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "detail": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "size": {
-                        "aggregate": "sum",
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q2"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "detail": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "size": {
-                        "aggregate": "sum",
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q2"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "color": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "size": {
-                        "type": "quantitative",
-                        "field": "q2"
-                    }
-                },
-                "mark": "point",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "type": "nominal",
-                        "field": "n1"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q1"
-                    },
-                    "size": {
-                        "type": "quantitative",
-                        "field": "q2"
-                    }
-                },
-                "mark": "point",
                 "data": {
                     "url": "data/cars_mod.json"
                 }
             }
         ]
     ],
-    "4": [
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "field": "q1"
-                    },
-                    "color": {
-                        "aggregate": "sum",
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "field": "q3"
-                    },
-                    "detail": {
-                        "type": "nominal",
-                        "field": "n1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "type": "quantitative",
-                        "field": "q1"
-                    },
-                    "color": {
-                        "aggregate": "sum",
-                        "type": "quantitative",
-                        "field": "q2"
-                    },
-                    "y": {
-                        "type": "quantitative",
-                        "scale": {
-                            "type": "log"
-                        },
-                        "field": "q3"
-                    },
-                    "detail": {
-                        "type": "nominal",
-                        "field": "n1"
-                    }
-                },
-                "mark": "line",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ]
-    ]
+    "4": []
 }

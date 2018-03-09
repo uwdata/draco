@@ -1,12 +1,11 @@
 import math
 import json
-from collections import OrderedDict
 from typing import Dict
+from sortedcontainers import SortedDict
 
-class Spec(OrderedDict):
+class Spec(SortedDict):
     def __init__(self, *args, **kw):
         super(Spec, self).__init__(*args, **kw)
-        self['encoding'] = OrderedDict()
 
     def __hash__(self):
         return json.dumps(self).__hash__()
