@@ -44,7 +44,7 @@ def insert_unlabeled_data(db_file: str):
         #vec1 = feature.negative
         #vec2 = feature.positive
 
-        print(pair_id + (task or 'No Task'))
+        print(pair_id)
 
         stmt = 'INSERT INTO pairs VALUES (?, ?, ?, ?, ?)'
 
