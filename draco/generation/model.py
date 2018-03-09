@@ -125,8 +125,6 @@ class Model:
         and improve comparisons
         This will run all methods found in class PostImprovements.
         """
-
-        # gets all functions from class Improve to call on spec
         self.__improve(spec, props, PostImprovements)
         return
 
@@ -296,7 +294,14 @@ class PostImprovements:
         if the mark is a bar.
         """
         if (spec['mark'] == 'bar'):
-            spec['scale'] = OrderedDict({'zero': True })
+            x_enc = spec.get_enc_by_channel('x')
+            y_enc = spec.get_enc_by_channel('x')
+
+            if (x_enc is None or y_enc is None):
+                return
+
+            zero_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
+            zero_enc['scale'] = OrderedDict({'zero': True })
 
         return
 
