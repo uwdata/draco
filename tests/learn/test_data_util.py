@@ -3,12 +3,12 @@ import os
 import pandas as pd
 import pytest
 
-from draco.learn.data_util import load_data, pickle_path, run_in_parallel
+from draco.learn.data_util import load_data, pos_neg_pickle_path, run_in_parallel
 from draco.spec import Task
 
 
 def test_load_data():
-    if not os.path.isfile(pickle_path):
+    if not os.path.isfile(pos_neg_pickle_path):
         pytest.skip('Test needs data file')
 
     train, test = load_data()
