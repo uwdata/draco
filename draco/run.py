@@ -40,7 +40,7 @@ def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = N
     files = files or DRACO_LP
     constants = constants or {}
 
-    options = ['--outf=2']
+    options = ['--outf=2', '--quiet=1,2,2']
     if silence_warnings:
         options.append('--warn=no-atom-undefined')
     for name, value in constants.items():
@@ -100,7 +100,7 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
         logger.debug(answers['Value'])
 
         query = Query.parse_from_answer(clyngor.Answers(answers['Value']).sorted)
-        return Task(task.data, query, cost=answers['Costs'][0], violations=violations)
+        return Task(task.data, query, cost=json_result['Models']['Costs'][0], violations=violations)
     elif result == 'SATISFIABLE':
         answers = json_result['Call'][0]['Witnesses'][-1]
 
