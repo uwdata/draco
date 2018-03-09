@@ -2,7 +2,6 @@ import random
 import inspect
 from copy import deepcopy
 from typing import Any, Dict, List, Tuple
-from collections import OrderedDict
 
 import numpy as np
 
@@ -164,10 +163,17 @@ class Model:
         """
         Returns an encoding, randomizing props.
         """
-        enc = OrderedDict()
+        enc = {}
 
         # set the field / type
-        field, vl_type = self.__sample_field()
+        field_name, vl_type = self.__sample_field()
+
+        # special case for count
+        if (field_name == 'count'):
+            enc['aggregate'] = 'count'
+            enc['type'] = 'quantitative'
+            return enc
+
         enc['field'] = field
         enc['type'] = vl_type
 
@@ -183,13 +189,18 @@ class Model:
         field_index = random.randrange(len(self.available_fields))
         field = self.available_fields.pop(field_index)
 
-        vl_types = [x for x in self.type_distribution[field.ty]]
-        probs = [self.type_distribution[field.ty][x] for x in vl_types]
-
-        vl_type, _ = Model.sample(vl_types, probs)
+        vl_type = None
+        if (field.ty == 'string' or field.ty == 'boolean'):
+            # strings and booleans are always nominal
+            vl_type = 'nominal'
+        elif (field.ty == 'datetime'):
+            vl_type = 'temporal'
+        elif (field.ty == 'number'):
+            # we need to decide between nominal, ordinal, quantitative,
+            # based off the cardinality
+            vl_type = Model.sample_vl_type(field.cardinality)
 
         return field.name, vl_type
-
 
     def __include(self, prop: str) -> bool:
         """
@@ -250,6 +261,23 @@ class Model:
         result = enums[index]
 
         return result, index
+
+    @staticmethod
+    def sample_vl_type(cardinality: int) -> str:
+        """
+        Samples a vega-lite type for a numerical field based
+        off its cardinality.
+        """
+        # tanh with coef of 0.12, which gives us prob of picking
+        # quantitative at 98.5% when cardinality is 20.
+        coef = 0.12
+
+        q_prob = np.tanh(coef * cardinality)
+
+        if (random.random() < q_prob):
+            return 'quantitative'
+        else:
+            return random.choice(['nominal', 'quantitative'])
 
     @staticmethod
     def build_value_from_enum(prop: str, enum: str) -> Any:
@@ -323,7 +351,7 @@ class PostImprovements:
                 return
 
             zero_enc = x_enc if x_enc['type'] == 'quantitative' else y_enc
-            zero_enc['scale'] = OrderedDict({'zero': True })
+            zero_enc['scale'] = {'zero': True }
 
         return
 

@@ -1,13 +1,14 @@
 
 [
-    { "name": "Car Type", "type": "string" },
-    { "name": "Make", "type": "string" },
-    { "name": "Interior", "type": "string" },
-    { "name": "Cylinders", "type": "number" },
-    { "name": "Rating", "type": "number" },
-    { "name": "Retail Price", "type": "number" },
-    { "name": "Horsepower", "type": "number" },
-    { "name": "Engine Size", "type": "number" },
-    { "name": "Sell Date", "type": "datetime" },
-    { "name": "Resale Date", "type": "datetime" }
+    { "name": "Car Type", "type": "string", "cardinality": 5 },
+    { "name": "Make", "type": "string", "cardinality": 4 },
+    { "name": "AWD", "type": "boolean", "cardinality": 2 },
+    { "name": "Cylinders", "type": "number", "cardinality": 8 },
+    { "name": "Rating", "type": "number", "cardinality": 4 },
+    { "name": "Retail Price", "type": "number", "cardinality": 34 },
+    { "name": "Horsepower", "type": "number", "cardinality": 100 },
+    { "name": "Engine Size", "type": "number", "cardinality": 40 },
+    { "name": "Sell Date", "type": "datetime", "cardinality": 237 },
+    { "name": "Resale Date", "type": "datetime", "cardinality": 31 },
+    { "name": "count", "type": "number", "cardinality": 1 }
 ]

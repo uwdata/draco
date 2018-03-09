@@ -17,8 +17,7 @@ class Generator:
                        definitions: Dict, data_schema: Dict, data_url: str) -> None:
         top_level_props = definitions['topLevelProps']
         encoding_props = definitions['encodingProps']
-        data_fields = [Field(x['name'], x['type']) for x in data_schema]
-        print(data_fields)
+        data_fields = [Field(x['name'], x['type'], cardinality=x['cardinality']) for x in data_schema]
 
         self.model = Model(data_fields, distributions, type_distribution, top_level_props, encoding_props)
         self.data = Data(data_fields)
@@ -60,7 +59,6 @@ class Generator:
                 query = Query.from_vegalite(base_spec)
 
                 if (is_valid(Task(self.data, query))):
-                    print(base_spec)
                     base_spec['data'] = { 'url': self.data_url }
                     specs.append(base_spec)
          # recursive case
