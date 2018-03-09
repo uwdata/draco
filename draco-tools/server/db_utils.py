@@ -56,7 +56,7 @@ def insert_user_study_data(db_file):
 
             f = data_util.count_violations_memoized(processed_specs, t)
             vec = data_util.violation_dict_to_vec(f)
-            
+
             return vec, t
 
         if np.random.choice([True, False]):
@@ -153,6 +153,6 @@ def load_labeled_specs(db_file):
 if __name__ == '__main__':
     db_file = os.path.join(os.path.dirname(__file__), 'label_data.db')
     create_database(db_file)
-    insert_user_study_data(db_file)
+    # insert_user_study_data(db_file)
     insert_halden_data(db_file)
     labeled = load_labeled_specs(db_file)

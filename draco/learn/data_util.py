@@ -122,54 +122,52 @@ def load_halden_data(include_features=True, data_dir=data_dir):
             data_cache[url].url = url
         return data_cache[url]
 
-    spec_to_task = lambda spec: Task(acquire_data(spec["data"]["url"]), Query.from_vegalite(spec), spec["task"] if "task" in spec else "value")
+    spec_to_task = lambda spec: Task(acquire_data(spec["data"]["url"]), Query.from_vegalite(spec), spec.get("task"))
 
     pair_process_func = lambda p: {"source": f"halden",
-                                   "task": p[0]["spec"]["task"] if "task" in p[0]["spec"] else "value",
+                                   "task": p[0]["spec"].get("task"),
                                    "left": p[0]["spec"],
                                    "right": p[1]["spec"],
                                    "left_feature": p[0]["feature"],
                                    "right_feature": p[1]["feature"]}
 
-    result = []
 
-    memoized_violations = {}
+    task_list: List[Task] = []
+    id_to_vec: Dict[str,int] = {}
 
-    to_label_pairs = None
+    count = 0
     for fname in files:
         with open(fname, 'r') as f:
             content = json.load(f)
             for num_channel in content:
                 for i, spec_list in enumerate(content[num_channel]):
-                    
-                    task_list = [spec_to_task(spec) for spec in spec_list]
+                    for j, spec in enumerate(spec_list):
+                        task_list.append(spec_to_task(spec))
+                        key = f'{fname}_{num_channel}_{i}_{j}'
+                        id_to_vec[key] = count
 
-                    if include_features:
-                        features = [violation_dict_to_vec(
-                                        count_violations_memoized(memoized_violations, task))
-                                    for task in task_list]
-                        #features = tasks_to_vec([spec_to_task(spec) for spec in spec_list])
-                    else:
-                        features = [None for task in task_list]
+                        count += 1;
 
-                    #print(spec_list[0]["data"])
-                    #print(len(spec_list))
-                    #print(len(features))
+    feature_vecs = tasks_to_vec(task_list)
 
-                    #for i in range(len(spec_list)):
-                    #    print(spec_list[i])
-                    #    print(tasks_to_vec([spec_to_task(spec_list[0])])[0])
-                    #    print(features[i])
-
-                    specs_and_features = [{"spec": task_list[i].to_vegalite(), "feature": features[i]} for i in range(len(task_list))]
+    for fname in files:
+        with open(fname, 'r') as f:
+            content = json.load(f)
+            for num_channel in content:
+                for i, spec_list in enumerate(content[num_channel]):
+                    specs_and_features = []
+                    for j, spec in enumerate(spec_list):
+                        key = f'{fname}_{num_channel}_{i}_{j}'
+                        specs_and_features.append({
+                            "spec": spec,
+                            "feature": feature_vecs.iloc[id_to_vec[key]]
+                        })
 
                     for pair in map(pair_process_func, itertools.combinations(specs_and_features, 2)):
-                    
                         if pair["left"] != pair["right"]:
                             yield pair
                         else:
                             print('[Err] find pairs with the same content file:{} - num_channel:{} - group:{}'.format(os.path.basename(fname), num_channel, i))
-
 
 
 def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
