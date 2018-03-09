@@ -21,7 +21,8 @@ const KEYS = {
   40: TERRIBLE  // down arrow
 };
 
-const REQUEST_PATH = 'http://0.0.0.0:5000/';
+const url = new URL(document.location.href);
+const REQUEST_PATH = `${url.protocol}//${url.hostname}:5000/`;
 
 function cleanUpSpec(spec) {
   if (!spec) {
