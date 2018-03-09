@@ -25,7 +25,9 @@ logger = logging.getLogger(__name__)
 def absolute_path(p: str) -> str:
     return os.path.join(os.path.dirname(__file__), p)
 
-pickle_path = absolute_path('../../__tmp__/data.pickle')
+pos_neg_pickle_path = absolute_path('../../__tmp__/pos_neg.pickle')
+unlabeled_pickle_path = absolute_path('../../__tmp__/unlabeled.pickle')
+
 man_data_path = absolute_path('../../data/training/manual.json')
 yh_data_path = absolute_path('../../data/training/younghoon.json')
 ba_data_path = absolute_path('../../data/training/bahador.json')
@@ -225,7 +227,17 @@ def _get_pos_neg_data() -> pd.DataFrame:
     '''
     Internal function to load the feature vecors.
     '''
-    data = pd.read_pickle(pickle_path)
+    data = pd.read_pickle(pos_neg_pickle_path)
+    data.fillna(0, inplace=True)
+
+    return data
+
+
+def _get_unlabeled_data() -> pd.DataFrame:
+    '''
+    Internal function to load the feature vecors.
+    '''
+    data = pd.read_pickle(unlabeled_pickle_path)
     data.fillna(0, inplace=True)
 
     return data
@@ -252,7 +264,7 @@ def get_labeled_data() -> Tuple[Dict[str, PosNegExample], pd.DataFrame]:
 
 def get_unlabeled_data() -> Tuple[Dict[str, UnlabeledExample], pd.DataFrame]:
     specs = load_unlabeled_specs()
-    vecs = pairs_to_vec(list(specs.values()))
+    vecs = _get_unlabeled_data()
 
     assert len(specs) == len(vecs)
 
@@ -263,4 +275,8 @@ if __name__ == '__main__':
     ''' Generate and store vectors for labeled data in default path. '''
     specs = load_neg_pos_specs()
     data = pairs_to_vec(list(specs.values()))
-    data.to_pickle(pickle_path)
+    data.to_pickle(pos_neg_pickle_path)
+
+    specs = load_unlabeled_specs()
+    data = pairs_to_vec(list(specs.values()))
+    data.to_pickle(unlabeled_pickle_path)
