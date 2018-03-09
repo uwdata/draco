@@ -18,7 +18,7 @@ def create_database(db_file: str):
 
     # Create table
     c.execute('''CREATE TABLE pairs (id text primary key, source text, task text, left text, right text)''')
-    c.execute('CREATE TABLE labels (id text, label integer, user text)')
+    c.execute('CREATE TABLE labels (id text, label text, user text)')
 
     conn.close()
 

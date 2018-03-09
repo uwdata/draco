@@ -157,7 +157,7 @@ def upload_label():
     c = db.cursor()
 
     pair_id = request.json['id']
-    label = 0 if request.json['label'] == '=' else (-1 if request.json['label'] == '<' else 1)
+    label = request.json['label']
 
     stmt = "INSERT INTO labels VALUES (?, ?, ?)"
     c.execute(stmt, (pair_id, label, user))

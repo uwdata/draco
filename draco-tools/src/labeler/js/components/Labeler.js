@@ -30,7 +30,8 @@ function cleanUpSpec(spec) {
   }
 
   spec = duplicate(spec);
-  delete spec.data;
+  delete spec.$schema;
+  delete spec.data.format;
   return spec;
 }
 
