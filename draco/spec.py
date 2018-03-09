@@ -30,7 +30,7 @@ def normalize_field_name(s:str) -> str:
 def recover_field_name(s:str, field_names: List[str]) -> str:
     """ recover fields for visualization purpose """
     for k in field_names:
-        if k == s or k.lower() == s:
+        if normalize_field_name(k) == s:
             return k
     return s
 
