@@ -24,56 +24,6 @@ def create_database(db_file: str):
     conn.close()
 
 
-def insert_user_study_data(db_file: str):
-    # generate feature vector and store in database
-
-    processed_specs: Dict = {}
-
-    conn = sqlite3.connect(db_file)
-    c = conn.cursor()
-
-    input_pairs = data_util.load_neg_pos_data()
-
-    for i, entry in enumerate(input_pairs):
-
-        if entry.source != 'younghoon':
-            continue
-
-        data = entry.data
-        task = entry.task
-
-        data.fill_with_random_content()
-
-        def query_and_features(spec):
-            query = Query.from_vegalite(spec)
-            t = Task(data, query, task)
-
-            f = data_util.count_violations_memoized(processed_specs, t)
-            vec = data_util.violation_dict_to_vec(f)
-
-            return vec, t
-
-        if np.random.choice([True, False]):
-            vec1, t1 = query_and_features(entry.positive)
-            vec2, t2 = query_and_features(entry.negative)
-        else:
-            vec1, t1 = query_and_features(entry.negative)
-            vec2, t2 = query_and_features(entry.positive)
-
-        tid = f'{entry.source}-{i}'
-
-        print(tid + task)
-
-        stmt = 'INSERT INTO pairs VALUES (?, ?, ?, ?, ?, ?)'
-
-        c.execute(stmt, (tid, task, t1.to_vegalite_json(), t2.to_vegalite_json(),
-                         json.dumps(vec1), json.dumps(vec2)))
-
-        conn.commit()
-
-    conn.close()
-
-
 def insert_halden_data(db_file: str):
     # generate feature vector and store in database
 
@@ -81,7 +31,6 @@ def insert_halden_data(db_file: str):
     c = conn.cursor()
 
     for i, entry in enumerate(data_util.load_halden_data()):
-
         source = entry['source']
         task = entry['task']
         left_spec = entry['left']

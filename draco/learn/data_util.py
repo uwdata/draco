@@ -29,6 +29,7 @@ pickle_path = absolute_path('../../__tmp__/data.pickle')
 man_data_path = absolute_path('../../data/training/manual.json')
 yh_data_path = absolute_path('../../data/training/younghoon.json')
 ba_data_path = absolute_path('../../data/training/bahador.json')
+label_data_path = absolute_path('../../data/training/labeler.json')
 compassql_data_path = absolute_path('../../data/compassql_examples')
 data_dir = absolute_path('../../data/') # the dir containing data used in visualization
 
@@ -36,24 +37,26 @@ halden_data_path = absolute_path('../../data/to_label')
 
 
 PosNegExample = namedtuple('PosNeg', ['pair_id', 'data', 'task', 'source', 'negative', 'positive'])
+UnlabeledExample = namedtuple('Unlabeled', ['pair_id', 'data', 'task', 'source', 'left', 'right'])
 
 
 def load_neg_pos_data() -> List[PosNegExample]:
     raw_data = []
     i = 0
 
-    for path in [man_data_path, yh_data_path, ba_data_path]:
+    for path in [man_data_path, yh_data_path, ba_data_path, label_data_path]:
         with open(path) as f:
             json_data = json.load(f)
 
             for row in json_data['data']:
                 fields = list(map(Field.from_obj, row['fields']))
                 spec_schema = Data(fields, row.get('num_rows'))
+                src = json_data['source']
                 raw_data.append(PosNegExample(
-                    i,
+                    f'{src}-{i}',
                     spec_schema,
                     row.get('task'),
-                    json_data['source'],
+                    src,
                     row['negative'],
                     row['positive'])
                 )
@@ -104,7 +107,7 @@ def load_partial_full_data(path=compassql_data_path, data_dir=data_dir):
     return result
 
 
-def load_halden_data(include_features=True, data_dir=data_dir):
+def load_halden_data(data_dir=data_dir):
     ''' load halden's data into memory the result is a list of unlabeled pairs
         Returns:
             A generator yielding entires one at a time
@@ -176,12 +179,6 @@ def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
         processed_specs[key] = count_violations(task)
     return processed_specs[key]
 
-
-def violation_dict_to_vec(violation_dict):
-    # convert dict format violation result into a vector
-    feature_names = get_feature_names()
-    vec = [violation_dict[name] if name in violation_dict else 0 for name in feature_names]
-    return vec
 
 def get_nested_index():
     '''
@@ -301,6 +298,21 @@ def load_data(test_size: float=0.3, random_state=1) -> Tuple[pd.DataFrame, pd.Da
     data = get_pos_neg_data()
     return train_test_split(data, test_size=test_size, random_state=random_state)
 
+
+
+def get_labeled_data() -> Tuple[List[PosNegExample],pd.DataFrame]:
+    a = load_neg_pos_data()
+    b = get_pos_neg_data()
+
+    assert len(a) == len(b)
+
+    return a,b
+
+
+def get_unlabeled_data() -> Tuple[List[UnlabeledExample],pd.DataFrame]:
+    pass
+
+    raise NotImplemented
 
 if __name__ == '__main__':
     ''' Generate and store data in default path. '''
