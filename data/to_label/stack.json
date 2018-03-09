@@ -3,1913 +3,2769 @@
     "2": [
         [
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
                     "color": {
-                        "field": "Engine Size",
-                        "type": "quantitative"
+                        "field": "Car Type",
+                        "type": "nominal"
                     },
-                    "y": {
+                    "x": {
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 20
+                        },
                         "field": "Rating",
                         "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             },
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
                     "color": {
-                        "field": "Engine Size",
-                        "type": "quantitative"
-                    },
-                    "y": {
+                        "bin": {
+                            "maxbins": 20
+                        },
                         "field": "Rating",
                         "type": "quantitative"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
                     },
-                    "y": {
+                    "x": {
+                        "aggregate": "sum",
                         "field": "Cylinders",
-                        "type": "quantitative",
-                        "stack": null,
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        },
                         "stack": "zero",
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Resale Date",
-                        "type": "temporal"
-                    },
-                    "y": {
-                        "field": "Engine Size",
                         "type": "quantitative"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             },
             {
-                "encoding": {
-                    "color": {
-                        "field": "Resale Date",
-                        "type": "temporal"
-                    },
-                    "y": {
-                        "field": "Engine Size",
-                        "type": "quantitative"
-                    }
-                },
-                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": null,
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "zero",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
                 "encoding": {
                     "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    },
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": null,
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    },
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "zero",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    },
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Retail Price",
-                        "type": "quantitative"
-                    },
-                    "x": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Retail Price",
-                        "type": "quantitative"
-                    },
-                    "x": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "stack": null,
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "aggregate": "count",
-                        "type": "quantitative",
-                        "stack": null
-                    },
-                    "color": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
                         "bin": {
-                            "maxbins": 3
-                        }
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "aggregate": "count",
-                        "type": "quantitative",
-                        "stack": "zero"
-                    },
-                    "color": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 3
-                        }
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "aggregate": "count",
-                        "type": "quantitative",
-                        "stack": "normalize"
-                    },
-                    "color": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 3
-                        }
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": null,
-                        "scale": {
-                            "zero": true
+                            "maxbins": 20
                         },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "zero",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "field": "Horsepower",
-                        "type": "quantitative",
-                        "stack": null,
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "field": "Horsepower",
-                        "type": "quantitative"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "field": "Horsepower",
-                        "type": "quantitative"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "field": "Engine Size",
-                        "type": "quantitative"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "field": "Engine Size",
-                        "type": "quantitative"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "field": "Engine Size",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "stack": null,
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
-                        "field": "Horsepower",
-                        "type": "quantitative"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
-                        "field": "Horsepower",
-                        "type": "quantitative"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "stack": null,
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "stack": "zero",
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        },
-                        "stack": "normalize",
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "field": "Horsepower",
-                        "type": "quantitative"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "field": "Horsepower",
-                        "type": "quantitative"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "field": "Horsepower",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Engine Size",
-                        "type": "quantitative",
-                        "stack": null,
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Engine Size",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Engine Size",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
                         "field": "Rating",
                         "type": "quantitative"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
+                    },
                     "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
+                        "aggregate": "sum",
+                        "field": "Cylinders",
                         "scale": {
                             "zero": true
-                        }
-                    },
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
                     "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Rating",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Rating",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "field": "Rating",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Engine Size",
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Engine Size",
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "field": "Horsepower",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "min",
                         "field": "Rating",
                         "type": "quantitative"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "x": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "stack": null,
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "x": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "stack": "zero",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "x": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": null,
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "zero",
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "aggregate": "sum"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": null,
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 5
-                        }
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "zero",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 5
-                        }
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 5
-                        }
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
                     },
                     "x": {
                         "aggregate": "count",
-                        "type": "quantitative",
+                        "scale": {
+                            "zero": true
+                        },
                         "stack": null,
-                        "scale": {
-                            "zero": true
-                        }
+                        "type": "quantitative"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             },
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
                     "color": {
-                        "field": "Make",
-                        "type": "nominal"
+                        "aggregate": "min",
+                        "field": "Rating",
+                        "type": "quantitative"
                     },
                     "x": {
                         "aggregate": "count",
-                        "type": "quantitative",
-                        "stack": "zero",
                         "scale": {
                             "zero": true
-                        }
+                        },
+                        "type": "quantitative"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "x": {
-                        "aggregate": "count",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "scale": {
-                            "zero": true
-                        }
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             }
         ],
         [
             {
-                "encoding": {
-                    "y": {
-                        "field": "Engine Size",
-                        "type": "quantitative",
-                        "stack": null,
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
-                }
-            },
-            {
+                },
                 "encoding": {
-                    "y": {
+                    "color": {
+                        "aggregate": "sum",
                         "field": "Engine Size",
                         "type": "quantitative"
                     },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             },
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
-                    "y": {
+                    "color": {
+                        "aggregate": "sum",
                         "field": "Engine Size",
                         "type": "quantitative"
                     },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             }
         ],
         [
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "count",
                         "stack": null,
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
                     },
+                    "y": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "count",
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
                     "color": {
                         "field": "Make",
                         "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
+                    },
                     "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "scale": {
+                            "zero": true
+                        },
                         "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
                         "scale": {
                             "zero": true
                         },
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
+                        "stack": "zero",
+                        "type": "quantitative"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             },
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
                     "color": {
                         "field": "Make",
                         "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
                     }
                 },
-                "mark": "bar",
+                "mark": "bar"
+            }
+        ],
+        [
+            {
                 "data": {
                     "url": "data/cars_mod.json"
-                }
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "mean",
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "median",
+                        "field": "Engine Size",
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "mean",
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "median",
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "field": "Rating",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "field": "Rating",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "field": "Horsepower",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "field": "Rating",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "field": "Horsepower",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 200
+                        },
+                        "field": "Rating",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 200
+                        },
+                        "field": "Rating",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 200
+                        },
+                        "field": "Rating",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Horsepower",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Engine Size",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Engine Size",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "field": "Engine Size",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Engine Size",
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Engine Size",
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
             }
         ]
     ],
     "3": [
         [
             {
-                "encoding": {
-                    "color": {
-                        "aggregate": "count",
-                        "type": "quantitative"
-                    },
-                    "y": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "stack": null,
-                        "aggregate": "sum"
-                    },
-                    "detail": {
-                        "field": "Make",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "aggregate": "count",
-                        "type": "quantitative"
-                    },
-                    "y": {
-                        "field": "Cylinders",
-                        "type": "quantitative",
-                        "stack": "zero",
-                        "aggregate": "sum"
-                    },
-                    "detail": {
-                        "field": "Make",
-                        "type": "nominal"
-                    }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
                 "encoding": {
                     "color": {
-                        "aggregate": "count",
-                        "type": "quantitative"
-                    },
-                    "y": {
                         "field": "Cylinders",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "aggregate": "sum"
-                    },
-                    "detail": {
-                        "field": "Make",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Make",
                         "type": "nominal"
                     },
                     "x": {
-                        "field": "Horsepower",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
+                        "aggregate": "count",
+                        "stack": null,
+                        "type": "quantitative"
                     },
                     "y": {
                         "field": "Car Type",
                         "type": "nominal"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "area"
             },
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
                     "color": {
-                        "field": "Make",
+                        "field": "Cylinders",
                         "type": "nominal"
                     },
                     "x": {
-                        "field": "Horsepower",
-                        "type": "quantitative",
+                        "aggregate": "count",
+                        "stack": "zero",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "area"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "min",
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    },
+                    "detail": {
+                        "field": "Cylinders",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "min",
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    },
+                    "detail": {
+                        "field": "Cylinders",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "min",
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    },
+                    "detail": {
+                        "field": "Cylinders",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
                         "scale": {
                             "zero": true
                         },
                         "stack": "normalize",
-                        "aggregate": "sum"
-                    },
-                    "y": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "field": "Rating",
-                        "type": "quantitative",
-                        "stack": "zero",
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "aggregate": "count",
                         "type": "quantitative"
-                    },
-                    "detail": {
-                        "field": "AWD",
-                        "type": "nominal"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "field": "Rating",
-                        "type": "quantitative",
-                        "stack": "zero",
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "aggregate": "count",
-                        "type": "quantitative"
-                    },
-                    "detail": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "y": {
-                        "field": "Rating",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "aggregate": "count",
-                        "type": "quantitative"
-                    },
-                    "detail": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             }
         ],
         [
             {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "zero",
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "field": "Rating",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "area",
                 "data": {
                     "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "aggregate": "sum"
-                    },
-                    "color": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "field": "Rating",
-                        "type": "nominal"
-                    }
                 },
-                "mark": "area",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
                 "encoding": {
                     "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "aggregate": "count",
-                        "type": "quantitative",
-                        "stack": null
-                    },
-                    "x": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "area",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    },
-                    "y": {
-                        "aggregate": "count",
-                        "type": "quantitative"
-                    },
-                    "x": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "area",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "x": {
-                        "aggregate": "count",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "column": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "aggregate": "count",
-                        "type": "quantitative",
-                        "stack": "zero",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "column": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            },
-            {
-                "encoding": {
-                    "x": {
-                        "aggregate": "count",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "scale": {
-                            "zero": true
-                        }
-                    },
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "column": {
-                        "field": "AWD",
-                        "type": "nominal"
-                    }
-                },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
-            }
-        ],
-        [
-            {
-                "encoding": {
-                    "y": {
-                        "field": "Horsepower",
-                        "type": "quantitative",
                         "bin": {
                             "maxbins": 100
-                        }
+                        },
+                        "field": "Retail Price",
+                        "type": "quantitative"
                     },
                     "x": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "y": {
                         "aggregate": "count",
-                        "type": "quantitative",
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 100
+                        },
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "count",
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
                         "stack": null,
-                        "scale": {
-                            "zero": true
-                        }
+                        "type": "quantitative"
                     },
-                    "color": {
-                        "field": "Make",
+                    "y": {
+                        "field": "AWD",
                         "type": "nominal"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             },
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
-                    "y": {
-                        "field": "Horsepower",
-                        "type": "quantitative",
-                        "bin": {
-                            "maxbins": 100
-                        }
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
                     },
                     "x": {
-                        "aggregate": "count",
-                        "type": "quantitative",
-                        "stack": "normalize",
+                        "aggregate": "sum",
+                        "field": "Retail Price",
                         "scale": {
                             "zero": true
-                        }
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
                     },
-                    "color": {
-                        "field": "Make",
+                    "y": {
+                        "field": "AWD",
                         "type": "nominal"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             }
         ],
         [
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
-                    "x": {
-                        "field": "Horsepower",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
                     },
-                    "y": {
+                    "column": {
                         "field": "AWD",
                         "type": "nominal"
                     },
-                    "color": {
-                        "field": "Car Type",
-                        "type": "nominal"
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Rating",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             },
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
-                    "x": {
-                        "field": "Horsepower",
-                        "type": "quantitative",
-                        "scale": {
-                            "zero": true
-                        }
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
                     },
-                    "y": {
+                    "column": {
                         "field": "AWD",
                         "type": "nominal"
                     },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Rating",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
                     "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "column": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Rating",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Cylinders",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "bin": {
+                            "maxbins": 5
+                        },
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Cylinders",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "bin": {
+                            "maxbins": 5
+                        },
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": null,
+                        "type": "quantitative"
+                    },
+                    "y": {
                         "field": "Car Type",
                         "type": "nominal"
                     }
                 },
-                "mark": "bar",
+                "mark": "bar"
+            },
+            {
                 "data": {
                     "url": "data/cars_mod.json"
-                }
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 20
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "stack": "zero",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 20
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 20
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "field": "Engine Size",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Engine Size",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "zero",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Make",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    },
+                    "detail": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "stack": "zero",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    },
+                    "detail": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "stack": null,
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 3
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 3
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 3
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Engine Size",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Engine Size",
+                        "scale": {
+                            "zero": true
+                        },
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "bin": {
+                            "maxbins": 3
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "stack": null,
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Make",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "bin": {
+                            "maxbins": 3
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "sum",
+                        "field": "Cylinders",
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 5
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Engine Size",
+                        "stack": "zero",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "area"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "bin": {
+                            "maxbins": 5
+                        },
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Engine Size",
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "area"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    },
+                    "x": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 3
+                        },
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    },
+                    "x": {
+                        "field": "Horsepower",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 3
+                        },
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
             }
         ]
     ],
     "4": [
         [
             {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": null,
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "y": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    },
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "opacity": {
-                        "aggregate": "count",
-                        "type": "quantitative"
-                    }
-                },
-                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
-                }
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Resale Date",
+                        "type": "temporal"
+                    },
+                    "opacity": {
+                        "field": "Retail Price",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "field": "Cylinders",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "area"
             },
             {
-                "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "y": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    },
-                    "color": {
-                        "field": "Make",
-                        "type": "nominal"
-                    },
-                    "opacity": {
-                        "aggregate": "count",
-                        "type": "quantitative"
-                    }
-                },
-                "mark": "bar",
                 "data": {
                     "url": "data/cars_mod.json"
-                }
-            },
-            {
+                },
                 "encoding": {
-                    "x": {
-                        "field": "Retail Price",
-                        "type": "quantitative",
-                        "stack": "normalize",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
-                    },
-                    "y": {
-                        "field": "Car Type",
-                        "type": "nominal"
-                    },
                     "color": {
-                        "field": "Make",
-                        "type": "nominal"
+                        "field": "Resale Date",
+                        "type": "temporal"
                     },
                     "opacity": {
-                        "aggregate": "count",
+                        "field": "Retail Price",
                         "type": "quantitative"
+                    },
+                    "x": {
+                        "field": "Cylinders",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "AWD",
+                        "type": "nominal"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "area"
             }
         ],
         [
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
-                    "detail": {
-                        "field": "Make",
+                    "color": {
+                        "field": "Rating",
+                        "type": "nominal"
+                    },
+                    "row": {
+                        "field": "AWD",
                         "type": "nominal"
                     },
                     "x": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 10
+                        },
                         "field": "Engine Size",
-                        "type": "quantitative",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Rating",
+                        "type": "nominal"
+                    },
+                    "row": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "area"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "opacity": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
                         "stack": null,
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
+                        "type": "quantitative"
                     },
                     "y": {
                         "field": "AWD",
                         "type": "nominal"
-                    },
-                    "color": {
-                        "aggregate": "count",
-                        "type": "quantitative"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             },
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
-                    "detail": {
-                        "field": "Make",
+                    "color": {
+                        "field": "Car Type",
                         "type": "nominal"
                     },
-                    "x": {
+                    "opacity": {
+                        "bin": {
+                            "maxbins": 10
+                        },
                         "field": "Engine Size",
-                        "type": "quantitative",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
                         "stack": "zero",
-                        "scale": {
-                            "zero": true
-                        },
-                        "aggregate": "sum"
+                        "type": "quantitative"
                     },
                     "y": {
                         "field": "AWD",
                         "type": "nominal"
-                    },
-                    "color": {
-                        "aggregate": "count",
-                        "type": "quantitative"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             },
             {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
                 "encoding": {
+                    "color": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    },
+                    "opacity": {
+                        "bin": {
+                            "maxbins": 10
+                        },
+                        "field": "Engine Size",
+                        "type": "quantitative"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "AWD",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar"
+            }
+        ],
+        [
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "mean",
+                        "field": "Cylinders",
+                        "type": "quantitative"
+                    },
                     "detail": {
-                        "field": "Make",
+                        "field": "AWD",
                         "type": "nominal"
                     },
                     "x": {
-                        "field": "Engine Size",
-                        "type": "quantitative",
-                        "stack": "normalize",
+                        "aggregate": "sum",
+                        "field": "Retail Price",
                         "scale": {
                             "zero": true
                         },
-                        "aggregate": "sum"
+                        "stack": "zero",
+                        "type": "quantitative"
                     },
                     "y": {
+                        "field": "Car Type",
+                        "type": "nominal"
+                    }
+                },
+                "mark": "bar"
+            },
+            {
+                "data": {
+                    "url": "data/cars_mod.json"
+                },
+                "encoding": {
+                    "color": {
+                        "aggregate": "mean",
+                        "field": "Cylinders",
+                        "type": "quantitative"
+                    },
+                    "detail": {
                         "field": "AWD",
                         "type": "nominal"
                     },
-                    "color": {
-                        "aggregate": "count",
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
+                        "scale": {
+                            "zero": true
+                        },
+                        "stack": "normalize",
                         "type": "quantitative"
+                    },
+                    "y": {
+                        "field": "Car Type",
+                        "type": "nominal"
                     }
                 },
-                "mark": "bar",
-                "data": {
-                    "url": "data/cars_mod.json"
-                }
+                "mark": "bar"
             }
         ]
     ]
