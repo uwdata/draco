@@ -25,11 +25,17 @@
 % cannot bin and aggregate
 :- bin(E,_), aggregate(E,_).
 
-% mean and sum only works for quantitative
-:- aggregate(E,(sum;mean)), type(E,T), T != quantitative.
+% oridnal only supports min, max, and median
+:- type(E,ordinal), aggregate(E,A), A != min, A != max, A != median.
 
-% min, max, and median only work for ordinal and quantitative
-:- aggregate(E,(min;max;median)), type(E,T), T != quantitative, T != ordinal.
+% temporal only supports min and max
+:- type(E,temporal), aggregate(E,A), A != min, A != max.
+
+% cannot aggregate nominal
+:- aggregate(E,_), type(E,nominal).
+
+% detail cannot be aggregated
+:- channel(E,detail), aggregate(E,_).
 
 % count has to be quantitative and not use a field
 :- aggregate(E,count), field(E,_).
@@ -43,18 +49,6 @@
 
 % size, and opacity impy order so nominal is misleading
 :- channel(E,(size;opacity)), type(E,nominal).
-
-% cannot aggregate nominal
-:- aggregate(E,_), type(E,nominal).
-
-% can only aggregate ordinal with min and max
-:- aggregate(E,A), type(E,ordinal), A != min, A != max.
-
-% detail cannot be aggregated
-:- channel(E,detail), aggregate(E,_).
-
-% nominal cannot be aggregated
-:- type(E,nominal), aggregate(E,_).
 
 % do not use log or zero when data is negative
 
