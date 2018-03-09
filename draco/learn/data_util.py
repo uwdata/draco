@@ -68,44 +68,24 @@ def load_neg_pos_specs() -> Dict[str, PosNegExample]:
     return raw_data
 
 
-def load_partial_full_data(path=compassql_data_path, data_dir=data_dir):
+def load_partial_full_data(path=compassql_data_path):
     ''' load partial-full spec pairs from the directory
-        Args:
-            compassql_data_dir: the directory containing compassql data with
-                 'input' and 'output' directories specifying compassql input and output
-        Returns:
-            A dictionary mapping each case name into a pair of partial spec - full spec.
+
+        Returns a dictionary mapping each case name into a pair of partial spec - full spec.
     '''
 
-    def load_spec(input_dir, data_format: str):
-        ''' load compassql data
-            Args: input_dir: the directory containing a set of json compassql specs
-                  data_format: one of 'compassql' and 'vegalite'
-            Returns:
-                a dictionary containing name and the Task object representing the spec
-        '''
+    def load_spec(input_dir):
         files = [os.path.join(input_dir, f) for f in os.listdir(input_dir)]
         result = {}
         for fname in files:
-            if not fname.endswith('.json'):
-                continue
-            with open(fname, 'r') as f:
-                content = json.load(f)
-                if 'url' in content['data'] and content['data']['url'] is not None:
-                    content['data']['url'] = os.path.join(data_dir, os.path.basename(content['data']['url']))
-                if data_format == 'compassql':
-                    spec = Task.from_cql(content, '.')
-                elif data_format == 'vegalite':
-                    spec = Task.from_vegalite(content)
-                    if spec.to_vegalite() != content:
-                        logger.warning('Vega-Lite and spec from task are different')
-                result[os.path.basename(fname)] = spec
+            if fname.endswith('.json'):
+                with open(fname, 'r') as f:
+                    spec = json.load(f)
+                    result[os.path.basename(fname)] = spec
         return result
 
-    # TODO: do not parse and generate full VL specs or compass specs
-
-    partial_specs = load_spec(os.path.join(path, 'input'), 'compassql')
-    compassql_outs = load_spec(os.path.join(path, 'output'), 'vegalite')
+    partial_specs = load_spec(os.path.join(path, 'input'))
+    compassql_outs = load_spec(os.path.join(path, 'output'))
 
     result = {}
     for k in partial_specs:

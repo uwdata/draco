@@ -7,6 +7,8 @@ import numpy as np
 from draco.learn import data_util, linear
 from draco.learn.helper import current_weights
 from draco.run import run
+from draco.spec import Task
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -69,36 +71,26 @@ def generate_visual_pairs(partial_full_data, weights):
     for case in partial_full_data:
         partial_spec, full_spec = partial_full_data[case]
 
-        draco_rec = run(partial_spec, constants=weights)
+        draco_rec = run(Task.from_cql(partial_spec), constants=weights)
 
         if draco_rec is None:
             logger.warning(f'Could not find a spec for {partial_spec}')
 
             result["specs"].append({
                 "first": None,
-                "second": full_spec.to_vegalite(),
+                "second": full_spec,
                 "properties": {
-                    "input": partial_spec.to_compassql()
+                    "input": partial_spec
                 }
             })
 
             continue
 
-        if len(result) > 25:
-            logger.warning('Stopped at 25')
-            break
-
-        if draco_rec.data.url is not None:
-            data_url = os.path.join("data", os.path.split(draco_rec.data.url)[1])
-
-            draco_rec.data.url = data_url
-            full_spec.data.url = data_url
-
         result["specs"].append({
             "first": draco_rec.to_vegalite(),
-            "second": full_spec.to_vegalite(),
+            "second": full_spec,
             "properties": {
-                "input": partial_spec.to_compassql()
+                "input": partial_spec
             }
         })
 

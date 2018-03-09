@@ -572,14 +572,14 @@ class Task():
         self.cost = cost
 
     @staticmethod
-    def from_obj(query_spec, data_dir: Optional[str]) -> 'Task':
+    def from_obj(query_spec, data_dir: Optional[str]=None) -> 'Task':
         ''' from a dict_obj '''
         data = Data.from_obj(query_spec['data'], path_prefix=data_dir)
         query = Query.from_obj(query_spec)
         return Task(data, query)
 
     @staticmethod
-    def from_cql(query_spec, data_dir: Optional[str]) -> 'Task':
+    def from_cql(query_spec, data_dir: Optional[str]=None) -> 'Task':
         ''' from a compassql query'''
         data = Data.from_obj(query_spec['data'], path_prefix=data_dir)
         query = Query.from_cql(query_spec)
