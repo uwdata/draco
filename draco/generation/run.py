@@ -17,6 +17,7 @@ INTERACTIONS_PATH = absolute_path('define/interactions.json')
 DISTRIBUTIONS_PATH = absolute_path('define/distributions.json')
 DEFINITIONS_PATH = absolute_path('define/definitions.json')
 DUMMY_SCHEMA_PATH = absolute_path('define/dummy_schema.json')
+TYPE_DISTRIBUTIONS = absolute_path('define/type_distribution.json')
 DATA_URL = 'data/cars_mod.json'
 
 NUM_TRIES = 100
@@ -29,10 +30,11 @@ def main(args):
     distributions = load_json(DISTRIBUTIONS_PATH)
     definitions = load_json(DEFINITIONS_PATH)
     dummy_schema = load_json(DUMMY_SCHEMA_PATH)
+    type_distribution = load_json(TYPE_DISTRIBUTIONS)
 
     out_dir = args.output_dir
 
-    generator = Generator(distributions, definitions, dummy_schema, DATA_URL)
+    generator = Generator(distributions, type_distribution, definitions, dummy_schema, DATA_URL)
 
     chosen = str(args.interaction)
     num_groups = int(args.groups)

@@ -13,12 +13,14 @@ class Generator:
     A Generator can be used to generate specs that represent
     mutations over a list of properties.
     """
-    def __init__(self, distributions: Dict, definitions: Dict, data_schema: Dict, data_url: str) -> None:
+    def __init__(self, distributions: Dict, type_distribution: Dict,
+                       definitions: Dict, data_schema: Dict, data_url: str) -> None:
         top_level_props = definitions['topLevelProps']
         encoding_props = definitions['encodingProps']
         data_fields = [Field(x['name'], x['type']) for x in data_schema]
+        print(data_fields)
 
-        self.model = Model(distributions, top_level_props, encoding_props)
+        self.model = Model(data_fields, distributions, type_distribution, top_level_props, encoding_props)
         self.data = Data(data_fields)
         self.data_url = data_url
 
@@ -55,10 +57,10 @@ class Generator:
             if not (base_spec in seen):
                 seen.add(base_spec)
 
-                self.__populate_field_names(base_spec)
                 query = Query.from_vegalite(base_spec)
 
                 if (is_valid(Task(self.data, query))):
+                    print(base_spec)
                     base_spec['data'] = { 'url': self.data_url }
                     specs.append(base_spec)
          # recursive case
@@ -72,18 +74,3 @@ class Generator:
                 self.__mutate_spec(spec, props, prop_index + 1, seen, specs)
 
         return
-
-    def __populate_field_names(self, spec: Spec):
-        counts = {
-            'n': 1, 'o': 1, 'q': 1, 't': 1
-        }
-
-        encodings = spec['encoding']
-        for channel in encodings:
-            enc = encodings[channel]
-
-            field_type = enc['type'][:1]
-            field_name = field_type + str(counts[field_type])
-            counts[field_type] += 1
-
-            enc['field'] = field_name

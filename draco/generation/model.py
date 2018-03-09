@@ -1,14 +1,14 @@
 import random
 import inspect
 from copy import deepcopy
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 from collections import OrderedDict
 
 import numpy as np
 
 from draco.generation.spec import Spec
 from draco.generation.prop_objects import PropObjects
-
+from draco.spec import Field
 
 class Model:
     """
@@ -25,13 +25,16 @@ class Model:
     # only 1 of these can appear in all encodings
     UNIQUE_ENCODING_PROPS = set(['stack'])
 
-    def __init__(self, distributions: Dict, top_level_props: List[str], encoding_props: List[str]) -> None:
+    def __init__(self, fields: List[Field], distributions: Dict, type_distribution: Dict,
+                       top_level_props: List[str], encoding_props: List[str]) -> None:
         """
         distributions -- see distributions.json
         top_level_props -- a list of top level properties
         encoding_props -- a list of encoding level properties
         """
+        self.fields = fields
         self.distributions = distributions
+        self.type_distribution = type_distribution
         self.top_level_props = set(top_level_props)
         self.encoding_props = set(encoding_props)
 
@@ -155,13 +158,20 @@ class Model:
         self.curr_enums = deepcopy(self.enums)
         self.curr_probs = deepcopy(self.probs)
         self.used_enc_props = set()
+        self.available_fields = deepcopy(self.fields)
 
     def __generate_enc(self):
         """
         Returns an encoding, randomizing props.
         """
-        enc = {}
+        enc = OrderedDict()
 
+        # set the field / type
+        field, vl_type = self.__sample_field()
+        enc['field'] = field
+        enc['type'] = vl_type
+
+        # everything else
         for prop in self.encoding_props:
             if (self.__include(prop)):
                 self.used_enc_props.add(prop)
@@ -169,7 +179,19 @@ class Model:
 
         return enc
 
-    def __include(self, prop: str):
+    def __sample_field(self) -> Tuple[str, str]:
+        field_index = random.randrange(len(self.available_fields))
+        field = self.available_fields.pop(field_index)
+
+        vl_types = [x for x in self.type_distribution[field.ty]]
+        probs = [self.type_distribution[field.ty][x] for x in vl_types]
+
+        vl_type, _ = Model.sample(vl_types, probs)
+
+        return field.name, vl_type
+
+
+    def __include(self, prop: str) -> bool:
         """
         Decides randomly from `self.distributions` whether or not
         the given spec should be included
@@ -182,7 +204,7 @@ class Model:
 
         return picked and allowed
 
-    def __sample_prop(self, prop: str):
+    def __sample_prop(self, prop: str) -> Any:
         """
         Returns a random value (enum or object) for the given prop.
         """
@@ -192,7 +214,7 @@ class Model:
 
         return enum
 
-    def __sample_enum_value(self, prop: str):
+    def __sample_enum_value(self, prop: str) -> str:
         """
         Returns a random enum for the given prop.
 
@@ -212,7 +234,7 @@ class Model:
         return result
 
     @staticmethod
-    def sample(enums: List[str], probs: List[float]):
+    def sample(enums: List[str], probs: List[float]) -> Tuple[str, int]:
         """
         Returns a probabilistic choice and index from the given list
         of enums, where probs[i] = probability for enums[i]. Expects sum(probs) = 1
@@ -230,7 +252,7 @@ class Model:
         return result, index
 
     @staticmethod
-    def build_value_from_enum(prop: str, enum: Any):
+    def build_value_from_enum(prop: str, enum: str) -> Any:
         """
         Builds a value for the given prop using given enum
         value. For example scale requires an object as its value,
