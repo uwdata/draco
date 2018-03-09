@@ -17,25 +17,36 @@ def create_database(db_file: str):
     c = conn.cursor()
 
     # Create table
-    c.execute('''CREATE TABLE pairs (id text primary key, task text, left text, right text,
-                                     left_feature text, right_feature text)''')
-    c.execute('CREATE TABLE labels (id text, label integer)')
+    c.execute('''CREATE TABLE pairs (id text primary key, task text, left text, right text)''')
+    c.execute('CREATE TABLE labels (id text, label integer, user_id integer)')
 
     conn.close()
 
 
-def insert_halden_data(db_file: str):
+def insert_unlabeled_data(db_file: str):
     # generate feature vector and store in database
 
-    conn = sqlite3.connect(db_file)
-    c = conn.cursor()
+    #conn = sqlite3.connect(db_file)
+    #c = conn.cursor()
 
-    for i, entry in enumerate(data_util.load_halden_data()):
+    specs, features = data_util.get_unlabeled_data()
+
+    for key in specs:
+
+        entry = specs[key]
+        feature = features.loc[key]
+
+        print(spec)
+        print(vec)
+
+        sys.exit(-1)
+
+        pair_id = entry['pair_id']
         source = entry['source']
         task = entry['task']
         left_spec = entry['left']
         right_spec = entry['right']
-        vec1 = entry['left_feature']
+        vec1 = feature['left_feature']
         vec2 = entry['right_feature']
 
         tid = f'{source}-{i}'
@@ -94,11 +105,11 @@ def load_labeled_specs(db_file: str):
 if __name__ == '__main__':
     db_file = os.path.join(os.path.dirname(__file__), 'label_data.db')
 
-    if pathlib.Path(db_file).exists():
-        print('[Err] The database {} exists, won\'t create one.'.format(db_file))
-        sys.exit(-1)
+    #if pathlib.Path(db_file).exists():
+    #    print('[Err] The database {} exists, won\'t create one.'.format(db_file))
+    #    sys.exit(-1)
 
-    create_database(db_file)
+    #create_database(db_file)
     # insert_user_study_data(db_file)
-    insert_halden_data(db_file)
-    labeled = load_labeled_specs(db_file)
+    insert_unlabeled_data(db_file)
+    #labeled = load_labeled_specs(db_file)

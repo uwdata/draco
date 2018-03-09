@@ -27,6 +27,7 @@ def get_db():
         db = global_state["db"]
     return db
 
+
 def get_leverage_score():
     """ get leverage score """
 
