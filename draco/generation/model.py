@@ -66,6 +66,7 @@ class Model:
         """
         self.__ready()
         spec = Spec()
+        spec['encoding'] = SortedDict()
 
         for prop in self.top_level_props:
             if (self.__include(prop)):

@@ -6,7 +6,6 @@ from sortedcontainers import SortedDict
 class Spec(SortedDict):
     def __init__(self, *args, **kw):
         super(Spec, self).__init__(*args, **kw)
-        self['encoding'] = SortedDict()
 
     def __hash__(self):
         return json.dumps(self).__hash__()
