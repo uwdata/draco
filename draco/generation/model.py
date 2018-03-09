@@ -95,7 +95,11 @@ class Model:
 
             # the least likely channel has the highest prob of being replaced
             probs = [(1 - self.enum_probs['channel'][x]) for x in used_channels]
-            to_replace, _ = Model.sample(used_channels, probs)
+
+            try:
+                to_replace, _ = Model.sample(used_channels, probs)
+            except ValueError:
+                raise ValueError('empty spec {0}'.format(spec))
 
             enc = spec['encoding'][to_replace]
             del spec['encoding'][to_replace]
@@ -239,14 +243,13 @@ class Model:
 
         try:
             result, index = Model.sample(enums, probs)
+            if (prop == 'channel'):
+                enums.pop(index)
+                probs.pop(index)
+
+            return result
         except ValueError:
             raise ValueError('{0} empty'.format(prop))
-
-        if (prop == 'channel'):
-            enums.pop(index)
-            probs.pop(index)
-
-        return result
 
     @staticmethod
     def sample(enums: List[str], probs: List[float]) -> Tuple[str, int]:
