@@ -24,16 +24,16 @@ def compute_cost(violations: Dict) -> int:
         c += v * weights[f'{k}_weight']
     return c
 
-def count_violations(task: Task) -> Dict[str, int]:
+def count_violations(task: Task, debug=False) -> Dict[str, int]:
     ''' Get a dictionary of violations for a full spec.
         Args:
             task: a task spec object
         Returns:
             a dictionary storing violations of soft rules
     '''
-    task = run(task, files=['define.lp', 'features.lp', 'output.lp', 'count.lp'], silence_warnings=True)
+    task = run(task, files=['define.lp', 'features.lp', 'output.lp', 'count.lp'], silence_warnings=True, debug=debug)
     return task.violations
-    
+
 
 def contingency_table(labels_1: np.array, labels_2: np.array) -> np.array:
     '''

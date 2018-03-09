@@ -25,7 +25,7 @@ def normalize_field_name(s:str) -> str:
     if s is HOLE or s is NULL or s is None:
         return s
     else:
-        return s.lower()
+        return s.replace(' ', '_').lower()
 
 def recover_field_name(s:str, field_names: List[str]) -> str:
     """ recover fields for visualization purpose """

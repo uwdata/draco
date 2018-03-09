@@ -129,8 +129,8 @@ def load_unlabeled_specs() -> Dict[str, UnlabeledExample]:
                         key = f'halden-{cnt}'
                         raw_data[key] = UnlabeledExample(
                             key,
-                            None,
                             acquire_data(url),
+                            None,
                             'halden',
                             left,
                             right
@@ -143,7 +143,7 @@ def load_unlabeled_specs() -> Dict[str, UnlabeledExample]:
 def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
     key = task.to_asp()
     if key not in processed_specs:
-        processed_specs[key] = count_violations(task)
+        processed_specs[key] = count_violations(task, True)
     return processed_specs[key]
 
 
@@ -166,8 +166,8 @@ def get_feature_names():
     return features
 
 
-def pair_partition_to_vec(input_data: Tuple[Dict, Iterable[Union[PosNegExample, UnlabeledExample, np.ndarray]]]):
-    processed_specs, partiton_data = input_data
+def pair_partition_to_vec(input_data: Tuple[Dict, Tuple[str,str], Iterable[Union[PosNegExample, UnlabeledExample, np.ndarray]]]):
+    processed_specs, fields, partiton_data = input_data
 
     columns = get_nested_index()
     dfs = []
@@ -175,18 +175,20 @@ def pair_partition_to_vec(input_data: Tuple[Dict, Iterable[Union[PosNegExample, 
     for example in partiton_data:
         Encoding.encoding_cnt = 0
 
+        # hack to get named tuples to work in parallel
         if isinstance(example, np.ndarray):
             example = PosNegExample(*example)
 
+        # use numbers because we odn't know the names here
         neg_feature_vec = count_violations_memoized(processed_specs,
-                            Task(example.data, Query.from_vegalite(example.negative), example.task))
+                            Task(example.data, Query.from_vegalite(example[4]), example.task))
         pos_feature_vec = count_violations_memoized(processed_specs,
-                            Task(example.data, Query.from_vegalite(example.positive), example.task))
+                            Task(example.data, Query.from_vegalite(example[5]), example.task))
 
         # Reformat the json data so that we can insert it into a multi index data frame.
         # https://stackoverflow.com/questions/24988131/nested-dictionary-to-multiindex-dataframe-where-dictionary-keys-are-column-label
-        specs = {('negative', key): values for key, values in neg_feature_vec.items()}
-        specs.update({('positive', key): values for key, values in pos_feature_vec.items()})
+        specs = {(fields[0], key): values for key, values in neg_feature_vec.items()}
+        specs.update({(fields[1], key): values for key, values in pos_feature_vec.items()})
 
         specs[('source', '')] = example.source
         specs[('task', '')] = example.task
@@ -196,7 +198,7 @@ def pair_partition_to_vec(input_data: Tuple[Dict, Iterable[Union[PosNegExample, 
     return pd.concat(dfs)
 
 
-def run_in_parallel(func, data: List[Any]) -> pd.DataFrame:
+def run_in_parallel(func, data: List[Union[PosNegExample, UnlabeledExample]], fields: Tuple[str, str]) -> pd.DataFrame:
     ''' Like map, but parallel. '''
 
     splits = min([cpu_count() * 20, math.ceil(len(data) / 10)])
@@ -210,11 +212,12 @@ def run_in_parallel(func, data: List[Any]) -> pd.DataFrame:
         d = m.dict()  # shared dict for memoization
         pool = m.Pool(processes=processes)
 
-        splits: List[Tuple[Dict,Any]] = []
+        tuples: List[Tuple[Dict,Any]] = []
         for s in df_split:
-            splits.append((d, s))
+            # add some arguments
+            tuples.append((d, fields, s))
 
-        df = pd.concat(pool.map(func, splits))
+        df = pd.concat(pool.map(func, tuples))
         pool.close()
         pool.join()
 
@@ -225,10 +228,10 @@ def run_in_parallel(func, data: List[Any]) -> pd.DataFrame:
     return df
 
 
-def pairs_to_vec(specs: List[Union[PosNegExample, UnlabeledExample]]) -> pd.DataFrame:
+def pairs_to_vec(specs: List[Union[PosNegExample, UnlabeledExample]], fields: Tuple[str, str]) -> pd.DataFrame:
     ''' given specs, convert them into feature vectors. '''
 
-    return run_in_parallel(pair_partition_to_vec, specs)
+    return run_in_parallel(pair_partition_to_vec, specs, fields)
 
 
 def _get_pos_neg_data() -> pd.DataFrame:
@@ -282,9 +285,9 @@ def get_unlabeled_data() -> Tuple[Dict[str, UnlabeledExample], pd.DataFrame]:
 if __name__ == '__main__':
     ''' Generate and store vectors for labeled data in default path. '''
     neg_pos_specs = load_neg_pos_specs()
-    data = pairs_to_vec(list(neg_pos_specs.values()))
-    data.to_pickle(pos_neg_pickle_path)
+    neg_pos_data = pairs_to_vec(list(neg_pos_specs.values()), ['first', 'second'])
+    neg_pos_data.to_pickle(pos_neg_pickle_path)
 
     unlabeled_specs = load_unlabeled_specs()
-    data = pairs_to_vec(list(unlabeled_specs.values()))
-    data.to_pickle(unlabeled_pickle_path)
+    unlabeled_data = pairs_to_vec(list(unlabeled_specs.values()), ['left', 'right'])
+    unlabeled_data.to_pickle(unlabeled_pickle_path)
