@@ -150,6 +150,10 @@
 % can only use stack if we also use discrete color, opacity, or detail
 :- stack(_), not channel_discrete(opacity), not channel_discrete(color), not channel(_,detail).
 
+% if we use stack and detail, we also have to use quantitative color
+:- stack(_), channel(_,detail), not channel(_,color).
+:- stack(_), channel(_,detail), channel(E,color), not aggregate(E,_).
+
 % stack can only be on continuous
 :- stack(E,_), discrete(E).
 

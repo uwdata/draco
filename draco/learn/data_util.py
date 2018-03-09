@@ -212,7 +212,7 @@ def run_in_parallel(func, data: List[Union[PosNegExample, UnlabeledExample]], fi
         d = m.dict()  # shared dict for memoization
         pool = m.Pool(processes=processes)
 
-        tuples: List[Tuple[Dict,Any]] = []
+        tuples: List[Tuple[Dict, Tuple[str, str], Any]] = []
         for s in df_split:
             # add some arguments
             tuples.append((d, fields, s))
@@ -285,9 +285,9 @@ def get_unlabeled_data() -> Tuple[Dict[str, UnlabeledExample], pd.DataFrame]:
 if __name__ == '__main__':
     ''' Generate and store vectors for labeled data in default path. '''
     neg_pos_specs = load_neg_pos_specs()
-    neg_pos_data = pairs_to_vec(list(neg_pos_specs.values()), ['first', 'second'])
+    neg_pos_data = pairs_to_vec(list(neg_pos_specs.values()), ('first', 'second'))
     neg_pos_data.to_pickle(pos_neg_pickle_path)
 
     unlabeled_specs = load_unlabeled_specs()
-    unlabeled_data = pairs_to_vec(list(unlabeled_specs.values()), ['left', 'right'])
+    unlabeled_data = pairs_to_vec(list(unlabeled_specs.values()), ('left', 'right'))
     unlabeled_data.to_pickle(unlabeled_pickle_path)

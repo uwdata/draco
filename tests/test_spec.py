@@ -1,4 +1,4 @@
-from draco.spec import Data, Encoding, Field
+from draco.spec import Data, Encoding, Field, Query
 
 
 class TestField():
@@ -75,3 +75,48 @@ class TestEncoding():
 
         e = Encoding()
         assert e.id == 'e1'
+
+class TestQuery():
+
+    def test_auto_bin(self):
+        q = Query.from_vegalite({
+            'mark': 'bar',
+            'encoding': {
+                'x': {
+                    'type': 'nominal'
+                },
+                "y": {
+                    'type': 'quantitative',
+                    'aggregate': 'sum'
+                },
+                'color': {
+                    'type': 'nominal'
+                }
+            }
+        })
+
+        encs = [e for e in q.encodings if e.stack]
+
+        assert len(encs) == 1
+        assert encs[0].stack == 'zero'
+
+    def test_no_auto_bin(self):
+        q = Query.from_vegalite({
+            'mark': 'bar',
+            'encoding': {
+                'x': {
+                    'type': 'nominal'
+                },
+                "y": {
+                    'type': 'quantitative',
+                    'aggregate': 'mean'
+                },
+                'color': {
+                    'type': 'nominal'
+                }
+            }
+        })
+
+        encs = [e for e in q.encodings if e.stack]
+
+        assert len(encs) == 0

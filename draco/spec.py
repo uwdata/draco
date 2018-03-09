@@ -3,10 +3,11 @@ Tasks, Encoding, and Query helper classes for draco.
 '''
 
 import json
+import logging
 import os
 from collections import defaultdict
-from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
 from copy import deepcopy
+from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
 
 import agate
 import numpy as np
@@ -15,6 +16,9 @@ import scipy.stats as stats
 from agate.table import Table
 from clyngor.answers import Answers
 from random_words import RandomWords
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 HOLE = '?' # I want the system to fill something for this
 NULL = 'null' # I don't want the system fill anything in this place
@@ -126,7 +130,7 @@ class Data():
             elif file_path.endswith("json"):
                 return Data.from_json(file_path)
             else:
-                print('[ERROR] the data format is not recognized.')
+                logger.error('The data format is not recognized.')
                 return None
         else:
             # a dict represented data already included in the file
@@ -487,7 +491,24 @@ class Query():
 
         encodings: List[Encoding] = []
 
-        for channel, enc in full_spec.get('encoding', {}).items():
+        encoding = full_spec.get('encoding', {})
+
+        mark = full_spec['mark']
+
+        # bar and area automatically stack if there is a group by
+        if mark == 'bar' or mark == 'area':
+            need_stack = any(
+                c in encoding and (encoding.get(c)['type'] in ['ordinal', 'nominal'] or encoding.get(c).get('bin'))
+                    for c in ['color', 'opacity', 'detail']
+            )
+
+            if need_stack:
+                for c in ['x', 'y']:
+                    if c in encoding and (encoding[c]['type'] == 'quantitative' and not encoding[c].get('bin')):
+                        if not encoding[c].get('stack') and encoding[c].get('aggregate') in [None, 'sum', 'count']:
+                            encoding[c]['stack'] = 'zero'
+
+        for channel, enc in encoding.items():
             enc['channel'] = channel
 
             # fix binning as the default is 10
@@ -508,7 +529,7 @@ class Query():
 
             encodings.append(Encoding.from_obj(enc))
 
-        return Query(full_spec['mark'], encodings)
+        return Query(mark, encodings)
 
     @staticmethod
     def parse_from_answer(clyngor_answer: Answers) -> 'Query':

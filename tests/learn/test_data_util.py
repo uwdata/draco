@@ -17,11 +17,12 @@ def test_load_data():
     assert len(train) - int(0.7 * size) <= 1
     assert len(test) - int(0.3 * size) <= 1
 
+
 def square(x):
     return x**2
 
 def batch_square(d):
-    _, xs = d
+    _, _, xs = d
 
     s = pd.Series()
     for i, x in xs:
@@ -31,6 +32,6 @@ def batch_square(d):
 def test_run_in_parallel():
     a = range(100)
     expected = list(map(square, a))
-    actual = run_in_parallel(batch_square, list(enumerate(a)))
+    actual = run_in_parallel(batch_square, list(enumerate(a)), ('a', 'b'))
 
     assert list(actual.values) == expected
