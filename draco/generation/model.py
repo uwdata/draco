@@ -240,8 +240,7 @@ class Model:
         try:
             result, index = Model.sample(enums, probs)
         except ValueError:
-            print(prop)
-            raise ValueError()
+            raise ValueError('{0} empty'.format(prop))
 
         if (prop == 'channel'):
             enums.pop(index)
