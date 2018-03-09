@@ -143,7 +143,7 @@ def load_unlabeled_specs() -> Dict[str, UnlabeledExample]:
 def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
     key = task.to_asp()
     if key not in processed_specs:
-        processed_specs[key] = count_violations(task, True)
+        processed_specs[key] = count_violations(task)
     return processed_specs[key]
 
 
