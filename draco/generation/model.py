@@ -174,7 +174,7 @@ class Model:
             enc['type'] = 'quantitative'
             return enc
 
-        enc['field'] = field
+        enc['field'] = field_name
         enc['type'] = vl_type
 
         # everything else
