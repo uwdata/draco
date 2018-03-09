@@ -39,6 +39,11 @@ class Visualization extends Component {
    * @param {Object} vlSpec The Vega-Lite spec to use.
    */
   updateView(vlSpec) {
+    if (!vlSpec) {
+      console.warn('no spec passed to viz view');
+      return;
+    }
+
     const loader = vega.loader();
 
     const original_http = loader.http;

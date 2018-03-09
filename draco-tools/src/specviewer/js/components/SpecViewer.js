@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
 import 'specviewer/scss/SpecViewer.css';
 
+import * as stringify from 'json-stable-stringify';
+import React, { Component } from 'react';
 import Visualization from 'shared/js/components/Visualization';
 
 class SpecViewer extends Component {
@@ -32,7 +33,7 @@ class SpecViewer extends Component {
     for (let i = 0; i < data.specs.length; i++) {
       const pair = data.specs[i];
 
-      const properties = Object.keys(pair.properties || {}).map((p, i) => <p key={i}><strong>{p}: </strong>{pair.properties[p]}</p>);
+      const properties = Object.keys(pair.properties || {}).map((p, i) => <p key={i}><strong>{p}: </strong>{stringify(pair.properties[p])}</p>);
 
       pairs.push(
         <div className="spec" key={i}>

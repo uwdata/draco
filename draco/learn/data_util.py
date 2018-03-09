@@ -40,12 +40,12 @@ PosNegExample = namedtuple('PosNeg', ['pair_id', 'data', 'task', 'source', 'nega
 UnlabeledExample = namedtuple('Unlabeled', ['pair_id', 'data', 'task', 'source', 'left', 'right'])
 
 
-def load_neg_pos_data() -> List[PosNegExample]:
+def load_neg_pos_specs() -> List[PosNegExample]:
     raw_data = []
-    i = 0
 
     for path in [man_data_path, yh_data_path, ba_data_path, label_data_path]:
         with open(path) as f:
+            i = 0
             json_data = json.load(f)
 
             for row in json_data['data']:
@@ -75,10 +75,10 @@ def load_partial_full_data(path=compassql_data_path, data_dir=data_dir):
             A dictionary mapping each case name into a pair of partial spec - full spec.
     '''
 
-    def load_spec(input_dir, data_dir, format):
+    def load_spec(input_dir, data_format: str):
         ''' load compassql data
             Args: input_dir: the directory containing a set of json compassql specs
-                  format: one of 'compassql' and 'vegalite'
+                  data_format: one of 'compassql' and 'vegalite'
             Returns:
                 a dictionary containing name and the Task object representing the spec
         '''
@@ -91,15 +91,19 @@ def load_partial_full_data(path=compassql_data_path, data_dir=data_dir):
                 content = json.load(f)
                 if 'url' in content['data'] and content['data']['url'] is not None:
                     content['data']['url'] = os.path.join(data_dir, os.path.basename(content['data']['url']))
-                if format == 'compassql':
+                if data_format == 'compassql':
                     spec = Task.from_cql(content, '.')
-                elif format == 'vegalite':
+                elif data_format == 'vegalite':
                     spec = Task.from_vegalite(content)
+                    if spec.to_vegalite() != content:
+                        logger.warning('Vega-Lite and spec from task are different')
                 result[os.path.basename(fname)] = spec
         return result
 
-    partial_specs = load_spec(os.path.join(path, 'input'), data_dir, 'compassql')
-    compassql_outs = load_spec(os.path.join(path, 'output'), data_dir, 'vegalite')
+    # TODO: do not parse and generate full VL specs or compass specs
+
+    partial_specs = load_spec(os.path.join(path, 'input'), 'compassql')
+    compassql_outs = load_spec(os.path.join(path, 'output'), 'vegalite')
 
     result = {}
     for k in partial_specs:
@@ -107,12 +111,7 @@ def load_partial_full_data(path=compassql_data_path, data_dir=data_dir):
     return result
 
 
-def load_halden_data(data_dir=data_dir):
-    ''' load halden's data into memory the result is a list of unlabeled pairs
-        Returns:
-            A generator yielding entires one at a time
-    '''
-
+def load_unlabeled_specs() -> List[UnlabeledExample]:
     files = [os.path.join(halden_data_path, f)
                 for f in os.listdir(halden_data_path)
                 if f.endswith('.json')]
@@ -125,52 +124,32 @@ def load_halden_data(data_dir=data_dir):
             data_cache[url].url = url
         return data_cache[url]
 
-    spec_to_task = lambda spec: Task(acquire_data(spec["data"]["url"]), Query.from_vegalite(spec), spec.get("task"))
+    raw_data: List[UnlabeledExample] = []
 
-    pair_process_func = lambda p: {"source": f"halden",
-                                   "task": p[0]["spec"].get("task"),
-                                   "left": p[0]["spec"],
-                                   "right": p[1]["spec"],
-                                   "left_feature": p[0]["feature"],
-                                   "right_feature": p[1]["feature"]}
-
-
-    task_list: List[Task] = []
-    id_to_vec: Dict[str,int] = {}
-
-    count = 0
-    for fname in files:
-        with open(fname, 'r') as f:
-            content = json.load(f)
-            for num_channel in content:
-                for i, spec_list in enumerate(content[num_channel]):
-                    for j, spec in enumerate(spec_list):
-                        task_list.append(spec_to_task(spec))
-                        key = f'{fname}_{num_channel}_{i}_{j}'
-                        id_to_vec[key] = count
-
-                        count += 1;
-
-    feature_vecs = tasks_to_vec(task_list)
+    cnt = 0
 
     for fname in files:
         with open(fname, 'r') as f:
             content = json.load(f)
             for num_channel in content:
-                for i, spec_list in enumerate(content[num_channel]):
-                    specs_and_features = []
-                    for j, spec in enumerate(spec_list):
-                        key = f'{fname}_{num_channel}_{i}_{j}'
-                        specs_and_features.append({
-                            "spec": spec,
-                            "feature": feature_vecs.iloc[id_to_vec[key]]
-                        })
+                for spec_list in content[num_channel]:
+                    for left, right in itertools.combinations(spec_list, 2):
+                        assert left != right, '[Err] find pairs with the same content file:{} - num_channel:{} - group:{}'.format(os.path.basename(fname), num_channel, i)
+                        assert left['data']['url'] == right['data']['url']
 
-                    for pair in map(pair_process_func, itertools.combinations(specs_and_features, 2)):
-                        if pair["left"] != pair["right"]:
-                            yield pair
-                        else:
-                            print('[Err] find pairs with the same content file:{} - num_channel:{} - group:{}'.format(os.path.basename(fname), num_channel, i))
+                        url = left["data"]["url"]
+
+                        raw_data.append(UnlabeledExample(
+                            f'halden-{cnt}',
+                            None,
+                            acquire_data(url),
+                            'halden',
+                            left,
+                            right
+                        ))
+                        cnt += 1
+
+    return raw_data
 
 
 def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
@@ -188,18 +167,18 @@ def get_nested_index():
 
     iterables = [['negative', 'positive'], features]
     index = pd.MultiIndex.from_product(iterables, names=['category', 'feature'])
-    index.append(pd.MultiIndex.from_arrays([['source', 'task'], ['', '']]))
+    index = index.append(pd.MultiIndex.from_arrays([['source', 'task'], ['', '']]))
     return index
 
 
 def get_feature_names():
     weights = current_weights()
-    features = list(map(lambda s: s[:-len('_weight')], weights.keys()))
+    features = sorted(map(lambda s: s[:-len('_weight')], weights.keys()))
 
     return features
 
 
-def pair_partition_to_vec(input_data: Tuple[Dict, Iterable[Union[PosNegExample, np.ndarray]]]):
+def pair_partition_to_vec(input_data: Tuple[Dict, Iterable[Union[PosNegExample, UnlabeledExample, np.ndarray]]]):
     processed_specs, partiton_data = input_data
 
     columns = get_nested_index()
@@ -224,23 +203,7 @@ def pair_partition_to_vec(input_data: Tuple[Dict, Iterable[Union[PosNegExample, 
         specs[('source', '')] = example.source
         specs[('task', '')] = example.task
 
-        dfs.append(pd.DataFrame(specs, columns=columns, index=[example.pair_id]))  # the idx is the same as the one in load_neg_pos_data
-
-    return pd.concat(dfs)
-
-
-def task_partition_to_vec(input_data: Tuple[Dict, Iterable[Tuple[int, Task]]]):
-    processed_specs, partiton_data = input_data
-
-    columns=get_feature_names()
-    dfs = []
-
-    for idx, task in partiton_data:
-        Encoding.encoding_cnt = 0
-
-        vec = count_violations_memoized(processed_specs, task)
-
-        dfs.append(pd.DataFrame(vec, index=[idx]))
+        dfs.append(pd.DataFrame(specs, columns=columns, index=[example.pair_id]))
 
     return pd.concat(dfs)
 
@@ -269,20 +232,15 @@ def run_in_parallel(func, data: List[Any]) -> pd.DataFrame:
     return df
 
 
-def pairs_to_vec(neg_pos_data: List[PosNegExample]) -> pd.DataFrame:
-    ''' given neg_pos_data, convert them into feature vectors. '''
+def pairs_to_vec(specs: List[Union[PosNegExample, UnlabeledExample]]) -> pd.DataFrame:
+    ''' given specs, convert them into feature vectors. '''
 
-    return run_in_parallel(pair_partition_to_vec, neg_pos_data)
-
-
-def tasks_to_vec(specs: List[Task]) -> pd.DataFrame:
-    ''' Turn a list of tasks into a feature vecor. '''
-    return run_in_parallel(task_partition_to_vec, list(enumerate(specs)))
+    return run_in_parallel(pair_partition_to_vec, specs)
 
 
-def get_pos_neg_data() -> pd.DataFrame:
+def _get_pos_neg_data() -> pd.DataFrame:
     '''
-    Load data created with `generate_and_store_data`.
+    Internal function to load the feature vecors.
     '''
     data = pd.read_pickle(pickle_path)
     data.fillna(0, inplace=True)
@@ -295,27 +253,31 @@ def load_data(test_size: float=0.3, random_state=1) -> Tuple[pd.DataFrame, pd.Da
         Returns:
             a tuple containing: train_dev, test.
     '''
-    data = get_pos_neg_data()
+    data = _get_pos_neg_data()
     return train_test_split(data, test_size=test_size, random_state=random_state)
 
 
 
-def get_labeled_data() -> Tuple[List[PosNegExample],pd.DataFrame]:
-    a = load_neg_pos_data()
-    b = get_pos_neg_data()
+def get_labeled_data() -> Tuple[List[PosNegExample], pd.DataFrame]:
+    specs = load_neg_pos_specs()
+    vecs = _get_pos_neg_data()
 
-    assert len(a) == len(b)
+    assert len(specs) == len(vecs)
 
-    return a,b
+    return specs, vecs
 
 
-def get_unlabeled_data() -> Tuple[List[UnlabeledExample],pd.DataFrame]:
-    pass
+def get_unlabeled_data() -> Tuple[List[UnlabeledExample], pd.DataFrame]:
+    specs = load_unlabeled_specs()
+    vecs = pairs_to_vec(specs)
 
-    raise NotImplemented
+    assert len(specs) == len(vecs)
+
+    return specs, vecs
+
 
 if __name__ == '__main__':
-    ''' Generate and store data in default path. '''
-    neg_pos_data = load_neg_pos_data()
+    ''' Generate and store vectors for labeled data in default path. '''
+    neg_pos_data = load_neg_pos_specs()
     data = pairs_to_vec(neg_pos_data)
     data.to_pickle(pickle_path)

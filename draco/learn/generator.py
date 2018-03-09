@@ -71,7 +71,7 @@ if __name__ == '__main__':
     cql_out_dir = os.path.join(synthetic_data_dir, 'input')
     vl_out_dir = os.path.join(synthetic_data_dir, 'output')
 
-    specs = data_util.load_neg_pos_data()
+    specs = data_util.load_neg_pos_specs()
 
     results = sample_partial_specs(specs)
 

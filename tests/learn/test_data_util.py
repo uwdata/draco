@@ -3,8 +3,7 @@ import os
 import pandas as pd
 import pytest
 
-from draco.learn.data_util import (load_data, pickle_path, run_in_parallel,
-                                   tasks_to_vec)
+from draco.learn.data_util import load_data, pickle_path, run_in_parallel
 from draco.spec import Task
 
 
@@ -35,17 +34,3 @@ def test_run_in_parallel():
     actual = run_in_parallel(batch_square, list(enumerate(a)))
 
     assert list(actual.values) == expected
-
-def test_tasks_to_vec():
-    task = Task.from_vegalite({
-        'data': {
-            'values': [{'a': 10}, {'a': 42}]
-        },
-        'mark': 'point',
-        'encoding': {
-            'x': {'field': 'a', 'type': 'quantitative'}
-        }
-    })
-
-    vecs = tasks_to_vec([task, task, task])
-    assert len(vecs) == 3

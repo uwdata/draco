@@ -362,7 +362,7 @@ class Encoding():
         self.binning = binning
         self.log_scale = log_scale
         self.zero = zero
-        self.stack = stack
+        self.stack = stack  # null will be treated as false
         self.id = idx if idx is not None else Encoding.gen_encoding_id()
 
     def to_compassql(self):

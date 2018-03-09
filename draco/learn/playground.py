@@ -73,6 +73,15 @@ def generate_visual_pairs(partial_full_data, weights):
 
         if draco_rec is None:
             logger.warning(f'Could not find a spec for {partial_spec}')
+
+            result["specs"].append({
+                "first": None,
+                "second": full_spec.to_vegalite(),
+                "properties": {
+                    "input": partial_spec.to_compassql()
+                }
+            })
+
             continue
 
         if len(result) > 25:
@@ -88,7 +97,9 @@ def generate_visual_pairs(partial_full_data, weights):
         result["specs"].append({
             "first": draco_rec.to_vegalite(),
             "second": full_spec.to_vegalite(),
-            "properties": {}
+            "properties": {
+                "input": partial_spec.to_compassql()
+            }
         })
 
     return result
