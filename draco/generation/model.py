@@ -4,6 +4,7 @@ from copy import deepcopy
 from typing import Any, Dict, List, Tuple
 
 import numpy as np
+from sortedcontainers import SortedDict
 
 from draco.generation.spec import Spec
 from draco.generation.prop_objects import PropObjects
@@ -163,7 +164,7 @@ class Model:
         """
         Returns an encoding, randomizing props.
         """
-        enc = {}
+        enc = SortedDict()
 
         # set the field / type
         field_name, vl_type = self.__sample_field()
