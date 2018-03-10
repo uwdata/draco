@@ -163,8 +163,6 @@
 % cannot use non positional continuous with stack unless it's aggregated
 :- stack(_), non_positional(C), channel(E,C), not aggregate(E,_), continuous(E).
 
-% stack only works with c_d
-:- stack(_), not is_c_d.
 
 % === Type checks ===
 
