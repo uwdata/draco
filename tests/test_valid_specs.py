@@ -135,6 +135,29 @@ class TestValidSpecs():
 
         assert is_valid(Task(data, query), True) == True
 
+    def test_stack_q_q(self):
+        query = Query.from_vegalite({
+            'mark': 'area',
+            'encoding': {
+                'x': {
+                    'type': 'quantitative',
+                    'field': 'q1',
+                    'scale': {'zero': False}
+                },
+                'y': {
+                    'type': 'quantitative',
+                    'field': 'q2',
+                    'stack': 'zero'
+                },
+                'color': {
+                    'type': 'nominal',
+                    'field': 'n1'
+                }
+            }
+        })
+
+        assert is_valid(Task(data, query), True) == True
+
     def test_heatmap(self):
         query = Query.from_vegalite({
             'mark': 'rect',

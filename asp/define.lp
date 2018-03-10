@@ -40,7 +40,10 @@ ordered(E) :- type(E,(ordinal;quantitative)).
 field(F) :- fieldtype(F,_).
 
 % stacking is applied to the continuous x or y
-stack(E,S) :- channel(E,(x;y)), continuous(E), stack(S).
+stack(EC,S) :- channel(EC,(x;y)), channel(ED,(x;y)), continuous(EC), discrete(ED), stack(S).
+% x and y are continuous
+stack(E,S) :- channel_continuous(x), channel(E,y), continuous(E), stack(S).
+
 stack(S) :- stack(_,S).
 
 % data properties
