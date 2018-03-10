@@ -9,7 +9,7 @@ obj_id(1..max_extra_encs).
 
 { encoding(E): obj_id(E) }.
 
-:- not encoding(ID1), encoding(ID2), obj_id(ID1), obj_id(ID2), ID1 < ID2.
+:- not encoding(ID), encoding(ID-1), obj_id(ID), obj_id(ID-1).
 
 % properties of encodings
 
