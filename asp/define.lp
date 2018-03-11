@@ -75,6 +75,9 @@ is_d_d :- channel_discrete(x), channel_discrete(y).
 
 % == Overlap ==
 
+no_verlap :- is_c_c, aggregate(E,_), channel(E,y).
+overlap :- is_c_c, not no_overlap, channel(EX,x), enc_cardinality(EX,CX), data_size(S), S > CX.
+
 % the continuous variable is a measure (it is aggregated) and all other channels are aggregated, or we use stack -> no overlap
 non_pos_unaggregated :- channel(E,C), non_positional(C), not aggregate(E,_).
 no_overlap :- is_c_d, continuous(E), channel(E,(x;y)), aggregate(E,_), not non_pos_unaggregated.
