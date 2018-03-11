@@ -46,8 +46,9 @@
 #const y_row_weight = 1.
 #const x_column_weight = 1.
 #const y_column_weight = 1.
-#const temporal_y_weight = 2.
 #const c_d_column_weight = 5.
+#const temporal_y_weight = 2.
+#const opacity_color_weight = 10.
 
 #const c_c_point_weight = 0.
 #const c_c_line_weight = 20.

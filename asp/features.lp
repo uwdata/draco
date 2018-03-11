@@ -134,6 +134,9 @@ feature_term(c_d_column) :- channel_continuous(x), channel_discrete(y), channel(
 % prefer time on x
 feature_term(temporal_y) :- type(E,temporal), channel(E,x).
 
+% prefer not to use opacity and color at the same time
+feature_term(opacity_color) :- channel(_,color), channel(_,opacity).
+
 % ====== Rankings ======
 
 feature_term(c_c_point) :- is_c_c, mark(point).
