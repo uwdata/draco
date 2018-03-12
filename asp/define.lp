@@ -13,11 +13,11 @@ summative_aggregate_op(count;sum).
 binning(5;10;20;200).
 
 % encoding channels
-single_channel(x;y;color;opacity;size;shape;text;row;column).
+single_channel(x;y;color;size;shape;text;row;column).
 multi_channel(detail).
 channel(C) :- single_channel(C).
 channel(C) :- multi_channel(C).
-non_positional(color;opacity;size;shape;text;detail).
+non_positional(color;size;shape;text;detail).
 
 % possible tasks
 tasks(value;summary).

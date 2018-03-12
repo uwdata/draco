@@ -86,7 +86,7 @@ class TestTypeChannel():
         }
 
     def test_q(self):
-        comparisons = [('x', 'size'), ('size', 'color'), ('color', 'opacity')]
+        comparisons = [('x', 'size'), ('size', 'color')]
 
         for c0, c1 in comparisons:
             a = run_spec(spec_schema, self.get_spec('quantitative', c0)).cost
@@ -95,7 +95,7 @@ class TestTypeChannel():
             assert a < b, f'Channel {c0} is not better than {c1}.'
 
     def test_o(self):
-        comparisons = [('x', 'color'), ('color', 'size'), ('size', 'opacity')]
+        comparisons = [('x', 'color'), ('color', 'size')]
 
         for c0, c1 in comparisons:
             a = run_spec(spec_schema, self.get_spec('ordinal', c0)).cost

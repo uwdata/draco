@@ -116,9 +116,6 @@ feature_term(position_entropy,E) :- channel(E,(x;y)), continuous(E), enc_cardina
 % prefer not to use size when the cardinality is large on x or y
 feature_term(high_cardinality_size,E) :- continuous(E), channel(_,size), enc_cardinality(E,C), C > 100, channel(E,(x;y)).
 
-% prefer to not use stacking when opacity is used
-feature_term(stack_opacity) :- stack(_), channel(_,opacity).
-
 % prefer not to aggregate for value tasks
 feature_term(value_agg) :- task(value), aggregate(_,_).
 
@@ -133,9 +130,6 @@ feature_term(c_d_column) :- channel_continuous(x), channel_discrete(y), channel(
 
 % prefer time on x
 feature_term(temporal_y) :- type(E,temporal), channel(E,x).
-
-% prefer not to use opacity and color at the same time
-feature_term(opacity_color) :- channel(_,color), channel(_,opacity).
 
 % ====== Rankings ======
 

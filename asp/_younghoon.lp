@@ -21,8 +21,5 @@
 % only scatterplots
 :- not mark(point).
 
-% opacity is not supported
-:- channel(_,opacity).
-
 % always use zero for quantitative
 :- type(E,quantitative), not zero(E).

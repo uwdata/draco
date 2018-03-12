@@ -47,8 +47,8 @@
 % detail requires nominal
 :- channel(E,detail), not type(E,nominal).
 
-% size, and opacity impy order so nominal is misleading
-:- channel(E,(size;opacity)), type(E,nominal).
+% size implies order so nominal is misleading
+:- channel(E,size), type(E,nominal).
 
 % do not use log or zero when data is negative
 
@@ -144,11 +144,11 @@
 % don't stack if aggregation is not summative (summative are count, sum, distinct, valid, missing)
 :- stack(E,_), aggregate(E,A), not summative_aggregate_op(A).
 
-% need to stack if we use bar, area with discrete color or opacity
-:- mark(bar;area), channel(E,(color;opacity)), discrete(E), not stack(_).
+% need to stack if we use bar, area with discrete color
+:- mark(bar;area), channel(E,color), discrete(E), not stack(_).
 
-% can only use stack if we also use discrete color, opacity, or detail
-:- stack(_), not channel_discrete(opacity), not channel_discrete(color), not channel(_,detail).
+% can only use stack if we also use discrete color, or detail
+:- stack(_), not channel_discrete(color), not channel(_,detail).
 
 % if we use stack and detail, we also have to use quantitative color
 :- stack(_), channel(_,detail), not channel(_,color).

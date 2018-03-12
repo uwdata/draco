@@ -499,7 +499,7 @@ class Query():
         if mark == 'bar' or mark == 'area':
             need_stack = any(
                 c in encoding and (encoding.get(c)['type'] in ['ordinal', 'nominal'] or encoding.get(c).get('bin'))
-                    for c in ['color', 'opacity', 'detail']
+                    for c in ['color', 'detail']
             )
 
             if need_stack:
