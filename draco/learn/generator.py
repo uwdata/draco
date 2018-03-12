@@ -8,7 +8,7 @@ from draco.spec import *
 
 from draco import spec
 
-def sample_partial_specs(specs):
+def sample_partial_specs(specs, N=None):
     """ Given a list of full specs, sample partial specs from them
     Args:
         specs: full specs formed from (data, query) pairs, query is a vegalite json file
@@ -17,9 +17,18 @@ def sample_partial_specs(specs):
     """
     results = []
 
-    for entry in specs:
+    i = 0
+    for key in specs:
+
+        if N is not None and i >= N:
+            break
+
+        i += 1
+
+        entry = specs[key]
 
         data, task, query = entry.data, entry.task, Query.from_vegalite(entry.positive)
+
         partial_query = insert_holes(query)
 
         if (not data.content) and (data.url is None):
@@ -57,7 +66,9 @@ def insert_holes(query, prob=0.8, subst_val=spec.HOLE):
         binning = subst_w_prob(enc.binning, subst_val, prob)
         log_scale = subst_w_prob(enc.log_scale, subst_val, prob)
         zero = subst_w_prob(enc.zero, subst_val, prob)
-        encodings.append(Encoding(channel, field, ty, aggregate, binning, log_scale, zero, enc.id))
+        stack = subst_w_prob(enc.stack, subst_val, prob)
+        encodings.append(Encoding(channel, field, ty, aggregate, 
+                                  binning, log_scale, zero, stack, enc.id))
     
     return Query(mark, encodings)
 
@@ -78,7 +89,7 @@ if __name__ == '__main__':
     indexes = list(range(len(results)))
     np.random.shuffle(indexes)
 
-    N = 20
+    N = 10
 
     for i in range(N):
         entry = results[indexes[i]]

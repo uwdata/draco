@@ -51,7 +51,6 @@ def discriminative_learning(train_data, initial_weights, learning_rate=0.01, max
 
 if __name__ == '__main__':
     partial_full_data = data_util.load_partial_full_data()
-    #neg_pos_data = data_util.load_neg_pos_specs()
 
-    pprint(partial_full_data)
+    pprint(len(partial_full_data))
     #weights = discriminative_learning(train_data, current_weights())
