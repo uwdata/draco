@@ -168,14 +168,12 @@ feature_term(d_d_no_overlap_rect) :- is_d_d, mark(rect).
 feature_term(continuous_x,E) :- channel(E,x), continuous(E).
 feature_term(continuous_y,E) :- channel(E,y), continuous(E).
 feature_term(continuous_color,E) :- channel(E,color), continuous(E).
-feature_term(continuous_opacity,E) :- channel(E,opacity), continuous(E).
 feature_term(continuous_size,E) :- channel(E,size), continuous(E).
 feature_term(continuous_text,E) :- channel(E,text), continuous(E).
 
 feature_term(ordered_x,E) :- channel(E,x), discrete(E), not type(E,nominal).
 feature_term(ordered_y,E) :- channel(E,y), discrete(E), not type(E,nominal).
 feature_term(ordered_color,E) :- channel(E,color), discrete(E), not type(E,nominal).
-feature_term(ordered_opacity,E) :- channel(E,opacity), discrete(E), not type(E,nominal).
 feature_term(ordered_size,E) :- channel(E,size), discrete(E), not type(E,nominal).
 feature_term(ordered_text,E) :- channel(E,text), discrete(E), not type(E,nominal).
 feature_term(ordered_row,E) :- channel(E,row), discrete(E), not type(E,nominal).
@@ -193,7 +191,6 @@ feature_term(nominal_detail,E) :- channel(E,detail), type(E,nominal).
 feature_term(interesting_x,E) :- channel(E,x), enc_interesting(E).
 feature_term(interesting_y,E) :- channel(E,y), enc_interesting(E).
 feature_term(interesting_color,E) :- channel(E,color), enc_interesting(E).
-feature_term(interesting_opacity,E) :- channel(E,opacity), enc_interesting(E).
 feature_term(interesting_size,E) :- channel(E,size), enc_interesting(E).
 feature_term(interesting_shape,E) :- channel(E,shape), enc_interesting(E).
 feature_term(interesting_text,E) :- channel(E,text), enc_interesting(E).
@@ -232,7 +229,6 @@ feature_term(summary_rect) :- task(summary), mark(rect).
 feature_term(value_channel_x,E) :- task(value), channel(E,x), enc_interesting(E).
 feature_term(value_channel_y,E) :- task(value), channel(E,y), enc_interesting(E).
 feature_term(value_channel_color,E) :- task(value), channel(E,color), enc_interesting(E).
-feature_term(value_channel_opacity,E) :- task(value), channel(E,opacity), enc_interesting(E).
 feature_term(value_channel_size,E) :- task(value), channel(E,size), enc_interesting(E).
 feature_term(value_channel_shape,E) :- task(value), channel(E,shape), enc_interesting(E).
 feature_term(value_channel_text,E) :- task(value), channel(E,text), enc_interesting(E).
@@ -243,7 +239,6 @@ feature_term(value_channel_detail,E) :- task(value), channel(E,detail), enc_inte
 feature_term(summary_channel_x,E) :- task(summary), channel(E,x), enc_interesting(E).
 feature_term(summary_channel_y,E) :- task(summary), channel(E,y), enc_interesting(E).
 feature_term(summary_channel_color,E) :- task(summary), channel(E,color), enc_interesting(E).
-feature_term(summary_channel_opacity,E) :- task(summary), channel(E,opacity), enc_interesting(E).
 feature_term(summary_channel_size,E) :- task(summary), channel(E,size), enc_interesting(E).
 feature_term(summary_channel_shape,E) :- task(summary), channel(E,shape), enc_interesting(E).
 feature_term(summary_channel_text,E) :- task(summary), channel(E,text), enc_interesting(E).
