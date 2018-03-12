@@ -1,6 +1,7 @@
 {
     "1": [],
-    "2": [
+    "2": [],
+    "3": [
         [
             {
                 "data": {
@@ -8,14 +9,22 @@
                 },
                 "encoding": {
                     "color": {
-                        "field": "Engine Size",
+                        "field": "Rating",
+                        "type": "nominal"
+                    },
+                    "x": {
+                        "aggregate": "sum",
+                        "field": "Retail Price",
                         "scale": {
                             "zero": true
                         },
                         "type": "quantitative"
                     },
-                    "x": {
-                        "field": "Rating",
+                    "y": {
+                        "bin": {
+                            "maxbins": 20
+                        },
+                        "field": "Horsepower",
                         "scale": {
                             "zero": true
                         },
@@ -30,14 +39,22 @@
                 },
                 "encoding": {
                     "color": {
-                        "field": "Engine Size",
-                        "type": "quantitative"
+                        "field": "Rating",
+                        "type": "nominal"
                     },
                     "x": {
-                        "field": "Rating",
+                        "aggregate": "sum",
+                        "field": "Retail Price",
                         "scale": {
                             "zero": true
                         },
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "bin": {
+                            "maxbins": 20
+                        },
+                        "field": "Horsepower",
                         "type": "quantitative"
                     }
                 },
@@ -45,6 +62,5 @@
             }
         ]
     ],
-    "3": [],
     "4": []
 }
