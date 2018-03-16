@@ -37,7 +37,7 @@ feature_term(count_twice) :- { aggregate(_,count) } = 2.
 feature_term(categorical_cardinality,E) :- channel(E,color), type(E,nominal), enc_cardinality(E,C), C > 20.
 
 % shape channel should not have too high cardinality
-feature_term(shape_cardinality,E) :- channel(E,shape), enc_cardinality(E,C), C > 6.
+feature_term(shape_cardinality,E) :- channel(E,shape), enc_cardinality(E,C), C > 5.
 
 % numbers should not be nominal
 feature_term(number_nominal,E) :- type(E,nominal), field(E,F), fieldtype(F,number).

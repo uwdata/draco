@@ -1,4 +1,4 @@
-% test with `clingo asp/_apt.lp test_apt.lp --opt-mode=optN --quiet=1 --project -c max_extra_encs=0`
+% test with `clingo asp/_apt.lp examples/example_apt.lp --opt-mode=optN --quiet=1 --project -c max_extra_encs=0`
 
 % ====== Data definitions ======
 data_size(20).

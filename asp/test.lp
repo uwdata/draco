@@ -163,6 +163,11 @@
 % cannot use non positional continuous with stack unless it's aggregated
 :- stack(_), non_positional(C), channel(E,C), not aggregate(E,_), continuous(E).
 
+% Vega-Lite currenlty supports 8 shapes
+:- channel(E,shape), enc_cardinality(E,C), C > 8.
+
+% At most 20 categorical colors
+:- channel(E,color), discrete(E), enc_cardinality(E,C), C > 20.
 
 % === Type checks ===
 
