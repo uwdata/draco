@@ -29,11 +29,11 @@ Solvers using CEGAR](https://www.microsoft.com/en-us/research/wp-content/uploads
 * The Algorithm is written up in https://hackmd.io/s/H1RYJ5RRW
 * https://github.com/potassco/guide/releases/
 
-## Developer setup
+## Installlation
 
 ### Install clingo.
 
-On Linux, run `conda install -c potassco clingo`. On MacOS, you can alternatively run `brew install clingo`.
+You can install clingo with conda: `conda install -c potassco clingo`. On MacOS, you can alternatively run `brew install clingo`.
 
 ### Install node dependencies
 
@@ -50,6 +50,10 @@ Install draco in editable mode
 `pip install -e .`
 
 Now you can call the command line tool `draco`. For example `draco --version` or `draco --help`.
+
+#### To run the notebook in a conda environment
+
+`conda install nb_conda_kernels nb_conda`
 
 ### Tests
 
@@ -69,7 +73,9 @@ You should also be able to run the tests (and coverage report)
 
 `mypy draco tests --ignore-missing-imports`
 
-### Running Draco
+## Running Draco
+
+### End to end example
 
 To run draco on a partial spec.
 
@@ -89,6 +95,8 @@ You can use the helper file `asp/_all.lp`.
 
 Alternatively, you can invoke draco with `draco -m asp test.lp`.
 
-## To run the notebook in a conda environment
+### Run APT example
 
-`conda install nb_conda_kernels nb_conda`
+`clingo asp/_apt.lp examples/example_apt.lp --opt-mode=optN --quiet=1 --project -c max_extra_encs=0`
+
+This only prints the relevant data and restricts the extra encodings that are being generated.

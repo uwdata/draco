@@ -24,5 +24,10 @@
 :- channel(_,row).
 :- channel(_,column).
 
+% don't bin, use log, or aggregate
+:- bin(_).
+:- log(_).
+:- aggregate(_,_).
+
 #show mark/1.
 #show channel/2.
