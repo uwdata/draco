@@ -56,10 +56,10 @@ enc_extent(E,MIN,MAX) :- field(E,F), extent(F,MIN,MAX).
 feature_term(F,_placeholder) :- feature_term(F).
 
 % silence warnings about properties never appearing in head
-_true(false).
-entropy(0,0) :- _true(true).
-interesting(0) :- _true(true).
-extent(0,0,0) :- _true(true).
+entropy(0,0) :- #false.
+interesting(0) :- #false.
+extent(0,0,0) :- #false.
+feature_term(0) :- #false.
 
 % == Chart Types ==
 
