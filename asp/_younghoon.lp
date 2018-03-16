@@ -23,3 +23,9 @@
 
 % always use zero for quantitative
 :- type(E,quantitative), not zero(E).
+
+% no aggregations
+:- aggregate(E,_).
+
+% no binning
+:- bin(E,_).
