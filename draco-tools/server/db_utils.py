@@ -113,4 +113,3 @@ if __name__ == '__main__':
     build_database(db_file)
     labeled = load_labeled_specs(db_file)
     print(labeled)
-    

@@ -47,7 +47,7 @@ def train_model(X: pd.DataFrame, test_size: float=0.3):
 def train_and_plot(data: pd.DataFrame, test_size: float=0.3):
     """ use SVM to classify them and then plot them after projecting X, y into 2D using PCA
     """
-    X = data.positive - data.negative
+    X = data.negative - data.positive
 
     pca = PCA(n_components=2)
     X2 = pca.fit_transform(X)
@@ -95,7 +95,7 @@ def project_and_plot(data: pd.DataFrame, test_size: float=0.3):
     """ Reduce X, y into 2D using PCA and use SVM to classify them
         Then plot the decision boundary as well as raw data points
     """
-    X = data.positive - data.negative
+    X = data.negative - data.positive
 
     pca = PCA(n_components=2)
     X = pca.fit_transform(X)
