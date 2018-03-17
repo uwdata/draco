@@ -128,7 +128,7 @@ feature_weight(value_channel_row,value_channel_row_weight).
 feature_weight(value_channel_column,value_channel_column_weight).
 feature_weight(value_channel_detail,value_channel_detail_weight).
 feature_weight(summary_channel_x,summary_channel_x_weight).
-feature_weight(summary_channel,summary_channel_weight).
+feature_weight(summary_channel_y,summary_channel_y_weight).
 feature_weight(summary_channel_color,summary_channel_color_weight).
 feature_weight(summary_channel_size,summary_channel_size_weight).
 feature_weight(summary_channel_shape,summary_channel_shape_weight).

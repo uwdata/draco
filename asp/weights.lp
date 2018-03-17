@@ -143,7 +143,7 @@
 #const value_channel_detail_weight = 0.
 
 #const summary_channel_x_weight = 0.
-#const summary_channel_weight = 0.
+#const summary_channel_y_weight = 0.
 #const summary_channel_color_weight = 0.
 #const summary_channel_size_weight = 0.
 #const summary_channel_shape_weight = 0.
