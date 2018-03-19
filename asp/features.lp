@@ -234,23 +234,14 @@ feature_term(value_continuous_color,E) :- task(value), channel(E,color), continu
 feature_term(value_continuous_size,E) :- task(value), channel(E,size), continuous(E), enc_interesting(E).
 feature_term(value_continuous_text,E) :- task(value), channel(E,text), continuous(E), enc_interesting(E).
 
-feature_term(value_ordered_x,E) :- task(value), channel(E,x), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(value_ordered_y,E) :- task(value), channel(E,y), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(value_ordered_color,E) :- task(value), channel(E,color), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(value_ordered_size,E) :- task(value), channel(E,size), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(value_ordered_text,E) :- task(value), channel(E,text), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(value_ordered_row,E) :- task(value), channel(E,row), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(value_ordered_column,E) :- task(value), channel(E,column), discrete(E), not type(E,nominal), enc_interesting(E).
-
-feature_term(value_nominal_x,E) :- task(value), channel(E,x), type(E,nominal), enc_interesting(E).
-feature_term(value_nominal_y,E) :- task(value), channel(E,y), type(E,nominal), enc_interesting(E).
-feature_term(value_nominal_color,E) :- task(value), channel(E,color), type(E,nominal), enc_interesting(E).
-feature_term(value_nominal_shape,E) :- task(value), channel(E,shape), type(E,nominal), enc_interesting(E).
-feature_term(value_nominal_text,E) :- task(value), channel(E,text), type(E,nominal), enc_interesting(E).
-feature_term(value_nominal_row,E) :- task(value), channel(E,row), type(E,nominal), enc_interesting(E).
-feature_term(value_nominal_column,E) :- task(value), channel(E,column), type(E,nominal), enc_interesting(E).
-feature_term(value_nominal_detail,E) :- task(value), channel(E,detail), type(E,nominal), enc_interesting(E).
-
+feature_term(value_discrete_x,E) :- task(value), channel(E,x), discrete(E), enc_interesting(E).
+feature_term(value_discrete_y,E) :- task(value), channel(E,y), discrete(E), enc_interesting(E).
+feature_term(value_discrete_color,E) :- task(value), channel(E,color), discrete(E), enc_interesting(E).
+feature_term(value_discrete_shape,E) :- task(value), channel(E,color), discrete(E), enc_interesting(E).
+feature_term(value_discrete_size,E) :- task(value), channel(E,size), discrete(E), enc_interesting(E).
+feature_term(value_discrete_text,E) :- task(value), channel(E,text), discrete(E), enc_interesting(E).
+feature_term(value_discrete_row,E) :- task(value), channel(E,row), discrete(E), enc_interesting(E).
+feature_term(value_discrete_column,E) :- task(value), channel(E,column), discrete(E), enc_interesting(E).
 
 feature_term(summary_continuous_x,E) :- task(summary), channel(E,x), continuous(E), enc_interesting(E).
 feature_term(summary_continuous_y,E) :- task(summary), channel(E,y), continuous(E), enc_interesting(E).
@@ -258,22 +249,14 @@ feature_term(summary_continuous_color,E) :- task(summary), channel(E,color), con
 feature_term(summary_continuous_size,E) :- task(summary), channel(E,size), continuous(E), enc_interesting(E).
 feature_term(summary_continuous_text,E) :- task(summary), channel(E,text), continuous(E), enc_interesting(E).
 
-feature_term(summary_ordered_x,E) :- task(summary), channel(E,x), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(summary_ordered_y,E) :- task(summary), channel(E,y), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(summary_ordered_color,E) :- task(summary), channel(E,color), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(summary_ordered_size,E) :- task(summary), channel(E,size), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(summary_ordered_text,E) :- task(summary), channel(E,text), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(summary_ordered_row,E) :- task(summary), channel(E,row), discrete(E), not type(E,nominal), enc_interesting(E).
-feature_term(summary_ordered_column,E) :- task(summary), channel(E,column), discrete(E), not type(E,nominal), enc_interesting(E).
-
-feature_term(summary_nominal_x,E) :- task(summary), channel(E,x), type(E,nominal), enc_interesting(E).
-feature_term(summary_nominal_y,E) :- task(summary), channel(E,y), type(E,nominal), enc_interesting(E).
-feature_term(summary_nominal_color,E) :- task(summary), channel(E,color), type(E,nominal), enc_interesting(E).
-feature_term(summary_nominal_shape,E) :- task(summary), channel(E,shape), type(E,nominal), enc_interesting(E).
-feature_term(summary_nominal_text,E) :- task(summary), channel(E,text), type(E,nominal), enc_interesting(E).
-feature_term(summary_nominal_row,E) :- task(summary), channel(E,row), type(E,nominal), enc_interesting(E).
-feature_term(summary_nominal_column,E) :- task(summary), channel(E,column), type(E,nominal), enc_interesting(E).
-feature_term(summary_nominal_detail,E) :- task(summary), channel(E,detail), type(E,nominal), enc_interesting(E).
+feature_term(summary_discrete_x,E) :- task(summary), channel(E,x), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_y,E) :- task(summary), channel(E,y), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_color,E) :- task(summary), channel(E,color), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_shape,E) :- task(summary), channel(E,color), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_size,E) :- task(summary), channel(E,size), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_text,E) :- task(summary), channel(E,text), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_row,E) :- task(summary), channel(E,row), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_column,E) :- task(summary), channel(E,column), discrete(E), enc_interesting(E).
 
 % stack
 
