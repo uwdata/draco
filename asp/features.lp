@@ -226,25 +226,37 @@ feature_term(summary_text) :- task(summary), mark(text).
 feature_term(summary_tick) :- task(summary), mark(tick).
 feature_term(summary_rect) :- task(summary), mark(rect).
 
-feature_term(value_channel_x,E) :- task(value), channel(E,x), enc_interesting(E).
-feature_term(value_channel_y,E) :- task(value), channel(E,y), enc_interesting(E).
-feature_term(value_channel_color,E) :- task(value), channel(E,color), enc_interesting(E).
-feature_term(value_channel_size,E) :- task(value), channel(E,size), enc_interesting(E).
-feature_term(value_channel_shape,E) :- task(value), channel(E,shape), enc_interesting(E).
-feature_term(value_channel_text,E) :- task(value), channel(E,text), enc_interesting(E).
-feature_term(value_channel_row,E) :- task(value), channel(E,row), enc_interesting(E).
-feature_term(value_channel_column,E) :- task(value), channel(E,column), enc_interesting(E).
-feature_term(value_channel_detail,E) :- task(value), channel(E,detail), enc_interesting(E).
+% task - channel correlations
 
-feature_term(summary_channel_x,E) :- task(summary), channel(E,x), enc_interesting(E).
-feature_term(summary_channel_y,E) :- task(summary), channel(E,y), enc_interesting(E).
-feature_term(summary_channel_color,E) :- task(summary), channel(E,color), enc_interesting(E).
-feature_term(summary_channel_size,E) :- task(summary), channel(E,size), enc_interesting(E).
-feature_term(summary_channel_shape,E) :- task(summary), channel(E,shape), enc_interesting(E).
-feature_term(summary_channel_text,E) :- task(summary), channel(E,text), enc_interesting(E).
-feature_term(summary_channel_row,E) :- task(summary), channel(E,row), enc_interesting(E).
-feature_term(summary_channel_column,E) :- task(summary), channel(E,column), enc_interesting(E).
-feature_term(summary_channel_detail,E) :- task(summary), channel(E,detail), enc_interesting(E).
+feature_term(value_continuous_x,E) :- task(value), channel(E,x), continuous(E), enc_interesting(E).
+feature_term(value_continuous_y,E) :- task(value), channel(E,y), continuous(E), enc_interesting(E).
+feature_term(value_continuous_color,E) :- task(value), channel(E,color), continuous(E), enc_interesting(E).
+feature_term(value_continuous_size,E) :- task(value), channel(E,size), continuous(E), enc_interesting(E).
+feature_term(value_continuous_text,E) :- task(value), channel(E,text), continuous(E), enc_interesting(E).
+
+feature_term(value_discrete_x,E) :- task(value), channel(E,x), discrete(E), enc_interesting(E).
+feature_term(value_discrete_y,E) :- task(value), channel(E,y), discrete(E), enc_interesting(E).
+feature_term(value_discrete_color,E) :- task(value), channel(E,color), discrete(E), enc_interesting(E).
+feature_term(value_discrete_shape,E) :- task(value), channel(E,color), discrete(E), enc_interesting(E).
+feature_term(value_discrete_size,E) :- task(value), channel(E,size), discrete(E), enc_interesting(E).
+feature_term(value_discrete_text,E) :- task(value), channel(E,text), discrete(E), enc_interesting(E).
+feature_term(value_discrete_row,E) :- task(value), channel(E,row), discrete(E), enc_interesting(E).
+feature_term(value_discrete_column,E) :- task(value), channel(E,column), discrete(E), enc_interesting(E).
+
+feature_term(summary_continuous_x,E) :- task(summary), channel(E,x), continuous(E), enc_interesting(E).
+feature_term(summary_continuous_y,E) :- task(summary), channel(E,y), continuous(E), enc_interesting(E).
+feature_term(summary_continuous_color,E) :- task(summary), channel(E,color), continuous(E), enc_interesting(E).
+feature_term(summary_continuous_size,E) :- task(summary), channel(E,size), continuous(E), enc_interesting(E).
+feature_term(summary_continuous_text,E) :- task(summary), channel(E,text), continuous(E), enc_interesting(E).
+
+feature_term(summary_discrete_x,E) :- task(summary), channel(E,x), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_y,E) :- task(summary), channel(E,y), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_color,E) :- task(summary), channel(E,color), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_shape,E) :- task(summary), channel(E,color), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_size,E) :- task(summary), channel(E,size), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_text,E) :- task(summary), channel(E,text), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_row,E) :- task(summary), channel(E,row), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_column,E) :- task(summary), channel(E,column), discrete(E), enc_interesting(E).
 
 % stack
 
