@@ -30,13 +30,11 @@ for (var i = 0; i < files.length; i ++) {
 
   const query = {
     spec,
-    chooseBy: 'effectiveness'
+    chooseBy: 'effectiveness',
+    config: { autoAddCount: true }
   };
 
-  const recommendation = cql.recommend(query, schema, {
-    defaultSpecConfig: null,
-    autoAddCount: true
-  });
+  const recommendation = cql.recommend(query, schema);
 
   const vlSpec = recommendation.result.items[0].toSpec();
 
