@@ -75,7 +75,7 @@ is_d_d :- channel_discrete(x), channel_discrete(y).
 
 % == Overlap ==
 
-no_verlap :- is_c_c, aggregate(E,_), channel(E,y).
+no_overlap :- is_c_c, aggregate(E,_), channel(E,y).
 overlap :- is_c_c, not no_overlap, channel(EX,x), enc_cardinality(EX,CX), data_size(S), S > CX.
 
 % the continuous variable is a measure (it is aggregated) and all other channels are aggregated, or we use stack -> no overlap
@@ -93,9 +93,13 @@ no_overlap :- is_c_d, data_size(S), discrete_size(S).
 % we definitely overlap if the data size > discrete size
 overlap :- is_c_d, not no_overlap, data_size(S1), discrete_size(S2), S1 > S2.
 
-% no overlap if all other dimensions are aggregated
-discrete_size(S) :- is_d_d, channel(EX,x), channel(EY,y), enc_cardinality(EX,SX), enc_cardinality(EY,SY), S = SX*SY.
-no_overlap :- is_d_d, not non_pos_unaggregated.
-no_overlap :- is_d_d, data_size(S1), discrete_size(S2), S1 <= S2.
+pos_cardinality(C,CE) :- C = (x;y), enc_cardinality(E,CE), channel(E,C), not bin(E,_).
+pos_cardinality(C,CB) :- C = (x;y), channel(E,C), bin(E,CB).
 
-overlap :- is_d_d, not no_overlap, data_size(S1), discrete_size(S2), S1 > S2.
+% no overlap if all other dimensions are aggregated
+discrete_size(S) :- is_d_d, pos_cardinality(x,SX), pos_cardinality(y,SY), S = SX*SY.
+no_overlap :- is_d_d, not non_pos_unaggregated.
+no_overlap :- is_d_d, data_size(S1), discrete_size(S2), S1 <= S2.  % this cannot guarantee no overlap
+
+% we can guarantee overlap using this rule unless we are using row / column
+overlap :- is_d_d, channel(E, C), not C = (row;column), data_size(S1), discrete_size(S2), S1 > S2.
