@@ -8,7 +8,6 @@
 #include "asp/assign_weights.lp".
 #include "asp/optimize.lp".
 #include "asp/count.lp".
-#include "asp/output.lp".
 
 % only three encodings
 3 { encoding(E): encoding(E) } 3.
@@ -29,3 +28,6 @@
 
 % no binning
 :- bin(E,_).
+
+#show mark/1.
+#show channel/2.
