@@ -162,7 +162,7 @@ Test constraints:
     Test can log number:
         Program: |
             encoding(e).
-            :- not field(e,q1).
+            :- not field(e,q2).
             :- not log(e).
         Expect: SAT
 
