@@ -46,6 +46,7 @@ feature_weight(x_column,x_column_weight).
 feature_weight(y_column,y_column_weight).
 feature_weight(c_d_column,c_d_column_weight).
 feature_weight(temporal_y,temporal_y_weight).
+feature_weight(d_d_overlap,d_d_overlap_weight).
 feature_weight(c_c_point,c_c_point_weight).
 feature_weight(c_c_line,c_c_line_weight).
 feature_weight(c_c_area,c_c_area_weight).
@@ -66,9 +67,6 @@ feature_weight(c_d_no_overlap_tick,c_d_no_overlap_tick_weight).
 feature_weight(d_d_point,d_d_point_weight).
 feature_weight(d_d_text,d_d_text_weight).
 feature_weight(d_d_rect,d_d_rect_weight).
-feature_weight(d_d_no_overlap_point,d_d_no_overlap_point_weight).
-feature_weight(d_d_no_overlap_text,d_d_no_overlap_text_weight).
-feature_weight(d_d_no_overlap_rect,d_d_no_overlap_rect_weight).
 feature_weight(continuous_x,continuous_x_weight).
 feature_weight(continuous_y,continuous_y_weight).
 feature_weight(continuous_color,continuous_color_weight).
@@ -99,6 +97,7 @@ feature_weight(interesting_row,interesting_row_weight).
 feature_weight(interesting_column,interesting_column_weight).
 feature_weight(interesting_detail,interesting_detail_weight).
 feature_weight(aggregate_count,aggregate_count_weight).
+feature_weight(aggregate_sum,aggregate_sum_weight).
 feature_weight(aggregate_mean,aggregate_mean_weight).
 feature_weight(aggregate_median,aggregate_median_weight).
 feature_weight(aggregate_min,aggregate_min_weight).

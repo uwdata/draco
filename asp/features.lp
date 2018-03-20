@@ -131,6 +131,9 @@ feature_term(c_d_column) :- channel_continuous(x), channel_discrete(y), channel(
 % prefer time on x
 feature_term(temporal_y) :- type(E,temporal), channel(E,x).
 
+% prefer not to overlap with DxD
+feature_term(d_d_overlap) :- is_d_d, overlap.
+
 % ====== Rankings ======
 
 feature_term(c_c_point) :- is_c_c, mark(point).
@@ -139,14 +142,13 @@ feature_term(c_c_area) :- is_c_c, mark(area).
 feature_term(c_c_text) :- is_c_c, mark(text).
 feature_term(c_c_tick) :- is_c_c, mark(tick).
 
+
 feature_term(c_d_point) :- is_c_d, not no_overlap, mark(point).
 feature_term(c_d_bar) :- is_c_d, not no_overlap, mark(bar).
 feature_term(c_d_line) :- is_c_d, not no_overlap, mark(line).
 feature_term(c_d_area) :- is_c_d, not no_overlap, mark(area).
 feature_term(c_d_text) :- is_c_d, not no_overlap, mark(text).
 feature_term(c_d_tick) :- is_c_d, not no_overlap, mark(tick).
-
-% no overlap
 
 feature_term(c_d_no_overlap_point) :- is_c_d, no_overlap, mark(point).
 feature_term(c_d_no_overlap_bar) :- is_c_d, no_overlap, mark(bar).
@@ -155,13 +157,10 @@ feature_term(c_d_no_overlap_area) :- is_c_d, no_overlap, mark(area).
 feature_term(c_d_no_overlap_text) :- is_c_d, no_overlap, mark(text).
 feature_term(c_d_no_overlap_tick) :- is_c_d, no_overlap, mark(tick).
 
+
 feature_term(d_d_point) :- is_d_d, mark(point).
 feature_term(d_d_text) :- is_d_d, mark(text).
 feature_term(d_d_rect) :- is_d_d, mark(rect).
-
-feature_term(d_d_no_overlap_point) :- is_d_d, mark(point).
-feature_term(d_d_no_overlap_text) :- is_d_d, mark(text).
-feature_term(d_d_no_overlap_rect) :- is_d_d, mark(rect).
 
 % channel rankings à la APT
 
