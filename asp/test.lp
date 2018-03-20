@@ -22,6 +22,9 @@
 % cannot use log and zero together
 :- log(E), zero(E).
 
+% cannot use log if the data is negative or zero
+:- log(E), field(E,F), extent(F,MIN,_), MIN <= 0.
+
 % cannot bin and aggregate
 :- bin(E,_), aggregate(E,_).
 
