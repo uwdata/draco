@@ -102,4 +102,5 @@ no_overlap :- is_d_d, not non_pos_unaggregated.
 no_overlap :- is_d_d, data_size(S1), discrete_size(S2), S1 <= S2.  % this cannot guarantee no overlap
 
 % we can guarantee overlap using this rule unless we are using row / column
-overlap :- is_d_d, channel(E, C), not C = (row;column), data_size(S1), discrete_size(S2), S1 > S2.
+row_col :- channel(_,(row;column)).
+overlap :- is_d_d, channel(E,C), not row_col, not no_overlap, data_size(S1), discrete_size(S2), S1 > S2.
