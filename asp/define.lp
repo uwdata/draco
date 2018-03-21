@@ -104,3 +104,11 @@ no_overlap :- is_d_d, data_size(S1), discrete_size(S2), S1 <= S2.  % this cannot
 % we can guarantee overlap using this rule unless we are using row / column
 row_col :- channel(_,(row;column)).
 overlap :- is_d_d, channel(E,C), not row_col, not no_overlap, data_size(S1), discrete_size(S2), S1 > S2.
+
+% == Orientation ==
+% orientation tells us which one is the dependent and independent variable
+
+orientation(vertical) :- mark(bar;tick;area;line), channel_discrete(x).
+orientation(vertical) :- mark(area;line), channel_continuous(x), channel_continuous(y).
+
+orientation(horizontal) :- mark(bar;tick;area;line), channel_discrete(y).

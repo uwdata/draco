@@ -103,7 +103,8 @@
 :- mark(bar;tick;area;line), not channel_continuous(x), not channel_continuous(y).
 
 % bar and area mark requires scale of continuous to start at zero
-:- mark(bar;area), channel(E,(x;y)), continuous(E), not zero(E).
+:- mark(bar;area), channel(E,x), orientation(horizontal), not zero(E).
+:- mark(bar;area), channel(E,y), orientation(vertical), not zero(E).
 
 % shape channel requires point mark
 :- channel(_,shape), not mark(point).
