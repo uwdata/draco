@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def train_model(X: pd.DataFrame, test_size: float=0.3, C: float=1.0):
+def train_model(X: pd.DataFrame, test_size: float=0.3, C: float=0.1):
     """ Given features X and labels y, train a linear model to classify them
         Args:
             X: a N x M matrix, representing feature vectors
