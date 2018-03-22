@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def train_model(X: pd.DataFrame, test_size: float=0.3):
+def train_model(X: pd.DataFrame, test_size: float=0.3, C: float=1.0):
     """ Given features X and labels y, train a linear model to classify them
         Args:
             X: a N x M matrix, representing feature vectors
@@ -40,7 +40,7 @@ def train_model(X: pd.DataFrame, test_size: float=0.3):
     X_train[idx] = -X_train[idx]
     y_train[idx] = -y_train[idx]
 
-    clf = svm.LinearSVC(C=1, fit_intercept=False)
+    clf = svm.LinearSVC(C=C, fit_intercept=False)
     clf.fit(X_train, y_train)
 
     print("Train score: ", clf.score(X_train, y_train))

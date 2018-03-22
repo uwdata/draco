@@ -227,7 +227,7 @@ class Data():
                     if f.extent:
                         l = np.random.randint(low=f.extent[0], high=f.extent[1], size=cardinality)
                     else:
-                        l = np.random.randint(size=cardinality)
+                        l = np.random.randint(0, cardinality * 1.5, size=cardinality)
                     data = np.random.choice(l, size=size)
             elif f.ty == "string":
                 l = rw.random_words(count=cardinality)
