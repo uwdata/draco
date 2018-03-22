@@ -123,10 +123,10 @@ feature_term(high_cardinality_size,E) :- continuous(E), channel(_,size), enc_car
 feature_term(value_agg) :- task(value), aggregate(_,_).
 
 % positional interactions
-feature_term(x_row) :- channel(_,x), channel(_,row), enc_interesting(x).
-feature_term(y_row) :- channel(_,y), channel(_,row), enc_interesting(y).
-feature_term(x_column) :- channel(_,x), channel(_,column), enc_interesting(x).
-feature_term(y_column) :- channel(_,y), channel(_,column), enc_interesting(y).
+feature_term(x_row) :- channel(E,x), channel(_,row), enc_interesting(E).
+feature_term(y_row) :- channel(E,y), channel(_,row), enc_interesting(E).
+feature_term(x_column) :- channel(E,x), channel(_,column), enc_interesting(E).
+feature_term(y_column) :- channel(E,y), channel(_,column), enc_interesting(E).
 
 % prefer not to use continuous on x, discrete on y, and column
 feature_term(c_d_column) :- channel_continuous(x), channel_discrete(y), channel(_,column).
