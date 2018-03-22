@@ -181,7 +181,7 @@ def make_meshgrid(x, y, h=.01):
 def main():
     train_dev, _ = data_util.load_data(test_size=0.3)
 
-    clf = train_and_plot(train_dev)
+    clf = train_and_plot(train_dev, test_size=0.3)
     features = train_dev.negative.columns
 
     path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../asp/weights_learned.lp'))
