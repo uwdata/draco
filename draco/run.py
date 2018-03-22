@@ -69,8 +69,13 @@ def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = N
 
     return (stderr, stdout)
 
-def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False) -> Task:
+def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False, clear_cache=False) -> Task:
     ''' Run clingo to compute a completion of a partial spec or violations. '''
+
+    # Clear file cache. useful during development in notebooks.
+    if clear_cache and file_cache:
+        logger.warning('Cleared file cache')
+        file_cache.clear()
 
     stderr, stdout = run_draco(task, constants, files, silence_warnings, debug)
 

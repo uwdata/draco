@@ -95,6 +95,7 @@ def main():  # pragma: no cover
 
             if task:
                 print(task.to_vegalite_json(), file=args.out)
+                logger.info(f'Cost: {task.cost}')
                 outname = 'stringIO' if isinstance(args.out, io.StringIO) else args.out.name
                 logger.info(f'Wrote Vega-Lite spec to {outname}')
 

@@ -99,7 +99,7 @@ feature_term(high_cardinality_ordinal,E) :- type(E,ordinal), enc_cardinality(E,C
 feature_term(high_cardinality_nominal,E) :- type(E,nominal), enc_cardinality(E,C), C > 12.
 
 % prefer not to use high cardinality nominal for color
-feature_term(high_cardinality_nominal_color,E) :- type(E,nominal), enc_cardinality(E,C), C > 10.
+feature_term(high_cardinality_nominal_color,E) :- type(E,nominal), channel(E,color), enc_cardinality(E,C), C > 10.
 
 % avoid high cardinality on x or column as it causes horizontal scrolling
 feature_term(horizontal_scrolling,E) :- channel(E,x), discrete(E), enc_cardinality(E,C), C > 20.

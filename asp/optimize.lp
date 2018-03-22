@@ -1,3 +1,3 @@
 % Minimize the feature weight
 
-#minimize { W,Q,F: feature_weight(F,W), feature_term(F,Q) }.
+#minimize { W,F,Q: feature_weight(F,W), feature_term(F,Q) }.
