@@ -203,6 +203,9 @@ class Data():
     def fill_with_random_content(self, defaut_size=10, override=False):
         """ Fill the data with randomly generated data if the content its content is empty """
 
+        # fix seed so we always get the same data
+        np.random.seed(42)
+
         if not override:
             assert self.content is None
 
@@ -215,13 +218,16 @@ class Data():
         for f in self.fields:
             cardinality = f.cardinality or size
             if f.ty == "number":
-                if f.cardinality > 0.9*size:  # almost unique
+                if f.cardinality > 0.8*size:  # almost unique
                     if f.extent:
                         lower, upper = f.extent
                         mu, sigma = 5, 0.7
                         data = stats.truncnorm((lower - mu) / sigma, (upper - mu) / sigma, loc=mu, scale=sigma).rvs(size)
                     else:
-                        data = np.random.normal(loc=1, scale=2, size=size)
+                        entropy = min((f.entropy or 0.5) / 4, 1)
+                        he = int(size * entropy)
+                        le = size - he
+                        data = np.concatenate([np.random.normal(loc=1, scale=0.35, size=le), np.random.uniform(0, 2, size=he)])
                     data = list(map(lambda v: round(v, 4), data))
                 else:  # probably some kind of ordinal
                     if f.extent:
