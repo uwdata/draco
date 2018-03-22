@@ -35,6 +35,7 @@
 #const orientation_discrete_weight = 1.
 #const high_cardinality_ordinal_weight = 10.
 #const high_cardinality_nominal_weight = 10.
+#const high_cardinality_nominal_color_weight = 5.
 #const horizontal_scrolling_weight = 20.
 #const temporal_date_weight = 1.
 #const quantitative_numbers_weight = 2.

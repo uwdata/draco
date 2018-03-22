@@ -98,6 +98,9 @@ feature_term(high_cardinality_ordinal,E) :- type(E,ordinal), enc_cardinality(E,C
 % prefer not to use nominal for fields with high cardinality
 feature_term(high_cardinality_nominal,E) :- type(E,nominal), enc_cardinality(E,C), C > 12.
 
+% prefer not to use high cardinality nominal for color
+feature_term(high_cardinality_nominal_color,E) :- type(E,nominal), enc_cardinality(E,C), C > 10.
+
 % avoid high cardinality on x or column as it causes horizontal scrolling
 feature_term(horizontal_scrolling,E) :- channel(E,x), discrete(E), enc_cardinality(E,C), C > 20.
 feature_term(horizontal_scrolling,E) :- channel(E,columm), discrete(E), enc_cardinality(E,C), C > 5.
@@ -236,7 +239,7 @@ feature_term(value_continuous_text,E) :- task(value), channel(E,text), continuou
 feature_term(value_discrete_x,E) :- task(value), channel(E,x), discrete(E), enc_interesting(E).
 feature_term(value_discrete_y,E) :- task(value), channel(E,y), discrete(E), enc_interesting(E).
 feature_term(value_discrete_color,E) :- task(value), channel(E,color), discrete(E), enc_interesting(E).
-feature_term(value_discrete_shape,E) :- task(value), channel(E,color), discrete(E), enc_interesting(E).
+feature_term(value_discrete_shape,E) :- task(value), channel(E,shape), discrete(E), enc_interesting(E).
 feature_term(value_discrete_size,E) :- task(value), channel(E,size), discrete(E), enc_interesting(E).
 feature_term(value_discrete_text,E) :- task(value), channel(E,text), discrete(E), enc_interesting(E).
 feature_term(value_discrete_row,E) :- task(value), channel(E,row), discrete(E), enc_interesting(E).
@@ -251,7 +254,7 @@ feature_term(summary_continuous_text,E) :- task(summary), channel(E,text), conti
 feature_term(summary_discrete_x,E) :- task(summary), channel(E,x), discrete(E), enc_interesting(E).
 feature_term(summary_discrete_y,E) :- task(summary), channel(E,y), discrete(E), enc_interesting(E).
 feature_term(summary_discrete_color,E) :- task(summary), channel(E,color), discrete(E), enc_interesting(E).
-feature_term(summary_discrete_shape,E) :- task(summary), channel(E,color), discrete(E), enc_interesting(E).
+feature_term(summary_discrete_shape,E) :- task(summary), channel(E,shape), discrete(E), enc_interesting(E).
 feature_term(summary_discrete_size,E) :- task(summary), channel(E,size), discrete(E), enc_interesting(E).
 feature_term(summary_discrete_text,E) :- task(summary), channel(E,text), discrete(E), enc_interesting(E).
 feature_term(summary_discrete_row,E) :- task(summary), channel(E,row), discrete(E), enc_interesting(E).

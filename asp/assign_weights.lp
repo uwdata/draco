@@ -34,6 +34,7 @@ feature_weight(orientation_binned,orientation_binned_weight).
 feature_weight(orientation_discrete,orientation_discrete_weight).
 feature_weight(high_cardinality_ordinal,high_cardinality_ordinal_weight).
 feature_weight(high_cardinality_nominal,high_cardinality_nominal_weight).
+feature_weight(high_cardinality_nominal_color,high_cardinality_nominal_color_weight).
 feature_weight(horizontal_scrolling,horizontal_scrolling_weight).
 feature_weight(temporal_date,temporal_date_weight).
 feature_weight(quantitative_numbers,quantitative_numbers_weight).
