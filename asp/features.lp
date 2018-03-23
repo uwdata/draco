@@ -125,7 +125,7 @@ feature_term(y_row) :- channel(_,y), channel(_,row).
 feature_term(x_column) :- channel(_,x), channel(_,column).
 feature_term(y_column) :- channel(_,y), channel(_,column).
 
-% entropy, primary quantitaty interactions
+% entropy, primary quantitaty interactions as suggested by Kim et al
 feature_term(color_entropy_high, E) :- channel(E,color), enc_entropy(E,EN), EN > 12, type(E,quantitative), enc_interesting(E).
 feature_term(color_entropy_low, E) :- channel(E,color), enc_entropy(E,EN), EN <= 12, type(E,quantitative), enc_interesting(E).
 feature_term(size_entropy_high, E) :- channel(E,size), enc_entropy(E,EN), EN > 12, type(E,quantitative), enc_interesting(E).
