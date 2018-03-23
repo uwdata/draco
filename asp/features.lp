@@ -33,9 +33,6 @@ feature_term(same_field_gte3,F) :- field(F), { field(_,F) } >= 3.
 % prefer not to use count more than once
 feature_term(count_twice) :- { aggregate(_,count) } = 2.
 
-% categorical color channel should not have too high cardinality
-feature_term(categorical_cardinality,E) :- channel(E,color), type(E,nominal), enc_cardinality(E,C), C > 20.
-
 % shape channel should not have too high cardinality
 feature_term(shape_cardinality,E) :- channel(E,shape), enc_cardinality(E,C), C > 5.
 
@@ -122,11 +119,17 @@ feature_term(high_cardinality_size,E) :- continuous(E), channel(_,size), enc_car
 % prefer not to aggregate for value tasks
 feature_term(value_agg) :- task(value), aggregate(_,_).
 
-% positional interactions
-feature_term(x_row) :- channel(E,x), channel(_,row), enc_interesting(E).
-feature_term(y_row) :- channel(E,y), channel(_,row), enc_interesting(E).
-feature_term(x_column) :- channel(E,x), channel(_,column), enc_interesting(E).
-feature_term(y_column) :- channel(E,y), channel(_,column), enc_interesting(E).
+% positional interactions as suggested by Kim et al
+feature_term(x_row) :- channel(_,x), channel(_,row).
+feature_term(y_row) :- channel(_,y), channel(_,row).
+feature_term(x_column) :- channel(_,x), channel(_,column).
+feature_term(y_column) :- channel(_,y), channel(_,column).
+
+% entropy, primary quantitaty interactions
+feature_term(color_high_primary_entropy, E) :- channel(E,color), enc_entropy(E,EN), EN > 12, type(E,quantitative), enc_interesting(E).
+feature_term(color_low_primary_entropy, E) :- channel(E,color), enc_entropy(E,EN), EN <= 12, type(E,quantitative), enc_interesting(E).
+feature_term(size_high_primary_entropy, E) :- channel(E,size), enc_entropy(E,EN), EN > 12, type(E,quantitative), enc_interesting(E).
+feature_term(size_low_primary_entropy, E) :- channel(E,size), enc_entropy(E,EN), EN <= 12, type(E,quantitative), enc_interesting(E).
 
 % prefer not to use continuous on x, discrete on y, and column
 feature_term(c_d_column) :- channel_continuous(x), channel_discrete(y), channel(_,column).
