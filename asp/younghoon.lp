@@ -20,3 +20,6 @@
 
 % no binning
 :- bin(E,_).
+
+% no column
+:- channel(E,column).

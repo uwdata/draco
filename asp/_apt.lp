@@ -6,19 +6,20 @@
 
 :~ type(E,quantitative), channel(E,x), priority(E,P). [1@P,E]
 :~ type(E,quantitative), channel(E,y), priority(E,P). [1@P,E]
-:~ type(E,quantitative), channel(E,color), priority(E,P). [2@P,E]
-:~ type(E,quantitative), channel(E,size), priority(E,P). [3@P,E]
+:~ type(E,quantitative), channel(E,size), priority(E,P). [2@P,E]
+:~ type(E,quantitative), channel(E,color), priority(E,P). [3@P,E]
 :~ type(E,quantitative), channel(E,text), priority(E,P). [4@P,E]
 
 :~ type(E,ordinal), channel(E,x), priority(E,P). [1@P,E]
 :~ type(E,ordinal), channel(E,y), priority(E,P). [1@P,E]
-:~ type(E,ordinal), channel(E,size), priority(E,P). [2@P,E]
-:~ type(E,ordinal), channel(E,color), priority(E,P). [3@P,E]
+:~ type(E,ordinal), channel(E,color), priority(E,P). [2@P,E]
+:~ type(E,ordinal), channel(E,size), priority(E,P). [3@P,E]
 
 :~ type(E,nominal), channel(E,x), priority(E,P). [1@P,E]
 :~ type(E,nominal), channel(E,y), priority(E,P). [1@P,E]
 :~ type(E,nominal), channel(E,color), priority(E,P). [2@P,E]
 :~ type(E,nominal), channel(E,shape), priority(E,P). [3@P,E]
+:~ type(E,nominal), channel(E,size), priority(E,P). [4@P,E]
 
 :- channel(_,detail).
 :- channel(_,row).
