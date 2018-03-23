@@ -241,6 +241,8 @@ def _get_pos_neg_data() -> pd.DataFrame:
     data = pd.read_pickle(pos_neg_pickle_path)
     data.fillna(0, inplace=True)
 
+    assert set(data.negative.columns) == set(get_feature_names()), 'Feature names do not match.'
+
     return data
 
 

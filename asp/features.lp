@@ -126,10 +126,10 @@ feature_term(x_column) :- channel(_,x), channel(_,column).
 feature_term(y_column) :- channel(_,y), channel(_,column).
 
 % entropy, primary quantitaty interactions
-feature_term(color_high_primary_entropy, E) :- channel(E,color), enc_entropy(E,EN), EN > 12, type(E,quantitative), enc_interesting(E).
-feature_term(color_low_primary_entropy, E) :- channel(E,color), enc_entropy(E,EN), EN <= 12, type(E,quantitative), enc_interesting(E).
-feature_term(size_high_primary_entropy, E) :- channel(E,size), enc_entropy(E,EN), EN > 12, type(E,quantitative), enc_interesting(E).
-feature_term(size_low_primary_entropy, E) :- channel(E,size), enc_entropy(E,EN), EN <= 12, type(E,quantitative), enc_interesting(E).
+feature_term(color_entropy_high, E) :- channel(E,color), enc_entropy(E,EN), EN > 12, type(E,quantitative), enc_interesting(E).
+feature_term(color_entropy_low, E) :- channel(E,color), enc_entropy(E,EN), EN <= 12, type(E,quantitative), enc_interesting(E).
+feature_term(size_entropy_high, E) :- channel(E,size), enc_entropy(E,EN), EN > 12, type(E,quantitative), enc_interesting(E).
+feature_term(size_entropy_low, E) :- channel(E,size), enc_entropy(E,EN), EN <= 12, type(E,quantitative), enc_interesting(E).
 
 % prefer not to use continuous on x, discrete on y, and column
 feature_term(c_d_column) :- channel_continuous(x), channel_discrete(y), channel(_,column).
