@@ -9,7 +9,5 @@
 #include "asp/assign_weights.lp".
 #include "asp/count.lp".
 #include "asp/output.lp".
+#include "asp/cost.lp".
 
-cost(C) :- C = #sum { W,Q,F: feature_weight(F,W), feature_term(F,Q) }.
-
-#show cost/1.

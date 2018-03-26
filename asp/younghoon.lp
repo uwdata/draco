@@ -23,3 +23,6 @@
 
 % no column
 :- channel(E,column).
+
+% no shape
+:- channel(E,shape).

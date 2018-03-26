@@ -119,6 +119,9 @@ feature_term(high_cardinality_size,E) :- continuous(E), channel(_,size), enc_car
 % prefer not to aggregate for value tasks
 feature_term(value_agg) :- task(value), aggregate(_,_).
 
+% prefer not to use row and column for summary tasks as it makes it difficult to compare
+feature_term(facet_summary,E) :- task(summary), channel(E,row).
+
 % positional interactions as suggested by Kim et al
 feature_term(x_row) :- channel(_,x), channel(_,row).
 feature_term(y_row) :- channel(_,y), channel(_,row).

@@ -147,13 +147,13 @@ def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
     return processed_specs[key]
 
 
-def get_nested_index():
+def get_nested_index(fields = None):
     '''
     Gives you a nested pandas index that we apply to the data when creating a dataframe.
     '''
     features = get_feature_names()
 
-    iterables = [['negative', 'positive'], features]
+    iterables = [fields or ['negative', 'positive'], features]
     index = pd.MultiIndex.from_product(iterables, names=['category', 'feature'])
     index = index.append(pd.MultiIndex.from_arrays([['source', 'task'], ['', '']]))
     return index
@@ -169,7 +169,7 @@ def get_feature_names():
 def pair_partition_to_vec(input_data: Tuple[Dict, Tuple[str,str], Iterable[Union[PosNegExample, UnlabeledExample, np.ndarray]]]):
     processed_specs, fields, partiton_data = input_data
 
-    columns = get_nested_index()
+    columns = get_nested_index(fields)
     dfs = []
 
     for example in partiton_data:
