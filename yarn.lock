@@ -1783,15 +1783,15 @@ vega-lite@2.0.0-rc1:
     vega-util "^1.5.0"
     yargs "^8.0.2"
 
-vega-lite@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-2.2.0.tgz#0b3ee37a0b18475924d65a305de9256edb74a449"
+vega-lite@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-2.3.1.tgz#a7abd16ef7d06b3f8ed8c873bca4be5c4a577369"
   dependencies:
     "@types/json-stable-stringify" "^1.0.32"
     json-stable-stringify "^1.0.1"
     tslib "^1.9.0"
     vega-event-selector "^2.0.0"
-    vega-typings "^0.2.9"
+    vega-typings "^0.2.11"
     vega-util "^1.7.0"
     yargs "^11.0.0"
 
@@ -1899,9 +1899,15 @@ vega-transforms@^1.2:
     vega-statistics "^1.2"
     vega-util "1"
 
-vega-typings@*, vega-typings@^0.2.9:
+vega-typings@*:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/vega-typings/-/vega-typings-0.2.9.tgz#e52d1ed5792eed6097807876c419831e52eea053"
+  dependencies:
+    prettier "^1.10.2"
+
+vega-typings@^0.2.11:
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/vega-typings/-/vega-typings-0.2.11.tgz#efc86024e50d69b120dc66165fb654caaa4dbbe5"
   dependencies:
     prettier "^1.10.2"
 
