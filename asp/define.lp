@@ -1,28 +1,28 @@
 % ====== Definitions ======
 
-% types of marks to encode data
+% Types of marks to encode data.
 marktype(point;bar;line;area;text;tick;rect).
-% high level data types: quantitative, ordinal, nominal, temporal
+% High level data types: quantitative, ordinal, nominal, temporal.
 type(quantitative;ordinal;nominal;temporal).
-% basic types of the data
+% Basic types of the data.
 primitive_type(string;number;boolean;datetime).
-% supported aggregation functions
+% Supported aggregation functions.
 aggregate_op(count;mean;median;min;max;stdev;sum).
 summative_aggregate_op(count;sum).
-% numbers of bins that can be recommended; any natural number is allowed
+% Numbers of bins that can be recommended; any natural number is allowed.
 binning(5;10;20;200).
 
-% encoding channels
+% Encoding channels.
 single_channel(x;y;color;size;shape;text;row;column).
 multi_channel(detail).
 channel(C) :- single_channel(C).
 channel(C) :- multi_channel(C).
 non_positional(color;size;shape;text;detail).
 
-% possible tasks
+% Possible tasks.
 tasks(value;summary).
 
-% possible stackings
+% Possible stackings.
 stacking(zero;normalize).
 
 % ====== Helpers ======
@@ -36,26 +36,30 @@ channel_continuous(C) :- continuous(E), channel(E,C).
 
 ordered(E) :- type(E,(ordinal;quantitative)).
 
-% fields
+% Fields
 field(F) :- fieldtype(F,_).
 
-% stacking is applied to the continuous x or y
+% Stacking is applied to the continuous x or y.
 stack(EC,S) :- channel(EC,(x;y)), channel(ED,(x;y)), continuous(EC), discrete(ED), stack(S).
-% x and y are continuous
+% X and y are continuous.
 stack(E,S) :- channel_continuous(x), channel(E,y), continuous(E), stack(S).
 
 stack(S) :- stack(_,S).
 
-% data properties
+% Data properties
 enc_cardinality(E,C) :- field(E,F), cardinality(F,C).
 enc_entropy(E,EN) :- field(E,F), entropy(F,EN).
 enc_interesting(E) :- field(E,F), interesting(F).
 enc_extent(E,MIN,MAX) :- field(E,F), extent(F,MIN,MAX).
 
-% define a fake violation/2 for all violation/1.
+% Cardinality of discrete field. A binned field has the cadinality of its field.
+discrete_cardinality(E,CE) :- discrete(E), enc_cardinality(E,CE), channel(E,C), not bin(E,_).
+discrete_cardinality(E,CB) :- channel(E,C), bin(E,CB).
+
+% Define a fake violation/2 for all violation/1.
 violation(F,_placeholder) :- violation(F).
 
-% silence warnings about properties never appearing in head
+% Silence warnings about properties never appearing in head.
 entropy(0,0) :- #false.
 interesting(0) :- #false.
 extent(0,0,0) :- #false.
@@ -63,50 +67,46 @@ violation(0) :- #false.
 
 % == Chart Types ==
 
-% continuous by continuous
+% Continuous by continuous.
 is_c_c :- channel_continuous(x), channel_continuous(y).
 
-% continuous by discrete (or continuous only)
+% Continuous by discrete (or continuous only).
 is_c_d :- channel_continuous(x), not channel_continuous(y).
 is_c_d :- channel_continuous(y), not channel_continuous(x).
 
-% discrete by discrete
+% Discrete by discrete.
 is_d_d :- channel_discrete(x), channel_discrete(y).
 
 % == Overlap ==
 
-no_overlap :- is_c_c, aggregate(E,_), channel(E,y).
-overlap :- is_c_c, not no_overlap, channel(EX,x), enc_cardinality(EX,CX), num_rows(S), S > CX.
-
-% the continuous variable is a measure (it is aggregated) and all other channels are aggregated, or we use stack -> no overlap
+% The continuous variable is a measure (it is aggregated) and all other channels are .aggregated, or we use stack -> no overlap
 non_pos_unaggregated :- channel(E,C), non_positional(C), not aggregate(E,_).
 no_overlap :- is_c_d, continuous(E), channel(E,(x;y)), aggregate(E,_), not non_pos_unaggregated.
 no_overlap :- is_c_d, stack(_).
 
-discrete_size(S) :- is_c_d, channel(E,(x;y)), discrete(E), enc_cardinality(E,S).
-discrete_size(1) :-  is_c_d, channel_continuous(x), not channel(_,y).
-discrete_size(1) :-  is_c_d, channel_continuous(y), not channel(_,x).
+% the size of the discrete positional encoding
+discrete_size(S) :- is_c_d, channel(E,(x;y)), discrete_cardinality(E,S).
+discrete_size(1) :- is_c_d, channel_continuous(x), not channel(_,y).
+discrete_size(1) :- is_c_d, channel_continuous(y), not channel(_,x).
 
-% data size is as small as discrete dimension -> no overlap
+% Data size is as small as discrete dimension -> no overlap.
 no_overlap :- is_c_d, num_rows(S), discrete_size(S).
 
-% we definitely overlap if the data size > discrete size
+% We definitely overlap if the data size > discrete size.
 overlap :- is_c_d, not no_overlap, num_rows(S1), discrete_size(S2), S1 > S2.
 
-pos_cardinality(C,CE) :- C = (x;y), enc_cardinality(E,CE), channel(E,C), not bin(E,_).
-pos_cardinality(C,CB) :- C = (x;y), channel(E,C), bin(E,CB).
-
-% no overlap if all other dimensions are aggregated
-discrete_size(S) :- is_d_d, pos_cardinality(x,SX), pos_cardinality(y,SY), S = SX*SY.
+% No overlap if all other dimensions are aggregated.
+discrete_size(S) :- is_d_d, channel(EX,x), channel(EY,y), discrete_cardinality(EX,SX), discrete_cardinality(EY,SY), S = SX*SY.
 no_overlap :- is_d_d, not non_pos_unaggregated.
-no_overlap :- is_d_d, num_rows(S1), discrete_size(S2), S1 <= S2.  % this cannot guarantee no overlap
+no_overlap :- is_d_d, num_rows(S1), discrete_size(S2), S1 <= S2.  % This cannot guarantee no overlap.
 
-% we can guarantee overlap using this rule unless we are using row / column
+% We can guarantee overlap using this rule unless we are using row / column.
 row_col :- channel(_,(row;column)).
 overlap :- is_d_d, channel(E,C), not row_col, not no_overlap, num_rows(S1), discrete_size(S2), S1 > S2.
 
 % == Orientation ==
-% orientation tells us which one is the dependent and independent variable
+
+% Orientation tells us which one is the dependent and independent variable.
 
 orientation(vertical) :- mark(bar;tick;area;line), channel_discrete(x).
 orientation(vertical) :- mark(area;line), channel_continuous(x), channel_continuous(y).

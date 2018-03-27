@@ -2,6 +2,7 @@
 % E.g. clingo asp/_violations.lp test.lp
 
 #include "asp/define.lp".
-#include "asp/test.lp".
-#include "asp/ranking.lp".
-#include "asp/output.lp".
+#include "asp/hard.lp".
+#include "asp/soft.lp".
+
+#show violation/2.

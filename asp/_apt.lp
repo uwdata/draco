@@ -2,7 +2,7 @@
 
 #include "asp/define.lp".
 #include "asp/generate.lp".
-#include "asp/test.lp".
+#include "asp/hard.lp".
 
 :~ type(E,quantitative), channel(E,x), priority(E,P). [1@P,E]
 :~ type(E,quantitative), channel(E,y), priority(E,P). [1@P,E]

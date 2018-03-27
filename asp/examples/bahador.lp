@@ -1,4 +1,4 @@
-% test with `clingo asp/_bahador.lp examples/example_bahador.lp --opt-mode=optN --quiet=1 --project`
+% test with `clingo asp/_bahador.lp asp/examples/bahador.lp --opt-mode=optN --quiet=1 --project`
 
 % ====== Data definitions ======
 num_rows(407).
@@ -15,14 +15,14 @@ cardinality(q2,407).
 
 % ====== Query constraints ======
 encoding(e0).
-channel(e0,y).
-field(e0,q2).
-type(e0,quantitative).
+:- not channel(e0,y).
+:- not field(e0,q2).
+:- not type(e0,quantitative).
 
 encoding(e1).
-channel(e1,x).
-field(e1,o1).
-type(e1,quantitative).
+:- not channel(e1,x).
+:- not field(e1,o1).
+:- not type(e1,ordinal).
 
 
 % ====== Task constraint ======

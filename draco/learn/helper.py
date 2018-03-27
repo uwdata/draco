@@ -31,7 +31,7 @@ def count_violations(task: Task, debug=False) -> Dict[str, int]:
         Returns:
             a dictionary storing violations of soft rules
     '''
-    task = run(task, files=['define.lp', 'ranking.lp', 'output.lp'], silence_warnings=True, debug=debug)
+    task = run(task, files=['define.lp', 'soft.lp', 'output.lp'], silence_warnings=True, debug=debug)
     return task.violations
 
 

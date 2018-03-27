@@ -4,7 +4,7 @@ num_rows(100).
 
 fieldtype(n1,string).
 cardinality(n1,20).
-entropy(n1,8).  % entropy is in 0.1 units because asp only supports integers
+entropy(n1,8).  % Entropy is in 0.1 units because ASP only supports integers.
 
 fieldtype(n2,string).
 cardinality(n2,3).
