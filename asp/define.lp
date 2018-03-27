@@ -76,7 +76,7 @@ is_d_d :- channel_discrete(x), channel_discrete(y).
 % == Overlap ==
 
 no_overlap :- is_c_c, aggregate(E,_), channel(E,y).
-overlap :- is_c_c, not no_overlap, channel(EX,x), enc_cardinality(EX,CX), data_size(S), S > CX.
+overlap :- is_c_c, not no_overlap, channel(EX,x), enc_cardinality(EX,CX), num_rows(S), S > CX.
 
 % the continuous variable is a measure (it is aggregated) and all other channels are aggregated, or we use stack -> no overlap
 non_pos_unaggregated :- channel(E,C), non_positional(C), not aggregate(E,_).
@@ -88,10 +88,10 @@ discrete_size(1) :-  is_c_d, channel_continuous(x), not channel(_,y).
 discrete_size(1) :-  is_c_d, channel_continuous(y), not channel(_,x).
 
 % data size is as small as discrete dimension -> no overlap
-no_overlap :- is_c_d, data_size(S), discrete_size(S).
+no_overlap :- is_c_d, num_rows(S), discrete_size(S).
 
 % we definitely overlap if the data size > discrete size
-overlap :- is_c_d, not no_overlap, data_size(S1), discrete_size(S2), S1 > S2.
+overlap :- is_c_d, not no_overlap, num_rows(S1), discrete_size(S2), S1 > S2.
 
 pos_cardinality(C,CE) :- C = (x;y), enc_cardinality(E,CE), channel(E,C), not bin(E,_).
 pos_cardinality(C,CB) :- C = (x;y), channel(E,C), bin(E,CB).
@@ -99,11 +99,11 @@ pos_cardinality(C,CB) :- C = (x;y), channel(E,C), bin(E,CB).
 % no overlap if all other dimensions are aggregated
 discrete_size(S) :- is_d_d, pos_cardinality(x,SX), pos_cardinality(y,SY), S = SX*SY.
 no_overlap :- is_d_d, not non_pos_unaggregated.
-no_overlap :- is_d_d, data_size(S1), discrete_size(S2), S1 <= S2.  % this cannot guarantee no overlap
+no_overlap :- is_d_d, num_rows(S1), discrete_size(S2), S1 <= S2.  % this cannot guarantee no overlap
 
 % we can guarantee overlap using this rule unless we are using row / column
 row_col :- channel(_,(row;column)).
-overlap :- is_d_d, channel(E,C), not row_col, not no_overlap, data_size(S1), discrete_size(S2), S1 > S2.
+overlap :- is_d_d, channel(E,C), not row_col, not no_overlap, num_rows(S1), discrete_size(S2), S1 > S2.
 
 % == Orientation ==
 % orientation tells us which one is the dependent and independent variable

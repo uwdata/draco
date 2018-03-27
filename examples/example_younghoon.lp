@@ -1,7 +1,7 @@
 % test with `clingo asp/_younghoon.lp examples/example_younghoon.lp --opt-mode=optN --quiet=1 --project`
 
 % ====== Data definitions ======
-data_size(30).
+num_rows(30).
 
 fieldtype(n,string).
 cardinality(n,10).

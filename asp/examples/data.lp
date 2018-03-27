@@ -1,6 +1,6 @@
 % ====== Data definitions for tests ======
 
-data_size(100).
+num_rows(100).
 
 fieldtype(n1,string).
 cardinality(n1,20).

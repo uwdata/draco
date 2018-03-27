@@ -1,7 +1,7 @@
 % test with `clingo asp/_apt.lp examples/example_apt.lp --opt-mode=optN --quiet=1 --project -c max_extra_encs=0`
 
 % ====== Data definitions ======
-data_size(20).
+num_rows(20).
 
 fieldtype(a,number).
 cardinality(a,20).

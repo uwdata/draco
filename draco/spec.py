@@ -264,7 +264,7 @@ class Data():
         asp = ''
 
         if self.size is not None:
-            asp += f'data_size({self.size}).\n\n'
+            asp += f'num_rows({self.size}).\n\n'
 
         return asp + '\n'.join([x.to_asp() for x in self.fields])
 

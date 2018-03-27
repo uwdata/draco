@@ -1,7 +1,7 @@
 % test with `clingo asp/_bahador.lp examples/example_bahador.lp --opt-mode=optN --quiet=1 --project`
 
 % ====== Data definitions ======
-data_size(407).
+num_rows(407).
 
 fieldtype(n,string).
 cardinality(n,9).
