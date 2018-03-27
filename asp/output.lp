@@ -11,3 +11,5 @@
 
 #show log/1.
 #show zero/1.
+
+#show violation/2.

@@ -4,10 +4,9 @@
 #include "asp/define.lp".
 #include "asp/generate.lp".
 #include "asp/test.lp".
-#include "asp/features.lp".
+#include "asp/ranking.lp".
 #include "asp/weights.lp".
 #include "asp/assign_weights.lp".
-#include "asp/count.lp".
 #include "asp/output.lp".
 #include "asp/cost.lp".
 

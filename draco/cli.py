@@ -82,7 +82,7 @@ def main():  # pragma: no cover
                 input_task = Task.from_vegalite(query_spec, d)
 
         if args.mode == Mode.violations:
-            task = run(input_task, debug=args.debug, files=['define.lp', 'test.lp', 'features.lp', 'count.lp', 'output.lp'], silence_warnings=True)
+            task = run(input_task, debug=args.debug, files=['define.lp', 'test.lp', 'ranking.lp', 'output.lp'], silence_warnings=True)
 
             if task:
                 print(task.violations, file=args.out)

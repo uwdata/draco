@@ -52,14 +52,14 @@ enc_entropy(E,EN) :- field(E,F), entropy(F,EN).
 enc_interesting(E) :- field(E,F), interesting(F).
 enc_extent(E,MIN,MAX) :- field(E,F), extent(F,MIN,MAX).
 
-% define a fake feature_term/2 for all feature_term/1.
-feature_term(F,_placeholder) :- feature_term(F).
+% define a fake violation/2 for all violation/1.
+violation(F,_placeholder) :- violation(F).
 
 % silence warnings about properties never appearing in head
 entropy(0,0) :- #false.
 interesting(0) :- #false.
 extent(0,0,0) :- #false.
-feature_term(0) :- #false.
+violation(0) :- #false.
 
 % == Chart Types ==
 

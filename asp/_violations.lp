@@ -3,6 +3,5 @@
 
 #include "asp/define.lp".
 #include "asp/test.lp".
-#include "asp/features.lp".
-#include "asp/count.lp".
+#include "asp/ranking.lp".
 #include "asp/output.lp".

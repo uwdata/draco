@@ -537,26 +537,6 @@ class Query():
 
         return Query(mark, encodings)
 
-    @staticmethod
-    def parse_from_answer(clyngor_answer: Answers) -> 'Query':
-        encodings: List[Encoding] = []
-        mark = None
-
-        raw_encoding_props: Dict = defaultdict(dict)
-
-        for (head, body), in clyngor_answer:
-            if head == 'mark':
-                mark = body[0]
-            else:
-                # collect encoding properties
-                raw_encoding_props[body[0]][head] = body[1] if len(body) > 1 else True
-
-        # generate encoding objects from each collected encodings
-        for k, v in raw_encoding_props.items():
-            encodings.append(Encoding.parse_from_answer(k, v))
-
-        return Query(mark, encodings)
-
     def to_compassql(self):
         query = {}
         if self.mark is None or self.mark is True:
@@ -619,6 +599,33 @@ class Task():
         data = Data.from_obj(full_spec["data"], path_prefix=data_dir)
         query = Query.from_vegalite(full_spec)
         return Task(data, query)
+
+    @staticmethod
+    def parse_from_answer(clyngor_answer: Answers, task: Optional[str] = None, data: Optional[Data] = None, cost: Optional[int] = None) -> 'Task':
+        encodings: List[Encoding] = []
+        mark = None
+
+        raw_encoding_props: Dict = defaultdict(dict)
+        violations: Dict[str, int] = defaultdict(int)
+
+        for (head, body), in clyngor_answer:
+            if head == 'mark':
+                mark = body[0]
+            elif head == 'cost':
+                cost = int(body[0])
+            elif head == 'violation':
+                violations[body[0]] += 1
+            else:
+                # collect encoding properties
+                raw_encoding_props[body[0]][head] = body[1] if len(body) > 1 else True
+
+        # generate encoding objects from each collected encodings
+        for k, v in raw_encoding_props.items():
+            encodings.append(Encoding.parse_from_answer(k, v))
+
+        query = Query(mark, encodings)
+
+        return Task(data, query, task=task, cost=cost, violations=violations)
 
     def to_compassql(self):
         ''' generate compassql from task'''

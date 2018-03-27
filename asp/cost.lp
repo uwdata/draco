@@ -1,5 +1,5 @@
 % !! This is super slow and should only be used for experiments !!
 
-cost(C) :- C = #sum { W,Q,F: feature_weight(F,W), feature_term(F,Q) }.
+cost(C) :- C = #sum { W,Q,F: violation_weight(F,W), violation(F,Q) }.
 
 #show cost/1.

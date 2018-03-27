@@ -5,7 +5,7 @@ Definitions:
     define: {filename: asp/define.lp}
     generate: {filename: asp/generate.lp}
     test: {filename: asp/test.lp}
-    features: {filename: asp/features.lp}
+    features: {filename: asp/ranking.lp}
     optimize: {filename: asp/optimize.lp}
 
     # program to test constraints
@@ -300,7 +300,7 @@ Test soft constraints:
             channel(e,x).
             type(e,quantitative).
 
-            :- not feature_term(position_entropy, e).
+            :- not violation(position_entropy, e).
         Expect: SAT
 
     Test skew with zero:
@@ -317,7 +317,7 @@ Test soft constraints:
             type(e,quantitative).
             zero(e).
 
-            :- not feature_term(zero_skew).
+            :- not violation(zero_skew).
         Expect: SAT
 
     Test zero with data that covers it:
@@ -335,6 +335,6 @@ Test soft constraints:
             type(e,quantitative).
             zero(e).
 
-            :- not feature_term(includes_zero).
+            :- not violation(includes_zero).
 
         Expect: UNSAT
