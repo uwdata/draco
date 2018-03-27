@@ -16,13 +16,17 @@ fieldtype(k,string).
 fieldtype(l,string).
 fieldtype(m,string).
 fieldtype(n,string).
+fieldtype(o,string).
+fieldtype(p,string).
+fieldtype(q,string).
+fieldtype(r,string).
+fieldtype(s,string).
 
-fieldtype(o,datetime).
-fieldtype(p,datetime).
-fieldtype(q,datetime).
-fieldtype(r,datetime).
-fieldtype(s,datetime).
 fieldtype(t,datetime).
+fieldtype(u,datetime).
+fieldtype(w,datetime).
+fieldtype(x,datetime).
+fieldtype(y,datetime).
 
 % ====== Query constraints ======
 encoding(e0).
