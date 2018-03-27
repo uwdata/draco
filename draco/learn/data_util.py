@@ -29,8 +29,8 @@ pos_neg_pickle_path = absolute_path('../../__tmp__/pos_neg.pickle')
 unlabeled_pickle_path = absolute_path('../../__tmp__/unlabeled.pickle')
 
 man_data_path = absolute_path('../../data/training/manual.json')
-yh_data_path = absolute_path('../../data/training/younghoon.json')
-ba_data_path = absolute_path('../../data/training/bahador.json')
+yh_data_path = absolute_path('../../data/training/kim2018.json')
+ba_data_path = absolute_path('../../data/training/saket2018.json')
 label_data_path = absolute_path('../../data/training/labeler.json')
 compassql_data_path = absolute_path('../../data/compassql_examples')
 data_dir = absolute_path('../../data/') # the dir containing data used in visualization

@@ -1,4 +1,4 @@
-% test with `clingo asp/_bahador.lp asp/examples/bahador.lp --opt-mode=optN --quiet=1 --project`
+% test with `clingo asp/_saket2018.lp asp/examples/saket2018.lp --opt-mode=optN --quiet=1 --project`
 
 % ====== Data definitions ======
 num_rows(407).

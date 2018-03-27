@@ -1,4 +1,4 @@
-% test with `clingo asp/_younghoon.lp asp/examples/younghoon.lp --opt-mode=optN --quiet=1 --project`
+% test with `clingo asp/_kim2018.lp asp/examples/kim2018.lp --opt-mode=optN --quiet=1 --project`
 
 % ====== Data definitions ======
 num_rows(30).

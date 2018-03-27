@@ -8,7 +8,7 @@
 #include "asp/assign_weights.lp".
 #include "asp/optimize.lp".
 
-#include "asp/bahador.lp".
+#include "asp/kim2018.lp".
 
 #show mark/1.
 #show channel/2.

@@ -20,8 +20,8 @@ This directory contains the answer set programs for Draco. We will make our Pyth
 * `_validate.lp` uses Draco to validate an encoding. Only applies hard constraints (well-formedness and expressiveness).
 * `_violations.lp` uses Draco to find violations of soft constraints. This is essentially Draco without optimization.
 * `_apt.lp` applies Draco-APT
-* `_younghoon.lp` applies Learned-APT to the visualization of the form that Kim et al. evaluated. Uses `weights_learned.lp` and `younghoon.lp`.
-* `_bahador.lp` applies Learned-APT to the visualization of the form that Saket et al. evaluated. Uses `weights_learned.lp` and `bahador.lp`.
+* `_kim2018.lp` applies Learned-APT to the visualization of the form that Kim et al. evaluated. Uses `weights_learned.lp` and `kim2018.lp`.
+* `_saket2018.lp` applies Learned-APT to the visualization of the form that Saket et al. evaluated. Uses `weights_learned.lp` and `saket2018.lp`.
 
 ## Usage
 
@@ -123,14 +123,14 @@ CPU Time     : 0.080s
 
 Instead of using Draco with default weights, we use Draco with learned weights.
 
-#### Kim et al. demo
+#### Kim et al. 2018 demo
 
 Here, we query for the optimal specification within the space that was studies by Kim et al.
 
 ```
-$ clingo asp/_younghoon.lp asp/examples/younghoon.lp --opt-mode=optN --quiet=1 --project
+$ clingo asp/_kim2018.lp asp/examples/kim2018.lp --opt-mode=optN --quiet=1 --project
 clingo version 5.2.2
-Reading from asp/_younghoon.lp ...
+Reading from asp/_kim2018.lp ...
 Solving...
 Answer: 1
 mark(point) channel(enc_n,x) channel(enc_q1,y) channel(enc_q2,color)
@@ -145,14 +145,14 @@ Time         : 0.156s (Solving: 0.00s 1st Model: 0.00s Unsat: 0.00s)
 CPU Time     : 0.091s
 ```
 
-#### Saket et al. demo
+#### Saket et al. 2018 demo
 
 Similar to above but for Saket at al.
 
 ```
-$ clingo asp/_bahador.lp asp/examples/bahador.lp --opt-mode=optN --quiet=1 --project                   189ms
+$ clingo asp/_saket2018.lp asp/examples/saket2018.lp --opt-mode=optN --quiet=1 --project
 clingo version 5.2.2
-Reading from asp/_bahador.lp ...
+Reading from asp/_saket2018.lp ...
 Solving...
 Answer: 1
 channel(e0,y) channel(e1,x) mark(line)
@@ -203,10 +203,10 @@ CPU Time     : 0.018s
 
 ## Enumerate a design space
 
-We can use Draco to enumerate all specifications within some space. For example, we might want to see all visualizations that could be created fore some dataset with the space of the study from Kim et al. The command line option `-n 0` tells Clingo to print all answer sets.
+We can use Draco to enumerate all specifications within some space. For example, we might want to see all visualizations that could be created for some dataset with the space of the study from Kim et al. The command line option `-n 0` tells Clingo to print all answer sets.
 
 ```
-$ clingo asp/_enumerate.lp asp/younghoon.lp asp/examples/data.lp -n 0 --project
+$ clingo asp/_enumerate.lp asp/kim2018.lp asp/examples/data.lp -n 0 --project
 clingo version 5.2.2
 Reading from asp/_enumerate.lp ...
 Solving...
@@ -234,7 +234,7 @@ CPU Time     : 0.086s
 
 ## Benchmark
 
-Here, we use Draco to find the optimal specification with 5 encodings for a dataset with 20 fields. On a 2014 MBP, Clingo finds the optimal answer in less than half a second.
+Here, we use Draco to find the optimal specification with 5 encodings for a dataset with 24 fields. On a 2014 MBP, Clingo finds the optimal answer in less than half a second.
 
 ```
 $ clingo asp/_all.lp asp/examples/benchmark.lp --quiet=1 --warn=no-atom-undefined
