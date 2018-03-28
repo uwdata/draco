@@ -75,7 +75,7 @@ def run(asp_query):
     stdout, stderr = proc.communicate(asp_program)
 
     out = json.loads(stdout)
-    return out['Time']['CPU']
+    return out['Time']['Total']
 
 def load_file(path):
     with open(path) as f:
