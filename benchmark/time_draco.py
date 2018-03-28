@@ -1,8 +1,6 @@
 import subprocess
-import datetime
 import os
 import json
-from draco.run import run
 from draco.spec import Query, Task
 
 import logging
@@ -17,7 +15,7 @@ DATA_FIELD_TYPES = ['string', 'string', 'string', 'number', 'string',
 
 NUM_FIELDS = [5, 10, 15, 20, 25]
 NUM_ENCODINGS = [1, 2, 3, 4, 5]
-NUM_TRIALS = 10
+NUM_TRIALS = 20
 
 CLINGO_PREFIX = 'clingo asp/_all.lp '
 CLINGO_OPTIONS = '--quiet=1 --warn=no-atom-undefined -c max_extra_encs=0'
@@ -61,7 +59,7 @@ def run_set(results = None):
 
 def run(asp_query):
     # default args
-    options = ['--outf=2', '--quiet=1,2,2', '--warn=no-atom-undefined']
+    options = ['--outf=2', '--quiet=3', '--warn=no-atom-undefined', '-c', 'max_extra_encs=0']
 
     cmd = ['clingo'] + options
 
@@ -74,12 +72,10 @@ def run(asp_query):
     file_names = [os.path.join(DRACO_LP_DIR, f) for f in DRACO_LP]
     asp_program = b'\n'.join(map(load_file, file_names)) + asp_query.encode('utf8')
 
-    start = datetime.datetime.now()
     stdout, stderr = proc.communicate(asp_program)
-    end = datetime.datetime.now()
 
-    delta = end - start
-    return delta.total_seconds()
+    out = json.loads(stdout)
+    return out['Time']['Total']
 
 def load_file(path):
     with open(path) as f:

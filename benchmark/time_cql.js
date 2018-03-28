@@ -47,7 +47,7 @@ const BASE_QUERY = {
 
 const NUM_FIELDS = [5, 10, 15, 20, 25];
 const NUM_ENCODINGS = [1, 2, 3, 4, 5];
-const NUM_TRIALS = 10;
+const NUM_TRIALS = 20;
 
 const INCLUDE = {
   5: {
