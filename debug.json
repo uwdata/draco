@@ -1,26 +1,20 @@
 {
     "data": {
-        "url": "data/cars.json"
+        "url": "data/movies.json"
     },
     "encodings": [
         {
-            "channel": "?",
-            "field": "Origin",
-            "type": "nominal"
-        },
-        {
             "aggregate": "?",
             "bin": "?",
             "channel": "?",
-            "field": "Horsepower",
+            "field": "IMDB_Rating",
             "type": "quantitative"
         },
         {
-            "aggregate": "?",
-            "bin": "?",
             "channel": "?",
-            "field": "Acceleration",
-            "type": "quantitative"
+            "field": "Release_Date",
+            "timeUnit": "?",
+            "type": "temporal"
         }
     ],
     "mark": "?"
