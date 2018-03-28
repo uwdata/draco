@@ -30,7 +30,6 @@ violation_weight(zero_skew,zero_skew_weight).
 violation_weight(includes_zero,includes_zero_weight).
 violation_weight(only_x,only_x_weight).
 violation_weight(orientation_binned,orientation_binned_weight).
-violation_weight(orientation_discrete,orientation_discrete_weight).
 violation_weight(high_cardinality_ordinal,high_cardinality_ordinal_weight).
 violation_weight(high_cardinality_nominal,high_cardinality_nominal_weight).
 violation_weight(high_cardinality_nominal_color,high_cardinality_nominal_color_weight).
