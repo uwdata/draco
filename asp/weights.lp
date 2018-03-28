@@ -1,8 +1,8 @@
 % Weights as constants
 
 #const type_q_weight = 0.
-#const type_o_weight = 2.
-#const type_n_weight = 4.
+#const type_o_weight = 1.
+#const type_n_weight = 2.
 #const aggregate_weight = 1.
 #const bin_weight = 2.
 #const bin_high_weight = 10.
@@ -97,7 +97,7 @@
 #const nominal_color_weight = 10.
 #const nominal_shape_weight = 11.
 #const nominal_text_weight = 12.
-#const nominal_row_weight = 8.
+#const nominal_row_weight = 7.
 #const nominal_column_weight = 10.
 #const nominal_detail_weight = 20.
 
