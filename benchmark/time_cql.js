@@ -90,16 +90,16 @@ const INCLUDE = {
 function main() {
   // warmup
   console.log('warming up...');
-  run_set()
+  run_set(1)
 
   // actual
   const results = []
-  run_set(results);
+  run_set(NUM_TRIALS, results);
 
   fs.writeFileSync('cql_runtimes.json', JSON.stringify(results, null, 2), 'utf-8');
 }
 
-function run_set(results = null) {
+function run_set(numTrials, results = null) {
   for (nfields of NUM_FIELDS) {
     const data = JSON.parse(fs.readFileSync('../data/weball26.json'));
 
@@ -123,7 +123,7 @@ function run_set(results = null) {
         query['spec']['encodings'] = encodings;
 
         let total_time = 0;
-        for (let i = 0; i < NUM_TRIALS; i++) {
+        for (let i = 0; i < numTrials; i++) {
           const startTime = new Date().getTime();
           const recommendation =  cql.recommend(query, schema);
           const endTime = new Date().getTime();
@@ -131,7 +131,7 @@ function run_set(results = null) {
           total_time += endTime - startTime;
         }
 
-        const avg_time = total_time * 1.0 / NUM_TRIALS / 1000;
+        const avg_time = total_time * 1.0 / numTrials / 1000;
 
         if (results !== null) {
           results.push({
