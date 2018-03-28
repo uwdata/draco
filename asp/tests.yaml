@@ -229,6 +229,26 @@ Test constraints:
             :- not type(e,temporal).
         Expect: SAT
 
+    Test cannot use different different on x and y:
+        Program: |
+            encoding(e0).
+            :- not channel(e0,x).
+            :- not field(e0,n1).
+            encoding(e1).
+            :- not channel(e1,y).
+            :- not field(e1,n2).
+        Expect: SAT
+
+    Test cannot use same field on x and y:
+        Program: |
+            encoding(e0).
+            :- not channel(e0,x).
+            :- not field(e0,n1).
+            encoding(e1).
+            :- not channel(e1,y).
+            :- not field(e1,n1).
+        Expect: UNSAT
+
 Test helpers:
     Modules: no_gen
 

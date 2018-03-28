@@ -59,7 +59,7 @@
 % === Across encodings and between encodings and marks ===
 
 % Cannot use single channels twice.
-:- single_channel(C), 2 {channel(_,C)}.
+:- single_channel(C), 2 { channel(_,C) }.
 
 % There has to be at least one encoding. Otherwise, the visualization doesn't show anything.
 :- not encoding(_).
@@ -120,7 +120,7 @@
 :- mark(rect), not is_d_d.
 
 % Don't use the same field on x and y.
-:- channel(EX,x), channel(EY,y), field(EX,F), field(EY,F).
+:- { field(E,F) : channel(E,x); field(E,F) : channel(E,y) } >= 2, field(F).
 % Don't use count on x and y.
 :- channel(EX,x), channel(EY,y), aggregate(EX,count), aggregate(EY,count).
 

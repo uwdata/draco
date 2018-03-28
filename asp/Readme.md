@@ -237,19 +237,16 @@ CPU Time     : 0.086s
 Here, we use Draco to find the optimal specification with 5 encodings for a dataset with 24 fields. On a 2014 MBP, Clingo finds the optimal answer in less than half a second.
 
 ```
-$ clingo asp/_all.lp asp/examples/benchmark.lp --quiet=1 --warn=no-atom-undefined
+$ clingo asp/_all.lp asp/examples/benchmark.lp --quiet=2 --warn=no-atom-undefined -c max_extra_encs=0
 clingo version 5.2.2
 Reading from asp/_all.lp ...
 Solving...
-Answer: 23
-violation(encoding,e0) violation(encoding,e1) violation(encoding,e3) violation(encoding,e4) bin(e4,10) channel(e0,y) channel(e1,x) channel(e3,size) channel(e4,color) type(e0,quantitative) type(e1,quantitative) type(e3,quantitative) type(e4,quantitative) zero(e0) zero(e1) zero(e3) mark(point) violation(multiple_non_pos,_placeholder) violation(c_c_point,_placeholder) field(e0,c) field(e1,d) field(e3,f) field(e4,g) violation(bin,e4) violation(encoding_field,e0) violation(encoding_field,e1) violation(encoding_field,e3) violation(encoding_field,e4) violation(type_q,e0) violation(type_q,e1) violation(type_q,e3) violation(type_q,e4) violation(continuous_x,e1) violation(continuous_y,e0) violation(continuous_size,e3) violation(ordered_color,e4)
-Optimization: 37
 OPTIMUM FOUND
 
-Models       : 23
+Models       : 29
   Optimum    : yes
 Optimization : 37
 Calls        : 1
-Time         : 0.392s (Solving: 0.22s 1st Model: 0.00s Unsat: 0.18s)
-CPU Time     : 0.344s
+Time         : 0.216s (Solving: 0.12s 1st Model: 0.00s Unsat: 0.12s)
+CPU Time     : 0.166s
 ```

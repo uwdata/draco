@@ -10,7 +10,7 @@ primitive_type(string;number;boolean;datetime).
 aggregate_op(count;mean;median;min;max;stdev;sum).
 summative_aggregate_op(count;sum).
 % Numbers of bins that can be recommended; any natural number is allowed.
-binning(5;10;20;200).
+binning(10;25;200).
 
 % Encoding channels.
 single_channel(x;y;color;size;shape;text;row;column).
@@ -85,7 +85,7 @@ no_overlap :- is_c_d, continuous(E), channel(E,(x;y)), aggregate(E,_), not non_p
 no_overlap :- is_c_d, stack(_).
 
 % the size of the discrete positional encoding
-discrete_size(S) :- is_c_d, channel(E,(x;y)), discrete_cardinality(E,S).
+discrete_size(S) :- is_c_d, x_y_cardinality(_,S).
 discrete_size(1) :- is_c_d, channel_continuous(x), not channel(_,y).
 discrete_size(1) :- is_c_d, channel_continuous(y), not channel(_,x).
 
@@ -95,8 +95,12 @@ no_overlap :- is_c_d, num_rows(S), discrete_size(S).
 % We definitely overlap if the data size > discrete size.
 overlap :- is_c_d, not no_overlap, num_rows(S1), discrete_size(S2), S1 > S2.
 
+% helpers to go from quadratic to linear number of grounding
+x_y_cardinality(x,S) :- channel(E,x), discrete_cardinality(E,S).
+x_y_cardinality(y,S) :- channel(E,y), discrete_cardinality(E,S).
+
 % No overlap if all other dimensions are aggregated.
-discrete_size(S) :- is_d_d, channel(EX,x), channel(EY,y), discrete_cardinality(EX,SX), discrete_cardinality(EY,SY), S = SX*SY.
+discrete_size(S) :- is_d_d, x_y_cardinality(x,SX), x_y_cardinality(y,SY), S = SX*SY.
 no_overlap :- is_d_d, not non_pos_unaggregated.
 no_overlap :- is_d_d, num_rows(S1), discrete_size(S2), S1 <= S2.  % This cannot guarantee no overlap.
 
