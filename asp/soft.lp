@@ -80,8 +80,7 @@ violation(only_x) :- channel(_,y), not channel(_,x).
 
 % Chart orientation for bar and tick (with and without bin).
 % Binned fields have short labels if they are quantitative while otherwise labels can be long.
-violation(orientation_binned) :- channel(E,y), bin(E,_), type(E,quantitative).
-violation(orientation_discrete) :- channel(E,x), discrete(ordinal;nominal).
+violation(orientation_binned) :- channel(E,x), bin(E,_), type(E,quantitative).
 
 % Prefer not to use ordinal for fields with high cardinality.
 violation(high_cardinality_ordinal,E) :- type(E,ordinal), discrete_cardinality(E,C), C > 30.

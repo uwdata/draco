@@ -1,10 +1,10 @@
 % Weights as constants
 
 #const type_q_weight = 0.
-#const type_o_weight = 2.
-#const type_n_weight = 4.
-#const aggregate_weight = 5.
-#const bin_weight = 1.
+#const type_o_weight = 1.
+#const type_n_weight = 2.
+#const aggregate_weight = 1.
+#const bin_weight = 2.
 #const bin_high_weight = 10.
 #const bin_low_weight = 6.
 #const encoding_weight = 0.
@@ -30,8 +30,7 @@
 #const includes_zero_weight = 10.
 
 #const only_x_weight = 1.
-#const orientation_binned_weight = 1.
-#const orientation_discrete_weight = 1.
+#const orientation_binned_weight = -1.
 #const high_cardinality_ordinal_weight = 10.
 #const high_cardinality_nominal_weight = 10.
 #const high_cardinality_nominal_color_weight = 10.
@@ -93,13 +92,13 @@
 #const ordered_row_weight = 10.
 #const ordered_column_weight = 10.
 
-#const nominal_x_weight = 1.
+#const nominal_x_weight = 3.
 #const nominal_y_weight = 0.
-#const nominal_color_weight = 7.
-#const nominal_shape_weight = 8.
-#const nominal_text_weight = 9.
-#const nominal_row_weight = 6.
-#const nominal_column_weight = 7.
+#const nominal_color_weight = 10.
+#const nominal_shape_weight = 11.
+#const nominal_text_weight = 12.
+#const nominal_row_weight = 7.
+#const nominal_column_weight = 10.
 #const nominal_detail_weight = 20.
 
 #const interesting_x_weight = 0.
