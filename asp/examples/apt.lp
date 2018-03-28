@@ -1,7 +1,7 @@
-% test with `clingo asp/_apt.lp examples/example_apt.lp --opt-mode=optN --quiet=1 --project -c max_extra_encs=0`
+% test with `clingo asp/_apt.lp asp/examples/apt.lp --opt-mode=optN --quiet=1 --project -c max_extra_encs=0`
 
 % ====== Data definitions ======
-data_size(20).
+num_rows(20).
 
 fieldtype(a,number).
 cardinality(a,20).
@@ -19,21 +19,21 @@ cardinality(d,6).
 mark(point).
 
 encoding(e0).
-type(e0,quantitative).
-field(e0,a).
 priority(e0,4).
+:- not type(e0,quantitative).
+:- not field(e0,a).
 
 encoding(e1).
-type(e1,quantitative).
-field(e1,b).
 priority(e1,3).
+:- not type(e1,quantitative).
+:- not field(e1,b).
 
 encoding(e2).
-type(e2,nominal).
-field(e2,c).
 priority(e2,2).
+:- not type(e2,nominal).
+:- not field(e2,c).
 
 encoding(e3).
-type(e3,ordinal).
-field(e3,d).
 priority(e3,1).
+:- not type(e3,ordinal).
+:- not field(e3,d).

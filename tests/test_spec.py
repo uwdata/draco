@@ -16,7 +16,7 @@ class TestData():
     def test_to_asp(self):
         data = Data([Field('foo', 'number', 10, 0.4)], 42)
 
-        assert data.to_asp() == 'data_size(42).\n\nfieldtype(foo,number).\ncardinality(foo,10).\nentropy(foo,4).\n'
+        assert data.to_asp() == 'num_rows(42).\n\nfieldtype(foo,number).\ncardinality(foo,10).\nentropy(foo,4).\n'
 
     def test_generate(self):
         data = Data(fields=[Field('foo', 'number', 10, 2.1, [1,2])])

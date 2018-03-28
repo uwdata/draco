@@ -2,4 +2,4 @@
 % E.g. clingo asp/_validate.lp test.lp
 
 #include "asp/define.lp".
-#include "asp/test.lp".
+#include "asp/hard.lp".

@@ -16,7 +16,7 @@ from draco.spec import Query, Task
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DRACO_LP = ['define.lp', 'generate.lp', 'test.lp', 'features.lp', 'weights.lp', 'assign_weights.lp', 'optimize.lp', 'output.lp']
+DRACO_LP = ['define.lp', 'generate.lp', 'hard.lp', 'soft.lp', 'weights.lp', 'assign_weights.lp', 'optimize.lp', 'output.lp']
 DRACO_LP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../asp'))
 
 
@@ -69,8 +69,13 @@ def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = N
 
     return (stderr, stdout)
 
-def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False) -> Task:
+def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False, clear_cache=False) -> Task:
     ''' Run clingo to compute a completion of a partial spec or violations. '''
+
+    # Clear file cache. useful during development in notebooks.
+    if clear_cache and file_cache:
+        logger.warning('Cleared file cache')
+        file_cache.clear()
 
     stderr, stdout = run_draco(task, constants, files, silence_warnings, debug)
 
@@ -81,12 +86,8 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
         logger.error('stderr: %s', stderr)
         raise
 
-    violations: Dict[str, int] = {}
     if stderr:
-        try:
-            violations = json.loads(stderr)
-        except json.JSONDecodeError:
-            logger.error(stderr)
+        logger.error(stderr)
 
     result = json_result['Result']
 
@@ -99,8 +100,10 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
 
         logger.debug(answers['Value'])
 
-        query = Query.parse_from_answer(clyngor.Answers(answers['Value']).sorted)
-        return Task(task.data, query, cost=json_result['Models']['Costs'][0], violations=violations)
+        return Task.parse_from_answer(
+            clyngor.Answers(answers['Value']).sorted,
+            data=task.data,
+            cost=json_result['Models']['Costs'][0])
     elif result == 'SATISFIABLE':
         answers = json_result['Call'][0]['Witnesses'][-1]
 
@@ -108,8 +111,9 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
 
         logger.debug(answers['Value'])
 
-        query = Query.parse_from_answer(clyngor.Answers(answers['Value']).sorted)
-        return Task(task.data, query, violations=violations)
+        return Task.parse_from_answer(
+            clyngor.Answers(answers['Value']).sorted,
+            data=task.data)
     else:
         logger.error('Unsupported result: %s', result)
         return None

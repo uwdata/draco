@@ -11,6 +11,6 @@ def is_valid(task: Task, debug=False) -> bool:
         Returns:
             whether the task is valid
     '''
-    _, stdout = run_draco(task, files=['define.lp', 'test.lp'], silence_warnings=True, debug=debug)
+    _, stdout = run_draco(task, files=['define.lp', 'hard.lp'], silence_warnings=True, debug=debug)
 
     return json.loads(stdout)['Result'] != 'UNSATISFIABLE'

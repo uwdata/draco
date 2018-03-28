@@ -1,0 +1,576 @@
+{
+  "$schema": "./schema.json",
+  "source": "saket2018",
+  "data": [
+    {
+      "num_rows": 407,
+      "significant": "completion",
+      "fields": [
+        {
+          "name": "n",
+          "type": "string",
+          "cardinality": 9
+        },
+        {
+          "name": "q1",
+          "type": "number",
+          "cardinality": 25
+        },
+        {
+          "name": "q2",
+          "type": "number",
+          "cardinality": 407
+        }
+      ],
+      "task": "summary",
+      "negative": {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "field": "n",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "positive": {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "field": "n",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "pvalue": 0.00693
+    },
+    {
+      "num_rows": 335,
+      "significant": "accuracy",
+      "fields": [
+        {
+          "name": "n",
+          "type": "string",
+          "cardinality": 9
+        },
+        {
+          "name": "q1",
+          "type": "number",
+          "cardinality": 25
+        },
+        {
+          "name": "q2",
+          "type": "number",
+          "cardinality": 335
+        }
+      ],
+      "task": "summary",
+      "negative": {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "positive": {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "pvalue": 0.002989
+    },
+    {
+      "num_rows": 407,
+      "significant": "accuracy",
+      "fields": [
+        {
+          "name": "n",
+          "type": "string",
+          "cardinality": 9
+        },
+        {
+          "name": "q1",
+          "type": "number",
+          "cardinality": 25
+        },
+        {
+          "name": "q2",
+          "type": "number",
+          "cardinality": 407
+        }
+      ],
+      "task": "summary",
+      "negative": {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "positive": {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "pvalue": 1e-06
+    },
+    {
+      "num_rows": 407,
+      "significant": "accuracy",
+      "fields": [
+        {
+          "name": "n",
+          "type": "string",
+          "cardinality": 9
+        },
+        {
+          "name": "q1",
+          "type": "number",
+          "cardinality": 25
+        },
+        {
+          "name": "q2",
+          "type": "number",
+          "cardinality": 407
+        }
+      ],
+      "task": "summary",
+      "negative": {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "positive": {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "pvalue": 0.002024
+    },
+    {
+      "num_rows": 335,
+      "significant": "accuracy",
+      "fields": [
+        {
+          "name": "n",
+          "type": "string",
+          "cardinality": 9
+        },
+        {
+          "name": "q1",
+          "type": "number",
+          "cardinality": 25
+        },
+        {
+          "name": "q2",
+          "type": "number",
+          "cardinality": 335
+        }
+      ],
+      "task": "summary",
+      "negative": {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "field": "n",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "positive": {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "n",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "pvalue": 0.001467
+    },
+    {
+      "num_rows": 335,
+      "significant": "completion",
+      "fields": [
+        {
+          "name": "n",
+          "type": "string",
+          "cardinality": 9
+        },
+        {
+          "name": "q1",
+          "type": "number",
+          "cardinality": 25
+        },
+        {
+          "name": "q2",
+          "type": "number",
+          "cardinality": 335
+        }
+      ],
+      "task": "value",
+      "negative": {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "n",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "positive": {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "field": "n",
+            "type": "nominal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "pvalue": 0.006602
+    },
+    {
+      "num_rows": 335,
+      "significant": "accuracy",
+      "fields": [
+        {
+          "name": "n",
+          "type": "string",
+          "cardinality": 9
+        },
+        {
+          "name": "q1",
+          "type": "number",
+          "cardinality": 25
+        },
+        {
+          "name": "q2",
+          "type": "number",
+          "cardinality": 335
+        }
+      ],
+      "task": "value",
+      "negative": {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "positive": {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "pvalue": 0.000645
+    },
+    {
+      "num_rows": 335,
+      "significant": "accuracy",
+      "fields": [
+        {
+          "name": "n",
+          "type": "string",
+          "cardinality": 9
+        },
+        {
+          "name": "q1",
+          "type": "number",
+          "cardinality": 25
+        },
+        {
+          "name": "q2",
+          "type": "number",
+          "cardinality": 335
+        }
+      ],
+      "task": "value",
+      "negative": {
+        "mark": "point",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "positive": {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "pvalue": 0.00504
+    },
+    {
+      "num_rows": 407,
+      "significant": "accuracy",
+      "fields": [
+        {
+          "name": "n",
+          "type": "string",
+          "cardinality": 9
+        },
+        {
+          "name": "q1",
+          "type": "number",
+          "cardinality": 25
+        },
+        {
+          "name": "q2",
+          "type": "number",
+          "cardinality": 407
+        }
+      ],
+      "task": "value",
+      "negative": {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "positive": {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "q1",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "pvalue": 0.001245
+    },
+    {
+      "num_rows": 335,
+      "significant": "completion",
+      "fields": [
+        {
+          "name": "n",
+          "type": "string",
+          "cardinality": 9
+        },
+        {
+          "name": "q1",
+          "type": "number",
+          "cardinality": 25
+        },
+        {
+          "name": "q2",
+          "type": "number",
+          "cardinality": 335
+        }
+      ],
+      "task": "value",
+      "negative": {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "n",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "positive": {
+        "mark": "line",
+        "encoding": {
+          "x": {
+            "field": "n",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "q2",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "scale": {
+              "zero": true
+            }
+          }
+        }
+      },
+      "pvalue": 0.002807
+    }
+  ]
+}

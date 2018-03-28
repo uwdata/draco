@@ -82,12 +82,12 @@ def main():  # pragma: no cover
                 input_task = Task.from_vegalite(query_spec, d)
 
         if args.mode == Mode.violations:
-            task = run(input_task, debug=args.debug, files=['define.lp', 'test.lp', 'features.lp', 'count.lp', 'output.lp'], silence_warnings=True)
+            task = run(input_task, debug=args.debug, files=['define.lp', 'hard.lp', 'soft.lp', 'output.lp'], silence_warnings=True)
 
             if task:
                 print(task.violations, file=args.out)
         elif args.mode == Mode.valid:
-            task = run(input_task, debug=args.debug, files=['define.lp', 'test.lp', 'output.lp'], silence_warnings=True)
+            task = run(input_task, debug=args.debug, files=['define.lp', 'hard.lp', 'output.lp'], silence_warnings=True)
 
             print('valid' if task else 'invalid', file=args.out)
         elif args.mode == Mode.optimize:
@@ -95,6 +95,7 @@ def main():  # pragma: no cover
 
             if task:
                 print(task.to_vegalite_json(), file=args.out)
+                logger.info(f'Cost: {task.cost}')
                 outname = 'stringIO' if isinstance(args.out, io.StringIO) else args.out.name
                 logger.info(f'Wrote Vega-Lite spec to {outname}')
 

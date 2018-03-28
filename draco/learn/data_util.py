@@ -29,8 +29,8 @@ pos_neg_pickle_path = absolute_path('../../__tmp__/pos_neg.pickle')
 unlabeled_pickle_path = absolute_path('../../__tmp__/unlabeled.pickle')
 
 man_data_path = absolute_path('../../data/training/manual.json')
-yh_data_path = absolute_path('../../data/training/younghoon.json')
-ba_data_path = absolute_path('../../data/training/bahador.json')
+yh_data_path = absolute_path('../../data/training/kim2018.json')
+ba_data_path = absolute_path('../../data/training/saket2018.json')
 label_data_path = absolute_path('../../data/training/labeler.json')
 compassql_data_path = absolute_path('../../data/compassql_examples')
 data_dir = absolute_path('../../data/') # the dir containing data used in visualization
@@ -147,13 +147,13 @@ def count_violations_memoized(processed_specs: Dict[str, Dict], task: Task):
     return processed_specs[key]
 
 
-def get_nested_index():
+def get_nested_index(fields = None):
     '''
     Gives you a nested pandas index that we apply to the data when creating a dataframe.
     '''
     features = get_feature_names()
 
-    iterables = [['negative', 'positive'], features]
+    iterables = [fields or ['negative', 'positive'], features]
     index = pd.MultiIndex.from_product(iterables, names=['category', 'feature'])
     index = index.append(pd.MultiIndex.from_arrays([['source', 'task'], ['', '']]))
     return index
@@ -169,7 +169,7 @@ def get_feature_names():
 def pair_partition_to_vec(input_data: Tuple[Dict, Tuple[str,str], Iterable[Union[PosNegExample, UnlabeledExample, np.ndarray]]]):
     processed_specs, fields, partiton_data = input_data
 
-    columns = get_nested_index()
+    columns = get_nested_index(fields)
     dfs = []
 
     for example in partiton_data:
@@ -240,6 +240,8 @@ def _get_pos_neg_data() -> pd.DataFrame:
     '''
     data = pd.read_pickle(pos_neg_pickle_path)
     data.fillna(0, inplace=True)
+
+    assert set(data.negative.columns) == set(get_feature_names()), 'Feature names do not match.'
 
     return data
 

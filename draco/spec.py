@@ -203,6 +203,9 @@ class Data():
     def fill_with_random_content(self, defaut_size=10, override=False):
         """ Fill the data with randomly generated data if the content its content is empty """
 
+        # fix seed so we always get the same data
+        np.random.seed(42)
+
         if not override:
             assert self.content is None
 
@@ -215,19 +218,22 @@ class Data():
         for f in self.fields:
             cardinality = f.cardinality or size
             if f.ty == "number":
-                if f.cardinality > 0.9*size:  # almost unique
+                if f.cardinality > 0.8*size:  # almost unique
                     if f.extent:
                         lower, upper = f.extent
                         mu, sigma = 5, 0.7
                         data = stats.truncnorm((lower - mu) / sigma, (upper - mu) / sigma, loc=mu, scale=sigma).rvs(size)
                     else:
-                        data = np.random.normal(loc=1, scale=2, size=size)
+                        entropy = min((f.entropy or 0.5) / 4, 1)
+                        he = int(size * entropy)
+                        le = size - he
+                        data = np.concatenate([np.random.normal(loc=1, scale=0.35, size=le), np.random.uniform(0, 2, size=he)])
                     data = list(map(lambda v: round(v, 4), data))
                 else:  # probably some kind of ordinal
                     if f.extent:
                         l = np.random.randint(low=f.extent[0], high=f.extent[1], size=cardinality)
                     else:
-                        l = np.random.randint(size=cardinality)
+                        l = np.random.randint(0, cardinality * 1.5, size=cardinality)
                     data = np.random.choice(l, size=size)
             elif f.ty == "string":
                 l = rw.random_words(count=cardinality)
@@ -258,7 +264,7 @@ class Data():
         asp = ''
 
         if self.size is not None:
-            asp += f'data_size({self.size}).\n\n'
+            asp += f'num_rows({self.size}).\n\n'
 
         return asp + '\n'.join([x.to_asp() for x in self.fields])
 
@@ -531,26 +537,6 @@ class Query():
 
         return Query(mark, encodings)
 
-    @staticmethod
-    def parse_from_answer(clyngor_answer: Answers) -> 'Query':
-        encodings: List[Encoding] = []
-        mark = None
-
-        raw_encoding_props: Dict = defaultdict(dict)
-
-        for (head, body), in clyngor_answer:
-            if head == 'mark':
-                mark = body[0]
-            else:
-                # collect encoding properties
-                raw_encoding_props[body[0]][head] = body[1] if len(body) > 1 else True
-
-        # generate encoding objects from each collected encodings
-        for k, v in raw_encoding_props.items():
-            encodings.append(Encoding.parse_from_answer(k, v))
-
-        return Query(mark, encodings)
-
     def to_compassql(self):
         query = {}
         if self.mark is None or self.mark is True:
@@ -613,6 +599,33 @@ class Task():
         data = Data.from_obj(full_spec["data"], path_prefix=data_dir)
         query = Query.from_vegalite(full_spec)
         return Task(data, query)
+
+    @staticmethod
+    def parse_from_answer(clyngor_answer: Answers, task: Optional[str] = None, data: Optional[Data] = None, cost: Optional[int] = None) -> 'Task':
+        encodings: List[Encoding] = []
+        mark = None
+
+        raw_encoding_props: Dict = defaultdict(dict)
+        violations: Dict[str, int] = defaultdict(int)
+
+        for (head, body), in clyngor_answer:
+            if head == 'mark':
+                mark = body[0]
+            elif head == 'cost':
+                cost = int(body[0])
+            elif head == 'violation':
+                violations[body[0]] += 1
+            else:
+                # collect encoding properties
+                raw_encoding_props[body[0]][head] = body[1] if len(body) > 1 else True
+
+        # generate encoding objects from each collected encodings
+        for k, v in raw_encoding_props.items():
+            encodings.append(Encoding.parse_from_answer(k, v))
+
+        query = Query(mark, encodings)
+
+        return Task(data, query, task=task, cost=cost, violations=violations)
 
     def to_compassql(self):
         ''' generate compassql from task'''
