@@ -25,6 +25,7 @@ def compute_cost(violations: Dict) -> int:
     return c
 
 def compute_violation_costs(violations: Dict) -> Dict:
+    '''Get a dictionary of violation -> (count, weight)'''
     result = {}
 
     weights = current_weights()
