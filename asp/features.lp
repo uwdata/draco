@@ -89,8 +89,7 @@ feature_term(only_x) :- channel(_,y), not channel(_,x).
 
 % chart orientation for bar and tick (with and without bin)
 % binned fields have short labels if they are quantitative while otherwise labels can be long
-feature_term(orientation_binned) :- channel(E,y), bin(E,_), type(E,quantitative).
-feature_term(orientation_discrete) :- channel(E,x), discrete(ordinal;nominal).
+feature_term(orientation_binned) :- channel(E,x), bin(E,_), type(E,quantitative).
 
 % prefer not to use ordinal for fields with high cardinality
 feature_term(high_cardinality_ordinal,E) :- type(E,ordinal), enc_cardinality(E,C), C > 30.
