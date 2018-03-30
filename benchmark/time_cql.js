@@ -32,7 +32,9 @@ const FIELD_NAMES = [
 const ENCODING = {
   "channel": "?",
   "field": "?",
-  "type": "?"
+  "type": "?",
+  "aggregate": "?",
+  "bin": "?"
 }
 
 const BASE_QUERY = {
