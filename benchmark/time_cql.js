@@ -1,3 +1,6 @@
+// USAGE:
+// node time_cql.js <nfields> <nencodings>
+
 const cql = require('compassql');
 const fs = require('fs');
 
@@ -29,124 +32,93 @@ const FIELD_NAMES = [
   'Refunds_to_Committees'
 ]
 
+// These are the encoding enumerations that draco supports
 const ENCODING = {
   "channel": "?",
   "field": "?",
   "type": "?",
   "aggregate": "?",
-  "bin": "?"
+  "bin": "?",
+  "stack": "?"
 }
 
 const BASE_QUERY = {
   "spec": {
     "mark": "?"
   },
-  "orderBy": "effectiveness",
+  "chooseBy": "effectiveness",
   "config": {
     "autoAddCount": true
   }
 }
 
-const NUM_FIELDS = [5, 10, 15, 20, 25];
-const NUM_ENCODINGS = [1, 2, 3, 4, 5];
 const NUM_TRIALS = 20;
 
-const INCLUDE = {
-  5: {
-    1: true,
-    2: true,
-    3: true,
-    4: true,
-    5: true,
-  },
-  10: {
-    1: true,
-    2: true,
-    3: true,
-    4: true,
-    5: false
-  },
-  15: {
-    1: true,
-    2: true,
-    3: true,
-    4: false,
-    5: false,
-  },
-  20: {
-    1: true,
-    2: true,
-    3: true,
-    4: false,
-    5: false,
-  },
-  25: {
-    1: true,
-    2: true,
-    3: true,
-    4: false,
-    5: false,
-  }
-};
+const OUT_FILE = 'cql_runtimes.json';
+
+const nfields = parseInt(process.argv[2]);
+const nencodings = parseInt(process.argv[3]);
 
 function main() {
   // warmup
-  console.log('warming up...');
   run_set(1)
 
   // actual
   const results = []
-  run_set(NUM_TRIALS, results);
+  run_set(NUM_TRIALS, nfields, nencodings,results);
 
-  fs.writeFileSync('cql_runtimes.json', JSON.stringify(results, null, 2), 'utf-8');
+  let existing = []
+  if (fs.existsSync(OUT_FILE)) {
+    existing = JSON.parse(fs.readFileSync(OUT_FILE));
+  }
+
+  const all_results = existing.concat(results);
+  fs.writeFileSync('cql_runtimes.json', JSON.stringify(all_results, null, 2), 'utf-8');
 }
 
-function run_set(numTrials, results = null) {
-  for (nfields of NUM_FIELDS) {
-    const data = JSON.parse(fs.readFileSync('../data/weball26.json'));
+function run_set(numTrials, nfields, nencodings, results = null) {
+  const data = JSON.parse(fs.readFileSync('../data/weball26.json'));
 
-    for (const datum of data) {
-      for (let i = FIELD_NAMES.length - 1; i >= nfields; i--) {
-        delete datum[FIELD_NAMES[i]];
-      }
+  for (const datum of data) {
+    for (let i = FIELD_NAMES.length - 1; i >= nfields; i--) {
+      delete datum[FIELD_NAMES[i]];
     }
+  }
 
-    const schema =  cql.schema.build(data);
+  const schema =  cql.schema.build(data);
 
-    for (nencodings of NUM_ENCODINGS) {
-      if (INCLUDE[nfields][nencodings]) {
-        encodings = [];
-        for (let i = 0; i < nencodings; i++) {
-          const enc = Object.assign({}, ENCODING);
-          encodings.push(enc);
-        }
+  encodings = [];
+  for (let i = 0; i < nencodings; i++) {
+    const enc = Object.assign({}, ENCODING);
+    encodings.push(enc);
+  }
 
-        const query = Object.assign({}, BASE_QUERY);
-        query['spec']['encodings'] = encodings;
+  const query = Object.assign({}, BASE_QUERY);
+  query['spec']['encodings'] = encodings;
 
-        let total_time = 0;
-        for (let i = 0; i < numTrials; i++) {
-          const startTime = new Date().getTime();
-          const recommendation =  cql.recommend(query, schema);
-          const endTime = new Date().getTime();
+  let totalTime = 0;
+  for (let i = 0; i < numTrials; i++) {
+    const startTime = new Date().getTime();
+    const recommendation =  cql.recommend(query, schema);
+    const endTime = new Date().getTime();
 
-          total_time += endTime - startTime;
-        }
+    const delta = endTime - startTime;
+    totalTime += delta;
 
-        const avg_time = total_time * 1.0 / numTrials / 1000;
-
-        if (results !== null) {
-          results.push({
-            'fields': nfields,
-            'encodings': nencodings,
-            'runtime': avg_time,
-            'system': 'cql'
-          });
-
-          console.log('fields=' + nfields + ' encodings=' + nencodings + ' query time: ' + avg_time + 's');
-        }
-      }
+    if (results !== null) {
+      results.push({
+        'fields': nfields,
+        'encodings': nencodings,
+        'runtime': delta,
+        'system': 'cql'
+      });
     }
+  }
+
+  const avgTime = totalTime * 1.0 / numTrials / 1000;
+
+  if (results !== null) {
+    console.log('CQL  :: fields=' + nfields + ' encodings=' + nencodings + ' avg_query_time: ' + avgTime + 's');
   }
 }
 

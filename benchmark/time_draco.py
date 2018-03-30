@@ -1,6 +1,7 @@
 import subprocess
 import os
 import json
+import argparse
 from draco.spec import Query, Task
 
 import logging
@@ -13,8 +14,6 @@ DATA_FIELD_TYPES = ['string', 'string', 'string', 'number', 'string',
                     'number', 'number', 'number', 'string', 'number',
                     'string', 'number', 'datetime', 'number', 'string']
 
-NUM_FIELDS = [5, 10, 15, 20, 25]
-NUM_ENCODINGS = [1, 2, 3, 4, 5]
 NUM_TRIALS = 20
 
 CLINGO_PREFIX = 'clingo asp/_all.lp '
@@ -23,39 +22,50 @@ CLINGO_OPTIONS = '--quiet=1 --warn=no-atom-undefined -c max_extra_encs=0'
 DRACO_LP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../asp'))
 DRACO_LP = ['define.lp', 'generate.lp', 'hard.lp', 'soft.lp', 'weights.lp', 'assign_weights.lp', 'optimize.lp', 'output.lp']
 
-def main():
+OUTPUT_FILE = 'draco_runtimes.json'
+
+def main(args):
+    nfields = int(args.nfields)
+    nencodings = int(args.nencodings)
+
     # warmup
     logger.info('warming up...')
-    run_set()
+    run_set(1, nfields, nencodings)
 
     # actual
     results = []
-    run_set(results)
+    run_set(NUM_TRIALS, nfields, nencodings, results)
 
-    with open('draco_runtimes.json', 'w') as out:
-        json.dump(results, out, indent=2)
+    existing = []
+    if (os.path.exists(OUTPUT_FILE)):
+        with open(OUTPUT_FILE, 'r') as in_file:
+            existing = json.load(in_file)
+    all_results = existing + results
+    with open(OUTPUT_FILE, 'w') as out_file:
+        json.dump(all_results, out_file, indent=2)
 
-def run_set(results = None):
-    for nfields in NUM_FIELDS:
-        for nencodings in NUM_ENCODINGS:
-            query = generate_asp_query(nfields, nencodings)
+def run_set(numTrials, nfields, nencodings, results = None):
+    query = generate_asp_query(nfields, nencodings)
 
-            total_time = 0
-            for _ in range(NUM_TRIALS):
-                asp_query = generate_asp_query(nfields, nencodings)
-                total_time += run(asp_query)
+    total_time = 0
+    for _ in range(numTrials):
+        asp_query = generate_asp_query(nfields, nencodings)
+        delta = run(asp_query)
+        total_time += delta
 
-            avg_time = total_time / NUM_TRIALS
+        if (results is not None):
+            results.append({
+                'fields': nfields,
+                'encodings': nencodings,
+                'runtime': delta,
+                'system': 'draco'
+            })
 
-            if (results is not None):
-                results.append({
-                    'fields': nfields,
-                    'encodings': nencodings,
-                    'runtime': avg_time,
-                    'system': 'draco'
-                })
 
-                logger.info('running fields={0} encodings={1} query time: {2}'.format(nfields, nencodings, avg_time))
+    avg_time = total_time / NUM_TRIALS
+
+    if (results is not None):
+        logger.info('DRACO:: fields={0} encodings={1} avg_query_time: {2}'.format(nfields, nencodings, avg_time))
 
 def run(asp_query):
     # default args
@@ -93,10 +103,16 @@ def generate_asp_query(nfields, nencodings):
     for i in range(nencodings):
         encoding_name = 'e{0}'.format(i)
         encoding_def = 'encoding({0}).\n'.format(encoding_name)
+        encoding_def += ':- not task(value).\n'  # fix a task, as compass does not support
         query_string += encoding_def
 
     return query_string
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('nfields')
+    parser.add_argument('nencodings')
+
+    args = parser.parse_args()
+    main(args)
