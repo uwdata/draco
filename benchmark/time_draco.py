@@ -29,7 +29,6 @@ def main(args):
     nencodings = int(args.nencodings)
 
     # warmup
-    logger.info('warming up...')
     run_set(1, nfields, nencodings)
 
     # actual
