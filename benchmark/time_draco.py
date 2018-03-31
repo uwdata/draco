@@ -28,15 +28,15 @@ def main(args):
     nencodings = int(args.nencodings)
 
     # warmup
-    run_set(1, nfields, nencodings)
+    run_set(1, nfields, nencodings, True)
 
     # actual
-    results = run_set(NUM_TRIALS, nfields, nencodings)
+    results = run_set(NUM_TRIALS, nfields, nencodings, False)
 
     with open(f'draco_runtimes_{nfields}_{nencodings}.json', 'w') as out_file:
         json.dump(results, out_file, indent=2)
 
-def run_set(numTrials, nfields, nencodings):
+def run_set(numTrials, nfields, nencodings, dry):
     query = generate_asp_query(nfields, nencodings)
     results = []
 
@@ -55,7 +55,8 @@ def run_set(numTrials, nfields, nencodings):
 
     avg_time = total_time / NUM_TRIALS
 
-    logger.info('DRACO:: fields={0} encodings={1} avg_query_time: {2}'.format(nfields, nencodings, avg_time))
+    if not dry:
+        logger.info('DRACO:: fields={0} encodings={1} avg_query_time: {2}'.format(nfields, nencodings, avg_time))
 
     return results
 
