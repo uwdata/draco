@@ -22,8 +22,6 @@ CLINGO_OPTIONS = '--quiet=1 --warn=no-atom-undefined -c max_extra_encs=0'
 DRACO_LP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../asp'))
 DRACO_LP = ['define.lp', 'generate.lp', 'hard.lp', 'soft.lp', 'weights.lp', 'assign_weights.lp', 'optimize.lp', 'output.lp']
 
-OUTPUT_FILE = 'draco_runtimes.json'
-
 def main(args):
     nfields = int(args.nfields)
     nencodings = int(args.nencodings)
@@ -32,19 +30,14 @@ def main(args):
     run_set(1, nfields, nencodings)
 
     # actual
-    results = []
-    run_set(NUM_TRIALS, nfields, nencodings, results)
+    results = run_set(NUM_TRIALS, nfields, nencodings)
 
-    existing = []
-    if (os.path.exists(OUTPUT_FILE)):
-        with open(OUTPUT_FILE, 'r') as in_file:
-            existing = json.load(in_file)
-    all_results = existing + results
-    with open(OUTPUT_FILE, 'w') as out_file:
-        json.dump(all_results, out_file, indent=2)
+    with open(f'draco_runtimes_{nfields}_{nencodings}.json', 'w') as out_file:
+        json.dump(results, out_file, indent=2)
 
-def run_set(numTrials, nfields, nencodings, results = None):
+def run_set(numTrials, nfields, nencodings):
     query = generate_asp_query(nfields, nencodings)
+    results = []
 
     total_time = 0
     for _ in range(numTrials):
@@ -52,19 +45,18 @@ def run_set(numTrials, nfields, nencodings, results = None):
         delta = run(asp_query)
         total_time += delta
 
-        if (results is not None):
-            results.append({
-                'fields': nfields,
-                'encodings': nencodings,
-                'runtime': delta,
-                'system': 'draco'
-            })
-
+        results.append({
+            'fields': nfields,
+            'encodings': nencodings,
+            'runtime': delta,
+            'system': 'draco'
+        })
 
     avg_time = total_time / NUM_TRIALS
 
-    if (results is not None):
-        logger.info('DRACO:: fields={0} encodings={1} avg_query_time: {2}'.format(nfields, nencodings, avg_time))
+    logger.info('DRACO:: fields={0} encodings={1} avg_query_time: {2}'.format(nfields, nencodings, avg_time))
+
+    return results
 
 def run(asp_query):
     # default args
