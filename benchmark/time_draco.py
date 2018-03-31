@@ -7,6 +7,7 @@ from draco.spec import Query, Task
 import logging
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.ERROR)
 
 DATA_FIELD_TYPES = ['string', 'string', 'string', 'number', 'string',
                     'number', 'string', 'number', 'number', 'number',
