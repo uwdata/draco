@@ -106,8 +106,6 @@ function run_set(numTrials, nfields, nencodings, dry) {
       'runtime': delta,
       'system': 'cql'
     });
-
-    return results;
   }
 
   const avgTime = totalTime * 1.0 / numTrials / 1000;
@@ -115,6 +113,8 @@ function run_set(numTrials, nfields, nencodings, dry) {
   if (!dry) {
     console.log('CQL  :: fields=' + nfields + ' encodings=' + nencodings + ' avg_query_time: ' + avgTime + 's');
   }
+
+  return results;
 }
 
 main();
