@@ -103,7 +103,7 @@ function run_set(numTrials, nfields, nencodings, dry) {
     results.push({
       'fields': nfields,
       'encodings': nencodings,
-      'runtime': delta,
+      'runtime': delta / 1000,
       'system': 'cql'
     });
   }
