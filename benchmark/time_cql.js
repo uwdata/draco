@@ -46,10 +46,7 @@ const BASE_QUERY = {
   "spec": {
     "mark": "?"
   },
-  "chooseBy": "effectiveness",
-  "config": {
-    "autoAddCount": true
-  }
+  "chooseBy": "effectiveness"
 }
 
 const NUM_TRIALS = 20;
