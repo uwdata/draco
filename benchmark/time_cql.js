@@ -67,13 +67,7 @@ function main() {
   const results = []
   run_set(NUM_TRIALS, nfields, nencodings,results);
 
-  let existing = []
-  if (fs.existsSync(OUT_FILE)) {
-    existing = JSON.parse(fs.readFileSync(OUT_FILE));
-  }
-
-  const all_results = existing.concat(results);
-  fs.writeFileSync('cql_runtimes.json', JSON.stringify(all_results, null, 2), 'utf-8');
+  fs.writeFileSync('cql_runtimes_' + nfields + '_' + nencodings + '.json', JSON.stringify(results, null, 2), 'utf-8');
 }
 
 function run_set(numTrials, nfields, nencodings, results = null) {
