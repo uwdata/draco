@@ -61,16 +61,15 @@ const nencodings = parseInt(process.argv[3]);
 
 function main() {
   // warmup
-  run_set(1)
+  run_set(1, nfields, nencodings, true)
 
   // actual
-  const results = []
-  run_set(NUM_TRIALS, nfields, nencodings,results);
+  results = run_set(NUM_TRIALS, nfields, nencodings, false);
 
   fs.writeFileSync('cql_runtimes_' + nfields + '_' + nencodings + '.json', JSON.stringify(results, null, 2), 'utf-8');
 }
 
-function run_set(numTrials, nfields, nencodings, results = null) {
+function run_set(numTrials, nfields, nencodings, dry) {
   const data = JSON.parse(fs.readFileSync('../data/weball26.json'));
 
   for (const datum of data) {
@@ -90,6 +89,8 @@ function run_set(numTrials, nfields, nencodings, results = null) {
   const query = Object.assign({}, BASE_QUERY);
   query['spec']['encodings'] = encodings;
 
+  const results = []
+
   let totalTime = 0;
   for (let i = 0; i < numTrials; i++) {
     const startTime = new Date().getTime();
@@ -99,19 +100,19 @@ function run_set(numTrials, nfields, nencodings, results = null) {
     const delta = endTime - startTime;
     totalTime += delta;
 
-    if (results !== null) {
-      results.push({
-        'fields': nfields,
-        'encodings': nencodings,
-        'runtime': delta,
-        'system': 'cql'
-      });
-    }
+    results.push({
+      'fields': nfields,
+      'encodings': nencodings,
+      'runtime': delta,
+      'system': 'cql'
+    });
+
+    return results;
   }
 
   const avgTime = totalTime * 1.0 / numTrials / 1000;
 
-  if (results !== null) {
+  if (!dry) {
     console.log('CQL  :: fields=' + nfields + ' encodings=' + nencodings + ' avg_query_time: ' + avgTime + 's');
   }
 }
