@@ -127,6 +127,9 @@
 % If we use aggregation, then all continuous fields need to be aggeragted.
 :- aggregate(_,_), continuous(E), not aggregate(E,_).
 
+% Don't use count twice.
+:- { aggregate(_,count) } = 2.
+
 % === Global properties ===
 
 % Bars and area cannot overlap.
