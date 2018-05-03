@@ -24,7 +24,7 @@ HOLE = '?' # I want the system to fill something for this
 NULL = 'null' # I don't want the system fill anything in this place
 # if it is None, the system decide itself whether to fill it and what to fill
 
-def normalize_field_name(s:str) -> str:
+def normalize_field_name(s: Optional[str]) -> Optional[str]:
     # normalize the field
     if s is HOLE or s is NULL or s is None:
         return s
@@ -130,8 +130,7 @@ class Data():
             elif file_path.endswith("json"):
                 return Data.from_json(file_path)
             else:
-                logger.error('The data format is not recognized.')
-                return None
+                raise Exception('The data format is not recognized.')
         else:
             # a dict represented data already included in the file
             return Data.from_agate_table(agate.Table.from_object(obj['values']))
@@ -427,7 +426,7 @@ class Encoding():
 
         constraints = [f'encoding({self.id}).']
 
-        def collect_val(prop: str, prop_type: str, value: Union[str, int]): # collect a field with value
+        def collect_val(prop: str, prop_type: str, value: Optional[Union[str, int]]): # collect a field with value
             if value is None: # ask the system to decide whether to fit
                 pass
             elif value == NULL: # we do not want to fit anything in
@@ -469,7 +468,7 @@ class Encoding():
 
 class Query():
 
-    def __init__(self, mark: str, encodings: Iterable[Encoding] = None) -> None:
+    def __init__(self, mark: Optional[str], encodings: Iterable[Encoding] = None) -> None:
         # channels include 'x', 'y', 'color', 'size', 'shape', 'text', 'detail'
         self.mark = mark
         self.encodings = encodings if encodings is not None else []
@@ -601,7 +600,7 @@ class Task():
         return Task(data, query)
 
     @staticmethod
-    def parse_from_answer(clyngor_answer: Answers, task: Optional[str] = None, data: Optional[Data] = None, cost: Optional[int] = None) -> 'Task':
+    def parse_from_answer(clyngor_answer: Answers, data: Data, task: Optional[str] = None, cost: Optional[int] = None) -> 'Task':
         encodings: List[Encoding] = []
         mark = None
 
@@ -663,7 +662,7 @@ class AspTask(Task):
 
     def __init__(self, asp: str) -> None:
         self.asp = asp
-        super(AspTask, self).__init__(Data([], url='__none__'), None, None, None, None)
+        super(AspTask, self).__init__(Data([], url='__none__'), Query(None, None), None, None, None)
 
     def to_asp(self):
         return self.asp

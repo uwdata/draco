@@ -1,6 +1,6 @@
 import math
 import json
-from typing import Dict
+from typing import Dict, Optional
 from sortedcontainers import SortedDict
 
 class Spec(SortedDict):
@@ -10,7 +10,7 @@ class Spec(SortedDict):
     def __hash__(self):
         return json.dumps(self).__hash__()
 
-    def get_enc_by_channel(self, channel) -> Dict:
+    def get_enc_by_channel(self, channel) -> Optional[Dict]:
         """
         Returns the encoding associated with the given channel,
         None if it does not exist.

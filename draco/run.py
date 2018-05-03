@@ -7,7 +7,7 @@ import logging
 import os
 import subprocess
 import tempfile
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 import clyngor
 
@@ -69,7 +69,7 @@ def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = N
 
     return (stderr, stdout)
 
-def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False, clear_cache=False) -> Task:
+def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False, clear_cache=False) -> Optional[Task]:
     ''' Run clingo to compute a completion of a partial spec or violations. '''
 
     # Clear file cache. useful during development in notebooks.
