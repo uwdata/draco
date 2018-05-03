@@ -1,10 +1,11 @@
 {
-    "name": "draco",
+    "name": "draco-vis",
     "version": "0.0.1",
     "description": "Draco on the web.",
     "main": "index.js",
+    "typings": "build/index.d.ts",
     "scripts": {
-        "build": "tsc && rollup -c"
+        "build": "rm -rf build && tsc && rollup -c"
     },
     "author": "Dominik Moritz",
     "license": "BSD-3-Clause",

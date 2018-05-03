@@ -1,3 +1,5 @@
+import {constraints} from './all';
+
 let output = "";
 
 var Module = {
@@ -25,3 +27,9 @@ innocent(Suspect) :- motive(Suspect), not guilty(Suspect).
 `
 
 Module.ccall('run', 'number', ['string', 'string'], [example])
+
+export const prog = constraints;
+
+export default function run() {
+  console.log(constraints);
+}
