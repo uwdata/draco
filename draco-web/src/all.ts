@@ -1,4 +1,4 @@
-const constraints: string = `% ====== Definitions ======
+export const constraints: string = `% ====== Definitions ======
 
 % Types of marks to encode data.
 marktype(point;bar;line;area;text;tick;rect).
