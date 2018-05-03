@@ -1,0 +1,55 @@
+@import 'base.scss';
+
+.Navbar {
+  height: 24px;
+  display: flex;
+  flex-direction: row;
+  padding: 8px 32px 8px 32px;
+  align-items: baseline;
+  user-select: none;
+  flex: 0 0 auto;
+
+  .title {
+    text-align: center;
+    font-size: 1.2em;
+    padding: 0 16px 0 16px;
+    cursor: default;
+    flex: 1 0 0;
+  }
+
+  .tabs {
+    display: flex;
+    flex: 1 0 0;
+
+    .tab {
+      font-size: 0.8em;
+      padding: 0 8px 0 8px;
+      cursor: pointer;
+      color: $med-grey;
+    }
+
+    .tab:hover {
+      color: $dark-purple;
+    }
+
+    .tab.selected {
+      font-weight: 700;
+    }
+  }
+
+  .tabs.left {
+    flex-direction: row;
+
+    .tab {
+      text-align: left;
+    }
+  }
+
+  .tabs.right {
+    flex-direction: row-reverse;
+
+    .tab {
+      text-align: right;
+    }
+  }
+}
