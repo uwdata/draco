@@ -5,13 +5,36 @@
     "main": "index.js",
     "typings": "build/index.d.ts",
     "scripts": {
+        "test": "jest",
         "build": "rm -rf build && tsc && rollup -c"
     },
     "author": "Dominik Moritz",
     "license": "BSD-3-Clause",
     "devDependencies": {
-        "@types/node":"^9.0.0",
+        "@types/jest": "^22.2.3",
+        "@types/node": "^9.0.0",
+        "jest": "^22.4.3",
         "rollup": "^0.58.2",
+        "ts-jest": "^22.4.4",
         "typescript": "^2.8.3"
+    },
+    "jest": {
+        "transform": {
+            "^.+\\.tsx?$": "ts-jest"
+        },
+        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "jsx",
+            "json",
+            "node"
+        ],
+        "testPathIgnorePatterns": [
+            "node_modules",
+            "<rootDir>/build",
+            "src"
+        ]
     }
 }
