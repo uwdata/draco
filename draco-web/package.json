@@ -4,7 +4,7 @@
     "description": "Draco on the web.",
     "main": "index.js",
     "scripts": {
-        "build": "tsc && rollup -c"
+        "build": "tsc && rollup -c && ./concat_lp.sh ../asp build"
     },
     "author": "Dominik Moritz",
     "license": "BSD-3-Clause",
