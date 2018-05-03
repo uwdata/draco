@@ -2,7 +2,7 @@ import {constraints} from './all';
 
 let output = "";
 
-let Module = {
+const Module = {
   preRun: [],
   postRun: [],
   print: (function() {
