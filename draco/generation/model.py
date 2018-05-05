@@ -202,6 +202,8 @@ class Model:
             # we need to decide between nominal, ordinal, quantitative,
             # based off the cardinality
             vl_type = Model.sample_vl_type(field.cardinality)
+        else:
+            raise Exception('No type for %s', field.ty)
 
         return field.name, vl_type
 

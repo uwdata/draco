@@ -5,13 +5,41 @@
     "main": "index.js",
     "typings": "build/index.d.ts",
     "scripts": {
-        "build": "rm -rf build && tsc && rollup -c"
+        "test": "jest",
+        "build": "rm -rf build && tsc && rollup -c",
+        "format": "tslint -p . --fix && prettier --write '{src,test}/**/*.ts'",
+        "lint": "tslint -p . && prettier --list-different '{src,test}/**/*.ts'"
     },
     "author": "Dominik Moritz",
     "license": "BSD-3-Clause",
     "devDependencies": {
-        "@types/node":"^9.0.0",
+        "@types/jest": "^22.2.3",
+        "@types/node": "^9.0.0",
+        "jest": "^22.4.3",
         "rollup": "^0.58.2",
-        "typescript": "^2.8.3"
+        "ts-jest": "^22.4.4",
+        "typescript": "^2.8.3",
+        "prettier": "^1.12.1",
+        "tslint": "^5.9.1",
+        "tslint-config-prettier": "^1.12.0"
+    },
+    "jest": {
+        "transform": {
+            "^.+\\.tsx?$": "ts-jest"
+        },
+        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "jsx",
+            "json",
+            "node"
+        ],
+        "testPathIgnorePatterns": [
+            "node_modules",
+            "<rootDir>/build",
+            "src"
+        ]
     }
 }

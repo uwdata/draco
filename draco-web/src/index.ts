@@ -2,12 +2,12 @@ import {constraints} from './all';
 
 let output = "";
 
-var Module = {
+const Module = {
   preRun: [],
   postRun: [],
   print: (function() {
     return function(text: string) {
-      if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+      if (arguments.length > 1) { text = Array.prototype.slice.call(arguments).join(' '); }
       output += text + "\n";
       console.log(output);
     };

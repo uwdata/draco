@@ -4,7 +4,7 @@ Helper functions for learning algorithm.
 
 import json
 import os
-from typing import Dict
+from typing import Dict, Optional
 
 import numpy as np
 
@@ -34,15 +34,18 @@ def compute_violation_costs(violations: Dict) -> Dict:
 
     return result
 
-def count_violations(task: Task, debug=False) -> Dict[str, int]:
+def count_violations(task: Task, debug=False) -> Optional[Dict[str, int]]:
     ''' Get a dictionary of violations for a full spec.
         Args:
             task: a task spec object
         Returns:
             a dictionary storing violations of soft rules
     '''
-    task = run(task, files=['define.lp', 'soft.lp', 'output.lp'], silence_warnings=True, debug=debug)
-    return task.violations
+    out_task = run(task, files=['define.lp', 'soft.lp', 'output.lp'], silence_warnings=True, debug=debug)
+    if out_task is not None:
+        return out_task.violations
+    else:
+        return None
 
 
 def contingency_table(labels_1: np.array, labels_2: np.array) -> np.array:
