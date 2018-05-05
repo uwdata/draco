@@ -26,7 +26,7 @@ class Editor extends React.Component<any, State> {
   public render() {
     const requireConfig = {
       paths: {
-        'vs': 'https://www.mycdn.com/monaco-editor/0.6.1/min/vs'
+        'vs': 'https://cdn.jsdelivr.net/npm/monaco@latest/build/vs/'
       },
       url: 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.1/require.min.js',
     };
