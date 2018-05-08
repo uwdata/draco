@@ -1,4 +1,4 @@
-export const constraints: string = `% ====== Definitions ======
+export const define = `% ====== Definitions ======
 
 % Types of marks to encode data.
 marktype(point;bar;line;area;text;tick;rect).
@@ -115,8 +115,9 @@ overlap :- is_d_d, channel(E,C), not row_col, not no_overlap, num_rows(S1), disc
 orientation(vertical) :- mark(bar;tick;area;line), channel_discrete(x).
 orientation(vertical) :- mark(area;line), channel_continuous(x), channel_continuous(y).
 
-orientation(horizontal) :- mark(bar;tick;area;line), channel_discrete(y).
-% ====== Generators ======
+orientation(horizontal) :- mark(bar;tick;area;line), channel_discrete(y).`;
+
+export const generate = `% ====== Generators ======
 
 % encodings
 
@@ -152,8 +153,9 @@ obj_id(1..max_extra_encs).
 
 % stacking
 
-0 { stack(S): stacking(S) } 1.
-% ====== Expressiveness and Well-Formedness Constraints ======
+0 { stack(S): stacking(S) } 1.`;
+
+export const hard = `% ====== Expressiveness and Well-Formedness Constraints ======
 
 % === Within Encodings ===
 
@@ -361,8 +363,9 @@ obj_id(1..max_extra_encs).
 
 % The name of a field cannot be the name of an encoding.
 % This is to prevent errors coming from the shortcuts in define.lp.
-:- encoding(N), field(N).
-% After adding a soft constraint to this file, make sure to update 'weights.lp' and run 'process_violations.py'..
+:- encoding(N), field(N).`;
+
+export const soft = `% After adding a soft constraint to this file, make sure to update 'weights.lp' and run 'process_violations.py'..
 
 % ====== Preferences ======
 
@@ -640,8 +643,9 @@ violation(summary_discrete_shape,E) :- task(summary), channel(E,shape), discrete
 violation(summary_discrete_size,E) :- task(summary), channel(E,size), discrete(E), enc_interesting(E).
 violation(summary_discrete_text,E) :- task(summary), channel(E,text), discrete(E), enc_interesting(E).
 violation(summary_discrete_row,E) :- task(summary), channel(E,row), discrete(E), enc_interesting(E).
-violation(summary_discrete_column,E) :- task(summary), channel(E,column), discrete(E), enc_interesting(E).
-% Weights as constants
+violation(summary_discrete_column,E) :- task(summary), channel(E,column), discrete(E), enc_interesting(E).`;
+
+export const weights = `% Weights as constants
 
 #const type_q_weight = 0.
 #const type_o_weight = 1.
@@ -805,8 +809,9 @@ violation(summary_discrete_column,E) :- task(summary), channel(E,column), discre
 #const summary_discrete_column_weight = 0.
 
 #const stack_zero_weight = 0.
-#const stack_normalize_weight = 1.
-%% GENERATED FILE. DO NOT EDIT.
+#const stack_normalize_weight = 1.`;
+
+export const assign_weights = `%% GENERATED FILE. DO NOT EDIT.
 
 violation_weight(type_q,type_q_weight).
 violation_weight(type_o,type_o_weight).
@@ -956,11 +961,13 @@ violation_weight(summary_discrete_text,summary_discrete_text_weight).
 violation_weight(summary_discrete_row,summary_discrete_row_weight).
 violation_weight(summary_discrete_column,summary_discrete_column_weight).
 violation_weight(stack_zero,stack_zero_weight).
-violation_weight(stack_normalize,stack_normalize_weight).
-% Minimize the feature weight
+violation_weight(stack_normalize,stack_normalize_weight).`;
 
-#minimize { W,F,Q: violation_weight(F,W), violation(F,Q) }.
-% ====== Output ======
+export const optimize = `% Minimize the feature weight
+
+#minimize { W,F,Q: violation_weight(F,W), violation(F,Q) }.`;
+
+export const output = `% ====== Output ======
 
 #show mark/1.
 
@@ -975,3 +982,5 @@ violation_weight(stack_normalize,stack_normalize_weight).
 #show zero/1.
 
 #show violation/2.`;
+
+

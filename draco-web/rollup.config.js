@@ -1,7 +1,7 @@
 export default {
-  input: "build/index.js",
+  input: "build/src/index.js",
   output: {
-    file: "build/draco.js",
+    file: "build/src/draco.js",
     format: "umd",
     sourcemap: true,
     name: "draco",

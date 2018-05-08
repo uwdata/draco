@@ -1,5 +1,22 @@
 # usage: ./concat_lp.sh srcdir destdir
 
-all=$(cat $1/define.lp $1/generate.lp $1/hard.lp $1/soft.lp $1/weights.lp $1/assign_weights.lp $1/optimize.lp $1/output.lp | sed -e s/\`/\'/g)
+declare -a files=("define"
+"generate"
+"hard"
+"soft"
+"weights"
+"assign_weights"
+"optimize"
+"output"
+)
 
-echo "export const constraints: string = \`${all}\`;" > $2/all.ts
+output=""
+newline=$'\n\n'
+
+for file in "${files[@]}"
+do
+  path="${1}/${file}.lp"
+  lp=$(cat $path | sed -e s/\`/\'/g)
+  output+="export const ${file} = \`${lp}\`;${newline}"
+done
+echo "$output" > $2/all.ts
