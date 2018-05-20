@@ -27,7 +27,10 @@ class Editor extends React.Component<any, State> {
     return (
       <div className="Editor">
         <SplitPane split="vertical" defaultSize="40%" minSize={400}>
-            <MonacoEditor editorDidMount={this.editorDidMount}/>
+            <MonacoEditor
+              language="prolog"
+              value={this.state.code}
+              editorDidMount={this.editorDidMount}/>
             <div>cool</div>
         </SplitPane>
       </div>

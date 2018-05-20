@@ -3,8 +3,12 @@
 .Editor {
   display: flex;
   flex-direction: row;
+  padding: 0;
+  margin: 0;
   height: 100%;
+  position: relative;
   border-top: 1px solid $light-grey;
+  box-sizing: border-box;
 
   .pane {
     resize: horizontal;
