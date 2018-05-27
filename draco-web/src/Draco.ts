@@ -66,6 +66,7 @@ class Draco {
    * @returns {Promise} A promise that resolves when the solver completes, or rejects upon error.
    */
   public solve(constraints: string, options: Options): Promise<any> {
+    // add Draco's constraints
     if (options.constraints === 'all') {
       for (const name in Draco.constraints) {
         const set = Draco.constraints[name];
