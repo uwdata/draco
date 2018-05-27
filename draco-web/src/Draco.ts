@@ -1,5 +1,4 @@
-import Clingo_ from 'wasm-clingo';
-const Clingo: typeof Clingo_ = (Clingo_ as any).default || Clingo_;
+import Clingo from 'wasm-clingo';
 
 import * as constraints from './all';
 
