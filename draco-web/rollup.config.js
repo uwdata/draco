@@ -1,3 +1,6 @@
+import nodeResolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
+
 export default {
   input: "build/src/index.js",
   output: {
@@ -6,5 +9,9 @@ export default {
     sourcemap: true,
     name: "draco",
     exports: "named"
-  }
+  },
+  "plugins": [
+    nodeResolve(),
+    commonjs()
+  ]
 };

@@ -17,6 +17,6 @@ for file in "${files[@]}"
 do
   path="${1}/${file}.lp"
   lp=$(cat $path | sed -e s/\`/\'/g)
-  output+="export const ${file} = \`${lp}\`;${newline}"
+  output+="export const ${file}: string = \`${lp}\`;${newline}"
 done
 echo "$output" > $2/all.ts

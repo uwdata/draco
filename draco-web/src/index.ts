@@ -1,73 +1,39 @@
-import * as constraints from './all';
+import Draco from './Draco';
 
-let output = "";
+const draco = new Draco();
 
-function updateOutput() {
-  const contentElement = document.querySelector('#content');
-  if (contentElement) {
-    contentElement.textContent = output;
-  }
-}
-
-let Module = Object.assign({
-  preRun: <any>[],
-  postRun: <any>[],
-  print: <any>(function() {
-    return function(text: string) {
-      if (arguments.length > 1) { text = Array.prototype.slice.call(arguments).join(' '); }
-      output += text + "\n";
-    };
-  })(),
-  printErr: function(text: string) {
-    if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-    if (text === "Calling stub instead of signal()") { return; }
-    var prefix = "pre-main prep time: ";
-    if (typeof text==="string" && prefix == text.slice(0, prefix.length)) { text = "Ready to go!" }
-    output += text + "\n";
-    updateOutput();
-  },
-  setStatus: <any>function(text: string) {
-    output += text + "\n";
-    updateOutput();
-  },
-  totalDependencies: <number>0,
-  monitorRunDependencies: <any>function(left: number) {
-    console.log(left);
-    Module.totalDependencies = Math.max(Module.totalDependencies, left);
-    Module.setStatus(left ? 'Preparing... (' + (Module.totalDependencies-left) + '/' + Module.totalDependencies + ')' : 'All downloads complete.');
-  }
-}, (<any>window).Module);
-
-Module.setStatus('downloading...');
-
-const contentElement = document.querySelector('#content');
-if (contentElement) {
-  contentElement.textContent = 'hello!';
-}
+draco.init('http://localhost:8000/node_modules/wasm-clingo', (status: string) => {
+  console.log(status);
+}).then(() => {
+  call();
+});
 
 function call() {
   const example = `
-    % instance
-    motive(harry).
-    motive(sally).
-    guilty(harry).
+    % ====== Data definitions ======
+    num_rows(142).
 
-    % encoding
-    innocent(Suspect) :- motive(Suspect), not guilty(Suspect).
+    fieldtype(horsepower,number).
+    cardinality(horsepower,94).
+
+    fieldtype(acceleration,number).
+    cardinality(acceleration,96).
+
+    % ====== Query constraints ======
+    encoding(e0).
+    :- not field(e0,acceleration).
+
+    encoding(e1).
+    :- not field(e1,horsepower).
     `
-  let options = "";
-  ((<any>window).Module).ccall('run', 'number', ['string', 'string'], [example, options])
+
+  const options = {
+    constraints: 'all'
+  };
+
+  draco.solve(example, options).then((solution: Object) => {
+    console.log(solution);
+  });
 }
 
-const title = document.querySelector('#title');
-if (title) {
-  title.addEventListener('click', call);
-}
-updateOutput();
-export const prog = constraints;
-
-export default function run() {
-  console.log(constraints);
-}
-
-(<any>window).Module = Module;
+export default Draco;
