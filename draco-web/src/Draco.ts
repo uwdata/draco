@@ -50,6 +50,8 @@ class Draco {
       this.Module.setStatus = (text: string) => {
         updateStatus(text);
       }
+    } else {
+      this.Module.setStatus = (text: string) => {};
     }
 
     return new Promise((resolve: () => void, reject: () => void) => {
