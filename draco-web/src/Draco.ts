@@ -3,14 +3,24 @@ const Clingo: typeof Clingo_ = (Clingo_ as any).default || Clingo_;
 
 import * as constraints from './all';
 
+/**
+ * Options for Draco.
+ */
 export interface Options {
   constraints: string[] | string;
 };
 
+/**
+ * Sets of constraints for Draco (i.e. soft constraints, hard constraints, etc).
+ */
 export interface Constraints {
   [key: string]: string;
 }
 
+/**
+ * Draco is a solver that recommends visualization specifications based off
+ * partial specs.
+ */
 class Draco {
   Module: any;
   static constraints: Constraints = constraints;
@@ -19,6 +29,15 @@ class Draco {
     this.Module = {};
   }
 
+  /**
+   * Initializes the underlying solver.
+   *
+   * @param {string} url The base path of the server hosting this.
+   * @param {function} updateStatus Optional callback to log updates for initializationg
+   *
+   * @returns {Promise} A promise that resolves when the solver is ready or rejects upon
+   *    failure.
+   */
   public init(url: string, updateStatus?: (text: string) => void): Promise<any> {
     this.Module.locateFile = (file: string) => { return `${url}/${file}`; } ;
     this.Module.totalDependencies = 0;
@@ -39,6 +58,13 @@ class Draco {
     });
   }
 
+  /**
+   *
+   * @param {string} constraints The constraint to solve (e.g. the partial specification in ASP)
+   * @param {Options} options Options for solving.
+   *
+   * @returns {Promise} A promise that resolves when the solver completes, or rejects upon error.
+   */
   public solve(constraints: string, options: Options): Promise<any> {
     if (options.constraints === 'all') {
       for (const name in Draco.constraints) {
