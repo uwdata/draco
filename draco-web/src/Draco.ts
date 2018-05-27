@@ -59,6 +59,7 @@ class Draco {
   }
 
   /**
+   * Solves with the given constraints.
    *
    * @param {string} constraints The constraint to solve (e.g. the partial specification in ASP)
    * @param {Options} options Options for solving.
