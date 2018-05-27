@@ -1,6 +1,7 @@
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import SplitPane from 'react-split-pane';
+import Draco from 'draco-vis';
 
 import '../styles/Editor.css';
 import '../styles/Resizer.css';
@@ -10,13 +11,24 @@ interface State {
 };
 
 class Editor extends React.Component<any, State> {
+  draco: Draco;
+
   public constructor(props: any) {
     super(props);
     this.state = {
-      code: '// enter your query here'
+      code: ''
     }
 
+    this.draco = new Draco();
+
     this.editorDidMount = this.editorDidMount.bind(this);
+    this.handleEditorChange = this.handleEditorChange.bind(this);
+  }
+
+  public componentDidMount() {
+    this.draco.init('dist').then(() => {
+      console.log('initialized draco!');
+    });
   }
 
   public editorDidMount(editor: any) {
@@ -28,13 +40,17 @@ class Editor extends React.Component<any, State> {
       <div className="Editor">
         <SplitPane split="vertical" defaultSize="40%" minSize={400}>
             <MonacoEditor
-              language="prolog"
               value={this.state.code}
-              editorDidMount={this.editorDidMount}/>
+              editorDidMount={this.editorDidMount}
+              onChange={this.handleEditorChange}/>
             <div>cool</div>
         </SplitPane>
       </div>
     );
+  }
+
+  private handleEditorChange(newValue: string, e: any) {
+    console.log(newValue);
   }
 }
 
