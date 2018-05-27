@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -12,6 +13,9 @@ module.exports = {
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: [".ts", ".tsx", ".js", ".json"]
+  },
+  node: {
+    fs: 'empty'
   },
   module: {
     rules: [
@@ -31,7 +35,10 @@ module.exports = {
       filename: "./index.html"
     }),
     new MonacoWebpackPlugin({
-      languages: ['prolog']
-    })
+      languages: ['python']
+    }),
+    new CopyWebpackPlugin([
+      { from: './node_modules/wasm-clingo/clingo.wasm', to: 'dist/clingo.wasm' }
+    ])
   ]
 };
