@@ -2,7 +2,7 @@ import Draco from "draco-vis";
 import * as React from "react";
 import MonacoEditor from "react-monaco-editor";
 import SplitPane from "react-split-pane";
-import ASP_FORMAT from '../asp';
+import { ASP_FORMAT, ASP_THEME}  from '../asp';
 import "../styles/Editor.css";
 import "../styles/Resizer.css";
 import Status from "./status";
@@ -50,7 +50,7 @@ export default class Editor extends React.Component<any, State> {
     };
 
     this.code = EXAMPLE;
-    this.draco = new Draco("static", status => {
+    this.draco = new Draco("static", (status: string) => {
       console.log(status);
       this.setState({ status });
     });
@@ -71,6 +71,7 @@ export default class Editor extends React.Component<any, State> {
   public editorWillMount(monaco: any) {
     monaco.languages.register({ id: "asp" });
     monaco.languages.setMonarchTokensProvider("asp", ASP_FORMAT);
+    monaco.editor.defineTheme("draco-light", ASP_THEME);
   }
 
   public render() {
@@ -106,6 +107,7 @@ export default class Editor extends React.Component<any, State> {
                 }}
                 language="asp"
                 value={this.code}
+                theme="draco-light"
                 editorDidMount={this.editorDidMount}
                 editorWillMount={this.editorWillMount}
                 onChange={this.handleEditorChange}
