@@ -21,42 +21,53 @@
     height: 100%;
 
     .toolbar {
-      $border-radius: 12px;
-
-      height: 24px;
+      height: 32px;
       display: flex;
       flex-direction: row;
+      justify-content: space-around;
       align-items: baseline;
       width: calc(100% - 64px);
-      border: 1px solid $dark-blue;
-      margin: 16px 32px 16px 32px;
-      border-radius: $border-radius;
-      font-size: 12px;
+      margin: 8px 32px 8px 32px;
+      font-size: 13px;
 
       .button {
         text-align: center;
         height: 100%;
-        padding: 0;
+        padding: 0 8px 0 8px;
         margin: 0;
-        flex-grow: 1;
         user-select: none;
         cursor: pointer;
         font-weight: 700;
         color: $dark-blue;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        .icon {
+          width: 16px;
+          height: 16px;
+          padding: 1px 8px 0 0;
+        }
       }
 
       .button:hover {
-        background-color: $med-blue;
-        color: #fff;
-      }
-
-      .button.right {
-        border-radius: 0 $border-radius $border-radius 0;
+        box-sizing: border-box;
+        border-bottom: 2px solid $med-blue;
       }
 
       .button.left {
-        border-radius: $border-radius 0 0 $border-radius;
+        margin-right: 8px;
       }
+
+      .button.right {
+        margin-left: 8px;
+      }
+
+      .button.middle {
+        margin: 0 8px 0 8px;
+      }
+
     }
   }
 

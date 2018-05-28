@@ -25,20 +25,22 @@
     font-size: 20px;
 
     .tab {
-      font-size: 0.8em;
-      padding: 0 8px 8px 8px;
+      font-size: 16px;
+      padding: 0 6px 8px 8px;
       cursor: pointer;
       color: $dark-blue;
+      border-bottom: 2px solid transparent;
     }
 
     .tab:hover {
       color: $med-blue;
       box-sizing: border-box;
-      border-bottom: 1px solid $med-blue;
+      border-bottom: 2px solid $med-blue;
     }
 
     .tab.selected {
-      font-weight: 700;
+      box-sizing: border-box;
+      border-bottom: 2px solid $med-blue;
     }
   }
 
@@ -46,6 +48,7 @@
     flex-direction: row;
 
     .tab {
+      margin: 0 16px 0 0;
       text-align: left;
     }
   }
@@ -54,6 +57,7 @@
     flex-direction: row-reverse;
 
     .tab {
+      margin: 0 0 0 16px;
       text-align: right;
     }
   }

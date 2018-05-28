@@ -7,6 +7,9 @@ import "../styles/Editor.css";
 import "../styles/Resizer.css";
 import Status from "./status";
 
+import playIcon from '../../images/play.svg';
+import optionsIcon from '../../images/options.svg';
+
 interface State {
   status: string;
   output: Object;
@@ -75,8 +78,14 @@ export default class Editor extends React.Component<any, State> {
           <SplitPane split="vertical" defaultSize="30%" minSize={400}>
             <div className="input-pane">
               <div className="toolbar">
-                <button className="button left">options</button>
-                <button className="button right" onClick={this.run} disabled={!this.draco.initialized}>run</button>
+                <button className="button left">
+                  <img src={optionsIcon} className="icon"/>
+                  options
+                </button>
+                <button className="button right" onClick={this.run} disabled={!this.draco.initialized}>
+                  <img src={playIcon} className="icon"/>
+                  run
+                </button>
               </div>
               <MonacoEditor
                 ref="monaco"
