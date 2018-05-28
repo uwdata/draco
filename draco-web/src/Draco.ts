@@ -34,11 +34,6 @@ class Draco {
       // Status change logger
       setStatus: updateStatus || console.log,
 
-      // Draco is ready upon runtime initialization.
-      onRuntimeInitialized: () => {
-        this.initialized = true;
-      },
-
       // Dependencies
       totalDependencies: 0,
       monitorRunDependencies(left: number) {
@@ -62,9 +57,15 @@ class Draco {
    *
    * @returns {Promise} A promise that resolves when the solver is ready.
    */
-  public async init() {
-    this.Module.setStatus('Downloading...');
-    return Clingo(this.Module);
+  public init() {
+    return new Promise((resolve: () => void, reject: () => void) => {
+      this.Module.setStatus('Downloading...');
+      this.Module.onRuntimeInitialized = () => {
+        this.initialized = true;
+        resolve();
+      };
+      Clingo(this.Module);
+    });
   }
 
   /**
