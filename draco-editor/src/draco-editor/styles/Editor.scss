@@ -10,8 +10,14 @@
   border-top: 1px solid $light-grey;
   box-sizing: border-box;
 
-  .pane {
-    resize: horizontal;
-    background-color: #333;
+  .input-pane {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .status {
+      height: 30px;
+      border-top: 1px solid #ddd;
+    }
   }
 }
