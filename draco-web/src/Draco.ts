@@ -31,8 +31,8 @@ class Draco {
       // where to locate clingo.wasm
       locateFile: (file: string) => `${url}/${file}`,
 
-      // use the given updateStatus function if present
-      setStatus: updateStatus ? updateStatus : (text: string) => { console.log(text); },
+      // // use the given updateStatus function if present
+      // setStatus: updateStatus ? updateStatus : (text: string) => { console.log(text); },
 
       // Draco is ready upon runtime initialization.
       onRuntimeInitialized: () => {
@@ -56,6 +56,10 @@ class Draco {
         console.error(err);
       }
     };
+
+    if (updateStatus) {
+      this.Module.setStatus = updateStatus;
+    }
   }
 
   /**
