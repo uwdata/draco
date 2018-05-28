@@ -1,35 +1,8 @@
 # Draco: Visualization Constraints Weight Learning for Visualization Recommendations [![Build Status](https://travis-ci.org/domoritz/draco.svg?branch=master)](https://travis-ci.org/domoritz/draco) [![Coverage Status](https://coveralls.io/repos/github/domoritz/draco/badge.svg?branch=master)](https://coveralls.io/github/domoritz/draco?branch=master)
 
-![logo](logo.png)
+<img src="logos/light/logo-light.png" width=300></img>
 
-## Resources
-
-### Related repos
-
-* https://github.com/domoritz/vis-csp
-* https://github.com/domoritz/vis-constraints
-
-### Related work
-
-* http://www2.parc.com/istl/groups/uir/publications/items/UIR-1986-02-Mackinlay-TOG-Automating.pdf
-* https://arxiv.org/pdf/1507.06566.pdf
-* http://hci.stanford.edu/publications/2011/Bricolage/Bricolage-CHI2011.pdf
-* https://www.cc.gatech.edu/~xzhang36/papers/mapl17.pdf
-* https://www.cc.gatech.edu/~xzhang36/papers/popl16.pdf
-* https://www.cc.gatech.edu/~xzhang36/papers/fse15a.pdf
-* [Discriminative Training of Markov Logic Networks](https://homes.cs.washington.edu/~pedrod/papers/aaai05.pdf)
-* [Markov Logic Network](https://homes.cs.washington.edu/~pedrod/papers/pilp.pdf)
-* [Efficient Weight Learning for Markov Logic Networks](https://homes.cs.washington.edu/~pedrod/papers/pkdd07.pdf)
-* [Combining Relational Learning with SMT
-Solvers using CEGAR](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/main-25.pdf)
-* [Convert ASP to MLN](http://reasoning.eas.asu.edu/lpmln/Tutorial.html)
-
-### Guides
-
-* The Algorithm is written up in https://hackmd.io/s/H1RYJ5RRW
-* https://github.com/potassco/guide/releases/
-
-## Installlation
+## Installation
 
 ### Install clingo.
 
@@ -75,6 +48,10 @@ You should also be able to run the tests (and coverage report)
 
 ## Running Draco
 
+## Run the Editor
+
+See https://github.com/domoritz/draco/blob/master/draco-editor/Readme.md
+
 ### End to end example
 
 To run draco on a partial spec.
@@ -100,3 +77,30 @@ Alternatively, you can invoke draco with `draco -m asp test.lp`.
 `clingo asp/_apt.lp examples/example_apt.lp --opt-mode=optN --quiet=1 --project -c max_extra_encs=0`
 
 This only prints the relevant data and restricts the extra encodings that are being generated.
+
+## Resources
+
+### Related repos
+
+* https://github.com/domoritz/vis-csp
+* https://github.com/domoritz/vis-constraints
+
+### Related work
+
+* http://www2.parc.com/istl/groups/uir/publications/items/UIR-1986-02-Mackinlay-TOG-Automating.pdf
+* https://arxiv.org/pdf/1507.06566.pdf
+* http://hci.stanford.edu/publications/2011/Bricolage/Bricolage-CHI2011.pdf
+* https://www.cc.gatech.edu/~xzhang36/papers/mapl17.pdf
+* https://www.cc.gatech.edu/~xzhang36/papers/popl16.pdf
+* https://www.cc.gatech.edu/~xzhang36/papers/fse15a.pdf
+* [Discriminative Training of Markov Logic Networks](https://homes.cs.washington.edu/~pedrod/papers/aaai05.pdf)
+* [Markov Logic Network](https://homes.cs.washington.edu/~pedrod/papers/pilp.pdf)
+* [Efficient Weight Learning for Markov Logic Networks](https://homes.cs.washington.edu/~pedrod/papers/pkdd07.pdf)
+* [Combining Relational Learning with SMT
+Solvers using CEGAR](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/main-25.pdf)
+* [Convert ASP to MLN](http://reasoning.eas.asu.edu/lpmln/Tutorial.html)
+
+### Guides
+
+* The Algorithm is written up in https://hackmd.io/s/H1RYJ5RRW
+* https://github.com/potassco/guide/releases/
