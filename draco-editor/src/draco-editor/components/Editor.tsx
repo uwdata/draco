@@ -41,6 +41,12 @@ class Editor extends React.Component<any, State> {
       <div className="Editor">
         <SplitPane split="vertical" defaultSize="40%" minSize={400}>
             <MonacoEditor
+              options={{
+                automaticLayout: true,
+                cursorBlinking: 'smooth',
+                wordWrap: 'on',
+                wrappingIndent: 'same'
+              }}
               language={null}
               value={this.state.code}
               editorDidMount={this.editorDidMount}
