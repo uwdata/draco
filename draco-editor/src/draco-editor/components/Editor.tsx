@@ -136,7 +136,7 @@ export default class Editor extends React.Component<any, State> {
           <div className="input-pane">
             <div className="toolbar">
               <button className="button left">options</button>
-              <button className="button right" onClick={this.run}>run</button>
+              <button className="button right" onClick={this.run} disabled={!this.draco.initialized}>run</button>
             </div>
             <MonacoEditor
               ref="monaco"

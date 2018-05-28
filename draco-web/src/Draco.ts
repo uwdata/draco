@@ -20,9 +20,9 @@ export interface Options {
  * partial specs.
  */
 class Draco {
-  private Module: any;
+  public initialized = false;
 
-  private initialized = false;
+  private Module: any;
 
   /**
    * @param url The base path of the server hosting this.
@@ -83,16 +83,21 @@ class Draco {
       throw Error('Draco is not initialized. Call `init() first.`');
     }
 
+    this.Module.setStatus('Running Draco Query...');
+
     program += (options && options.constraints || Object.keys(constraints)).map((name: string) => (constraints as any)[name]).join('\n');
 
-    const opt = ' --outf=2';  // JSON output
+    const opt = [
+      '--outf=2', // JSON output
+      '--opt-mode=OptN', // find multiple optimal models
+      '--quiet=1',  // only output optimal models
+      '5'  // at most 5 models
+    ].join(' ');
 
     let result = '';
     this.Module.print = (text: string) => {
       result += text;
     };
-
-    this.Module.setStatus('Running Draco Query...');
 
     this.Module.ccall('run', 'number', ['string', 'string'], [program, opt]);
     return JSON.parse(result);
