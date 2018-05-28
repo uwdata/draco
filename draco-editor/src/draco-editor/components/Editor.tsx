@@ -5,6 +5,7 @@ import SplitPane from "react-split-pane";
 import Status from "./status";
 import "../styles/Editor.css";
 import "../styles/Resizer.css";
+import * as monaco from "monaco-editor";
 
 interface State {
   status: string;
@@ -62,6 +63,72 @@ export default class Editor extends React.Component<any, State> {
     editor.focus();
   }
 
+  public editorWillMount(monaco: any) {
+    monaco.languages.register({ id: "asp" });
+    monaco.languages.setMonarchTokensProvider("asp", {
+      brackets: [
+        ['{','}','delimiter.curly'],
+        ['[',']','delimiter.square'],
+        ['(',')','delimiter.parenthesis']
+      ],
+
+      keywords: [
+        'not'
+      ],
+
+      operators: [
+        ':', '..', ':~',
+        ':-', '|', ';', ',',
+        '=', '!=', '<', '<=',
+        '>', '>=', '+', '-',
+        '/', '*', '@'
+      ],
+
+      // operators
+      symbols: /([\.]{2})|([=><!:\|\+\-\~\*\/%,;]+)/,
+
+      tokenizer: {
+        root : [
+          { include: '@whitespace' },
+
+          // variables
+          [ /[A-Z][\w_]*('*)/, 'tag' ],  // variable.name
+
+          [ /[a-zA-Z_][\w_]*('*)/, {
+              cases: {
+                  '@keywords': 'keyword',
+                  '@default': 'identifier'
+              } } ],
+
+          // delimiters
+          [ /[\{\}\(\)\[\]]/, '@brackets' ],
+          [ /\./, 'delimiter' ],
+
+          // numbers
+          [ /[\-\+]?\d+\/[\-\+]?\d*[1-9]/, 'number' ],
+          [ /[\-\+]?\d+(\.\d+)?/, 'number' ],
+          [ /@symbols/, { cases:{ '@operators': 'keyword',
+                              '@default': 'symbols' } } ],
+
+          // strings
+          [/"([^"\\]|\\.)*$/, 'string.invalid' ],  // non-teminated string
+          [/"/,  'string', '@string' ],
+        ],
+
+        whitespace: [
+          [/[ \t\r\n]+/, 'white'],
+          [/\%.*$/,    'comment'],
+          [/\#.*$/,    'comment'],
+        ],
+
+        string: [
+          [/[^"]+/,  'string'],
+          [/"/,      'string', '@pop' ]
+        ],
+      }
+    });
+  }
+
   public render() {
     return (
       <div className="Editor">
@@ -77,11 +144,15 @@ export default class Editor extends React.Component<any, State> {
                 automaticLayout: true,
                 cursorBlinking: "smooth",
                 wordWrap: "on",
-                wrappingIndent: "same"
+                wrappingIndent: "same",
+                minimap: {
+                  enabled: false
+                }
               }}
-              language={null}
+              language="asp"
               value={this.code}
               editorDidMount={this.editorDidMount}
+              editorWillMount={this.editorWillMount}
               onChange={this.handleEditorChange}
             />
             <Status status={this.state.status} />
