@@ -85,6 +85,7 @@ export default class Editor extends React.Component<any, State> {
                   cursorBlinking: "smooth",
                   wordWrap: "on",
                   wrappingIndent: "same",
+                  scrollBeyondLastLine: false,
                   minimap: {
                     enabled: false
                   }
