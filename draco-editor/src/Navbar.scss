@@ -12,7 +12,7 @@
 
   .title {
     text-align: center;
-    font-size: 1.5em;
+    font-size: 24px;
     padding: 0 16px 0 16px;
     cursor: default;
     flex: 1 0 0;
@@ -22,7 +22,7 @@
   .tabs {
     display: flex;
     flex: 1 0 0;
-    font-size: 1.2em;
+    font-size: 20px;
 
     .tab {
       font-size: 0.8em;
@@ -33,6 +33,7 @@
 
     .tab:hover {
       color: $med-blue;
+      box-sizing: border-box;
       border-bottom: 1px solid $med-blue;
     }
 
@@ -55,5 +56,10 @@
     .tab {
       text-align: right;
     }
+  }
+
+  .draco-logo {
+    width: 24px;
+    height: 24px;
   }
 }

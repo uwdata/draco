@@ -37,8 +37,10 @@ class Navbar extends React.Component<Props, any> {
       });
 
       rightTabs.push(
-        <button className={tabClass} key={name}>{name}</button>
-      )
+        <button className={tabClass} key={name}>
+          {name}
+        </button>
+      );
     }
 
     return (
