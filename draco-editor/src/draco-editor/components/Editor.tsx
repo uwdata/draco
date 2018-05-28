@@ -157,7 +157,9 @@ export default class Editor extends React.Component<any, State> {
             />
             <Status status={this.state.status} />
           </div>
-          <div className="recommendations">{JSON.stringify(this.state.output)}</div>
+          <div className="recommendations">
+            <pre>{JSON.stringify(this.state.output, null, 2)}</pre>
+          </div>
         </SplitPane>
       </div>
     );
