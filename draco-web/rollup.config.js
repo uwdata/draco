@@ -4,11 +4,12 @@ import commonjs from 'rollup-plugin-commonjs';
 export default {
   input: "build/src/index.js",
   output: {
-    file: "build/src/draco.js",
+    file: "build/draco.js",
     format: "umd",
     sourcemap: true,
     name: "draco",
-    exports: "named"
+    exports: "named",
+    external: ["path", "fs", "crypto"]
   },
   "plugins": [
     nodeResolve(),

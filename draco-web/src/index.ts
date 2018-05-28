@@ -1,15 +1,6 @@
 import Draco from './Draco';
 
-const draco = new Draco();
-
-draco.init('http://localhost:8000/node_modules/wasm-clingo', (status: string) => {
-  console.log(status);
-}).then(() => {
-  call();
-});
-
-function call() {
-  const example = `
+const EXAMPLE = `
 % ====== Data definitions ======
 num_rows(142).
 
@@ -25,15 +16,16 @@ encoding(e0).
 
 encoding(e1).
 :- not field(e1,horsepower).
-    `
+`;
 
-  const options = {
-    constraints: 'all'
-  };
+export default async function run() {
+  const draco = new Draco();
+  const status = await draco.init('http://localhost:8000/node_modules/wasm-clingo');
 
-  draco.solve(example, options).then((solution: Object) => {
-    console.log(solution);
-  });
+  const solution = await draco.solve(EXAMPLE, { constraints: 'all' });
+
+  console.log(solution);
 }
 
-export default Draco;
+// run draco
+run();

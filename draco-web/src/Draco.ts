@@ -1,4 +1,5 @@
-import Clingo from 'wasm-clingo';
+import Clingo_ from 'wasm-clingo';
+const Clingo: typeof Clingo_ = (Clingo_ as any).default || Clingo_;
 
 import * as constraints from './all';
 
@@ -7,7 +8,7 @@ import * as constraints from './all';
  */
 export interface Options {
   constraints: string[] | string;
-};
+}
 
 /**
  * Sets of constraints for Draco (i.e. soft constraints, hard constraints, etc).
@@ -21,8 +22,8 @@ export interface Constraints {
  * partial specs.
  */
 class Draco {
-  Module: any;
-  static constraints: Constraints = constraints;
+  private Module: any;
+  public static constraints: Constraints = constraints;
 
   constructor() {
     this.Module = {};
@@ -38,17 +39,21 @@ class Draco {
    *    failure.
    */
   public init(url: string, updateStatus?: (text: string) => void): Promise<any> {
-    this.Module.locateFile = (file: string) => { return `${url}/${file}`; } ;
+    this.Module.locateFile = (file: string) => `${url}/${file}`;
     this.Module.totalDependencies = 0;
     this.Module.monitorRunDependencies = function(left: number) {
-        this.totalDependencies = Math.max(this.totalDependencies, left);
-        this.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+      this.totalDependencies = Math.max(this.totalDependencies, left);
+      this.setStatus(
+        left
+          ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')'
+          : 'All downloads complete.'
+      );
     };
 
     if (updateStatus) {
       this.Module.setStatus = (text: string) => {
         updateStatus(text);
-      }
+      };
     } else {
       this.Module.setStatus = (text: string) => {};
     }
@@ -82,7 +87,7 @@ class Draco {
     }
 
     return new Promise((resolve: (value: string) => void, reject: (value: string) => void) => {
-      let opt = " --outf=2";
+      const opt = ' --outf=2';
       let result = '';
       this.Module.print = (text: string) => {
         result += text;
