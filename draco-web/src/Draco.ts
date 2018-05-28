@@ -28,25 +28,28 @@ class Draco {
    */
   constructor(url: string, updateStatus?: (text: string) => void) {
     this.Module = {
+      // where to locate clingo.wasm
       locateFile: (file: string) => `${url}/${file}`,
-      totalDependencies: 0
+
+      // use the given updateStatus function if present
+      setStatus: updateStatus ? updateStatus : () => {},
+
+      // Draco is ready upon runtime initialization.
+      onRuntimeInitialized: () => {
+        this.initialized = true;
+      },
+
+      // dependencies
+      totalDependencies: 0,
+      monitorRunDependencies: function(left: number) {
+        this.totalDependencies = Math.max(this.totalDependencies, left)
+        this.setStatus(
+          left
+            ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')'
+            : 'All downloads complete.'
+        );
+      },
     };
-
-
-    this.Module.monitorRunDependencies = function(left: number) {
-      this.totalDependencies = Math.max(this.totalDependencies, left);
-      this.setStatus(
-        left
-          ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')'
-          : 'All downloads complete.'
-      );
-    };
-
-    if (updateStatus) {
-      this.Module.setStatus = (text: string) => {
-        updateStatus(text);
-      };
-    }
   }
 
   /**
@@ -56,7 +59,6 @@ class Draco {
    *    failure.
    */
   public init(): Promise<any> {
-    this.initialized = true;
     return Clingo(this.Module);
   }
 
