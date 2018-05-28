@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as classNames from "classnames";
 
 import "../styles/Status.css";
 
@@ -8,11 +9,11 @@ interface Props {
 
 export default class Status extends React.PureComponent<Props> {
   public render() {
-    let className = "Status";
-    if (!!this.props.status) {
-      className += " active";
-    }
+    const classes = classNames({
+      "Status": true,
+      "active": !!this.props.status
+    });
 
-    return <div className={className}>{this.props.status}</div>;
+    return <div className={classes}>{this.props.status}</div>;
   }
 }
