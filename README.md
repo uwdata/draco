@@ -1,6 +1,8 @@
 # Draco: Visualization Constraints Weight Learning for Visualization Recommendations [![Build Status](https://travis-ci.org/domoritz/draco.svg?branch=master)](https://travis-ci.org/domoritz/draco) [![Coverage Status](https://coveralls.io/repos/github/domoritz/draco/badge.svg?branch=master)](https://coveralls.io/github/domoritz/draco?branch=master)
 
-<img src="logos/light/logo-light.png" width=300></img>
+<img src="logos/dark/logo-dark.png" width=300></img>
+
+Try Draco in the browser at https://domoritz.github.io/draco. Note that we use [Emscripten](https://github.com/kripken/emscripten) to compile the constraint solver for the web.
 
 ## Installation
 
