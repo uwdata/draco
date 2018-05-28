@@ -60,10 +60,9 @@ class Draco {
   /**
    * Initializes the underlying solver.
    *
-   * @returns {Promise} A promise that resolves when the solver is ready or rejects upon
-   *    failure.
+   * @returns {Promise} A promise that resolves when the solver is ready.
    */
-  public init(): Promise<any> {
+  public async init() {
     this.Module.setStatus('Downloading...');
     return Clingo(this.Module);
   }
