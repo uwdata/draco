@@ -1,13 +1,13 @@
-const path = require('path');
+const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: "./src/index.tsx",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist")
   },
   devtool: "source-map",
   resolve: {
@@ -15,7 +15,7 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js", ".json"]
   },
   node: {
-    fs: 'empty'
+    fs: "empty"
   },
   module: {
     rules: [
@@ -24,7 +24,7 @@ module.exports = {
       // css loading
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: ["style-loader", "css-loader"]
       }
     ]
   },
@@ -38,7 +38,7 @@ module.exports = {
       languages: []
     }),
     new CopyWebpackPlugin([
-      { from: './node_modules/wasm-clingo/clingo.wasm', to: 'dist/clingo.wasm' }
+      { from: "./node_modules/wasm-clingo/clingo.wasm", to: "dist/clingo.wasm" }
     ])
   ]
 };
