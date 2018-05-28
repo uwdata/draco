@@ -28,20 +28,20 @@ class Draco {
    */
   constructor(url: string, updateStatus?: (text: string) => void) {
     this.Module = {
-      // where to locate clingo.wasm
+      // Where to locate clingo.wasm
       locateFile: (file: string) => `${url}/${file}`,
 
-      // // use the given updateStatus function if present
-      // setStatus: updateStatus ? updateStatus : (text: string) => { console.log(text); },
+      // Status change logger
+      setStatus: updateStatus || console.log;
 
       // Draco is ready upon runtime initialization.
       onRuntimeInitialized: () => {
         this.initialized = true;
       },
 
-      // dependencies
+      // Dependencies
       totalDependencies: 0,
-      monitorRunDependencies: function(left: number) {
+      monitorRunDependencies(left: number) {
         this.totalDependencies = Math.max(this.totalDependencies, left)
         this.setStatus(
           left
@@ -50,16 +50,11 @@ class Draco {
         );
       },
 
-      // on error
-      printErr: function(err: Error) {
+      printErr(err: Error) {
         this.setStatus('Error');
         console.error(err);
       }
     };
-
-    if (updateStatus) {
-      this.Module.setStatus = updateStatus;
-    }
   }
 
   /**
@@ -94,6 +89,8 @@ class Draco {
     this.Module.print = (text: string) => {
       result += text;
     };
+
+    this.Module.setStatus('Running Draco Query...');
 
     this.Module.ccall('run', 'number', ['string', 'string'], [program, opt]);
     return JSON.parse(result);
