@@ -9,6 +9,7 @@ import Status from "./status";
 import * as classNames from 'classnames';
 
 import playIcon from '../../images/play.svg';
+import playIconGrey from '../../images/play-grey.svg';
 import optionsIcon from '../../images/options.svg';
 
 interface State {
@@ -86,7 +87,8 @@ export default class Editor extends React.Component<any, State> {
                 <button className={classNames({
                   'button': true, 'right': true, 'disabled': !this.draco.initialized
                 })} onClick={this.run} disabled={!this.draco.initialized}>
-                  <img src={playIcon} className="icon"/>
+                  <img src={!this.draco.initialized ? playIconGrey : playIcon}
+                    className="icon"/>
                   run
                 </button>
               </div>
