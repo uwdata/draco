@@ -2,10 +2,10 @@ import Draco from "draco-vis";
 import * as React from "react";
 import MonacoEditor from "react-monaco-editor";
 import SplitPane from "react-split-pane";
-import Status from "./status";
+import ASP_FORMAT from '../asp';
 import "../styles/Editor.css";
 import "../styles/Resizer.css";
-import * as monaco from "monaco-editor";
+import Status from "./status";
 
 interface State {
   status: string;
@@ -16,8 +16,7 @@ interface Monaco {
   editor: Object;
 }
 
-const EXAMPLE = `
-% ====== Data definitions ======
+const EXAMPLE = `% ====== Data definitions ======
 num_rows(142).
 
 fieldtype(horsepower,number).
@@ -46,7 +45,8 @@ export default class Editor extends React.Component<any, State> {
     };
 
     this.code = EXAMPLE;
-    this.draco = new Draco("dist", status => {
+    this.draco = new Draco("static", status => {
+      console.log(status);
       this.setState({ status });
     });
 
@@ -65,102 +65,44 @@ export default class Editor extends React.Component<any, State> {
 
   public editorWillMount(monaco: any) {
     monaco.languages.register({ id: "asp" });
-    monaco.languages.setMonarchTokensProvider("asp", {
-      brackets: [
-        ['{','}','delimiter.curly'],
-        ['[',']','delimiter.square'],
-        ['(',')','delimiter.parenthesis']
-      ],
-
-      keywords: [
-        'not'
-      ],
-
-      operators: [
-        ':', '..', ':~',
-        ':-', '|', ';', ',',
-        '=', '!=', '<', '<=',
-        '>', '>=', '+', '-',
-        '/', '*', '@'
-      ],
-
-      // operators
-      symbols: /([\.]{2})|([=><!:\|\+\-\~\*\/%,;]+)/,
-
-      tokenizer: {
-        root : [
-          { include: '@whitespace' },
-
-          // variables
-          [ /[A-Z][\w_]*('*)/, 'tag' ],  // variable.name
-
-          [ /[a-zA-Z_][\w_]*('*)/, {
-              cases: {
-                  '@keywords': 'keyword',
-                  '@default': 'identifier'
-              } } ],
-
-          // delimiters
-          [ /[\{\}\(\)\[\]]/, '@brackets' ],
-          [ /\./, 'delimiter' ],
-
-          // numbers
-          [ /[\-\+]?\d+\/[\-\+]?\d*[1-9]/, 'number' ],
-          [ /[\-\+]?\d+(\.\d+)?/, 'number' ],
-          [ /@symbols/, { cases:{ '@operators': 'keyword',
-                              '@default': 'symbols' } } ],
-
-          // strings
-          [/"([^"\\]|\\.)*$/, 'string.invalid' ],  // non-teminated string
-          [/"/,  'string', '@string' ],
-        ],
-
-        whitespace: [
-          [/[ \t\r\n]+/, 'white'],
-          [/\%.*$/,    'comment'],
-          [/\#.*$/,    'comment'],
-        ],
-
-        string: [
-          [/[^"]+/,  'string'],
-          [/"/,      'string', '@pop' ]
-        ],
-      }
-    });
+    monaco.languages.setMonarchTokensProvider("asp", ASP_FORMAT);
   }
 
   public render() {
     return (
       <div className="Editor">
-        <SplitPane split="vertical" defaultSize="30%" minSize={400}>
-          <div className="input-pane">
-            <div className="toolbar">
-              <button className="button left">options</button>
-              <button className="button right" onClick={this.run} disabled={!this.draco.initialized}>run</button>
+        <div className="split-pane-wrapper">
+          <SplitPane split="vertical" defaultSize="30%" minSize={400}>
+            <div className="input-pane">
+              <div className="toolbar">
+                <button className="button left">options</button>
+                <button className="button right" onClick={this.run} disabled={!this.draco.initialized}>run</button>
+              </div>
+              <MonacoEditor
+                ref="monaco"
+                options={{
+                  automaticLayout: true,
+                  cursorBlinking: "smooth",
+                  wordWrap: "on",
+                  wrappingIndent: "same",
+                  scrollBeyondLastLine: false,
+                  minimap: {
+                    enabled: false
+                  }
+                }}
+                language="asp"
+                value={this.code}
+                editorDidMount={this.editorDidMount}
+                editorWillMount={this.editorWillMount}
+                onChange={this.handleEditorChange}
+              />
             </div>
-            <MonacoEditor
-              ref="monaco"
-              options={{
-                automaticLayout: true,
-                cursorBlinking: "smooth",
-                wordWrap: "on",
-                wrappingIndent: "same",
-                minimap: {
-                  enabled: false
-                }
-              }}
-              language="asp"
-              value={this.code}
-              editorDidMount={this.editorDidMount}
-              editorWillMount={this.editorWillMount}
-              onChange={this.handleEditorChange}
-            />
-            <Status status={this.state.status} />
-          </div>
-          <div className="recommendations">
-            <pre>{JSON.stringify(this.state.output, null, 2)}</pre>
-          </div>
-        </SplitPane>
+            <div className="recommendations">
+              <pre>{JSON.stringify(this.state.output, null, 2)}</pre>
+            </div>
+          </SplitPane>
+        </div>
+        <Status status={this.state.status} />
       </div>
     );
   }

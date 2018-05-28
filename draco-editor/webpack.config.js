@@ -39,7 +39,7 @@ module.exports = {
       languages: []
     }),
     new CopyWebpackPlugin([
-      { from: "./node_modules/wasm-clingo/clingo.wasm", to: "dist/clingo.wasm" }
+      { from: "./node_modules/wasm-clingo/clingo.wasm", to: "static/clingo.wasm" }
     ])
   ]
 };

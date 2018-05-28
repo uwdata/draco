@@ -2,13 +2,18 @@
 
 .Editor {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 0;
   margin: 0;
   height: 100%;
   position: relative;
   border-top: 1px solid $light-grey;
   box-sizing: border-box;
+
+  .split-pane-wrapper {
+    flex: 1;
+    position: relative;
+  }
 
   .input-pane {
     display: flex;
