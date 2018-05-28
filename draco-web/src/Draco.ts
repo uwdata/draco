@@ -1,7 +1,7 @@
 import Clingo_ from 'wasm-clingo';
 const Clingo: typeof Clingo_ = (Clingo_ as any).default || Clingo_;
 
-import * as constraints from './all';
+import * as constraints from './constraints';
 
 /**
  * Options for Draco.
@@ -57,6 +57,7 @@ class Draco {
    */
   public init(): Promise<any> {
     this.initialized = true;
+    this.Module.setStatus('Downloading...');
     return Clingo(this.Module);
   }
 
