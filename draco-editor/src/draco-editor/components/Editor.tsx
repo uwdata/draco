@@ -19,14 +19,14 @@ class Editor extends React.Component<any, State> {
       code: ''
     }
 
-    this.draco = new Draco();
+    this.draco = new Draco('dist');
 
     this.editorDidMount = this.editorDidMount.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
   }
 
   public componentDidMount() {
-    this.draco.init('dist').then(() => {
+    this.draco.init().then(() => {
       console.log('initialized draco!');
     });
   }
