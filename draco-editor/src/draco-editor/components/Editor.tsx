@@ -41,6 +41,7 @@ class Editor extends React.Component<any, State> {
       <div className="Editor">
         <SplitPane split="vertical" defaultSize="40%" minSize={400}>
             <MonacoEditor
+              language={null}
               value={this.state.code}
               editorDidMount={this.editorDidMount}
               onChange={this.handleEditorChange}/>
