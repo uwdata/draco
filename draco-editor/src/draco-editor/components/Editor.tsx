@@ -168,7 +168,6 @@ export default class Editor extends React.Component<any, State> {
   }
 
   private run() {
-    console.log('running');
     const monaco = this.refs.monaco as any;
     const model = monaco.editor.getModel();
     const program = model.getValue();
