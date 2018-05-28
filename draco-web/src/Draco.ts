@@ -32,7 +32,7 @@ class Draco {
       locateFile: (file: string) => `${url}/${file}`,
 
       // use the given updateStatus function if present
-      setStatus: updateStatus ? updateStatus : () => {},
+      setStatus: updateStatus ? updateStatus : (text: string) => { console.log(text); },
 
       // Draco is ready upon runtime initialization.
       onRuntimeInitialized: () => {
@@ -49,6 +49,12 @@ class Draco {
             : 'All downloads complete.'
         );
       },
+
+      // on error
+      printErr: function(err: Error) {
+        this.setStatus('Error');
+        console.error(err);
+      }
     };
   }
 
