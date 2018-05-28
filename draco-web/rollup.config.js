@@ -3,7 +3,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import builtins from 'rollup-plugin-node-builtins';
 
 export default {
-  input: "build/src/index.js",
+  input: "build/index.js",
   output: {
     file: "build/draco.js",
     format: "umd",
