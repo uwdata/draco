@@ -1,5 +1,5 @@
 import Draco from './Draco';
-export * from './all';
+export * from './constraints';
 
 const EXAMPLE = `
 % ====== Data definitions ======

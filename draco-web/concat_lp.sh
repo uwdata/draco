@@ -21,4 +21,4 @@ do
   output+="export const ${const}: string = \`${lp}\`;${newline}"
 done
 
-echo "$output" > $2/all.ts
+echo "$output" > $2/constraints.ts
