@@ -1,10 +1,11 @@
+import Draco from 'draco-vis';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import SplitPane from 'react-split-pane';
-import Draco from 'draco-vis';
 
 import '../styles/Editor.css';
 import '../styles/Resizer.css';
+
 
 interface State {
   code: string

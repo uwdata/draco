@@ -1,9 +1,8 @@
 import * as React from 'react';
+
 import './App.css';
-import Editor from './draco-editor/components/Editor';
 import Navbar from './Navbar';
-
-
+import Editor from './draco-editor/components/Editor';
 
 class App extends React.Component {
   public render() {

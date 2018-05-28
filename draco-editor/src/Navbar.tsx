@@ -1,7 +1,8 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
+
 import './Navbar.css';
 
-import * as classNames from 'classnames';
 
 const LEFT_TABS = ['editor', 'configurer'];
 const RIGHT_TABS = ['about'];
