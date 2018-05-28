@@ -40,6 +40,10 @@ class Editor extends React.Component<any, State> {
       <div className="Editor">
         <SplitPane split="vertical" defaultSize="40%" minSize={400}>
           <div className="input-pane">
+            <div className="toolbar">
+              <div className="button left">options</div>
+              <div className="button right">run</div>
+            </div>
             <MonacoEditor
               options={{
                 automaticLayout: true,

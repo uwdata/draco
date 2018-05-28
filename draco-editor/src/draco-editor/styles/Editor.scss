@@ -15,6 +15,44 @@
     flex-direction: column;
     height: 100%;
 
+    .toolbar {
+      $border-radius: 12px;
+
+      height: 24px;
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      width: calc(100% - 64px);
+      border: 1px solid $light-grey;
+      margin: 16px 32px 16px 32px;
+      border-radius: $border-radius;
+      font-size: 0.9em;
+
+      .button {
+        text-align: center;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        flex-grow: 1;
+        user-select: none;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .button:hover {
+        background-color: $light-grey;
+        color: #fff;
+      }
+
+      .button.right {
+        border-radius: 0 $border-radius $border-radius 0;
+      }
+
+      .button.left {
+        border-radius: $border-radius 0 0 $border-radius;
+      }
+    }
+
     .status {
       height: 30px;
       border-top: 1px solid #ddd;
