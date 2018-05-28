@@ -32,7 +32,7 @@ class Draco {
       locateFile: (file: string) => `${url}/${file}`,
 
       // Status change logger
-      setStatus: updateStatus || console.log;
+      setStatus: updateStatus || console.log,
 
       // Draco is ready upon runtime initialization.
       onRuntimeInitialized: () => {
