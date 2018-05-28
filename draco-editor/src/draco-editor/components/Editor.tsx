@@ -40,7 +40,7 @@ export default class Editor extends React.Component<any, State> {
   public render() {
     return (
       <div className="Editor">
-        <SplitPane split="vertical" defaultSize="40%" minSize={400}>
+        <SplitPane split="vertical" defaultSize="30%" minSize={400}>
           <div className="input-pane">
             <MonacoEditor
               options={{
