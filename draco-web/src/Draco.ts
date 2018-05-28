@@ -48,7 +48,7 @@ class Draco {
       },
 
       printErr(err: Error) {
-        this.setStatus('Error');
+        this.setStatus('Error. See console for errors.');
         console.error(err);
       }
     };

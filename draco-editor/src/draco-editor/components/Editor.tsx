@@ -2,33 +2,35 @@ import Draco from "draco-vis";
 import * as React from "react";
 import MonacoEditor from "react-monaco-editor";
 import SplitPane from "react-split-pane";
-
+import Status from "./status";
 import "../styles/Editor.css";
 import "../styles/Resizer.css";
 
 interface State {
   code: string;
+  status: string;
 }
 
-class Editor extends React.Component<any, State> {
+export default class Editor extends React.Component<any, State> {
   draco: Draco;
 
   public constructor(props: any) {
     super(props);
     this.state = {
-      code: ""
+      code: "",
+      status: ""
     };
 
-    this.draco = new Draco("dist");
+    this.draco = new Draco("dist", status => {
+      this.setState({ status });
+    });
 
     this.editorDidMount = this.editorDidMount.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
   }
 
   public componentDidMount() {
-    this.draco.init().then(() => {
-      console.log("initialized draco!");
-    });
+    this.draco.init();
   }
 
   public editorDidMount(editor: any) {
@@ -52,7 +54,7 @@ class Editor extends React.Component<any, State> {
               editorDidMount={this.editorDidMount}
               onChange={this.handleEditorChange}
             />
-            <div className="status">Status</div>
+            <Status status={this.state.status} />
           </div>
           <div className="recommendations">Output</div>
         </SplitPane>
@@ -64,5 +66,3 @@ class Editor extends React.Component<any, State> {
     console.log(newValue);
   }
 }
-
-export default Editor;
