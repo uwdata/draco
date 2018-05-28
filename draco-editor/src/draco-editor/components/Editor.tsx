@@ -6,6 +6,7 @@ import ASP_FORMAT from '../asp';
 import "../styles/Editor.css";
 import "../styles/Resizer.css";
 import Status from "./status";
+import * as classNames from 'classnames';
 
 import playIcon from '../../images/play.svg';
 import optionsIcon from '../../images/options.svg';
@@ -82,7 +83,9 @@ export default class Editor extends React.Component<any, State> {
                   <img src={optionsIcon} className="icon"/>
                   options
                 </button>
-                <button className="button right" onClick={this.run} disabled={!this.draco.initialized}>
+                <button className={classNames({
+                  'button': true, 'right': true, 'disabled': !this.draco.initialized
+                })} onClick={this.run} disabled={!this.draco.initialized}>
                   <img src={playIcon} className="icon"/>
                   run
                 </button>
