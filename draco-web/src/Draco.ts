@@ -83,6 +83,8 @@ class Draco {
       throw Error('Draco is not initialized. Call `init() first.`');
     }
 
+    this.Module.setStatus('Running Draco Query...');
+
     program += (options && options.constraints || Object.keys(constraints)).map((name: string) => (constraints as any)[name]).join('\n');
 
     const opt = [
@@ -96,8 +98,6 @@ class Draco {
     this.Module.print = (text: string) => {
       result += text;
     };
-
-    this.Module.setStatus('Running Draco Query...');
 
     this.Module.ccall('run', 'number', ['string', 'string'], [program, opt]);
     return JSON.parse(result);
