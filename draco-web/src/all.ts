@@ -1,4 +1,4 @@
-export const define: string = `% ====== Definitions ======
+export const DEFINE: string = `% ====== Definitions ======
 
 % Types of marks to encode data.
 marktype(point;bar;line;area;text;tick;rect).
@@ -117,7 +117,7 @@ orientation(vertical) :- mark(area;line), channel_continuous(x), channel_continu
 
 orientation(horizontal) :- mark(bar;tick;area;line), channel_discrete(y).`;
 
-export const generate: string = `% ====== Generators ======
+export const GENERATE: string = `% ====== Generators ======
 
 % encodings
 
@@ -155,7 +155,7 @@ obj_id(1..max_extra_encs).
 
 0 { stack(S): stacking(S) } 1.`;
 
-export const hard: string = `% ====== Expressiveness and Well-Formedness Constraints ======
+export const HARD: string = `% ====== Expressiveness and Well-Formedness Constraints ======
 
 % === Within Encodings ===
 
@@ -365,7 +365,7 @@ export const hard: string = `% ====== Expressiveness and Well-Formedness Constra
 % This is to prevent errors coming from the shortcuts in define.lp.
 :- encoding(N), field(N).`;
 
-export const soft: string = `% After adding a soft constraint to this file, make sure to update 'weights.lp' and run 'process_violations.py'..
+export const SOFT: string = `% After adding a soft constraint to this file, make sure to update 'weights.lp' and run 'process_violations.py'..
 
 % ====== Preferences ======
 
@@ -645,7 +645,7 @@ violation(summary_discrete_text,E) :- task(summary), channel(E,text), discrete(E
 violation(summary_discrete_row,E) :- task(summary), channel(E,row), discrete(E), enc_interesting(E).
 violation(summary_discrete_column,E) :- task(summary), channel(E,column), discrete(E), enc_interesting(E).`;
 
-export const weights: string = `% Weights as constants
+export const WEIGHTS: string = `% Weights as constants
 
 #const type_q_weight = 0.
 #const type_o_weight = 1.
@@ -811,7 +811,7 @@ export const weights: string = `% Weights as constants
 #const stack_zero_weight = 0.
 #const stack_normalize_weight = 1.`;
 
-export const assign_weights: string = `%% GENERATED FILE. DO NOT EDIT.
+export const ASSIGN_WEIGHTS: string = `%% GENERATED FILE. DO NOT EDIT.
 
 violation_weight(type_q,type_q_weight).
 violation_weight(type_o,type_o_weight).
@@ -963,11 +963,11 @@ violation_weight(summary_discrete_column,summary_discrete_column_weight).
 violation_weight(stack_zero,stack_zero_weight).
 violation_weight(stack_normalize,stack_normalize_weight).`;
 
-export const optimize: string = `% Minimize the feature weight
+export const OPTIMIZE: string = `% Minimize the feature weight
 
 #minimize { W,F,Q: violation_weight(F,W), violation(F,Q) }.`;
 
-export const output: string = `% ====== Output ======
+export const OUTPUT: string = `% ====== Output ======
 
 #show mark/1.
 

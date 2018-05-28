@@ -1,4 +1,5 @@
 import Draco from './Draco';
+export * from './all';
 
 const EXAMPLE = `
 % ====== Data definitions ======
@@ -19,10 +20,10 @@ encoding(e1).
 `;
 
 export default async function run() {
-  const draco = new Draco();
-  const status = await draco.init('http://localhost:8000/node_modules/wasm-clingo');
+  const draco = new Draco('/node_modules/wasm-clingo');
+  const status = await draco.init();
 
-  const solution = await draco.solve(EXAMPLE, { constraints: 'all' });
+  const solution = draco.solve(EXAMPLE);
 
   console.log(solution);
 }

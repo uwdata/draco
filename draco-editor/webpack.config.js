@@ -35,7 +35,7 @@ module.exports = {
       filename: "./index.html"
     }),
     new MonacoWebpackPlugin({
-      languages: ['python']
+      languages: []
     }),
     new CopyWebpackPlugin([
       { from: './node_modules/wasm-clingo/clingo.wasm', to: 'dist/clingo.wasm' }

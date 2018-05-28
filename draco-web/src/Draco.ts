@@ -7,14 +7,10 @@ import * as constraints from './all';
  * Options for Draco.
  */
 export interface Options {
-  constraints: string[] | string;
-}
-
-/**
- * Sets of constraints for Draco (i.e. soft constraints, hard constraints, etc).
- */
-export interface Constraints {
-  [key: string]: string;
+  /**
+   * Empty means all.
+   */
+  constraints?: string[];
 }
 
 /**
@@ -23,24 +19,20 @@ export interface Constraints {
  */
 class Draco {
   private Module: any;
-  public static constraints: Constraints = constraints;
 
-  constructor() {
-    this.Module = {};
-  }
+  private initialized = false;
 
   /**
-   * Initializes the underlying solver.
-   *
-   * @param {string} url The base path of the server hosting this.
-   * @param {function} updateStatus Optional callback to log updates for initializationg
-   *
-   * @returns {Promise} A promise that resolves when the solver is ready or rejects upon
-   *    failure.
+   * @param url The base path of the server hosting this.
+   * @param updateStatus Optional callback to log updates for status changes.
    */
-  public init(url: string, updateStatus?: (text: string) => void): Promise<any> {
-    this.Module.locateFile = (file: string) => `${url}/${file}`;
-    this.Module.totalDependencies = 0;
+  constructor(url: string, updateStatus?: (text: string) => void) {
+    this.Module = {
+      locateFile: (file: string) => `${url}/${file}`,
+      totalDependencies: 0
+    };
+
+
     this.Module.monitorRunDependencies = function(left: number) {
       this.totalDependencies = Math.max(this.totalDependencies, left);
       this.setStatus(
@@ -54,53 +46,44 @@ class Draco {
       this.Module.setStatus = (text: string) => {
         updateStatus(text);
       };
-    } else {
-      this.Module.setStatus = (text: string) => {};
     }
+  }
 
-    return new Promise((resolve: () => void, reject: () => void) => {
-      this.Module.onRuntimeInitialized = resolve;
-      Clingo(this.Module);
-    });
+  /**
+   * Initializes the underlying solver.
+   *
+   * @returns {Promise} A promise that resolves when the solver is ready or rejects upon
+   *    failure.
+   */
+  public init(): Promise<any> {
+    this.initialized = true;
+    return Clingo(this.Module);
   }
 
   /**
    * Solves with the given constraints.
    *
-   * @param {string} constraints The constraint to solve (e.g. the partial specification in ASP)
-   * @param {Options} options Options for solving.
+   * @param program The constraint to solve (e.g. the partial specification in ASP)
+   * @param options Options for solving.
    *
-   * @returns {Promise} A promise that resolves when the solver completes, or rejects upon error.
+   * @returns The solution from Clingo as JSON.
    */
-  public solve(constraints: string, options: Options): Promise<any> {
-    // add Draco's constraints
-    if (options.constraints === 'all') {
-      for (const name in Draco.constraints) {
-        const set = Draco.constraints[name];
-        constraints += `\n${set}`;
-      }
-    } else {
-      for (const name of options.constraints) {
-        const set: string = Draco.constraints[name];
-        constraints += `\n${set}`;
-      }
+  public solve(program: string, options?: Options): any {
+    if (!this.initialized) {
+      throw Error('Draco is not initialized. Call `init() first.`');
     }
 
-    return new Promise((resolve: (value: string) => void, reject: (value: string) => void) => {
-      const opt = ' --outf=2';
-      let result = '';
-      this.Module.print = (text: string) => {
-        result += text;
-      };
+    program += (options && options.constraints || Object.keys(constraints)).map((name: string) => (constraints as any)[name]).join('\n');
 
-      this.Module.ccall('run', 'number', ['string', 'string'], [constraints, opt]);
-      try {
-        const json = JSON.parse(result);
-        resolve(json);
-      } catch (error) {
-        reject(result);
-      }
-    });
+    const opt = ' --outf=2';  // JSON output
+
+    let result = '';
+    this.Module.print = (text: string) => {
+      result += text;
+    };
+
+    this.Module.ccall('run', 'number', ['string', 'string'], [program, opt]);
+    return JSON.parse(result);
   }
 }
 

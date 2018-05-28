@@ -6,10 +6,12 @@
     "typings": "build/src/Draco.d.ts",
     "scripts": {
         "test": "jest",
+        "concat": "bash concat_lp.sh ../asp src",
         "build": "rm -rf build && tsc && rollup -c",
         "format": "tslint -p . --fix && prettier --write '{src,test}/**/*.ts'",
         "lint": "tslint -p . && prettier --list-different '{src,test}/**/*.ts'",
-        "watch": "concurrently --kill-others -n Typescript,Rollup 'tsc -w' 'rollup -c -w'"
+        "watch": "concurrently --kill-others -n Typescript,Rollup 'tsc -w' 'rollup -c -w'",
+        "serve": "python serve.py"
     },
     "author": "Dominik Moritz",
     "license": "BSD-3-Clause",
