@@ -3,6 +3,8 @@ const Clingo: typeof Clingo_ = (Clingo_ as any).default || Clingo_;
 
 import * as constraints from './constraints';
 
+export * from './constraints';
+
 /**
  * Options for Draco.
  */

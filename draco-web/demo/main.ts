@@ -1,5 +1,4 @@
-import Draco from './Draco';
-export * from './constraints';
+import Draco from '../src/draco';
 
 const EXAMPLE = `
 % ====== Data definitions ======
@@ -19,14 +18,8 @@ encoding(e1).
 :- not field(e1,horsepower).
 `;
 
-export default async function run() {
-  const draco = new Draco('/node_modules/wasm-clingo');
-  const status = await draco.init();
-
+const draco = new Draco('https://cdn.jsdelivr.net/npm/wasm-clingo');
+draco.init().then(() => {
   const solution = draco.solve(EXAMPLE);
-
   console.log(solution);
-}
-
-// run draco
-run();
+});
