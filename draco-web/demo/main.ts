@@ -1,4 +1,4 @@
-import Draco from '../src/draco';
+import Draco from '../src';
 
 const EXAMPLE = `
 % ====== Data definitions ======
