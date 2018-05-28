@@ -43,8 +43,8 @@ export default class Editor extends React.Component<any, State> {
         <SplitPane split="vertical" defaultSize="30%" minSize={400}>
           <div className="input-pane">
             <div className="toolbar">
-              <div className="button left">options</div>
-              <div className="button right">run</div>
+              <button className="button left">options</button>
+              <button className="button right">run</button>
             </div>
             <MonacoEditor
               options={{

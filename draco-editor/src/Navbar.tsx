@@ -25,7 +25,7 @@ class Navbar extends React.Component<Props, any> {
       });
 
       leftTabs.push(
-        <div className={tabClass} key={name}>{name}</div>
+        <button className={tabClass} key={name}>{name}</button>
       )
     }
 
@@ -37,7 +37,7 @@ class Navbar extends React.Component<Props, any> {
       });
 
       rightTabs.push(
-        <div className={tabClass} key={name}>{name}</div>
+        <button className={tabClass} key={name}>{name}</button>
       )
     }
 
