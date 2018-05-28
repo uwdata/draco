@@ -45,7 +45,7 @@ export default class Editor extends React.Component<any, State> {
     };
 
     this.code = EXAMPLE;
-    this.draco = new Draco("dist", status => {
+    this.draco = new Draco("static", status => {
       console.log(status);
       this.setState({ status });
     });

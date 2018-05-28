@@ -6,7 +6,9 @@
     "start-js": "webpack-dev-server --mode development --open",
     "build-js": "webpack --mode production",
     "start": "npm-run-all -p watch-css start-js",
-    "build": "npm-run-all build-css build-js"
+    "build": "npm-run-all build-css build-js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "classnames": "^2.2.5",
