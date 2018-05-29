@@ -4,9 +4,6 @@ export function asp2vl(facts: any): TopLevelSpec {
     let mark = '';
     const encoding: {[index: string]: any} = {};
 
-    let argv: string[];
-    let enc: string;
-
     const regex = /(\w+)\((\w+)(,(\w+))?\)/
 
     facts.forEach((value: string) => {

@@ -104,8 +104,10 @@ class Draco {
     this.Module.ccall('run', 'number', ['string', 'string'], [program, opt]);
 
     const result = JSON.parse(resultText);
-
     const specs = result2vl(result);
+
+    // done
+    this.Module.setStatus('');
 
     return {specs, result};
   }
