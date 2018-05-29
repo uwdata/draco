@@ -7,7 +7,7 @@ export function asp2vl(asp: any): TopLevelSpec[] {
     if (witnesses) {
         specs = witnesses.map((witness: any) => {
             let mark = '';
-            const encoding: {[index: string]: {}} = {
+            const encoding: {[index: string]: any} = {
                 'scale': {},
             };
 
@@ -49,12 +49,21 @@ export function asp2vl(asp: any): TopLevelSpec[] {
                         encoding[enc] = {maxbins: argv[1]};
                         break;
                     
+                    case 'log':
+                        encoding.scale.type = 'log';
+                        break;
+
                     case 'zero':
-                        // console.log(value);
-                        
+                        break;
+
+                    case 'stack':
+                        encoding.stack = getArgv(value, 'stack')[0];
+                        break;
 
                     default:
+                    console.log(value);
                         break;
+                        
 
                 }
             });
