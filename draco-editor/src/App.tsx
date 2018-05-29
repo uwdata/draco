@@ -10,7 +10,7 @@ class App extends React.Component {
 
   public render() {
     return (
-      <Router>
+      <Router basename={BASENAME}>
         <div className="App">
           <div className="content">
             <Route path="/" component={Navbar} />
