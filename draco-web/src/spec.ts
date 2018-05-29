@@ -11,10 +11,7 @@ export function asp2vl(asp: any): TopLevelSpec[] {
                 scale: {},
             };
 
-            // filter out soft constraint violations because we only need spec
-            const specValues = witness.Value.filter((s: string) => !s.startsWith('violation'));
-
-            specValues.forEach((value: string) => {
+            witness.Value.forEach((value: string) => {
                 const valueType = value.split('(')[0];
                 switch(valueType) {
                     case 'mark':
@@ -22,28 +19,28 @@ export function asp2vl(asp: any): TopLevelSpec[] {
                         break;
                     
                     case 'channel':
-                        const mapping = value.replace('channel(', '').replace(')', '').split(',');
-                        const enc = mapping[0];
-                        const ch = mapping[1];
+                        let argvs = value.replace('channel(', '').replace(')', '').split(',');
+                        let enc = argvs[0];
+                        let ch = argvs[1];
                         encoding[ch] = {aspEncoding: enc};
+                        break;
+
+                    case 'field':
+                        argvs = value.replace('field(', '').replace(')', '').split(',');
+                        enc = argvs[0];
+                        encoding[enc] = {field: argvs[1]};
+                        break;
+
+                    case 'type':
+                    case 'zero':
+                        
 
                     default:
+                        console.log(value);
                         break;
 
                 }
             });
-
-            specValues.forEach((value: string) => {
-                const valueType = value.split('(')[0];
-                switch(valueType) {
-                    case 'field':
-                    case 'type':
-                    case 'zero':
-                        console.log(value);
-                    default:
-                        break;
-                }
-            })
 
             return {
                 '$schema': 'https://vega.github.io/schema/vega-lite/v2.0.json',
