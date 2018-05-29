@@ -69,13 +69,11 @@ export function asp2vl(facts: any): TopLevelSpec {
     });
 
     // post-process encodings
-    ['x', 'y', 'color', 'size', 'shape', 'text', 'detail', 'row', 'column'].forEach((channel: string) => {
-        if (encoding[channel]) {
-            const e = encoding[channel].aspEncoding;
-            encoding[channel] = encoding[e];
-            delete encoding[e];
-        }
-    });
+    for (const channel of Object.keys(encoding)) {
+        const e = encoding[channel].aspEncoding;
+        encoding[channel] = encoding[e];
+        delete encoding[e];
+    }
 
     // post-process zero: if quantitative encoding and zero is not set, set zero to false
     for (const channel in encoding) {
