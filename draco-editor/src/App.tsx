@@ -24,6 +24,8 @@ class App extends React.Component<any, State> {
       console.log(status);
       this.setState({ status });
     });
+
+    this.updateStatus = this.updateStatus.bind(this);
   }
 
   public render() {
@@ -34,13 +36,18 @@ class App extends React.Component<any, State> {
             <Route path="/" component={Navbar} />
             <Route exact path="/" render={() => <Redirect to="/editor" />} />
             <Route exact path="/editor" render={() => {
-              return <Editor draco={this.draco} status={this.state.status}/>
+              return <Editor draco={this.draco} status={this.state.status}
+                updateStatus={this.updateStatus} />
             }} />
             <Route exact path="/about" component={About} />
           </div>
         </div>
       </Router>
     );
+  }
+
+  private updateStatus(status: string) {
+    this.setState({ status });
   }
 }
 

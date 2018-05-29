@@ -19,6 +19,7 @@ interface State {
 interface Props {
   draco: Draco;
   status: string;
+  updateStatus: (status: string) => void
 }
 
 interface Monaco {
@@ -135,5 +136,6 @@ export default class Editor extends React.Component<Props, State> {
     this.setState({
       output: result,
     });
+    this.props.updateStatus("");
   }
 }
