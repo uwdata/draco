@@ -70,8 +70,6 @@ export function asp2vl(asp: any): TopLevelSpec[] {
 
                     default:
                         break;
-                        
-
                 }
             });
 
