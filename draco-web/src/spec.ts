@@ -7,36 +7,37 @@ export function asp2vl(asp: any): TopLevelSpec[] {
     if (witnesses) {
         specs = witnesses.map((witness: any) => {
             let mark = '';
-            let encoding = {
-                scale: {},
+            const encoding: {[index: string]: {}} = {
+                'scale': {},
             };
 
             witness.Value.forEach((value: string) => {
                 const valueType = value.split('(')[0];
                 switch(valueType) {
                     case 'mark':
-                        mark = value.replace('mark(', '').replace(')', '');
+                        mark = getArgv(value, 'mark')[0];
                         break;
                     
                     case 'channel':
-                        let argvs = value.replace('channel(', '').replace(')', '').split(',');
-                        let enc = argvs[0];
-                        let ch = argvs[1];
+                        let argv = getArgv(value, 'channel');
+                        let enc = argv[0];
+                        const ch = argv[1];
                         encoding[ch] = {aspEncoding: enc};
                         break;
 
                     case 'field':
-                        argvs = value.replace('field(', '').replace(')', '').split(',');
-                        enc = argvs[0];
-                        encoding[enc] = {field: argvs[1]};
+                        argv = getArgv(value, 'field');
+                        enc = argv[0];
+                        encoding[enc] = {field: argv[1]};
                         break;
 
                     case 'type':
+                        
                     case 'zero':
+                    console.log(value);
                         
 
                     default:
-                        console.log(value);
                         break;
 
                 }
@@ -66,4 +67,13 @@ function getWitnesses(asp: any) {
     } else {
         return undefined;
     }
+}
+
+/**
+ * Get arguments from an asp predicate
+ * @param aspPredicate An ASP predicate that takes 1 or more arguments, e.g., channel(e0, x)
+ * @param predicateType The type of predicate, e.g., mark, encoding, channel, type, field
+ */
+function getArgv(aspPredicate: string, predicateType: string): string[] {
+    return aspPredicate.replace(predicateType, '').replace('(', '').replace(')', '').split(',');
 }
