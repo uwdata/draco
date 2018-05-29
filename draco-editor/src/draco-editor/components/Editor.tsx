@@ -13,8 +13,12 @@ import playIconGrey from '../../images/play-grey.svg';
 import optionsIcon from '../../images/options.svg';
 
 interface State {
-  status: string;
   output: Object;
+}
+
+interface Props {
+  draco: Draco;
+  status: string;
 }
 
 interface Monaco {
@@ -38,22 +42,16 @@ encoding(e1).
 :- not field(e1,horsepower).
 `;
 
-export default class Editor extends React.Component<any, State> {
-  draco: Draco;
+export default class Editor extends React.Component<Props, State> {
   code: string;
 
-  public constructor(props: any) {
+  public constructor(props: Props) {
     super(props);
     this.state = {
-      status: "",
       output: null
     };
 
     this.code = EXAMPLE;
-    this.draco = new Draco("static", (status: string) => {
-      console.log(status);
-      this.setState({ status });
-    });
 
     this.editorDidMount = this.editorDidMount.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
@@ -61,7 +59,9 @@ export default class Editor extends React.Component<any, State> {
   }
 
   public componentDidMount() {
-    this.draco.init();
+    if (!this.props.draco.initialized) {
+      this.props.draco.init();
+    }
   }
 
   public editorDidMount(editor: any) {
@@ -86,9 +86,9 @@ export default class Editor extends React.Component<any, State> {
                   options
                 </button>
                 <button className={classNames({
-                  'button': true, 'right': true, 'disabled': !this.draco.initialized
-                })} onClick={this.run} disabled={!this.draco.initialized}>
-                  <img src={!this.draco.initialized ? playIconGrey : playIcon}
+                  'button': true, 'right': true, 'disabled': !this.props.draco.initialized
+                })} onClick={this.run} disabled={!this.props.draco.initialized}>
+                  <img src={!this.props.draco.initialized ? playIconGrey : playIcon}
                     className="icon"/>
                   run
                 </button>
@@ -118,7 +118,7 @@ export default class Editor extends React.Component<any, State> {
             </div>
           </SplitPane>
         </div>
-        <Status status={this.state.status} />
+        <Status status={this.props.status} />
       </div>
     );
   }
@@ -131,10 +131,9 @@ export default class Editor extends React.Component<any, State> {
     const monaco = this.refs.monaco as any;
     const model = monaco.editor.getModel();
     const program = model.getValue();
-    const result = this.draco.solve(program);
+    const result = this.props.draco.solve(program);
     this.setState({
       output: result,
-      status: ""
-    })
+    });
   }
 }

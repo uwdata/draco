@@ -1,12 +1,30 @@
 import * as React from 'react';
 import { HashRouter as Router, Route, Link, Redirect } from 'react-router-dom';
-
+import Draco from 'draco-vis';
 import './App.css';
 import Navbar from './Navbar';
 import Editor from './draco-editor/components/Editor';
 import About from './about/components/About';
 
-class App extends React.Component {
+interface State {
+  status: string
+};
+
+class App extends React.Component<any, State> {
+  draco: Draco;
+
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      status: ""
+    }
+
+    this.draco = new Draco("static", (status: string) => {
+      console.log(status);
+      this.setState({ status });
+    });
+  }
 
   public render() {
     return (
@@ -15,7 +33,9 @@ class App extends React.Component {
           <div className="content">
             <Route path="/" component={Navbar} />
             <Route exact path="/" render={() => <Redirect to="/editor" />} />
-            <Route exact path="/editor" component={Editor} />
+            <Route exact path="/editor" render={() => {
+              return <Editor draco={this.draco} status={this.state.status}/>
+            }} />
             <Route exact path="/about" component={About} />
           </div>
         </div>

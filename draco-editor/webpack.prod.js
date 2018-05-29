@@ -14,7 +14,7 @@ module.exports = merge(common, {
   plugins: [
     // base route
     new webpack.DefinePlugin({
-      BASENAME: JSON.stringify("/draco")
+      BASENAME: JSON.stringify("/")
     }),
   ],
 });
