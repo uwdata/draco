@@ -7,15 +7,14 @@ import './Navbar.css';
 
 const LEFT_TABS = ['editor'];
 const RIGHT_TABS = ['about'];
-const HOME_ROUTE = 'editor';
+const HOME_ROUTE = '';
 
 
 class Navbar extends React.Component<any, any> {
   public render() {
     const leftTabs = LEFT_TABS.map((name) => {
-      const route = name === HOME_ROUTE ? '' : name;
       return (
-        <NavLink to={`/${route}`}
+        <NavLink to={`/${name}`}
           exact
           activeClassName="selected"
           className="tab" key={name}>
@@ -25,9 +24,8 @@ class Navbar extends React.Component<any, any> {
     });
 
     const rightTabs = RIGHT_TABS.map((name) => {
-      const route = name === HOME_ROUTE ? '' : name;
       return (
-        <NavLink to={`/${route}`}
+        <NavLink to={`/${name}`}
           exact
           activeClassName="selected"
           className="tab" key={name}>
@@ -36,16 +34,23 @@ class Navbar extends React.Component<any, any> {
       );
     });
 
+    const navbarClasses = classNames({
+      'Navbar': true,
+      'bordered': this.props.location.pathname === '/editor'
+    });
+
     return (
-      <div className="Navbar">
-        <div className="tabs left">
-          {leftTabs}
-        </div>
-        <div className="title">
-          Draco
-        </div>
-        <div className="tabs right">
-          {rightTabs}
+      <div className={navbarClasses}>
+        <div className="content">
+          <div className="tabs left">
+            {leftTabs}
+          </div>
+          <div className="title">
+            Draco
+          </div>
+          <div className="tabs right">
+            {rightTabs}
+          </div>
         </div>
       </div>
     );

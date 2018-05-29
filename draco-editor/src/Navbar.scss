@@ -1,14 +1,41 @@
 @import 'base.scss';
 
 .Navbar {
-  height: 32px;
-  display: flex;
-  flex-direction: row;
-  padding: 8px 32px 8px 32px;
-  margin: 0;
-  align-items: baseline;
-  user-select: none;
-  flex: 0 0 auto;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 48px;
+  box-sizing: border-box;
+
+  &:before {
+    content: '';
+    position: absolute;
+    height: 0;
+    bottom: 0;
+    right: 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid $light-grey;
+
+    width: 0;
+    transition: width 250ms $standard-ease;
+  }
+
+  &.bordered:before {
+    box-sizing: border-box;
+    width: 100%;
+    transition: width 300ms $standard-ease;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    padding: 8px 32px 8px 32px;
+    margin: 0;
+    align-items: baseline;
+    user-select: none;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+  }
 
   .title {
     text-align: center;

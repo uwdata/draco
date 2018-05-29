@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
 
 import './App.css';
 import Navbar from './Navbar';
@@ -12,10 +12,11 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <Navbar/>
           <div className="content">
-            <Route exact path="/" component={Editor} />
-            <Route path="/about" component={About} />
+            <Route path="/" component={Navbar} />
+            <Route exact path="/" render={() => <Redirect to="/editor" />} />
+            <Route exact path="/editor" component={Editor} />
+            <Route exact path="/about" component={About} />
           </div>
         </div>
       </Router>
