@@ -1,9 +1,10 @@
 import Clingo_ from 'wasm-clingo';
+import * as constraints from './constraints';
+import { result2vl } from './spec';
 const Clingo: typeof Clingo_ = (Clingo_ as any).default || Clingo_;
 
-import * as constraints from './constraints';
-
 export * from './constraints';
+
 
 /**
  * Options for Draco.
@@ -91,16 +92,22 @@ class Draco {
       '--outf=2', // JSON output
       '--opt-mode=OptN', // find multiple optimal models
       '--quiet=1',  // only output optimal models
+      '--project',  // every model only once
       '5'  // at most 5 models
     ].join(' ');
 
-    let result = '';
+    let resultText = '';
     this.Module.print = (text: string) => {
-      result += text;
+      resultText += text;
     };
 
     this.Module.ccall('run', 'number', ['string', 'string'], [program, opt]);
-    return JSON.parse(result);
+
+    const result = JSON.parse(resultText);
+
+    const specs = result2vl(result);
+
+    return {specs, result};
   }
 }
 
