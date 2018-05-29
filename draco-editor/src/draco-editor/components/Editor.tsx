@@ -12,9 +12,12 @@ import Recommendations from './Recommendations';
 import playIcon from '../../images/play.svg';
 import playIconGrey from '../../images/play-grey.svg';
 import optionsIcon from '../../images/options.svg';
+import examplesIcon from '../../images/examples.svg';
 
+import EXAMPLES, { SCATTER } from '../examples';
 interface State {
   output: Object;
+  showExamples: boolean
 }
 
 interface Props {
@@ -27,36 +30,21 @@ interface Monaco {
   editor: Object;
 }
 
-const EXAMPLE = `% ====== Data definitions ======
-num_rows(142).
-
-fieldtype(horsepower,number).
-cardinality(horsepower,94).
-
-fieldtype(acceleration,number).
-cardinality(acceleration,96).
-
-% ====== Query constraints ======
-encoding(e0).
-:- not field(e0,acceleration).
-
-encoding(e1).
-:- not field(e1,horsepower).
-`;
-
 export default class Editor extends React.Component<Props, State> {
   code: string;
 
   public constructor(props: Props) {
     super(props);
     this.state = {
-      output: null
+      output: null,
+      showExamples: false
     };
 
-    this.code = EXAMPLE;
+    this.code = SCATTER;
 
     this.editorDidMount = this.editorDidMount.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.showExamples = this.showExamples.bind(this);
     this.run = this.run.bind(this);
   }
 
@@ -80,10 +68,14 @@ export default class Editor extends React.Component<Props, State> {
     return (
       <div className="Editor">
         <div className="split-pane-wrapper">
-          <SplitPane split="vertical" defaultSize="30%" minSize={400}>
+          <SplitPane split="vertical" defaultSize={400} minSize={400}>
             <div className="input-pane">
               <div className="toolbar">
-                <button className="button left">
+                <button className="button left" onClick={this.showExamples}>
+                  <img src={examplesIcon} className="icon"/>
+                  examples
+                </button>
+                <button className="button">
                   <img src={optionsIcon} className="icon"/>
                   options
                 </button>
@@ -114,6 +106,26 @@ export default class Editor extends React.Component<Props, State> {
                 editorWillMount={this.editorWillMount}
                 onChange={this.handleEditorChange}
               />
+              <div className={classNames({
+                'examples': true,
+                'hidden': !this.state.showExamples
+              })}>
+                {EXAMPLES.map((example) => {
+                  return (
+                    <div key={example.name} className="example" onClick={() => {
+                      this.code = example.program;
+                      this.setState({ showExamples: false });
+                      setTimeout(() => {
+                        if (this.props.draco.initialized) {
+                          this.run();
+                        }
+                      }, 10);
+                    }}>
+                      {example.name}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
             <Recommendations results={this.state.output}/>
           </SplitPane>
@@ -136,5 +148,11 @@ export default class Editor extends React.Component<Props, State> {
       output: result,
     });
     this.props.updateStatus("");
+  }
+
+  private showExamples() {
+    this.setState({
+      showExamples: true
+    });
   }
 }
