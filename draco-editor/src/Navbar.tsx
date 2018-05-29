@@ -1,47 +1,40 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
+import { NavLink } from "react-router-dom";
 
 import './Navbar.css';
 
 
-const LEFT_TABS = ['editor', 'configurer'];
+const LEFT_TABS = ['editor'];
 const RIGHT_TABS = ['about'];
+const HOME_ROUTE = 'editor';
 
-interface Props {
-  currTab: string;
-}
 
-class Navbar extends React.Component<Props, any> {
-  constructor(props: Props) {
-    super(props);
-  }
-
+class Navbar extends React.Component<any, any> {
   public render() {
-    const leftTabs = [];
-    for (const name of LEFT_TABS) {
-      const tabClass = classNames({
-        'selected': this.props.currTab === name,
-        'tab': true,
-      });
-
-      leftTabs.push(
-        <button className={tabClass} key={name}>{name}</button>
-      )
-    }
-
-    const rightTabs = [];
-    for (const name of RIGHT_TABS) {
-      const tabClass = classNames({
-        'selected': this.props.currTab === name,
-        'tab': true,
-      });
-
-      rightTabs.push(
-        <button className={tabClass} key={name}>
+    const leftTabs = LEFT_TABS.map((name) => {
+      const route = name === HOME_ROUTE ? '' : name;
+      return (
+        <NavLink to={`/${route}`}
+          exact
+          activeClassName="selected"
+          className="tab" key={name}>
           {name}
-        </button>
+        </NavLink>
       );
-    }
+    });
+
+    const rightTabs = RIGHT_TABS.map((name) => {
+      const route = name === HOME_ROUTE ? '' : name;
+      return (
+        <NavLink to={`/${route}`}
+          exact
+          activeClassName="selected"
+          className="tab" key={name}>
+          {name}
+        </NavLink>
+      );
+    });
 
     return (
       <div className="Navbar">
