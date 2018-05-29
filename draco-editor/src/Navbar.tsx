@@ -41,7 +41,7 @@ class Navbar extends React.Component<any, any> {
 
     return (
       <div className={navbarClasses}>
-        <div className="content">
+        <div className="items">
           <div className="tabs left">
             {leftTabs}
           </div>
