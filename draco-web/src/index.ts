@@ -92,6 +92,7 @@ class Draco {
       '--outf=2', // JSON output
       '--opt-mode=OptN', // find multiple optimal models
       '--quiet=1',  // only output optimal models
+      '--project',  // every model only once
       '5'  // at most 5 models
     ].join(' ');
 
