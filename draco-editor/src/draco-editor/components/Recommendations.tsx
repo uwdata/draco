@@ -6,7 +6,7 @@ import VegaLiteChart from '../../shared/components/VegaLiteChart';
 import '../styles/Recommendations.css';
 
 interface Props {
-  results: Object
+  results: any
 }
 
 interface State {
@@ -19,7 +19,6 @@ export default class Recommendations extends React.Component<Props, State> {
       return null;
     }
 
-    // @ts-ignore
     const vlSpec = this.props.results.specs[0] as TopLevelSpec;
     return (
       <div className="Recommendations">

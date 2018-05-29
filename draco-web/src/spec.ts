@@ -1,6 +1,6 @@
-import { TopLevelSpec } from 'vega-lite';
+import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';
 
-export function asp2vl(facts: any): TopLevelSpec {
+export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
   let mark = '';
   const encoding: { [index: string]: any } = {};
 
@@ -108,7 +108,7 @@ export function asp2vl(facts: any): TopLevelSpec {
     data: { url: 'data/cars.json' },
     mark,
     encoding,
-  } as TopLevelSpec;
+  } as TopLevelFacetedUnitSpec;
 }
 
 export function result2vl(result: any) {
@@ -128,6 +128,17 @@ function getWitnesses(result: any): Array<{ Value: any[] }> {
   }
 }
 
-export function vl2asp(spec: TopLevelSpec): string[] {
-  return [];
+export function vl2asp(spec: TopLevelFacetedUnitSpec): string[] {
+  const facts = [
+    `mark(${spec.mark}).`
+  ];
+
+  let i = 0;
+  for (const channel of Object.keys(spec)) {
+    facts.push(`encoding(e${i})`);
+    // TODO
+    i++;
+  }
+
+  return facts;
 }
