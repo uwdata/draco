@@ -4,6 +4,9 @@ export function asp2vl(facts: any): TopLevelSpec {
     let mark = '';
     const encoding: {[index: string]: any} = {};
 
+    let argv: string[];
+    let enc: string;
+
     facts.forEach((value: string) => {
         const valueType = value.split('(')[0];
         switch(valueType) {
@@ -12,13 +15,14 @@ export function asp2vl(facts: any): TopLevelSpec {
                 break;
 
             case 'channel':
-                let argv = getArgv(value, 'channel');
-                let enc = argv[0];
+                argv = getArgv(value, 'channel');
+                enc = argv[0];
                 const ch = argv[1];
                 encoding[ch] = {aspEncoding: enc};
                 break;
 
             case 'field':
+                console.log('field', value);
                 argv = getArgv(value, 'field');
                 enc = argv[0];
                 encoding[enc] = {field: argv[1]};
