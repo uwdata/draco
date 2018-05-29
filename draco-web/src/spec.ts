@@ -1,106 +1,53 @@
+import { ChannelDef } from 'vega-lite/build/src/fielddef';
 import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';
+
+const REGEX = /(\w+)\((\w+)(,(\w+))?\)/;
 
 export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
   let mark = '';
-  const encoding: { [index: string]: any } = {};
+  const encodings: { [enc: string]: any } = {};
 
-  const regex = /(\w+)\((\w+)(,(\w+))?\)/;
+  for (const value of facts) {
+    const [_, predicate, first, __, second] = REGEX.exec(value) as any;
 
-  facts.forEach((value: string) => {
-    const [_, predicate, first, __, second] = regex.exec(value) as any;
+    if (predicate === 'mark') {
+      mark = first;
+    } else if (predicate !== 'violation') {
+      if (!encodings[first]) {
+        encodings[first] = {}
+      }
 
-    switch (predicate) {
-      case 'mark':
-        mark = first;
-        break;
-
-      case 'channel':
-        encoding[second] = {
-          ...encoding[second],
-          aspEncoding: first,
-        };
-        break;
-
-      case 'field':
-        encoding[first] = {
-          ...encoding[first],
-          field: second,
-        };
-        break;
-
-      case 'type':
-        encoding[first] = {
-          ...encoding[first],
-          type: second,
-        };
-        break;
-
-      case 'aggregate':
-        encoding[first] = {
-          ...encoding[first],
-          aggregate: second,
-        };
-        break;
-
-      case 'bin':
-        encoding[first] = {
-          ...encoding[first],
-          bin: {
-            maxbins: +second,
-          },
-        };
-        break;
-
-      case 'log':
-        encoding[first] = {
-          ...encoding[first],
-          scale: {
-            type: 'log',
-          },
-        };
-        break;
-
-      case 'zero':
-        encoding[first] = {
-          ...encoding[first],
-          scale: {
-            zero: true,
-          },
-        };
-        break;
-
-      case 'stack':
-        encoding[first] = {
-          ...encoding[first],
-          stack: second,
-        };
-        break;
-
-      default:
-        break;
+      encodings[first][predicate] = second || true;
     }
-  });
+  }
 
-  // post-process encodings
-  ['x', 'y', 'color', 'size', 'shape', 'text', 'detail', 'row', 'column'].forEach((channel: string) => {
-    if (encoding[channel]) {
-      const e = encoding[channel].aspEncoding;
-      encoding[channel] = encoding[e];
-      delete encoding[e];
-    }
-  });
+  const encoding: { [channel: string]: any } = {};
 
-  // post-process zero: if quantitative encoding and zero is not set, set zero to false
-  for (const channel in encoding) {
-    if (
-      encoding[channel].type === 'quantitative' &&
-      (!encoding[channel].scale || encoding[channel].scale.zero !== true)
-    ) {
-      encoding[channel].scale = {
-        ...encoding[channel].scale,
-        zero: false,
-      };
+  console.log(encodings)
+
+  for (const e of Object.keys(encodings)) {
+    const enc = encodings[e];
+
+    console.log(e, enc)
+
+    // if quantitative encoding and zero is not set, set zero to false
+    if (enc.type === 'quantitative' && enc.zero === undefined) {
+      enc.zero = false;
     }
+
+    const scale = {
+      ...(enc.log ? { type: 'log' } : {}),
+      ...(enc.zero ? { zero: true } : {}),
+    };
+
+    encoding[enc.channel] = {
+      type: enc.type,
+      ...(enc.aggregate ? { aggregate: enc.aggregate } : {}),
+      ...(enc.field ? { field: enc.field } : {}),
+      ...(enc.stack ? { stack: enc.stack } : {}),
+      ...(enc.bin ? { bin: { maxbins: enc.stack } } : {}),
+      ...(Object.keys(scale).length ? { scale } : {}),
+    };
   }
 
   return {
@@ -109,11 +56,6 @@ export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
     mark,
     encoding,
   } as TopLevelFacetedUnitSpec;
-}
-
-export function result2vl(result: any) {
-  const witnesses = getWitnesses(result);
-  return witnesses.map(witness => asp2vl(witness.Value));
 }
 
 /**
@@ -128,10 +70,13 @@ function getWitnesses(result: any): Array<{ Value: any[] }> {
   }
 }
 
+export function result2vl(result: any) {
+  const witnesses = getWitnesses(result);
+  return witnesses.map(witness => asp2vl(witness.Value));
+}
+
 export function vl2asp(spec: TopLevelFacetedUnitSpec): string[] {
-  const facts = [
-    `mark(${spec.mark}).`
-  ];
+  const facts = [`mark(${spec.mark}).`];
 
   let i = 0;
   for (const channel of Object.keys(spec)) {
