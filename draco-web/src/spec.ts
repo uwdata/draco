@@ -85,7 +85,7 @@ export function asp2vl(asp: any): TopLevelSpec[] {
             });
 
             // post-process zero: if quantitative encoding and zero is not set, set zero to false
-            for (let channel in encoding) {
+            for (const channel in encoding) {
                 if (encoding[channel].type === 'quantitative' && 
                     (!encoding[channel].scale || encoding[channel].scale.zero !== true)) {
                         encoding[channel].scale = {
@@ -103,7 +103,7 @@ export function asp2vl(asp: any): TopLevelSpec[] {
             };
         });
     }
-    console.log('specs', specs);
+
     return specs;
 }
 
