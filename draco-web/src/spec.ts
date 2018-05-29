@@ -4,6 +4,9 @@ export function asp2vl(facts: any): TopLevelSpec {
     let mark = '';
     const encoding: {[index: string]: any} = {};
 
+    let argv: string[];
+    let enc: string;
+
     facts.forEach((value: string) => {
         const valueType = value.split('(')[0];
         switch(valueType) {
@@ -12,8 +15,8 @@ export function asp2vl(facts: any): TopLevelSpec {
                 break;
 
             case 'channel':
-                let argv = getArgv(value, 'channel');
-                let enc = argv[0];
+                argv = getArgv(value, 'channel');
+                enc = argv[0];
                 const ch = argv[1];
                 encoding[ch] = {aspEncoding: enc};
                 break;
@@ -69,11 +72,13 @@ export function asp2vl(facts: any): TopLevelSpec {
     });
 
     // post-process encodings
-    for (const channel of Object.keys(encoding)) {
-        const e = encoding[channel].aspEncoding;
-        encoding[channel] = encoding[e];
-        delete encoding[e];
-    }
+    ['x', 'y', 'color', 'size', 'shape', 'text', 'detail', 'row', 'column'].forEach((channel: string) => {
+        if (encoding[channel]) {
+            const e = encoding[channel].aspEncoding;
+            encoding[channel] = encoding[e];
+            delete encoding[e];
+        }
+    });
 
     // post-process zero: if quantitative encoding and zero is not set, set zero to false
     for (const channel in encoding) {
