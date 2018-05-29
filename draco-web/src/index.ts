@@ -104,7 +104,7 @@ class Draco {
 
     this.Module.ccall('run', 'number', ['string', 'string'], [program, opt]);
 
-    const spec: TopLevelSpec = asp2vl(result);
+    const specs: TopLevelSpec[] = asp2vl(result);
 
     return JSON.parse(result);
   }
