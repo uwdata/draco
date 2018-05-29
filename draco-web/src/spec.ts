@@ -6,14 +6,32 @@ export function asp2vl(asp: any): TopLevelSpec[] {
     const witnesses = getWitnesses(asp);
     if (witnesses) {
         specs = witnesses.map((witness: any) => {
-            // filter out soft constraint violations because we only need spec
-            const specValues = witness.Value.filter((s: string) => !s.startsWith('violation'));
-    
+            let mark = '';
+            let encoding = {scale: {}};
+
+            witness.Value.forEach((value: string) => {
+                const valueType = value.split('(')[0];
+                switch(valueType) {
+                    case 'mark':
+                        mark = value.replace('mark(', '').replace(')', '');
+                        break;
+                    
+                    case 'field':
+                    case 'channel':
+                    case 'type':
+                    case 'zero':
+
+                    default:
+                        break;
+
+                }
+            });
+
             return {
                 '$schema': 'https://vega.github.io/schema/vega-lite/v2.0.json',
                 data: {url: 'data/cars.json'},
-                mark: parseMark(specValues),
-                encoding: {}
+                mark,
+                encoding
             };
         });
     }
@@ -33,15 +51,4 @@ function getWitnesses(asp: any) {
     } else {
         return undefined;
     }
-}
-
-/**
- * Parse clingo output to get mark for vegalite spec
- */
-function parseMark(values: string[]) {
-    const markValue = values.find((s: string) => s.startsWith('mark'));
-    if (markValue) {
-        return markValue.replace('mark(', '').replace(')', '');
-    }
-    return undefined;
 }
