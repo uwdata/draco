@@ -99,8 +99,6 @@ export function asp2vl(facts: any): TopLevelSpec {
         }
     }
 
-    console.log(encoding);
-
     return {
         $schema: 'https://vega.github.io/schema/vega-lite/v2.json',
         data: {url: 'data/cars.json'},
