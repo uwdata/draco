@@ -35,19 +35,22 @@ export function asp2vl(asp: any): TopLevelSpec[] {
                         argv = getArgv(value, 'type');
                         enc = argv[0];
                         encoding[enc] = {type: argv[1]};
+                        break;
                         
                     case 'aggregate': 
                         argv = getArgv(value, 'aggregate');
                         enc = argv[0];
                         encoding[enc] = {aggregate: argv[1]};
+                        break;
                     
                     case 'bin': 
                         argv = getArgv(value, 'bin');
                         enc = argv[0];
                         encoding[enc] = {bin: argv[1]};
+                        break;
                     
                     case 'zero':
-                    console.log(value);
+                        // console.log(value);
                         
 
                     default:
