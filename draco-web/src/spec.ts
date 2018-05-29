@@ -128,15 +128,6 @@ function getWitnesses(result: any): Array<{ Value: any[] }> {
   }
 }
 
-/**
- * Get arguments from an asp predicate
- * @param aspPredicate An ASP predicate that takes 1 or more arguments, e.g., channel(e0, x)
- * @param predicateType The type of predicate, e.g., mark, encoding, channel, type, field
- */
-function getArgv(aspPredicate: string, predicateType: string): string[] {
-  return aspPredicate
-    .replace(predicateType, '')
-    .replace('(', '')
-    .replace(')', '')
-    .split(',');
+export function vl2asp(spec: TopLevelSpec): string[] {
+  return [];
 }

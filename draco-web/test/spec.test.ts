@@ -1,4 +1,4 @@
-import { asp2vl } from '../src/spec';
+import { asp2vl, vl2asp } from '../src/spec';
 
 test('parses results correctly', () => {
   expect(asp2vl([
@@ -23,4 +23,29 @@ test('parses results correctly', () => {
       y: { aggregate: 'count', type: 'quantitative', scale: { zero: true } },
     },
   });
+});
+
+test('generates correct asp', () => {
+  expect(vl2asp({
+    $schema: 'https://vega.github.io/schema/vega-lite/v2.json',
+    data: {url: 'data/cars.json'},
+    mark: 'bar',
+    encoding: {
+      x: { field: 'foo', type: 'ordinal' },
+      y: { aggregate: 'count', type: 'quantitative', scale: { zero: true } },
+    },
+  }).sort()).toEqual([
+    'mark(bar)',
+
+    'encoding(e0)',
+    'channel(e0,x)',
+    'field(e0,foo)',
+    'type(e0,ordinal)',
+
+    'encoding(e1)',
+    'channel(e1,y)',
+    'aggregate(e1,count)',
+    'type(e1,quantitative)',
+    'zero(e1)',
+  ].sort());
 });
