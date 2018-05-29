@@ -68,7 +68,7 @@ export default class VegaLiteChart extends React.Component<Props, State> {
       renderer: this.props.renderer,
       loader: loader,
       mode: 'vega-lite',
-      actions: { editor: false, export: false }
+      defaultStyle: true,
     };
 
     // @ts-ignore
