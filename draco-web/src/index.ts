@@ -1,12 +1,10 @@
 import Clingo_ from 'wasm-clingo';
-const Clingo: typeof Clingo_ = (Clingo_ as any).default || Clingo_;
-
 import * as constraints from './constraints';
+import { result2vl } from './spec';
+const Clingo: typeof Clingo_ = (Clingo_ as any).default || Clingo_;
 
 export * from './constraints';
 
-import {TopLevelSpec} from 'vega-lite';
-import {asp2vl} from './spec';
 
 /**
  * Options for Draco.
@@ -106,7 +104,7 @@ class Draco {
 
     const result = JSON.parse(resultText);
 
-    const specs: TopLevelSpec[] = asp2vl(result);
+    const specs = result2vl(result);
 
     return {specs, result};
   }

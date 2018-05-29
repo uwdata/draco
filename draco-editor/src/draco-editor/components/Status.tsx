@@ -11,6 +11,7 @@ export default class Status extends React.PureComponent<Props> {
   public constructor(props: Props) {
     super(props);
 
+    // add error handler to the window
     window.onerror = (event) => {
       this.setState({
         status: 'Exception thrown, see JavaScript console'

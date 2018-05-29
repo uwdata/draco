@@ -1,5 +1,11 @@
-import * as spec from '../src/spec';
+import {asp2vl} from '../src/spec';
 
-test('adds 1 + 2 to equal 3', () => {
-  expect(1 + 2).toBe(3);
+test('parses results correctly', () => {
+  expect(asp2vl(['mark(bar)'])).toBe({
+    mark: 'bar',
+    encoding: {
+      x: {field: 'foo', type: 'ordinal'},
+      y: {aggregate: 'count', type: 'quantitative'}
+    }
+  });
 });
