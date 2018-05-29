@@ -97,16 +97,18 @@ class Draco {
       '5'  // at most 5 models
     ].join(' ');
 
-    let result = '';
+    let resultText = '';
     this.Module.print = (text: string) => {
-      result += text;
+      resultText += text;
     };
 
     this.Module.ccall('run', 'number', ['string', 'string'], [program, opt]);
 
+    const result = JSON.parse(resultText);
+
     const specs: TopLevelSpec[] = asp2vl(result);
 
-    return JSON.parse(result);
+    return {specs, result};
   }
 }
 

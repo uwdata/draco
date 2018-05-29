@@ -1,9 +1,10 @@
 import {TopLevelSpec} from 'vega-lite';
 
-export function asp2vl(asp: any): TopLevelSpec[] {
+export function asp2vl(result: any): TopLevelSpec[] {
     let specs: TopLevelSpec[] = [];
 
-    const witnesses = getWitnesses(asp);
+    const witnesses = getWitnesses(result);
+
     if (witnesses) {
         specs = witnesses.map((witness: any) => {
             let mark = '';
@@ -15,7 +16,7 @@ export function asp2vl(asp: any): TopLevelSpec[] {
                     case 'mark':
                         mark = getArgv(value, 'mark')[0];
                         break;
-                    
+
                     case 'channel':
                         let argv = getArgv(value, 'channel');
                         let enc = argv[0];
@@ -34,19 +35,19 @@ export function asp2vl(asp: any): TopLevelSpec[] {
                         enc = argv[0];
                         encoding[enc] = {type: argv[1]};
                         break;
-                        
-                    case 'aggregate': 
+
+                    case 'aggregate':
                         argv = getArgv(value, 'aggregate');
                         enc = argv[0];
                         encoding[enc] = {aggregate: argv[1]};
                         break;
-                    
-                    case 'bin': 
+
+                    case 'bin':
                         argv = getArgv(value, 'bin');
                         enc = argv[0];
                         encoding[enc] = {maxbins: argv[1]};
                         break;
-                    
+
                     case 'log':
                         enc = getArgv(value, 'log')[0];
                         encoding[enc].scale = {
@@ -84,7 +85,7 @@ export function asp2vl(asp: any): TopLevelSpec[] {
 
             // post-process zero: if quantitative encoding and zero is not set, set zero to false
             for (const channel in encoding) {
-                if (encoding[channel].type === 'quantitative' && 
+                if (encoding[channel].type === 'quantitative' &&
                     (!encoding[channel].scale || encoding[channel].scale.zero !== true)) {
                         encoding[channel].scale = {
                             ...encoding[channel].scale,
@@ -105,14 +106,12 @@ export function asp2vl(asp: any): TopLevelSpec[] {
     return specs;
 }
 
-/** 
- * Get the array of witnesses from clingo output. 
- * Return undefined if no witnesses were found. 
+/**
+ * Get the array of witnesses from clingo output.
+ * Return undefined if no witnesses were found.
  */
-function getWitnesses(asp: any) {
-    const result = JSON.parse(asp);
-
-    if(result.Call && result.Call.length > 0) {
+function getWitnesses(result: any) {
+    if (result.Call && result.Call.length > 0) {
         return result.Call[0].Witnesses;
     } else {
         return undefined;
