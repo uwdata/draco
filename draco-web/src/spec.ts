@@ -7,25 +7,43 @@ export function asp2vl(asp: any): TopLevelSpec[] {
     if (witnesses) {
         specs = witnesses.map((witness: any) => {
             let mark = '';
-            let encoding = {scale: {}};
+            let encoding = {
+                scale: {},
+            };
 
-            witness.Value.forEach((value: string) => {
+            // filter out soft constraint violations because we only need spec
+            const specValues = witness.Value.filter((s: string) => !s.startsWith('violation'));
+
+            specValues.forEach((value: string) => {
                 const valueType = value.split('(')[0];
                 switch(valueType) {
                     case 'mark':
                         mark = value.replace('mark(', '').replace(')', '');
                         break;
                     
-                    case 'field':
                     case 'channel':
-                    case 'type':
-                    case 'zero':
+                        const mapping = value.replace('channel(', '').replace(')', '').split(',');
+                        const enc = mapping[0];
+                        const ch = mapping[1];
+                        encoding[ch] = {aspEncoding: enc};
 
                     default:
                         break;
 
                 }
             });
+
+            specValues.forEach((value: string) => {
+                const valueType = value.split('(')[0];
+                switch(valueType) {
+                    case 'field':
+                    case 'type':
+                    case 'zero':
+                        console.log(value);
+                    default:
+                        break;
+                }
+            })
 
             return {
                 '$schema': 'https://vega.github.io/schema/vega-lite/v2.0.json',
