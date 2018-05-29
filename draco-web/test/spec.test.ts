@@ -13,13 +13,14 @@ test('parses results correctly', () => {
     'channel(e1,y)',
     'aggregate(e1,count)',
     'type(e1,quantitative)',
+    'zero(e1)',
   ])).toBe({
     $schema: 'https://vega.github.io/schema/vega-lite/v2.json',
     data: {url: 'data/cars.json'},
     mark: 'bar',
     encoding: {
       x: { field: 'foo', type: 'ordinal' },
-      y: { aggregate: 'count', type: 'quantitative' },
+      y: { aggregate: 'count', type: 'quantitative', zero: true },
     },
   });
 });
