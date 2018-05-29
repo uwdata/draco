@@ -46,7 +46,7 @@ export function asp2vl(asp: any): TopLevelSpec[] {
                     case 'bin': 
                         argv = getArgv(value, 'bin');
                         enc = argv[0];
-                        encoding[enc] = {bin: argv[1]};
+                        encoding[enc] = {maxbins: argv[1]};
                         break;
                     
                     case 'zero':
