@@ -7,6 +7,7 @@ import "../styles/Editor.css";
 import "../styles/Resizer.css";
 import Status from "./status";
 import * as classNames from 'classnames';
+import Recommendations from './Recommendations';
 
 import playIcon from '../../images/play.svg';
 import playIconGrey from '../../images/play-grey.svg';
@@ -114,9 +115,7 @@ export default class Editor extends React.Component<Props, State> {
                 onChange={this.handleEditorChange}
               />
             </div>
-            <div className="recommendations">
-              <pre>{JSON.stringify(this.state.output, null, 2)}</pre>
-            </div>
+            <Recommendations results={this.state.output}/>
           </SplitPane>
         </div>
         <Status status={this.props.status} />
