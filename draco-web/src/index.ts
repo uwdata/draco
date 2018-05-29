@@ -5,6 +5,9 @@ import * as constraints from './constraints';
 
 export * from './constraints';
 
+import {TopLevelSpec} from 'vega-lite';
+import {asp2vl} from './spec';
+
 /**
  * Options for Draco.
  */
@@ -100,6 +103,9 @@ class Draco {
     };
 
     this.Module.ccall('run', 'number', ['string', 'string'], [program, opt]);
+
+    const specs: TopLevelSpec[] = asp2vl(result);
+
     return JSON.parse(result);
   }
 }
