@@ -45,7 +45,7 @@ export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
       ...(enc.aggregate ? { aggregate: enc.aggregate } : {}),
       ...(enc.field ? { field: enc.field } : {}),
       ...(enc.stack ? { stack: enc.stack } : {}),
-      ...(enc.bin ? { bin: { maxbins: enc.stack } } : {}),
+      ...(enc.bin !== undefined ? { bin: { maxbins: +enc.bin } } : {}),
       ...(Object.keys(scale).length ? { scale } : {}),
     };
   }
