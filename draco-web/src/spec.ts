@@ -15,41 +15,63 @@ export function asp2vl(facts: any): TopLevelSpec {
                 break;
 
             case 'channel':
-                encoding[second] = {aspEncoding: first};
+                encoding[second] = {
+                  ...encoding[second],
+                  aspEncoding: first
+                };
                 break;
 
             case 'field':
-                encoding[first] = {field: second};
+                encoding[first] = {
+                  ...encoding[first],
+                  field: second
+                };
                 break;
 
             case 'type':
-                encoding[first] = {type: second};
+                encoding[first] = {
+                  ...encoding[first],
+                  type: second
+                };
                 break;
 
             case 'aggregate':
-                encoding[first] = {aggregate: second};
+                encoding[first] = {
+                  ...encoding[first],
+                  aggregate: second
+                };
                 break;
 
             case 'bin':
-                encoding[first] = {maxbins: second};
+                encoding[first] = {
+                  ...encoding[first],
+                  maxbins: second
+                };
                 break;
 
             case 'log':
-                encoding[first].scale = {
-                    ...encoding[first].scale,
+                encoding[first] = {
+                  ...encoding[first],
+                  scale: {
                     type: 'log'
+                  }
                 };
                 break;
 
             case 'zero':
-                encoding[first].scale = {
-                    ...encoding[first].scale,
+                encoding[first] = {
+                  ...encoding[first],
+                  scale: {
                     zero: true
+                  }
                 };
                 break;
 
             case 'stack':
-                encoding[first].stack = second;
+                encoding[first] = {
+                  ...encoding[first],
+                  stack: second
+                }
                 break;
 
             default:
@@ -76,6 +98,8 @@ export function asp2vl(facts: any): TopLevelSpec {
                 }
         }
     }
+
+    console.log(encoding);
 
     return {
         $schema: 'https://vega.github.io/schema/vega-lite/v2.json',

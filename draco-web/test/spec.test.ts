@@ -14,13 +14,13 @@ test('parses results correctly', () => {
     'aggregate(e1,count)',
     'type(e1,quantitative)',
     'zero(e1)',
-  ])).toBe({
+  ])).toEqual({
     $schema: 'https://vega.github.io/schema/vega-lite/v2.json',
     data: {url: 'data/cars.json'},
     mark: 'bar',
     encoding: {
       x: { field: 'foo', type: 'ordinal' },
-      y: { aggregate: 'count', type: 'quantitative', zero: true },
+      y: { aggregate: 'count', type: 'quantitative', scale: { zero: true } },
     },
   });
 });
