@@ -56,7 +56,6 @@ export function asp2vl(asp: any): TopLevelSpec[] {
                         break;
 
                     case 'zero':
-                        console.log(value);
                         enc = getArgv(value, 'zero')[0];
                         encoding[enc].scale = {
                             ...encoding[enc].scale,
@@ -75,6 +74,18 @@ export function asp2vl(asp: any): TopLevelSpec[] {
 
                 }
             });
+
+            // post-process encodings
+            ['x', 'y', 'color', 'size', 'shape', 'text', 'detail', 'row', 'column'].forEach((channel: string) => {
+                if (encoding[channel]) {
+                    const e = encoding[channel].aspEncoding;
+                    encoding[channel] = encoding[e];
+                    delete encoding[e];
+                }
+            });
+
+            // post-process zero: 
+            console.log(encoding);
 
             return {
                 '$schema': 'https://vega.github.io/schema/vega-lite/v2.0.json',
