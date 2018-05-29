@@ -45,6 +45,7 @@ export default class Editor extends React.Component<Props, State> {
     this.editorDidMount = this.editorDidMount.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.showExamples = this.showExamples.bind(this);
+    this.hideExamples = this.hideExamples.bind(this);
     this.run = this.run.bind(this);
   }
 
@@ -70,7 +71,7 @@ export default class Editor extends React.Component<Props, State> {
 
   public render() {
     return (
-      <div className="Editor">
+      <div className="Editor" onClick={this.hideExamples}>
         <div className="split-pane-wrapper">
           <SplitPane split="vertical" defaultSize={400} minSize={400}>
             <div className="input-pane">
@@ -118,7 +119,6 @@ export default class Editor extends React.Component<Props, State> {
                   return (
                     <div key={example.name} className="example" onClick={() => {
                       this.code = example.program;
-                      this.setState({ showExamples: false });
                       setTimeout(() => {
                         if (this.props.draco.initialized) {
                           this.run();
@@ -158,5 +158,13 @@ export default class Editor extends React.Component<Props, State> {
     this.setState({
       showExamples: true
     });
+  }
+
+  private hideExamples() {
+    if (this.state.showExamples) {
+      this.setState({
+        showExamples: false
+      });
+    }
   }
 }
