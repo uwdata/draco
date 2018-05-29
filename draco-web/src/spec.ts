@@ -7,9 +7,7 @@ export function asp2vl(asp: any): TopLevelSpec[] {
     if (witnesses) {
         specs = witnesses.map((witness: any) => {
             let mark = '';
-            const encoding: {[index: string]: any} = {
-                'scale': {},
-            };
+            const encoding: {[index: string]: any} = {};
 
             witness.Value.forEach((value: string) => {
                 const valueType = value.split('(')[0];
@@ -50,18 +48,28 @@ export function asp2vl(asp: any): TopLevelSpec[] {
                         break;
                     
                     case 'log':
-                        encoding.scale.type = 'log';
+                        enc = getArgv(value, 'log')[0];
+                        encoding[enc].scale = {
+                            ...encoding[enc].scale,
+                            type: 'log'
+                        };
                         break;
 
                     case 'zero':
+                        console.log(value);
+                        enc = getArgv(value, 'zero')[0];
+                        encoding[enc].scale = {
+                            ...encoding[enc].scale,
+                            zero: true
+                        };
                         break;
 
                     case 'stack':
-                        encoding.stack = getArgv(value, 'stack')[0];
+                        enc = getArgv(value, 'stack')[0];
+                        encoding[enc].stack = getArgv(value, 'stack')[0];
                         break;
 
                     default:
-                    console.log(value);
                         break;
                         
 
