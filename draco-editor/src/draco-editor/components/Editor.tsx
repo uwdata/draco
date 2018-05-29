@@ -50,7 +50,11 @@ export default class Editor extends React.Component<Props, State> {
 
   public componentDidMount() {
     if (!this.props.draco.initialized) {
-      this.props.draco.init();
+      this.props.draco.init().then(() => {
+        this.run();
+      });
+    } else {
+      this.run();
     }
   }
 
