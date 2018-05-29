@@ -7,63 +7,52 @@ export function asp2vl(facts: any): TopLevelSpec {
     let argv: string[];
     let enc: string;
 
+    const regex = /(\w+)\((\w+)(,(\w+))?\)/
+
     facts.forEach((value: string) => {
-        const valueType = value.split('(')[0];
-        switch(valueType) {
+        const [_, predicate, first, __, second] = regex.exec(value) as any;
+
+        switch(predicate) {
             case 'mark':
-                mark = getArgv(value, 'mark')[0];
+                mark = first;
                 break;
 
             case 'channel':
-                argv = getArgv(value, 'channel');
-                enc = argv[0];
-                const ch = argv[1];
-                encoding[ch] = {aspEncoding: enc};
+                encoding[second] = {aspEncoding: first};
                 break;
 
             case 'field':
-                argv = getArgv(value, 'field');
-                enc = argv[0];
-                encoding[enc] = {field: argv[1]};
+                encoding[first] = {field: second};
                 break;
 
             case 'type':
-                argv = getArgv(value, 'type');
-                enc = argv[0];
-                encoding[enc] = {type: argv[1]};
+                encoding[first] = {type: second};
                 break;
 
             case 'aggregate':
-                argv = getArgv(value, 'aggregate');
-                enc = argv[0];
-                encoding[enc] = {aggregate: argv[1]};
+                encoding[first] = {aggregate: second};
                 break;
 
             case 'bin':
-                argv = getArgv(value, 'bin');
-                enc = argv[0];
-                encoding[enc] = {maxbins: argv[1]};
+                encoding[first] = {maxbins: second};
                 break;
 
             case 'log':
-                enc = getArgv(value, 'log')[0];
-                encoding[enc].scale = {
-                    ...encoding[enc].scale,
+                encoding[first].scale = {
+                    ...encoding[first].scale,
                     type: 'log'
                 };
                 break;
 
             case 'zero':
-                enc = getArgv(value, 'zero')[0];
-                encoding[enc].scale = {
-                    ...encoding[enc].scale,
+                encoding[first].scale = {
+                    ...encoding[first].scale,
                     zero: true
                 };
                 break;
 
             case 'stack':
-                enc = getArgv(value, 'stack')[0];
-                encoding[enc].stack = getArgv(value, 'stack')[0];
+                encoding[first].stack = second;
                 break;
 
             default:
