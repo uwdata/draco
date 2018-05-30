@@ -147,11 +147,12 @@ export default class Editor extends React.Component<Props, State> {
     const monaco = this.refs.monaco as any;
     const model = monaco.editor.getModel();
     const program = model.getValue();
-    const result = this.props.draco.solve(program);
+    const result = this.props.draco.solve(program, {
+      num_models: 5
+    });
     this.setState({
       output: result,
     });
-    this.props.updateStatus("");
   }
 
   private showExamples() {

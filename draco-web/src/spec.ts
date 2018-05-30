@@ -23,12 +23,8 @@ export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
 
   const encoding: { [channel: string]: any } = {};
 
-  console.log(encodings)
-
   for (const e of Object.keys(encodings)) {
     const enc = encodings[e];
-
-    console.log(e, enc)
 
     // if quantitative encoding and zero is not set, set zero to false
     if (enc.type === 'quantitative' && enc.zero === undefined) {

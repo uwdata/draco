@@ -14,6 +14,19 @@ export interface Options {
    * Empty means all.
    */
   constraints?: string[];
+
+  /**
+   * Weight for the soft constraints.
+   */
+  weights?: {
+    name: string,
+    value: number
+  }[]
+
+  /**
+   * Number of models.
+   */
+  num_models?: number
 }
 
 /**
@@ -79,22 +92,22 @@ class Draco {
    *
    * @returns The solution from Clingo as JSON.
    */
-  public solve(program: string, options?: Options): any {
+  public solve(program: string, options: Options = {}): any {
     if (!this.initialized) {
       throw Error('Draco is not initialized. Call `init() first.`');
     }
 
     this.Module.setStatus('Running Draco Query...');
 
-    program += (options && options.constraints || Object.keys(constraints)).map((name: string) => (constraints as any)[name]).join('\n');
+    program += (options.constraints || Object.keys(constraints)).map((name: string) => (constraints as any)[name]).join('\n');
 
     const opt = [
       '--outf=2', // JSON output
       '--opt-mode=OptN', // find multiple optimal models
-      '--quiet=1',  // only output optimal models
+      '--quiet=1,1,2',  // only output optimal models
       '--project',  // every model only once
-      '5'  // at most 5 models
-    ].join(' ');
+      options.num_models === undefined ? 1 : options.num_models
+    ].concat((options.weights || []).map(d => `-c ${d.name}=${d.value}`)).join(' ');
 
     let resultText = '';
     this.Module.print = (text: string) => {
