@@ -74,22 +74,17 @@
           margin: 16px 16px 16px 16px;
           cursor: pointer;
           border-radius: 8px;
-          box-shadow: $small-box-shadow;
-          transition: box-shadow 220ms $standard-ease,
-                      transform 220ms $standard-ease;
-          transform: translateY(0);
+          border: 2px solid transparent;
 
           &:hover {
-            box-shadow: $medium-box-shadow;
+            border: 2px solid $light-blue;
           }
 
           &.selected {
-            transform: translateY(-16px);
-            box-shadow: $small-box-shadow;
+            border: 2px solid $med-blue;
           }
 
           &.selected:hover {
-            box-shadow: $small-box-shadow;
           }
 
           .VegaLiteChart {
