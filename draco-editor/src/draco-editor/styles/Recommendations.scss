@@ -35,6 +35,22 @@
       .chart {
         padding: 24px 16px 16px 16px;
         box-shadow: $medium-box-shadow;
+
+        &.update {
+          animation: bump 500ms $standard-ease;
+        }
+
+        @keyframes bump {
+          0% {
+            box-shadow: $medium-box-shadow;
+          }
+          50% {
+            box-shadow: $large-box-shadow;
+          }
+          100% {
+            box-shadow: $medium-box-shadow;
+          }
+        }
       }
     }
 

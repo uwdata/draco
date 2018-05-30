@@ -4,6 +4,7 @@ import { TopLevelSpec } from 'vega-lite';
 import SplitPane from 'react-split-pane';
 import VegaLiteChart from '../../shared/components/VegaLiteChart';
 import * as classNames from 'classnames';
+import AnimateOnChange from 'react-animate-on-change';
 
 import '../styles/Recommendations.css';
 
@@ -15,11 +16,24 @@ interface Props {
 
 interface State {
   focusIndex: number;
+  updateFocus: boolean;
 }
 
 export default class Recommendations extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    this.state = {
+      focusIndex: props.focusIndex,
+      updateFocus: true
+    }
+  }
+
+  static getDerivedStateFromProps(props: Props, state: State) {
+    return {
+      focusIndex: props.focusIndex,
+      updateFocus: props.focusIndex !== state.focusIndex
+    }
   }
 
   render() {
@@ -55,9 +69,13 @@ export default class Recommendations extends React.Component<Props, State> {
         <SplitPane split="vertical" primary="second" defaultSize={400} minSize={400} maxSize={-400}>
           <div className="visualizations">
             <div className="focus">
-              <div className="chart">
-                <VegaLiteChart vlSpec={focusSpec} renderer="svg"/>
-              </div>
+              <AnimateOnChange
+                baseClassName="chart"
+                animationClassName="update"
+                animate={this.state.updateFocus}>
+                  <VegaLiteChart vlSpec={focusSpec} renderer="svg" />
+              </AnimateOnChange>
+
             </div>
             <div className="context">
               <div className="carousel">
