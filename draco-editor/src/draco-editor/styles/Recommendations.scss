@@ -31,23 +31,25 @@
       align-items: center;
       flex-shrink: 0;
       margin: 0;
+      overflow: auto;
 
       .chart {
         padding: 24px 16px 16px 16px;
         border-radius: 8px;
 
         &.update {
+          animation: bump 500ms $standard-ease;
         }
 
         @keyframes bump {
           0% {
-            box-shadow: $small-box-shadow;
+            background-color: #fff;
           }
           50% {
-            box-shadow: $large-box-shadow;
+            background-color: rgb(245, 244, 249);
           }
           100% {
-            box-shadow: $small-box-shadow;
+            background-color: #fff;
           }
         }
       }
@@ -58,7 +60,7 @@
       overflow-x: scroll;
       height: 196px;
       position: relative;
-      background-color: rgb(243, 242, 247);
+      background-color: rgb(245, 244, 249);
 
       .carousel {
         padding: 0;
