@@ -128,7 +128,9 @@ export default class Editor extends React.Component<Props, State> {
                         }
                       }, 10);
                     }}>
-                      {example.name}
+                      <span className="text">
+                        {example.name}
+                      </span>
                     </div>
                   );
                 })}
