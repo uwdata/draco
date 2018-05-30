@@ -26,7 +26,7 @@
     .focus {
       display: flex;
       width: 100%;
-      height: calc(100% - 256px);
+      height: calc(100% - 196px);
       justify-content: center;
       align-items: center;
       flex-shrink: 0;
@@ -35,10 +35,8 @@
       .chart {
         padding: 24px 16px 16px 16px;
         border-radius: 8px;
-        box-shadow: $small-box-shadow;
 
         &.update {
-          animation: bump 500ms $standard-ease;
         }
 
         @keyframes bump {
@@ -58,42 +56,52 @@
     .context {
       width: 100%;
       overflow-x: scroll;
-      height: 256px;
-      box-sizing: border-box;
+      height: 196px;
       position: relative;
+      background-color: rgb(243, 242, 247);
 
       .carousel {
-        padding: 0 16px 0 16px;
+        padding: 0;
         height: 100%;
         display: inline-flex;
         flex-direction: row;
         align-items: center;
 
         .context-chart {
-          padding: 8px 16px 8px 8px;
-          margin: 16px 16px 16px 16px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          box-sizing: border-box;
+          height: 100%;
+          padding: 24px 32px 24px 24px;
           cursor: pointer;
-          border-radius: 8px;
-          box-shadow: $small-box-shadow;
-          transition: box-shadow 220ms $standard-ease,
-                      transform 220ms $standard-ease;
-          transform: translateY(0);
+
+          .backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+          }
 
           &:hover {
-            box-shadow: $medium-box-shadow;
+            .backdrop {
+              background-color: rgb(250, 250, 252);
+            }
           }
 
           &.selected {
-            transform: translateY(-16px);
-            box-shadow: $small-box-shadow;
-          }
-
-          &.selected:hover {
-            box-shadow: $small-box-shadow;
+            .backdrop {
+              background-color: #fff;
+            }
           }
 
           .VegaLiteChart {
             padding: 0;
+            z-index: 2;
 
             svg {
               width: 128px;
