@@ -1,4 +1,6 @@
 % ====== Data definitions ======
+data("cars.csv").
+
 num_rows(142).
 
 fieldtype(horsepower,number).

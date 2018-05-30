@@ -1,5 +1,7 @@
 % ====== Output ======
 
+#show data/1.
+
 #show mark/1.
 
 #show type/2.

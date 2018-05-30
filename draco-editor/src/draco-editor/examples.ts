@@ -1,4 +1,5 @@
 export const SCATTER: string = `% ====== Data definitions ======
+data("cars.json").
 num_rows(142).
 
 fieldtype(horsepower,number).
@@ -16,6 +17,7 @@ encoding(e1).
 `;
 
 export const HISTOGRAM: string = `% ====== Data definitions ======
+data("cars.json").
 num_rows(142).
 
 fieldtype(horsepower,number).
@@ -28,6 +30,7 @@ encoding(e0).
 `;
 
 export const STRIP: string = `% ====== Data definitions ======
+data("cars.json").
 num_rows(142).
 
 fieldtype(horsepower,number).

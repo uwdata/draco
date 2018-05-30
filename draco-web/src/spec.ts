@@ -1,20 +1,25 @@
 import { ChannelDef } from 'vega-lite/build/src/fielddef';
 import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';
 
-const REGEX = /(\w+)\((\w+)(,(\w+))?\)/;
+const REGEX = /(\w+)\(([\w\.]+)(,([\w\.]+))?\)/;
 
 export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
   let mark = '';
+  let url = 'cars.json'; // default dataset
   const encodings: { [enc: string]: any } = {};
 
   for (const value of facts) {
-    const [_, predicate, first, __, second] = REGEX.exec(value) as any;
+    // TODO: Better handle quotes fields. We currently simpliy remove all ".
+    const cleanedValue = value.replace(/\"/g, '');
+    const [_, predicate, first, __, second] = REGEX.exec(cleanedValue) as any;
 
     if (predicate === 'mark') {
       mark = first;
+    } else if (predicate === 'data') {
+      url = first;
     } else if (predicate !== 'violation') {
       if (!encodings[first]) {
-        encodings[first] = {}
+        encodings[first] = {};
       }
 
       encodings[first][predicate] = second || true;
@@ -48,7 +53,7 @@ export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
 
   return {
     $schema: 'https://vega.github.io/schema/vega-lite/v2.json',
-    data: { url: 'data/cars.json' },
+    data: { url: `data/${url}` },
     mark,
     encoding,
   } as TopLevelFacetedUnitSpec;

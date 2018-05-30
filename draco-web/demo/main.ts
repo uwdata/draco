@@ -2,6 +2,7 @@ import Draco from '../src';
 
 const EXAMPLE = `
 % ====== Data definitions ======
+data("cars.json").
 num_rows(142).
 
 fieldtype(horsepower,number).
