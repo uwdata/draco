@@ -73,11 +73,11 @@ class Draco {
    * @returns {Promise} A promise that resolves when the solver is ready.
    */
   public init() {
-    return new Promise((resolve: () => void, reject: () => void) => {
+    return new Promise((resolve: (draco: Draco) => void, reject: () => void) => {
       this.Module.setStatus('Downloading...');
       this.Module.onRuntimeInitialized = () => {
         this.initialized = true;
-        resolve();
+        resolve(this);
       };
       Clingo(this.Module);
     });
