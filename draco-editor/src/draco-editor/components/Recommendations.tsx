@@ -72,7 +72,7 @@ export default class Recommendations extends React.Component<Props, State> {
 
     return (
       <div className="Recommendations">
-        <SplitPane split="vertical" primary="second" defaultSize={400} minSize={400} maxSize={-400}>
+        <SplitPane split="vertical" primary="second" defaultSize={344} minSize={24} maxSize={-400}>
           <div className="visualizations">
             <div className="focus">
               <AnimateOnChange

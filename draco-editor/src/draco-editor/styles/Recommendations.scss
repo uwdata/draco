@@ -82,16 +82,20 @@
           }
 
           &.selected {
-            transform: translateY(-32px);
-            box-shadow: $small-hover-box-shadow;
+            transform: translateY(-16px);
+            box-shadow: $small-box-shadow;
+          }
+
+          &.selected:hover {
+            box-shadow: $small-box-shadow;
           }
 
           .VegaLiteChart {
             padding: 0;
 
             svg {
-              width: 160px;
-              height: 160px;
+              width: 128px;
+              height: 128px;
             }
           }
         }
