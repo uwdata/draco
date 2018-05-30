@@ -78,7 +78,7 @@ export default class Editor extends React.Component<Props, State> {
     return (
       <div className="Editor" onClick={this.hideExamples}>
         <div className="split-pane-wrapper">
-          <SplitPane split="vertical" defaultSize={320} minSize={344} maxSize={-800}>
+          <SplitPane split="vertical" defaultSize={344} minSize={256} maxSize={-800}>
             <div className="input-pane">
               <div className="toolbar">
                 <button className="button left" onClick={this.showExamples}>
