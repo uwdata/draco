@@ -87,7 +87,8 @@ export const ASP_THEME = {
     { token: "comment", foreground: "87a1c4" },
     { token: "number", foreground: "256fd1"},
     { token: "identifier", foreground: "586677" },
-    { token: "keyword", foreground: "0090ff"}
+    { token: "keyword", foreground: "0090ff"},
+    { token: "string", foreground: "7c71f2"}
   ],
   colors: {
     "editorCursor.foreground": "#586677",
