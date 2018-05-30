@@ -18,7 +18,8 @@ import EXAMPLES, { SCATTER } from '../examples';
 interface State {
   output: Object;
   showExamples: boolean,
-  focusIndex: number
+  focusIndex: number,
+  runCount: number
 }
 
 interface Props {
@@ -39,7 +40,8 @@ export default class Editor extends React.Component<Props, State> {
     this.state = {
       output: null,
       showExamples: false,
-      focusIndex: 0
+      focusIndex: 0,
+      runCount: 0
     };
 
     this.code = SCATTER;
@@ -136,7 +138,10 @@ export default class Editor extends React.Component<Props, State> {
                 })}
               </div>
             </div>
-            <Recommendations results={this.state.output} focusIndex={this.state.focusIndex} setFocusIndex={this.setFocusIndex}/>
+            <Recommendations results={this.state.output}
+              runId={this.state.runCount}
+              focusIndex={this.state.focusIndex}
+              setFocusIndex={this.setFocusIndex}/>
           </SplitPane>
         </div>
         <Status status={this.props.status} />
@@ -157,7 +162,8 @@ export default class Editor extends React.Component<Props, State> {
     });
     this.setState({
       output: result,
-      focusIndex: 0
+      focusIndex: 0,
+      runCount: this.state.runCount + 1
     });
   }
 

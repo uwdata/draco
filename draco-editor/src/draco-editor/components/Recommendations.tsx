@@ -11,11 +11,13 @@ import '../styles/Recommendations.css';
 interface Props {
   results: any,
   focusIndex: number,
-  setFocusIndex: (focusIndex: number) => void
+  setFocusIndex: (focusIndex: number) => void,
+  runId: number  // to identify unique runs
 }
 
 interface State {
   focusIndex: number;
+  runId: number;
   updateFocus: boolean;
 }
 
@@ -25,14 +27,18 @@ export default class Recommendations extends React.Component<Props, State> {
 
     this.state = {
       focusIndex: props.focusIndex,
+      runId: -1,
       updateFocus: true
     }
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {
+
     return {
       focusIndex: props.focusIndex,
-      updateFocus: props.focusIndex !== state.focusIndex
+      runId: props.runId,
+      updateFocus: props.focusIndex !== state.focusIndex ||
+        props.runId !== state.runId
     }
   }
 
@@ -93,7 +99,6 @@ export default class Recommendations extends React.Component<Props, State> {
             </div>
           </div>
         </SplitPane>
-
       </div>
     );
   }
