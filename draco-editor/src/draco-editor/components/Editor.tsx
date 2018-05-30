@@ -17,7 +17,8 @@ import examplesIcon from '../../images/examples.svg';
 import EXAMPLES, { SCATTER } from '../examples';
 interface State {
   output: Object;
-  showExamples: boolean
+  showExamples: boolean,
+  focusIndex: number
 }
 
 interface Props {
@@ -37,7 +38,8 @@ export default class Editor extends React.Component<Props, State> {
     super(props);
     this.state = {
       output: null,
-      showExamples: false
+      showExamples: false,
+      focusIndex: 0
     };
 
     this.code = SCATTER;
@@ -46,6 +48,7 @@ export default class Editor extends React.Component<Props, State> {
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.showExamples = this.showExamples.bind(this);
     this.hideExamples = this.hideExamples.bind(this);
+    this.setFocusIndex = this.setFocusIndex.bind(this);
     this.run = this.run.bind(this);
   }
 
@@ -73,7 +76,7 @@ export default class Editor extends React.Component<Props, State> {
     return (
       <div className="Editor" onClick={this.hideExamples}>
         <div className="split-pane-wrapper">
-          <SplitPane split="vertical" defaultSize={400} minSize={400}>
+          <SplitPane split="vertical" defaultSize={400} minSize={400} maxSize={-800}>
             <div className="input-pane">
               <div className="toolbar">
                 <button className="button left" onClick={this.showExamples}>
@@ -131,7 +134,7 @@ export default class Editor extends React.Component<Props, State> {
                 })}
               </div>
             </div>
-            <Recommendations results={this.state.output}/>
+            <Recommendations results={this.state.output} focusIndex={this.state.focusIndex} setFocusIndex={this.setFocusIndex}/>
           </SplitPane>
         </div>
         <Status status={this.props.status} />
@@ -152,6 +155,7 @@ export default class Editor extends React.Component<Props, State> {
     });
     this.setState({
       output: result,
+      focusIndex: 0
     });
   }
 
@@ -167,5 +171,9 @@ export default class Editor extends React.Component<Props, State> {
         showExamples: false
       });
     }
+  }
+
+  private setFocusIndex(focusIndex: number) {
+    this.setState({ focusIndex });
   }
 }

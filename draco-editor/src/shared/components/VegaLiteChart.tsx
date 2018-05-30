@@ -1,5 +1,6 @@
 import * as React from 'react';
-import vegaEmbed, { vega } from 'vega-embed';
+import vegaEmbed, { vega, EmbedOptions, Result } from 'vega-embed';
+import { View } from 'vega-lib';
 import { TopLevelSpec } from 'vega-lite';
 
 import '../styles/VegaLiteChart.css';
@@ -10,8 +11,9 @@ export const datasets = {
 };
 
 interface Props {
-  vlSpec: TopLevelSpec
-  renderer: "canvas" | "svg"
+  vlSpec: TopLevelSpec;
+  renderer: "canvas" | "svg";
+  actions?: boolean;
 }
 
 interface State {
@@ -33,7 +35,7 @@ export default class VegaLiteChart extends React.Component<Props, State> {
 
   render() {
     return (
-      <div className='Visualization' ref='vis'>
+      <div className='VegaLiteChart' ref='vis'>
       </div>
     );
   }
@@ -64,11 +66,12 @@ export default class VegaLiteChart extends React.Component<Props, State> {
 
     const element = this.refs.vis as HTMLElement;
 
-    const opt = {
+    const opt: EmbedOptions = {
       renderer: this.props.renderer,
       loader: loader,
       mode: 'vega-lite',
       defaultStyle: true,
+      actions: typeof this.props.actions === 'undefined' ? true : this.props.actions
     };
 
     // @ts-ignore

@@ -7,21 +7,90 @@
   height: 100%;
   position: relative;
 
-  .visualizations {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    flex-shrink: 0;
-    margin: 32px 0 32px 0;
+  // hack to get the visualization pane to not overflow
+  .Pane.vertical.Pane1 {
+    overflow: hidden;
   }
 
-  .raw {
-    border-top: 1px solid $light-grey;
-    padding: 10px;
-    overflow: auto;
-    height: auto;
-    width: calc(100% - 20px);
-    opacity: 0.9;
-    font-size: 0.8em;
+  .Pane.vertical.Pane2 {
+    overflow: hidden;
+  }
+
+  .visualizations {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .focus {
+      display: flex;
+      width: 100%;
+      height: calc(100% - 256px);
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      margin: 0;
+
+      .chart {
+        padding: 24px 16px 16px 16px;
+        box-shadow: $medium-box-shadow;
+      }
+    }
+
+    .context {
+      width: 100%;
+      overflow-x: scroll;
+      height: 256px;
+      box-sizing: border-box;
+      position: relative;
+
+      .carousel {
+        padding: 0 16px 0 16px;
+        height: 100%;
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+
+        .context-chart {
+          padding: 8px 16px 8px 8px;
+          margin: 16px 16px 16px 16px;
+          cursor: pointer;
+          box-shadow: $small-box-shadow;
+          transition: box-shadow 220ms $standard-ease,
+                      transform 220ms $standard-ease;
+          transform: translateY(0);
+
+          &:hover {
+            box-shadow: $small-hover-box-shadow;
+          }
+
+          &.selected {
+            transform: translateY(-32px);
+            box-shadow: $small-hover-box-shadow;
+          }
+
+          .VegaLiteChart {
+            padding: 0;
+
+            svg {
+              width: 160px;
+              height: 160px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .info {
+    height: 100%;
+    overflow-y: auto;
+
+    .raw {
+      padding: 32px;
+      opacity: 0.9;
+      font-size: 0.8em;
+    }
   }
 }
