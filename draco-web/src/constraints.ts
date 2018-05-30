@@ -969,6 +969,8 @@ export const OPTIMIZE: string = `% Minimize the feature weight
 
 export const OUTPUT: string = `% ====== Output ======
 
+#show data/1.
+
 #show mark/1.
 
 #show type/2.

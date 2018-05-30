@@ -5,7 +5,6 @@ const Clingo: typeof Clingo_ = (Clingo_ as any).default || Clingo_;
 
 export * from './constraints';
 
-
 /**
  * Options for Draco.
  */
@@ -18,15 +17,15 @@ export interface Options {
   /**
    * Weight for the soft constraints.
    */
-  weights?: {
-    name: string,
-    value: number
-  }[]
+  weights?: Array<{
+    name: string;
+    value: number;
+  }>;
 
   /**
    * Number of models.
    */
-  num_models?: number
+  num_models?: number;
 }
 
 /**
@@ -53,7 +52,7 @@ class Draco {
       // Dependencies
       totalDependencies: 0,
       monitorRunDependencies(left: number) {
-        this.totalDependencies = Math.max(this.totalDependencies, left)
+        this.totalDependencies = Math.max(this.totalDependencies, left);
         this.setStatus(
           left
             ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')'
@@ -64,7 +63,7 @@ class Draco {
       printErr(err: Error) {
         this.setStatus('Error. See console for errors.');
         console.error(err);
-      }
+      },
     };
   }
 
@@ -74,11 +73,11 @@ class Draco {
    * @returns {Promise} A promise that resolves when the solver is ready.
    */
   public init() {
-    return new Promise((resolve: () => void, reject: () => void) => {
+    return new Promise((resolve: (draco: Draco) => void, reject: () => void) => {
       this.Module.setStatus('Downloading...');
       this.Module.onRuntimeInitialized = () => {
         this.initialized = true;
-        resolve();
+        resolve(this);
       };
       Clingo(this.Module);
     });
@@ -99,15 +98,19 @@ class Draco {
 
     this.Module.setStatus('Running Draco Query...');
 
-    program += (options.constraints || Object.keys(constraints)).map((name: string) => (constraints as any)[name]).join('\n');
+    program += (options.constraints || Object.keys(constraints))
+      .map((name: string) => (constraints as any)[name])
+      .join('\n');
 
     const opt = [
       '--outf=2', // JSON output
       '--opt-mode=OptN', // find multiple optimal models
-      '--quiet=1,1,2',  // only output optimal models
-      '--project',  // every model only once
-      options.num_models === undefined ? 1 : options.num_models
-    ].concat((options.weights || []).map(d => `-c ${d.name}=${d.value}`)).join(' ');
+      '--quiet=1,1,2', // only output optimal models
+      '--project', // every model only once
+      options.num_models === undefined ? 1 : options.num_models,
+    ]
+      .concat((options.weights || []).map(d => `-c ${d.name}=${d.value}`))
+      .join(' ');
 
     let resultText = '';
     this.Module.print = (text: string) => {
@@ -122,7 +125,7 @@ class Draco {
     // done
     this.Module.setStatus('');
 
-    return {specs, result};
+    return { specs, result };
   }
 }
 
