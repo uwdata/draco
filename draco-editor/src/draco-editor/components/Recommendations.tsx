@@ -85,15 +85,13 @@ export default class Recommendations extends React.Component<Props, State> {
                 'tab': true,
                 'selected': this.props.view === 'focus'
               })} onClick={() =>  { this.props.setView('focus'); }}>
-                <span className="text">Focus + Context</span>
-                <div className="backdrop"/>
+                <span className="text">focus + context</span>
               </button>
               <button className={classNames({
                 'tab': true,
                 'selected': this.props.view === 'grid'
               })} onClick={() =>  { this.props.setView('grid'); }}>
-                <div className="text">Grid View</div>
-                <div className="backdrop"/>
+                <div className="text">grid</div>
               </button>
             </div>
             <div className={classNames({

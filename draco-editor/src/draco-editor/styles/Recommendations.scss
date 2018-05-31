@@ -22,6 +22,10 @@
 
   .visualizations {
     .tabs {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
       width: 100%;
       height: 44px;
       background-color: #fff;
@@ -63,8 +67,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    transform: scaleY(1);
-    transition: transform $view-switch-speed $standard-ease;
 
     .focus {
       display: flex;
@@ -75,6 +77,11 @@
       flex-shrink: 0;
       margin: 0;
       overflow: auto;
+
+      transform: scaleY(1);
+      visibility: visible;
+      transition: transform $view-switch-speed $standard-ease,
+                  visibility $view-switch-speed $standard-ease;
 
       .chart {
         padding: 24px 16px 16px 16px;
@@ -97,6 +104,7 @@
         }
 
         .VegaLiteChart {
+          z-index: 0;
           transform: translateY(0);
           transition: transform $view-switch-speed $standard-ease;
 
@@ -107,9 +115,11 @@
       }
 
       &.hidden {
+        transform: translateY(-100%);
+        visibility: hidden;
+
         .VegaLiteChart {
-          z-index: -1;
-          transform: translateY(-100%);
+          z-index: 0;
         }
       }
     }
@@ -117,11 +127,13 @@
     .context {
       width: 100%;
       overflow-x: scroll;
+      overflow-y: hidden;
       position: absolute;
       z-index: 1;
       height: 196px;
       top: calc(100% - 196px);
       background-color: $unfocused-color;
+      box-sizing: border-box;
 
       transition: top $view-switch-speed $standard-ease,
                   background-color $view-switch-speed $standard-ease;
@@ -130,10 +142,13 @@
         top: 44px;  // leave room for tabs
         height: calc(100% - 44px);
         background-color: #fff;
+        overflow-y: auto;
 
         .carousel {
           flex-wrap: wrap;
           width: 100%;
+          align-content: flex-start;
+          align-items: flex-start;
 
           transition: flex-wrap 0ms, width 0ms;
 
@@ -142,10 +157,6 @@
             border: 1px solid transparent;
             margin: 15px; // we minus 1px for the border
             padding: 8px 16px 8px 8px;  // should add up to the padding in non-full
-
-            .backdrop {
-              visibility: hidden;
-            }
 
             &.selected {
               border: 1px solid $med-blue;
@@ -156,10 +167,6 @@
             }
 
             &:hover {
-              .backdrop {
-                background-color: #fff;
-              }
-
               border: 1px dashed $light-blue;
             }
           }
@@ -167,8 +174,9 @@
       }
 
       .carousel {
-        height: 196px;
+        height: 100%;
         padding: 0;
+        margin: 0;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -184,27 +192,12 @@
           padding: 24px 32px 24px 24px;  // should add up to the margin + padding in `full`
           cursor: pointer;
 
-          .backdrop {
-            position: absolute;
-            top: 0;
-            left: 0;
-
-            z-index: 1;
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-          }
-
           &:hover {
-            .backdrop {
-              background-color: rgb(250, 250, 252);
-            }
+            background-color: rgb(250, 250, 252);
           }
 
           &.selected {
-            .backdrop {
-              background-color: #fff;
-            }
+            background-color: #fff;
           }
 
           .VegaLiteChart {
