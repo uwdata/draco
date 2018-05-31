@@ -73,7 +73,7 @@ export default class Recommendations extends React.Component<Props, State> {
     const info = {
       spec: focusSpec,
       violations: witness.Value.filter((d: string) => d.startsWith('violation')),
-      cost: witness.Cost[0]
+      cost: witness.Costs[0]
     };
 
     return (
