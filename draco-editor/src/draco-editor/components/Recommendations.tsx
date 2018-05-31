@@ -8,11 +8,15 @@ import AnimateOnChange from 'react-animate-on-change';
 
 import '../styles/Recommendations.css';
 
+export type VizView = 'focus' | 'grid';
+
 interface Props {
-  results: any,
-  focusIndex: number,
-  setFocusIndex: (focusIndex: number) => void,
-  runId: number  // to identify unique runs
+  results: any;
+  focusIndex: number;
+  setFocusIndex: (focusIndex: number) => void;
+  runId: number;  // to identify unique runs
+  view: VizView;  // focus for focus + context, grid for grid view.
+  setView: (view: VizView) => void;
 }
 
 interface State {
@@ -75,7 +79,26 @@ export default class Recommendations extends React.Component<Props, State> {
       <div className="Recommendations">
         <SplitPane split="vertical" primary="second" defaultSize={344} minSize={24} maxSize={-400}>
           <div className="visualizations">
-            <div className="focus">
+            <div className="tabs">
+              <button className={classNames({
+                'tab': true,
+                'selected': this.props.view === 'focus'
+              })} onClick={() =>  { this.props.setView('focus'); }}>
+                <span className="text">Focus + Context</span>
+                <div className="backdrop"/>
+              </button>
+              <button className={classNames({
+                'tab': true,
+                'selected': this.props.view === 'grid'
+              })} onClick={() =>  { this.props.setView('grid'); }}>
+                <div className="text">Grid View</div>
+                <div className="backdrop"/>
+              </button>
+            </div>
+            <div className={classNames({
+              'focus': true,
+              'hidden': this.props.view !== 'focus'
+            })}>
               <AnimateOnChange
                 baseClassName="chart"
                 animationClassName="update"
@@ -84,7 +107,10 @@ export default class Recommendations extends React.Component<Props, State> {
               </AnimateOnChange>
 
             </div>
-            <div className="context">
+            <div className={classNames({
+              'context': true,
+              'full': this.props.view === 'grid'
+            })}>
               <div className="carousel">
                 {contextCharts}
               </div>

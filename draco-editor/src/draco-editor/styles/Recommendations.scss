@@ -7,6 +7,8 @@
   height: 100%;
   position: relative;
 
+  $unfocused-color: rgb(245, 244, 249);
+
   // hack to get the visualization pane to not overflow
   .Pane.vertical.Pane1 {
     overflow: hidden;
@@ -17,16 +19,68 @@
   }
 
   .visualizations {
+    .tabs {
+      width: 100%;
+      height: 44px;
+      background-color: $unfocused-color;
+      display: flex;
+      flex-direction: row;
+
+      .tab {
+        flex-grow: 1;
+        cursor: pointer;
+        position: relative;
+
+        .text {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 13px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 2;
+        }
+
+        .backdrop {
+          position: absolute;
+          top: 0;
+          left: 0;
+
+          z-index: 1;
+          width: 100%;
+          height: 100%;
+          background-color: transparent;
+        }
+
+        &:hover {
+          .backdrop {
+            background-color: rgb(250, 250, 252);
+          }
+        }
+
+        &.selected {
+          .backdrop {
+            background-color: #fff;
+          }
+        }
+      }
+    }
+
     position: relative;
-    height: 100%;
+    height: calc(100%);
     width: 100%;
     display: flex;
     flex-direction: column;
+    transform: scaleY(1);
+    transition: transform 220ms $standard-ease;
 
     .focus {
       display: flex;
       width: 100%;
-      height: calc(100% - 196px);
+      height: calc(100% - 196px - 44px);  // minus height of context and tabs
       justify-content: center;
       align-items: center;
       flex-shrink: 0;
@@ -46,11 +100,27 @@
             background-color: #fff;
           }
           50% {
-            background-color: rgb(245, 244, 249);
+            background-color: $unfocused-color;
           }
           100% {
             background-color: #fff;
           }
+        }
+
+        .VegaLiteChart {
+          transform: translateY(0);
+          transition: transform 220ms $standard-ease;
+
+          .vega-actions-wrapper {
+            z-index: 0;  // we don't want a z-index here
+          }
+        }
+      }
+
+      &.hidden {
+        .VegaLiteChart {
+          z-index: -1;
+          transform: translateY(-100%);
         }
       }
     }
@@ -58,24 +128,70 @@
     .context {
       width: 100%;
       overflow-x: scroll;
-      height: 196px;
-      position: relative;
-      background-color: rgb(245, 244, 249);
+      position: absolute;
+      z-index: 1;
+      top: calc(100% - 196px);
+      background-color: $unfocused-color;
+
+      transition: top 220ms $standard-ease,
+                  background-color 220ms $standard-ease;
+
+      &.full {
+        top: 44px;  // leave room for tabs
+        height: calc(100% - 44px);
+        background-color: #fff;
+
+        .carousel {
+          flex-wrap: wrap;
+          width: 100%;
+
+          transition: flex-wrap 0ms, width 0ms;
+
+          .context-chart {
+            border-radius: 8px;
+            border: 1px solid transparent;
+            margin: 15px; // we minus 1px for the border
+            padding: 8px 16px 8px 8px;  // should add up to the padding in non-full
+
+            .backdrop {
+              visibility: hidden;
+            }
+
+            &.selected {
+              border: 1px solid $med-blue;
+
+              &:hover {
+                border: 1px solid $med-blue;  // don't change border on hover
+              }
+            }
+
+            &:hover {
+              .backdrop {
+                background-color: #fff;
+              }
+
+              border: 1px solid $light-blue;
+            }
+          }
+        }
+      }
 
       .carousel {
+        height: 196px;
         padding: 0;
-        height: 100%;
-        display: inline-flex;
+        display: flex;
         flex-direction: row;
         align-items: center;
+        width: auto;
+        flex-wrap: nowrap;
+        transition: flex-wrap 220ms, width 220ms;
 
         .context-chart {
           position: relative;
           display: flex;
           align-items: center;
-          box-sizing: border-box;
-          height: 100%;
-          padding: 24px 32px 24px 24px;
+          height: calc(196px - 48px);  // subtract padding on top / bottom and border
+          padding: 24px 32px 24px 24px;  // should add up to the margin + padding in `full`
           cursor: pointer;
 
           .backdrop {

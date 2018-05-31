@@ -7,7 +7,7 @@ import "../styles/Editor.css";
 import "../styles/Resizer.css";
 import Status from "./status";
 import * as classNames from 'classnames';
-import Recommendations from './Recommendations';
+import Recommendations, { VizView } from './Recommendations';
 
 import playIcon from '../../images/play.svg';
 import playIconGrey from '../../images/play-grey.svg';
@@ -17,9 +17,10 @@ import examplesIcon from '../../images/examples.svg';
 import EXAMPLES, { SCATTER } from '../examples';
 interface State {
   output: Object;
-  showExamples: boolean,
-  focusIndex: number,
-  runCount: number
+  showExamples: boolean;
+  focusIndex: number;
+  runCount: number;
+  view: VizView;
 }
 
 interface Props {
@@ -41,7 +42,8 @@ export default class Editor extends React.Component<Props, State> {
       output: null,
       showExamples: false,
       focusIndex: 0,
-      runCount: 0
+      runCount: 0,
+      view: 'focus'
     };
 
     this.code = SCATTER;
@@ -51,6 +53,7 @@ export default class Editor extends React.Component<Props, State> {
     this.showExamples = this.showExamples.bind(this);
     this.hideExamples = this.hideExamples.bind(this);
     this.setFocusIndex = this.setFocusIndex.bind(this);
+    this.setView = this.setView.bind(this);
     this.run = this.run.bind(this);
   }
 
@@ -141,7 +144,9 @@ export default class Editor extends React.Component<Props, State> {
             <Recommendations results={this.state.output}
               runId={this.state.runCount}
               focusIndex={this.state.focusIndex}
-              setFocusIndex={this.setFocusIndex}/>
+              setFocusIndex={this.setFocusIndex}
+              view={this.state.view}
+              setView={this.setView}/>
           </SplitPane>
         </div>
         <Status status={this.props.status} />
@@ -183,5 +188,9 @@ export default class Editor extends React.Component<Props, State> {
 
   private setFocusIndex(focusIndex: number) {
     this.setState({ focusIndex });
+  }
+
+  private setView(view: VizView) {
+    this.setState({ view });
   }
 }
