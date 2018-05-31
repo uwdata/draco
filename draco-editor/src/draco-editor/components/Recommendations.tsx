@@ -62,7 +62,7 @@ export default class Recommendations extends React.Component<Props, State> {
         <div key={index} className={classes} onClick={() => {
           this.props.setFocusIndex(index);
         }}>
-          <VegaLiteChart vlSpec={spec} renderer="svg" actions={false} />
+          <VegaLiteChart vlSpec={spec} renderer="canvas" actions={false} />
           <div className="backdrop"></div>
         </div>
       );
@@ -73,7 +73,7 @@ export default class Recommendations extends React.Component<Props, State> {
     const info = {
       spec: focusSpec,
       violations: witness.Value.filter((d: string) => d.startsWith('violation')),
-      cost: witness.Cost[0]
+      cost: witness.Costs[0]
     };
 
     return (
@@ -85,15 +85,13 @@ export default class Recommendations extends React.Component<Props, State> {
                 'tab': true,
                 'selected': this.props.view === 'focus'
               })} onClick={() =>  { this.props.setView('focus'); }}>
-                <span className="text">Focus + Context</span>
-                <div className="backdrop"/>
+                <span className="text">focus + context</span>
               </button>
               <button className={classNames({
                 'tab': true,
                 'selected': this.props.view === 'grid'
               })} onClick={() =>  { this.props.setView('grid'); }}>
-                <div className="text">Grid View</div>
-                <div className="backdrop"/>
+                <div className="text">grid</div>
               </button>
             </div>
             <div className={classNames({

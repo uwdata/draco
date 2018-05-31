@@ -9,6 +9,8 @@
 
   $unfocused-color: rgb(245, 244, 249);
 
+  $view-switch-speed: 500ms;
+
   // hack to get the visualization pane to not overflow
   .Pane.vertical.Pane1 {
     overflow: hidden;
@@ -20,9 +22,13 @@
 
   .visualizations {
     .tabs {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
       width: 100%;
       height: 44px;
-      background-color: $unfocused-color;
+      background-color: #fff;
       display: flex;
       flex-direction: row;
 
@@ -30,40 +36,27 @@
         flex-grow: 1;
         cursor: pointer;
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-        .text {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 13px;
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 2;
-        }
+        &.selected {
+          background-color: #fff;
 
-        .backdrop {
-          position: absolute;
-          top: 0;
-          left: 0;
-
-          z-index: 1;
-          width: 100%;
-          height: 100%;
-          background-color: transparent;
-        }
-
-        &:hover {
-          .backdrop {
-            background-color: rgb(250, 250, 252);
+          .text {
+            border-bottom: 2px solid $dark-blue;
           }
         }
 
-        &.selected {
-          .backdrop {
-            background-color: #fff;
+        .text {
+          font-size: 13px;
+          padding: 4px 4px 4px 4px;
+          border-bottom: 2px solid transparent;
+        }
+
+        &:hover {
+          .text {
+            border-bottom: 2px solid $dark-blue;
           }
         }
       }
@@ -74,18 +67,24 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    transform: scaleY(1);
-    transition: transform 220ms $standard-ease;
 
     .focus {
+      position: absolute;
+      top: 44px;  // tabs;
+      left: 0;
+      height: calc(100% - 196px - 44px);  // minus height of context and tabs
       display: flex;
       width: 100%;
-      height: calc(100% - 196px - 44px);  // minus height of context and tabs
       justify-content: center;
       align-items: center;
       flex-shrink: 0;
       margin: 0;
       overflow: auto;
+
+      transform: scaleY(1);
+      visibility: visible;
+      transition: transform $view-switch-speed $standard-ease,
+                  visibility $view-switch-speed $standard-ease;
 
       .chart {
         padding: 24px 16px 16px 16px;
@@ -108,8 +107,9 @@
         }
 
         .VegaLiteChart {
+          z-index: 0;
           transform: translateY(0);
-          transition: transform 220ms $standard-ease;
+          transition: transform $view-switch-speed $standard-ease;
 
           .vega-actions-wrapper {
             z-index: 0;  // we don't want a z-index here
@@ -118,9 +118,11 @@
       }
 
       &.hidden {
+        transform: translateY(-100%);
+        visibility: hidden;
+
         .VegaLiteChart {
-          z-index: -1;
-          transform: translateY(-100%);
+          z-index: 0;
         }
       }
     }
@@ -128,22 +130,28 @@
     .context {
       width: 100%;
       overflow-x: scroll;
+      overflow-y: hidden;
       position: absolute;
       z-index: 1;
+      height: 196px;
       top: calc(100% - 196px);
       background-color: $unfocused-color;
+      box-sizing: border-box;
 
-      transition: top 220ms $standard-ease,
-                  background-color 220ms $standard-ease;
+      transition: top $view-switch-speed $standard-ease,
+                  background-color $view-switch-speed $standard-ease;
 
       &.full {
         top: 44px;  // leave room for tabs
         height: calc(100% - 44px);
         background-color: #fff;
+        overflow-y: auto;
 
         .carousel {
           flex-wrap: wrap;
           width: 100%;
+          align-content: flex-start;
+          align-items: flex-start;
 
           transition: flex-wrap 0ms, width 0ms;
 
@@ -152,10 +160,6 @@
             border: 1px solid transparent;
             margin: 15px; // we minus 1px for the border
             padding: 8px 16px 8px 8px;  // should add up to the padding in non-full
-
-            .backdrop {
-              visibility: hidden;
-            }
 
             &.selected {
               border: 1px solid $med-blue;
@@ -166,25 +170,23 @@
             }
 
             &:hover {
-              .backdrop {
-                background-color: #fff;
-              }
-
-              border: 1px solid $light-blue;
+              border: 1px dashed $light-blue;
+              background-color: #fff;  // override previous hover
             }
           }
         }
       }
 
       .carousel {
-        height: 196px;
+        height: 100%;
         padding: 0;
+        margin: 0;
         display: flex;
         flex-direction: row;
         align-items: center;
         width: auto;
         flex-wrap: nowrap;
-        transition: flex-wrap 220ms, width 220ms;
+        transition: flex-wrap $view-switch-speed, width $view-switch-speed;
 
         .context-chart {
           position: relative;
@@ -194,27 +196,12 @@
           padding: 24px 32px 24px 24px;  // should add up to the margin + padding in `full`
           cursor: pointer;
 
-          .backdrop {
-            position: absolute;
-            top: 0;
-            left: 0;
-
-            z-index: 1;
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-          }
-
           &:hover {
-            .backdrop {
-              background-color: rgb(250, 250, 252);
-            }
+            background-color: rgb(250, 250, 252);
           }
 
           &.selected {
-            .backdrop {
-              background-color: #fff;
-            }
+            background-color: #fff;
           }
 
           .VegaLiteChart {
@@ -222,8 +209,13 @@
             z-index: 2;
 
             svg {
-              width: 128px;
-              height: 128px;
+              width: 128px !important;
+              height: 128px !important;
+            }
+
+            canvas {
+              width: 128px !important;
+              height: auto !important;
             }
           }
         }
