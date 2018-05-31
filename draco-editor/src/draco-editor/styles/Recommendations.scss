@@ -69,9 +69,12 @@
     flex-direction: column;
 
     .focus {
+      position: absolute;
+      top: 44px;  // tabs;
+      left: 0;
+      height: calc(100% - 196px - 44px);  // minus height of context and tabs
       display: flex;
       width: 100%;
-      height: calc(100% - 196px - 44px);  // minus height of context and tabs
       justify-content: center;
       align-items: center;
       flex-shrink: 0;
