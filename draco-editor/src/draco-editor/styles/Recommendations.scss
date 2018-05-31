@@ -46,7 +46,7 @@
 
         .text {
           font-size: 13px;
-          padding-bottom: 4px;
+          padding: 4px 4px 4px 4px;
           border-bottom: 2px solid transparent;
         }
 
@@ -119,6 +119,7 @@
       overflow-x: scroll;
       position: absolute;
       z-index: 1;
+      height: 196px;
       top: calc(100% - 196px);
       background-color: $unfocused-color;
 
@@ -159,7 +160,7 @@
                 background-color: #fff;
               }
 
-              border: 1px solid $light-blue;
+              border: 1px dashed $light-blue;
             }
           }
         }
