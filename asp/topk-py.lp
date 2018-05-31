@@ -1,5 +1,11 @@
 #script(python)
-import clingo
+
+class Observer:
+    def __init__(self):
+        self.minimize_literals = []
+
+    def minimize(self, priority, literals):
+        self.minimize_literals = literals
 
 def main(prg):
     assert(prg.configuration.solve.opt_mode == 'optN'), 'Set --opt-mode=OptN.'
@@ -7,31 +13,26 @@ def main(prg):
     # Use model count as number of models to output
     count = int(prg.configuration.solve.models)
 
-    # We need all models and will stop the search ourselves
-    prg.configuration.solve.models = 0
+    # register observer
+    obs = Observer()
+    prg.register_observer(obs)
 
     prg.ground([('base', [])])
 
-    
-
     while count > 0:
-        model_literals = []
-        with prg.solve(yield_=True) as handle:
-            if not handle.get().satisfiable:
-                return
+        cost = 0
 
+        prg.configuration.solve.models = count
+        with prg.solve(yield_=True) as handle:
+            if handle.get().unsatisfiable:
+                break
             for model in handle:
                 if model.optimality_proven:
-                    atoms = model.symbols(atoms=True)
-                    literals = [prg.symbolic_atoms[clingo.Function(a.name, a.arguments)].literal for a in atoms]
-                    model_literals.append(literals)
-
+                    cost = model.cost[0]
                     count -= 1
-                    if count == 0:
-                        # We have enough results so let's cancel the search
-                        handle.cancel()
-        
-        # Add rules that forbid previous models
-        for literals in model_literals:
-            prg.backend.add_rule([], literals)
+
+        if count > 0:
+            aux = prg.backend.add_atom()
+            prg.backend.add_weight_rule([aux], cost+1, obs.minimize_literals)
+            prg.backend.add_rule([], [-aux])
 #end.

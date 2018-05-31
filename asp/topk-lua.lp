@@ -1,34 +1,34 @@
 #script(lua)
 
-require("clingo")
-
 function main(prg)
     local count = tonumber(prg.configuration.solve.models)
+    local backend = prg.backend
+
+    local observer = {
+        minimize_literals = {}
+    }
+    function observer:minimize (priority, literals)
+        self.minimize_literals = literals
+    end
+
+    prg:register_observer(observer)
 
     prg:ground({{"base", {}}}, self)
 
     while count > 0 do
-        local m_lits = {}
+        local cost = 0
         local it = prg:solve{yield=true}
 
         local ret, err = pcall(function()
-            if not it:get().satisfiable then
+            if it:get().unsatisfiable then
+                count = 0
                 return
             end
 
             for m in it:iter() do
                 if m.optimality_proven then
-                    local lits = {}
-                    for i, a in ipairs(m:symbols{atoms=true}) do
-                        local s = prg.symbolic_atoms:lookup(clingo.Function(a.name, a.arguments))
-                        table.insert(lits, s.literal)
-                    end
-                    table.insert(m_lits, lits)
-
+                    cost = m.cost[1]
                     count = count-1
-                    if count == 0 then
-                        it:cancel()
-                    end
                 end
             end
         end)
@@ -37,8 +37,10 @@ function main(prg)
             error(err)
         end
 
-        for i, lits in ipairs(m_lits) do
-            prg.backend:add_rule{{}, lits}
+        if count > 0 then
+            local aux = backend:add_atom()
+            backend:add_weight_rule{{aux}, cost+1, observer.minimize_literals}
+            backend:add_rule{{aux}, {-aux}}
         end
     end
 end
