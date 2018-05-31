@@ -98,7 +98,9 @@ class Draco {
 
     this.Module.setStatus('Running Draco Query...');
 
-    program += (options.constraints || Object.keys(constraints))
+    const programs = options.constraints || Object.keys(constraints);
+
+    program += programs
       .map((name: string) => (constraints as any)[name])
       .join('\n');
 
@@ -125,7 +127,7 @@ class Draco {
     // done
     this.Module.setStatus('');
 
-    return { specs, result };
+    return { specs, result, programs };
   }
 }
 

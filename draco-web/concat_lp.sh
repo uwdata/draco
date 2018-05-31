@@ -8,6 +8,7 @@ declare -a files=("define"
 "assign_weights"
 "optimize"
 "output"
+"topk-lua"
 )
 
 output=""
@@ -17,7 +18,7 @@ for file in "${files[@]}"
 do
   path="${1}/${file}.lp"
   lp=$(cat $path | sed -e s/\`/\'/g)
-  const=$(echo $file | tr a-z A-Z)
+  const=$(echo $file | tr a-z A-Z | tr \- _)
   output+="export const ${const}: string = \`${lp}\`;${newline}"
 done
 
