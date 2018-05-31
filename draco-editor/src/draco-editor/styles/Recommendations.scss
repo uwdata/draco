@@ -9,6 +9,8 @@
 
   $unfocused-color: rgb(245, 244, 249);
 
+  $view-switch-speed: 500ms;
+
   // hack to get the visualization pane to not overflow
   .Pane.vertical.Pane1 {
     overflow: hidden;
@@ -22,7 +24,7 @@
     .tabs {
       width: 100%;
       height: 44px;
-      background-color: $unfocused-color;
+      background-color: #fff;
       display: flex;
       flex-direction: row;
 
@@ -30,40 +32,27 @@
         flex-grow: 1;
         cursor: pointer;
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-        .text {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 13px;
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 2;
-        }
+        &.selected {
+          background-color: #fff;
 
-        .backdrop {
-          position: absolute;
-          top: 0;
-          left: 0;
-
-          z-index: 1;
-          width: 100%;
-          height: 100%;
-          background-color: transparent;
-        }
-
-        &:hover {
-          .backdrop {
-            background-color: rgb(250, 250, 252);
+          .text {
+            border-bottom: 2px solid $dark-blue;
           }
         }
 
-        &.selected {
-          .backdrop {
-            background-color: #fff;
+        .text {
+          font-size: 13px;
+          padding-bottom: 4px;
+          border-bottom: 2px solid transparent;
+        }
+
+        &:hover {
+          .text {
+            border-bottom: 2px solid $dark-blue;
           }
         }
       }
@@ -75,7 +64,7 @@
     display: flex;
     flex-direction: column;
     transform: scaleY(1);
-    transition: transform 220ms $standard-ease;
+    transition: transform $view-switch-speed $standard-ease;
 
     .focus {
       display: flex;
@@ -109,7 +98,7 @@
 
         .VegaLiteChart {
           transform: translateY(0);
-          transition: transform 220ms $standard-ease;
+          transition: transform $view-switch-speed $standard-ease;
 
           .vega-actions-wrapper {
             z-index: 0;  // we don't want a z-index here
@@ -133,8 +122,8 @@
       top: calc(100% - 196px);
       background-color: $unfocused-color;
 
-      transition: top 220ms $standard-ease,
-                  background-color 220ms $standard-ease;
+      transition: top $view-switch-speed $standard-ease,
+                  background-color $view-switch-speed $standard-ease;
 
       &.full {
         top: 44px;  // leave room for tabs
@@ -184,7 +173,7 @@
         align-items: center;
         width: auto;
         flex-wrap: nowrap;
-        transition: flex-wrap 220ms, width 220ms;
+        transition: flex-wrap $view-switch-speed, width $view-switch-speed;
 
         .context-chart {
           position: relative;
