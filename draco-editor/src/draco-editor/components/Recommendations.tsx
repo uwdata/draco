@@ -62,7 +62,7 @@ export default class Recommendations extends React.Component<Props, State> {
         <div key={index} className={classes} onClick={() => {
           this.props.setFocusIndex(index);
         }}>
-          <VegaLiteChart vlSpec={spec} renderer="svg" actions={false} />
+          <VegaLiteChart vlSpec={spec} renderer="canvas" actions={false} />
           <div className="backdrop"></div>
         </div>
       );
