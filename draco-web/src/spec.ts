@@ -64,11 +64,10 @@ export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
  * Return undefined if no witnesses were found.
  */
 function getWitnesses(result: any): Array<{ Value: any[] }> {
-  if (result.Call && result.Call.length > 0) {
-    return result.Call[0].Witnesses;
-  } else {
-    return [];
-  }
+  return (result.Call || []).reduce((arr: any[], el: any) => {
+    el.Witnesses.forEach((d: any) => arr.push(d))
+    return arr;
+  }, []);
 }
 
 export function result2vl(result: any) {

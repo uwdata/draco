@@ -21,6 +21,6 @@ encoding(e1).
 
 const draco = new Draco('https://unpkg.com/wasm-clingo@0.0.6');
 draco.init().then(() => {
-  const solution = draco.solve(EXAMPLE);
+  const solution = draco.solve(EXAMPLE, {models: 5});
   console.log(solution);
 });

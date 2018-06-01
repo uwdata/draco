@@ -1,6 +1,7 @@
 # usage: ./concat_lp.sh srcdir destdir
 
-declare -a files=("define"
+declare -a files=("topk-lua"
+"define"
 "generate"
 "hard"
 "soft"
@@ -8,7 +9,6 @@ declare -a files=("define"
 "assign_weights"
 "optimize"
 "output"
-"topk-lua"
 )
 
 output=""

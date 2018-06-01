@@ -25,7 +25,7 @@ export interface Options {
   /**
    * Number of models.
    */
-  num_models?: number;
+  models?: number;
 }
 
 /**
@@ -102,14 +102,14 @@ class Draco {
 
     program += programs
       .map((name: string) => (constraints as any)[name])
-      .join('\n');
+      .join('\n\n');
 
     const opt = [
       '--outf=2', // JSON output
       '--opt-mode=OptN', // find multiple optimal models
-      '--quiet=1,1,2', // only output optimal models
+      '--quiet=1', // only output optimal models
       '--project', // every model only once
-      options.num_models === undefined ? 1 : options.num_models,
+      options.models === undefined ? 1 : options.models,
     ]
       .concat((options.weights || []).map(d => `-c ${d.name}=${d.value}`))
       .join(' ');
