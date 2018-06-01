@@ -103,7 +103,7 @@ export default class Recommendations extends React.Component<Props, State> {
                 'tab': true,
                 'selected': this.props.view === 'focus'
               })} onClick={() =>  { this.props.setView('focus'); }}>
-                <span className="text">focus + context</span>
+                <span className="text">single</span>
               </button>
               <button className={classNames({
                 'tab': true,

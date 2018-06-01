@@ -13,8 +13,6 @@
 }
 
 .Resizer:hover {
-  -webkit-transition: all 2s ease;
-  transition: all 2s ease;
 }
 
 .Resizer.horizontal {
@@ -27,8 +25,7 @@
 }
 
 .Resizer.horizontal:hover {
-  border-top: 5px solid rgba(0, 0, 0, 0.5);
-  border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+
 }
 
 .Resizer.vertical {
@@ -40,12 +37,7 @@
 }
 
 .Resizer.vertical:hover {
-  border-left: 5px solid rgba(0, 0, 0, 0.5);
-  border-right: 5px solid rgba(0, 0, 0, 0.5);
+
 }
 .Resizer.disabled {
-cursor: not-allowed;
-}
-.Resizer.disabled:hover {
-border-color: transparent;
 }

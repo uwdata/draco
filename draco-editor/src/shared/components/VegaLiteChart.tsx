@@ -30,7 +30,9 @@ export default class VegaLiteChart extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps(nextProps: Props) {
-    this.updateView(nextProps.vlSpec);
+    if (nextProps.vlSpec !== this.props.vlSpec) {
+      this.updateView(nextProps.vlSpec);
+    }
   }
 
   render() {
