@@ -158,6 +158,7 @@
             border: 1px solid transparent;
             margin: 15px; // we minus 1px for the border
             padding: 8px 16px 8px 8px;  // should add up to the padding in non-full
+            flex-grow: 0;
 
             &.selected {
               border: 1px solid $med-blue;
@@ -211,14 +212,11 @@
             padding: 0;
             z-index: 2;
 
-            svg {
-              width: 128px !important;
-              height: 128px !important;
-            }
-
             canvas {
-              width: 128px !important;
+              width: auto !important;
+              max-width: 128px !important;
               height: auto !important;
+              max-height: 128px !important;
             }
           }
         }
