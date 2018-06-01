@@ -7,6 +7,7 @@ import * as classNames from 'classnames';
 import AnimateOnChange from 'react-animate-on-change';
 
 import '../styles/Recommendations.css';
+import expandButton from '../../images/expand.svg';
 
 export type VizView = 'focus' | 'grid';
 
@@ -23,7 +24,11 @@ interface State {
   focusIndex: number;
   runId: number;
   updateFocus: boolean;
+  showInfoPane: boolean;
 }
+
+const COLLAPSED_INFO_PANE_SIZE = 24;
+const SHOW_INFO_PANE_DEFAULT_SIZE = 344;
 
 export default class Recommendations extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -32,12 +37,12 @@ export default class Recommendations extends React.Component<Props, State> {
     this.state = {
       focusIndex: props.focusIndex,
       runId: -1,
-      updateFocus: true
+      updateFocus: true,
+      showInfoPane: false,
     }
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {
-
     return {
       focusIndex: props.focusIndex,
       runId: props.runId,
@@ -78,7 +83,10 @@ export default class Recommendations extends React.Component<Props, State> {
 
     return (
       <div className="Recommendations">
-        <SplitPane split="vertical" primary="second" defaultSize={344} minSize={24} maxSize={-400}>
+        <SplitPane split="vertical" primary="second"
+          size={this.state.showInfoPane ? SHOW_INFO_PANE_DEFAULT_SIZE : COLLAPSED_INFO_PANE_SIZE }
+          allowResize={this.state.showInfoPane}
+          minSize={24} maxSize={-400}>
           <div className="visualizations">
             <div className="tabs">
               <button className={classNames({
@@ -116,12 +124,20 @@ export default class Recommendations extends React.Component<Props, State> {
             </div>
           </div>
           <div className="info">
-            <div className="raw">
-              <ReactJson src={info}
-                theme="rjv-default"
-                enableClipboard={false}
-                collapsed={false}
-                indentWidth={2} />
+            <button className="expand-button" onClick={() => { this.setState({ showInfoPane: !this.state.showInfoPane }); }}>
+              <img className={classNames({
+                'expand-icon': true,
+                'collapse': this.state.showInfoPane
+               })} src={expandButton}/>
+            </button>
+            <div className="raw-container">
+              <div className="raw">
+                <ReactJson src={info}
+                  theme="rjv-default"
+                  enableClipboard={false}
+                  collapsed={false}
+                  indentWidth={2} />
+              </div>
             </div>
           </div>
         </SplitPane>
