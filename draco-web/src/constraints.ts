@@ -17,8 +17,9 @@ function main(prg)
 
     while count > 0 do
         local cost = 0
-        local it = prg:solve{yield=true}
 
+        prg.configuration.solve.models = count
+        local it = prg:solve{yield=true}
         local ret, err = pcall(function()
             if it:get().unsatisfiable then
                 count = 0
