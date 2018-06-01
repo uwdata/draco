@@ -64,6 +64,9 @@ entropy(0,0) :- #false.
 interesting(0) :- #false.
 extent(0,0,0) :- #false.
 violation(0) :- #false.
+task(value) :- #false.
+task(summary) :- #false.
+data(0) :- #false.
 
 % == Chart Types ==
 
@@ -146,10 +149,6 @@ obj_id(1..max_extra_encs).
 % pick one mark type
 
 { mark(M) : marktype(M) } = 1.
-
-% maybe assign a task
-
-0 { task(T): tasks(T) } 1.
 
 % stacking
 
@@ -447,7 +446,7 @@ violation(only_x) :- channel(_,y), not channel(_,x).
 
 % Chart orientation for bar and tick (with and without bin).
 % Binned fields have short labels if they are quantitative while otherwise labels can be long.
-violation(orientation_binned) :- channel(E,x), bin(E,_), type(E,quantitative).
+violation(orientation_binned) :- bin(E,_), type(E,quantitative), not channel(E,x).
 
 % Prefer not to use ordinal for fields with high cardinality.
 violation(high_cardinality_ordinal,E) :- type(E,ordinal), discrete_cardinality(E,C), C > 30.
@@ -498,7 +497,7 @@ violation(size_entropy_low, E) :- channel(E,size), enc_entropy(E,EN), EN <= 12, 
 violation(c_d_column) :- channel_continuous(x), channel_discrete(y), channel(_,column).
 
 % Prefer time on x.
-violation(temporal_y) :- type(E,temporal), channel(E,x).
+violation(temporal_y) :- type(E,temporal), not channel(E,x).
 
 % Prefer not to overlap with DxD.
 violation(d_d_overlap) :- is_d_d, overlap.
@@ -677,7 +676,7 @@ export const WEIGHTS: string = `% Weights as constants
 #const includes_zero_weight = 10.
 
 #const only_x_weight = 1.
-#const orientation_binned_weight = -1.
+#const orientation_binned_weight = 1.
 #const high_cardinality_ordinal_weight = 10.
 #const high_cardinality_nominal_weight = 10.
 #const high_cardinality_nominal_color_weight = 10.
@@ -698,7 +697,7 @@ export const WEIGHTS: string = `% Weights as constants
 #const size_entropy_low_weight = 0.
 
 #const c_d_column_weight = 5.
-#const temporal_y_weight = -1.
+#const temporal_y_weight = 1.
 #const d_d_overlap_weight = 20.
 
 #const c_c_point_weight = 0.
