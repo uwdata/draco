@@ -30,7 +30,7 @@
 #const includes_zero_weight = 10.
 
 #const only_x_weight = 1.
-#const orientation_binned_weight = -1.
+#const orientation_binned_weight = 1.
 #const high_cardinality_ordinal_weight = 10.
 #const high_cardinality_nominal_weight = 10.
 #const high_cardinality_nominal_color_weight = 10.
@@ -51,7 +51,7 @@
 #const size_entropy_low_weight = 0.
 
 #const c_d_column_weight = 5.
-#const temporal_y_weight = -1.
+#const temporal_y_weight = 1.
 #const d_d_overlap_weight = 20.
 
 #const c_c_point_weight = 0.

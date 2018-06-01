@@ -28,10 +28,6 @@ obj_id(1..max_extra_encs).
 
 { mark(M) : marktype(M) } = 1.
 
-% maybe assign a task
-
-0 { task(T): tasks(T) } 1.
-
 % stacking
 
 0 { stack(S): stacking(S) } 1.

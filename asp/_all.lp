@@ -9,3 +9,4 @@
 #include "asp/assign_weights.lp".
 #include "asp/optimize.lp".
 #include "asp/output.lp".
+#include "asp/topk-py.lp".
