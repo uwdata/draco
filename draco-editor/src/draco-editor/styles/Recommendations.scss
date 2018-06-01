@@ -188,13 +188,15 @@
         transition: flex-wrap $view-switch-speed, width $view-switch-speed;
 
         .context-chart {
-          position: relative;
           display: flex;
           align-items: center;
           height: calc(196px - 48px);  // subtract padding on top / bottom and border
-          padding: 24px 32px 24px 24px;  // should add up to the margin + padding in `full`
+          width: calc(196px - 48px);  // subtract padding on left / right
+          justify-content: center;
+          padding: 24px 16px 24px 16px;  // should add up to the margin + padding in `full`
           cursor: pointer;
-          flex-grow: 1;
+          flex-grow: 0;
+          flex-shrink: 0;
 
           &.scroll {
             flex-grow: 0;
