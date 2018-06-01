@@ -157,7 +157,7 @@
             border-radius: 8px;
             border: 1px solid transparent;
             margin: 15px; // we minus 1px for the border
-            padding: 8px 16px 8px 8px;  // should add up to the padding in non-full
+            padding: 8px 0 8px 0;  // should add up to the padding in non-full
             flex-grow: 0;
 
             &.selected {
@@ -190,7 +190,6 @@
         .context-chart {
           display: flex;
           align-items: center;
-          justify-content: center;
           height: calc(196px - 48px);  // subtract padding on top / bottom and border
           width: calc(196px - 48px);  // subtract padding on left / right
           justify-content: center;
