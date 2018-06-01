@@ -28,9 +28,11 @@ interface State {
 }
 
 const COLLAPSED_INFO_PANE_SIZE = 24;
-const SHOW_INFO_PANE_DEFAULT_SIZE = 344;
+const DEFAULT_INFO_PANE_SIZE = 344;
 
 export default class Recommendations extends React.Component<Props, State> {
+  previousInfoPaneSize: number;  // -1 for none
+
   constructor(props: Props) {
     super(props);
 
@@ -40,6 +42,8 @@ export default class Recommendations extends React.Component<Props, State> {
       updateFocus: true,
       showInfoPane: false,
     }
+
+    this.previousInfoPaneSize = -1;
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {
@@ -84,8 +88,14 @@ export default class Recommendations extends React.Component<Props, State> {
     return (
       <div className="Recommendations">
         <SplitPane split="vertical" primary="second"
-          size={this.state.showInfoPane ? SHOW_INFO_PANE_DEFAULT_SIZE : COLLAPSED_INFO_PANE_SIZE }
+          size={
+            this.state.showInfoPane ?
+              this.previousInfoPaneSize === -1 ? DEFAULT_INFO_PANE_SIZE : this.previousInfoPaneSize
+            :
+              COLLAPSED_INFO_PANE_SIZE
+          }
           allowResize={this.state.showInfoPane}
+          onDragFinished={(size: number) => { this.previousInfoPaneSize = size}}
           minSize={24} maxSize={-400}>
           <div className="visualizations">
             <div className="tabs">
