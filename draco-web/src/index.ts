@@ -1,6 +1,6 @@
 import Clingo_ from 'wasm-clingo';
 import * as constraints from './constraints';
-import { result2vl } from './spec';
+import { getModels, models2vl } from './spec';
 const Clingo: typeof Clingo_ = (Clingo_ as any).default || Clingo_;
 
 export * from './constraints';
@@ -122,12 +122,13 @@ class Draco {
     this.Module.ccall('run', 'number', ['string', 'string'], [program, opt]);
 
     const result = JSON.parse(resultText);
-    const specs = result2vl(result);
+    const models = getModels(result);
+    const specs = models2vl(models);
 
     // done
     this.Module.setStatus('');
 
-    return { specs, result, programs };
+    return { specs, result, models, programs };
   }
 }
 

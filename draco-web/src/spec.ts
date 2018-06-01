@@ -38,7 +38,7 @@ export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
 
     const scale = {
       ...(enc.log ? { type: 'log' } : {}),
-      ...(enc.zero ? { zero: true } : {}),
+      ...(enc.zero === undefined ? {} : (enc.zero ? { zero: true } : { zero: false })),
     };
 
     encoding[enc.channel] = {
@@ -63,16 +63,18 @@ export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
  * Get the array of witnesses from clingo output.
  * Return undefined if no witnesses were found.
  */
-function getWitnesses(result: any): Array<{ Value: any[] }> {
+export function getModels(result: any) {
   return (result.Call || []).reduce((arr: any[], el: any) => {
-    el.Witnesses.forEach((d: any) => arr.push(d))
+    el.Witnesses.forEach((d: any) => arr.push({
+      facts: d.Value,
+      costs: d.Costs
+    }));
     return arr;
   }, []);
 }
 
-export function result2vl(result: any) {
-  const witnesses = getWitnesses(result);
-  return witnesses.map(witness => asp2vl(witness.Value));
+export function models2vl(models: any[]) {
+  return models.map(model => asp2vl(model.facts));
 }
 
 export function vl2asp(spec: TopLevelFacetedUnitSpec): string[] {

@@ -77,12 +77,12 @@ export default class Recommendations extends React.Component<Props, State> {
       );
     });
 
-    const witness = this.props.results.result.Call[0].Witnesses[this.props.focusIndex];
+    const model = this.props.results.models[this.props.focusIndex];
 
     const info = {
       spec: focusSpec,
-      violations: witness.Value.filter((d: string) => d.startsWith('violation')),
-      cost: witness.Costs[0]
+      violations: model.facts.filter((d: string) => d.startsWith('violation')),
+      cost: model.costs[0]
     };
 
     return (
