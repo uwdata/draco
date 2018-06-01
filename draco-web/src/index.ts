@@ -100,9 +100,7 @@ class Draco {
 
     const programs = options.constraints || Object.keys(constraints);
 
-    program += programs
-      .map((name: string) => (constraints as any)[name])
-      .join('\n\n');
+    program += programs.map((name: string) => (constraints as any)[name]).join('\n\n');
 
     const opt = [
       '--outf=2', // JSON output
@@ -123,6 +121,11 @@ class Draco {
 
     const result = JSON.parse(resultText);
     const models = getModels(result);
+
+    if (models.length > (options.models || 1)) {
+      throw new Error('Too many models.');
+    }
+
     const specs = models2vl(models);
 
     // done
