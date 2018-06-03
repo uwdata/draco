@@ -18,9 +18,11 @@ import EXAMPLES, { SCATTER } from '../examples';
 interface State {
   output: Object;
   showExamples: boolean;
+  showOptions: boolean;
   focusIndex: number;
   runCount: number;
   view: VizView;
+  models: number;
 }
 
 interface Props {
@@ -33,6 +35,8 @@ interface Monaco {
   editor: Object;
 }
 
+const DEFAULT_MODELS = 7;
+
 export default class Editor extends React.Component<Props, State> {
   code: string;
 
@@ -41,9 +45,11 @@ export default class Editor extends React.Component<Props, State> {
     this.state = {
       output: null,
       showExamples: false,
+      showOptions: false,
       focusIndex: 0,
       runCount: 0,
-      view: 'focus'
+      view: 'focus',
+      models: DEFAULT_MODELS,
     };
 
     this.code = SCATTER;
@@ -51,7 +57,8 @@ export default class Editor extends React.Component<Props, State> {
     this.editorDidMount = this.editorDidMount.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.showExamples = this.showExamples.bind(this);
-    this.hideExamples = this.hideExamples.bind(this);
+    this.showOptions = this.showOptions.bind(this);
+    this.hideDropdowns = this.hideDropdowns.bind(this);
     this.setFocusIndex = this.setFocusIndex.bind(this);
     this.setView = this.setView.bind(this);
     this.run = this.run.bind(this);
@@ -79,16 +86,20 @@ export default class Editor extends React.Component<Props, State> {
 
   public render() {
     return (
-      <div className="Editor" onClick={this.hideExamples}>
+      <div className="Editor">
         <div className="split-pane-wrapper">
           <SplitPane split="vertical" defaultSize={344} minSize={256} maxSize={-800}>
             <div className="input-pane">
-              <div className="toolbar">
-                <button className="button left" onClick={this.showExamples}>
+              <div className="toolbar" onClick={this.hideDropdowns}>
+                <button className={classNames({
+                  'button': true, 'left': true, 'selected': this.state.showExamples
+                })} onClick={this.showExamples}>
                   <img src={examplesIcon} className="icon"/>
                   examples
                 </button>
-                <button className="button">
+                <button className={classNames({
+                  'button': true, 'selected': this.state.showOptions
+                })} onClick={this.showOptions}>
                   <img src={optionsIcon} className="icon"/>
                   options
                 </button>
@@ -100,27 +111,29 @@ export default class Editor extends React.Component<Props, State> {
                   run
                 </button>
               </div>
-              <MonacoEditor
-                ref="monaco"
-                options={{
-                  automaticLayout: true,
-                  cursorBlinking: "smooth",
-                  wordWrap: "on",
-                  wrappingIndent: "same",
-                  scrollBeyondLastLine: false,
-                  minimap: {
-                    enabled: false
-                  }
-                }}
-                language="asp"
-                value={this.code}
-                theme="draco-light"
-                editorDidMount={this.editorDidMount}
-                editorWillMount={this.editorWillMount}
-                onChange={this.handleEditorChange}
-              />
+              <div className="editor-box" onClick={this.hideDropdowns}>
+                <MonacoEditor
+                  ref="monaco"
+                  options={{
+                    automaticLayout: true,
+                    cursorBlinking: "smooth",
+                    wordWrap: "on",
+                    wrappingIndent: "same",
+                    scrollBeyondLastLine: false,
+                    minimap: {
+                      enabled: false
+                    }
+                  }}
+                  language="asp"
+                  value={this.code}
+                  theme="draco-light"
+                  editorDidMount={this.editorDidMount}
+                  editorWillMount={this.editorWillMount}
+                  onChange={this.handleEditorChange}
+                />
+              </div>
               <div className={classNames({
-                'examples': true,
+                'dropdown': true,
                 'hidden': !this.state.showExamples
               })}>
                 {EXAMPLES.map((example) => {
@@ -132,6 +145,7 @@ export default class Editor extends React.Component<Props, State> {
                           this.run();
                         }
                       }, 10);
+                      this.hideDropdowns();
                     }}>
                       <span className="text">
                         {example.name}
@@ -139,6 +153,23 @@ export default class Editor extends React.Component<Props, State> {
                     </div>
                   );
                 })}
+              </div>
+              <div className={classNames({
+                'dropdown': true,
+                'hidden': !this.state.showOptions
+              })}>
+                <div className="option">
+                  <span className="text">
+                    models
+                  </span>
+                  <input type="number" className="number-input"
+                    value={this.state.models} onChange={(e: any) => {
+                      const models = e.target.value;
+                      if (models >= 0 && models <= 100) {
+                        this.setState({ models })
+                      }
+                    }}/>
+                </div>
               </div>
             </div>
             <Recommendations results={this.state.output}
@@ -163,7 +194,7 @@ export default class Editor extends React.Component<Props, State> {
     const model = monaco.editor.getModel();
     const program = model.getValue();
     const result = this.props.draco.solve(program, {
-      models: 7
+      models: this.state.models
     });
     this.setState({
       output: result,
@@ -174,16 +205,30 @@ export default class Editor extends React.Component<Props, State> {
 
   private showExamples() {
     this.setState({
-      showExamples: true
+      showExamples: true,
+      showOptions: false
     });
   }
 
-  private hideExamples() {
+  private hideDropdowns() {
     if (this.state.showExamples) {
       this.setState({
-        showExamples: false
+        showExamples: false,
       });
     }
+
+    if (this.state.showOptions) {
+      this.setState({
+        showOptions: false
+      })
+    }
+  }
+
+  private showOptions() {
+    this.setState({
+      showExamples: false,
+      showOptions: true,
+    });
   }
 
   private setFocusIndex(focusIndex: number) {
