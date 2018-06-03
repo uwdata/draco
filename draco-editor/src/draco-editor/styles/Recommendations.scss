@@ -48,7 +48,7 @@
         }
 
         .text {
-          font-size: 13px;
+          font-size: 14px;
           padding: 4px 4px 4px 4px;
           border-bottom: 2px solid transparent;
         }
@@ -154,8 +154,8 @@
           .context-chart {
             border-radius: 8px;
             border: 1px solid transparent;
-            margin: 15px; // we minus 1px for the border
-            padding: 8px 0 8px 0;  // should add up to the padding in non-full
+            margin: 11px 15px 11px 15px; // we minus 1px for the border
+            padding: 12px 0 12px 0;  // should add up to the padding in non-full
             flex-grow: 0;
 
             &.selected {
@@ -169,6 +169,10 @@
             &:hover {
               border: 1px dashed $light-blue;
               background-color: #fff;  // override previous hover
+            }
+
+            .cost {
+              bottom: 8px;
             }
           }
         }
@@ -186,6 +190,7 @@
         transition: flex-wrap $view-switch-speed, width $view-switch-speed;
 
         .context-chart {
+          position: relative;
           display: flex;
           align-items: center;
           height: calc(196px - 48px);  // subtract padding on top / bottom and border
@@ -218,6 +223,15 @@
               height: auto !important;
               max-height: 128px !important;
             }
+          }
+
+          .cost {
+            position: absolute;
+            bottom: 18px;
+            font-size: 11px;
+            font-weight: 300;
+            font-family: 'Roboto Mono', monospace;
+            color: $med-grey;
           }
         }
       }

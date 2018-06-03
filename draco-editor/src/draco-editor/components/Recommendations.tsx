@@ -73,6 +73,9 @@ export default class Recommendations extends React.Component<Props, State> {
         }}>
           <VegaLiteChart vlSpec={spec} renderer="canvas" actions={false} />
           <div className="backdrop"></div>
+          <div className="cost">
+            {`${index === 0 ? 'cost: ' : ''}${this.props.results.models[index].costs[0]}`}
+          </div>
         </div>
       );
     });
@@ -81,8 +84,8 @@ export default class Recommendations extends React.Component<Props, State> {
 
     const info = {
       spec: focusSpec,
+      cost: model.costs[0],
       violations: model.facts.filter((d: string) => d.startsWith('violation')),
-      cost: model.costs[0]
     };
 
     return (
