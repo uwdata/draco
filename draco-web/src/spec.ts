@@ -77,13 +77,38 @@ export function models2vl(models: any[]) {
   return models.map(model => asp2vl(model.facts));
 }
 
-export function vl2asp(spec: TopLevelFacetedUnitSpec): string[] {
+export function vl2asp(spec: any): string[] {
   const facts = [`mark(${spec.mark}).`];
 
   let i = 0;
-  for (const channel of Object.keys(spec)) {
-    facts.push(`encoding(e${i})`);
-    // TODO
+  for (const channel of Object.keys(spec['encoding'])) {
+    const eid = `e${i}`;
+    facts.push(`encoding(${eid}).`);
+    facts.push(`channel(${eid},${channel}).`);
+
+    // translate encodings
+    for (const field of Object.keys(spec['encoding'][channel])) {
+      const fieldContent = spec['encoding'][channel][field];
+      if (field == 'scale') {
+        // translate two boolean fields
+        if ("zero" in fieldContent) {
+          if (fieldContent['zero'])
+            facts.push(`zero(${eid}).`);
+          else
+            facts.push(`:- zero(${eid}).`);
+        }
+        if ("log" in fieldContent) {
+          if (fieldContent['log'])
+            facts.push(`log(${eid}).`);
+          else
+            facts.push(`:-log(${eid}).`);
+        } 
+      }
+      else {
+        // translate normal fields
+        facts.push(`${field}(${eid},${fieldContent}).`);
+      }
+    }
     i++;
   }
 

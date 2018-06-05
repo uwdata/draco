@@ -35,17 +35,17 @@ test('generates correct asp', () => {
       y: { aggregate: 'count', type: 'quantitative', scale: { zero: true } },
     },
   }).sort()).toEqual([
-    'mark(bar)',
+    'mark(bar).',
 
-    'encoding(e0)',
-    'channel(e0,x)',
-    'field(e0,foo)',
-    'type(e0,ordinal)',
+    'encoding(e0).',
+    'channel(e0,x).',
+    'field(e0,foo).',
+    'type(e0,ordinal).',
 
-    'encoding(e1)',
-    'channel(e1,y)',
-    'aggregate(e1,count)',
-    'type(e1,quantitative)',
-    'zero(e1)',
+    'encoding(e1).',
+    'channel(e1,y).',
+    'aggregate(e1,count).',
+    'type(e1,quantitative).',
+    'zero(e1).',
   ].sort());
 });
