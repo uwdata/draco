@@ -8,7 +8,7 @@ Try Draco in the browser at https://uwdata.github.io/draco. Note that we use [Em
 
 ## Status
 
-This project is in active development and we are working hard on cleaning up the repository and making it easier to use the recommendation model in Draco. If you want to use this right now, please talk to us. More documentation is forthcoming
+**There Be Dragons!** This project is in active development and we are working hard on cleaning up the repository and making it easier to use the recommendation model in Draco. If you want to use this right now, please talk to us. More documentation is forthcoming
 
 ## Overview
 
