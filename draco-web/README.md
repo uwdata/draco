@@ -7,3 +7,7 @@ Install with `yarn add draco-vis`. See it in action on Observable at https://bet
 ## Run locally
 
 Run `yarn` to install dependencies. Then run `yarn start`.
+
+Run `yarn test` to test the module.
+
+Run `yarn format` to format the code.
