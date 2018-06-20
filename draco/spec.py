@@ -262,6 +262,9 @@ class Data():
     def to_asp(self) -> str:
         asp = ''
 
+        if self.url is not None:
+            asp += f"data(\"{self.url}\").\n\n"
+
         if self.size is not None:
             asp += f'num_rows({self.size}).\n\n'
 
@@ -287,6 +290,7 @@ class Encoding():
             Returns:
                 an encoding object
         '''
+
         def remove_if_star(v):
             return v if v != '*' else None
 
@@ -412,7 +416,7 @@ class Encoding():
         if self.log_scale:
             encoding['scale']['type'] = 'log'
         if self.ty == 'quantitative':
-            encoding['scale']['zero'] = False if self.zero == None else self.zero
+            encoding['scale']['zero'] = False if self.zero is None else self.zero
         if self.stack:
             encoding['stack'] = self.stack
 
@@ -436,13 +440,18 @@ class Encoding():
             else: #the value is already supplied
                 constraints.append(f'{prop}({self.id},{value}).')
 
-        def collect_boolean_val(prop, value): # collect a boolean field with value
+        def collect_boolean_val(prop, value, default=None): # collect a boolean field with value
             if value == True or (value == HOLE): # the value is set to True
                 constraints.append(f'{prop}({self.id}).')
             elif value == False or (value == NULL): # we want to disable this
                 constraints.append(f':- {prop}({self.id}).')
             elif value is None:
-                pass
+                if default == None:
+                    pass
+                elif default == False:
+                    constraints.append(f':- {prop}({self.id}).')
+                elif default == True:
+                    constraints.append(f'{prop}({self.id}).')
 
         collect_val('channel', 'channel', self.channel)
 
@@ -461,7 +470,13 @@ class Encoding():
             collect_val('bin', 'binning', self.binning)
 
         collect_boolean_val('log', self.log_scale)
-        collect_boolean_val('zero', self.zero)
+
+        if self.ty == 'quantitative':
+            zero_default = False if self.zero == None else self.zero
+        else:
+            zero_default = None
+
+        collect_boolean_val('zero', self.zero, zero_default)
 
         return  '\n'.join(constraints) + '\n'
 
@@ -636,7 +651,7 @@ class Task():
         ''' generate a vegalite spec from the object '''
         result = self.query.to_vegalite(self.data.get_field_names())
         result['data'] = self.data.to_vegalite()
-        result['$schema'] = 'https://vega.github.io/schema/vega-lite/v2.0.json'
+        result['$schema'] = 'https://vega.github.io/schema/vega-lite/v2.json'
         return result
 
     def to_vegalite_json(self) -> str:
@@ -676,12 +691,39 @@ class AspTask(Task):
     def to_compassql(self):
         raise NotImplementedError
 
+import re
 
 if __name__ == '__main__':
-    e = Encoding(channel='x', field='xx', ty='quantitative', binning=True, idx='e1')
-    print(e.to_asp())
-    print(e.to_compassql())
 
-    agate.Table.from_json("../data/compassql_examples/data/cars.json")
-    agate.Table.from_json("../data/compassql_examples/data/driving.json")
-    agate.Table.from_json("../data/compassql_examples/data/movies.json")
+    vl_dir = "../data/compassql_examples/output"
+    data_dir = ".."
+
+    vl_specs = []
+    asp_specs = []
+
+    for fname in os.listdir(vl_dir):
+        if fname.endswith(".json"): 
+            full_fname = os.path.join(vl_dir, fname)
+            with open(full_fname, "r") as f:
+
+                Encoding.encoding_cnt = 0
+
+                content = "".join(f.readlines())
+                task = Task.from_vegalite(json.loads(content), data_dir)
+                vl_str = json.dumps(task.to_vegalite())
+                vl_specs.append(vl_str.replace("../data/", "data/"))
+
+                asp_str = task.to_asp()
+                data_decl = re.search('data(.+).', asp_str)
+                data_decl = ("data" + data_decl.group(1) + ".\n").replace("../data/", "data/")
+                asp_str = (data_decl + asp_str[asp_str.index("mark("):]).replace("\n", " ")
+                asp_specs.append(asp_str)
+
+    vl_specs_str = "var vl_specs = [{}];".format(",\n".join([f"'{spec}'" for spec in vl_specs]))
+    asp_specs_str = "var asp_specs = [{}];".format(",\n".join([f"'{spec}'" for spec in asp_specs]))
+
+    print(vl_specs_str)
+    print(asp_specs_str)
+
+
+

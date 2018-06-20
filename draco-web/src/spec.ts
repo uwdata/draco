@@ -9,8 +9,10 @@ export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
   const encodings: { [enc: string]: any } = {};
 
   for (const value of facts) {
+
     // TODO: Better handle quotes fields. We currently simpliy remove all ".
     const cleanedValue = value.replace(/\"/g, '');
+    const neg_symbol = value.trim().startsWith(":-"); // TODO: include in REGEX
     const [_, predicate, first, __, second] = REGEX.exec(cleanedValue) as any;
 
     if (predicate === 'mark') {
@@ -21,8 +23,9 @@ export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
       if (!encodings[first]) {
         encodings[first] = {};
       }
-
-      encodings[first][predicate] = second || true;
+      // if it contains the neg symbol, and the field is a boolean field, its value would be false
+      // e.g., for the case ":- zero(e3)"
+      encodings[first][predicate] = second || ((! neg_symbol) && true);
     }
   }
 
@@ -78,17 +81,17 @@ export function models2vl(models: any[]) {
 }
 
 export function vl2asp(spec: any): string[] {
-  const facts = [`mark(${spec.mark}).`];
+  const facts = [`mark(${spec.mark})`];
 
   if ("data" in spec && "url" in spec.data) {
-    facts.push(`data(${spec.data.url})`);
+    facts.push(`data("${spec.data.url}")`);
   }
 
   let i = 0;
   for (const channel of Object.keys(spec['encoding'])) {
     const eid = `e${i}`;
-    facts.push(`encoding(${eid}).`);
-    facts.push(`channel(${eid},${channel}).`);
+    facts.push(`encoding(${eid})`);
+    facts.push(`channel(${eid},${channel})`);
 
     // translate encodings
     for (const field of Object.keys(spec['encoding'][channel])) {
@@ -97,20 +100,21 @@ export function vl2asp(spec: any): string[] {
         // translate two boolean fields
         if ("zero" in fieldContent) {
           if (fieldContent['zero'])
-            facts.push(`zero(${eid}).`);
+            facts.push(`zero(${eid})`);
           else
-            facts.push(`:- zero(${eid}).`);
+            facts.push(`:- zero(${eid})`);
         }
         if ("log" in fieldContent) {
           if (fieldContent['log'])
-            facts.push(`log(${eid}).`);
+            facts.push(`log(${eid})`);
           else
-            facts.push(`:-log(${eid}).`);
+            facts.push(`:-log(${eid})`);
         } 
-      }
-      else {
+      } else if (field == 'bin') {
+        facts.push(`${field}(${eid},${fieldContent.maxbins})`);
+      } else {
         // translate normal fields
-        facts.push(`${field}(${eid},${fieldContent}).`);
+        facts.push(`${field}(${eid},${fieldContent})`);
       }
     }
     i++;
