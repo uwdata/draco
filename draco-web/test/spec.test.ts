@@ -35,6 +35,7 @@ test('generates correct asp', () => {
       y: { aggregate: 'count', type: 'quantitative', scale: { zero: true } },
     },
   }).sort()).toEqual([
+    'data(data/cars.json)',
     'mark(bar).',
 
     'encoding(e0).',
