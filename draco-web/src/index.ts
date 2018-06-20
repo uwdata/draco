@@ -1,6 +1,6 @@
 import Clingo_ from 'wasm-clingo';
 import * as constraints from './constraints';
-import { getModels, models2vl, vl2asp} from './spec';
+import { getModels, models2vl, vl2asp } from './spec';
 const Clingo: typeof Clingo_ = (Clingo_ as any).default || Clingo_;
 
 export * from './constraints';

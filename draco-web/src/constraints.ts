@@ -1032,5 +1032,3 @@ export const OUTPUT: string = `% ====== Output ======
 #show zero/1.
 
 #show violation/2.`;
-
-
