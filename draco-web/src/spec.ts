@@ -10,7 +10,7 @@ export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
 
   for (const value of facts) {
 
-    // TODO: Better handle quotes fields. We currently simpliy remove all ".
+    // TODO: Better handle quoted fields. We currently simpliy remove all ".
     const cleanedValue = value.replace(/\"/g, '');
     const neg_symbol = value.trim().startsWith(":-"); // TODO: include in REGEX
     const [_, predicate, first, __, second] = REGEX.exec(cleanedValue) as any;
