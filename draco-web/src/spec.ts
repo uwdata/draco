@@ -1,11 +1,11 @@
 import { ChannelDef } from 'vega-lite/build/src/fielddef';
 import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';
 
-const REGEX = /(\w+)\(([\w\.]+)(,([\w\.]+))?\)/;
+const REGEX = /(\w+)\(([\w\.\/]+)(,([\w\.]+))?\)/;
 
 export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
   let mark = '';
-  let url = 'cars.json'; // default dataset
+  let url = 'data/cars.json'; // default dataset
   const encodings: { [enc: string]: any } = {};
 
   for (const value of facts) {
@@ -53,7 +53,7 @@ export function asp2vl(facts: any): TopLevelFacetedUnitSpec {
 
   return {
     $schema: 'https://vega.github.io/schema/vega-lite/v2.json',
-    data: { url: `data/${url}` },
+    data: { url: `${url}` },
     mark,
     encoding,
   } as TopLevelFacetedUnitSpec;
@@ -79,6 +79,10 @@ export function models2vl(models: any[]) {
 
 export function vl2asp(spec: any): string[] {
   const facts = [`mark(${spec.mark}).`];
+
+  if ("data" in spec && "url" in spec.data) {
+    facts.push(`data(${spec.data.url})`);
+  }
 
   let i = 0;
   for (const channel of Object.keys(spec['encoding'])) {

@@ -2,7 +2,7 @@ import Draco from '../src';
 
 const EXAMPLE = `
 % ====== Data definitions ======
-data("cars.json").
+data("data/cars.json").
 num_rows(142).
 
 fieldtype(horsepower,number).
@@ -24,3 +24,4 @@ draco.init().then(() => {
   const solution = draco.solve(EXAMPLE, {models: 5});
   console.log(solution);
 });
+
