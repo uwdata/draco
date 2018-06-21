@@ -4,7 +4,7 @@ Draco is a formal framework for representing design knowledge about effective vi
 
 <img src="logos/dark/logo-dark.png" width=300></img>
 
-Try Draco in the browser at https://uwdata.github.io/draco. Note that we use [Emscripten](https://github.com/kripken/emscripten) to compile the constraint solver for the web.
+Try Draco in the browser at https://uwdata.github.io/draco-editor. The code for the editor is at https://github.com/uwdata/draco-editor. Note that we use [Emscripten](https://github.com/kripken/emscripten) to compile the constraint solver for the web.
 
 ## Status
 
