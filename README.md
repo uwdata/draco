@@ -4,7 +4,7 @@ Draco is a formal framework for representing design knowledge about effective vi
 
 <img src="logos/dark/logo-dark.png" width=300></img>
 
-Try Draco in the browser at https://uwdata.github.io/draco-editor. The code for the editor is at https://github.com/uwdata/draco-editor. Note that we use [Emscripten](https://github.com/kripken/emscripten) to compile the constraint solver for the web.
+Try Draco in the browser at https://uwdata.github.io/draco-editor. The code for the editor is at https://github.com/uwdata/draco-editor.
 
 ## Status
 
@@ -20,7 +20,6 @@ This repository currently contains:
     * translates the output from the clingo ASP solver to Vega-Lite
     * Runs a learning to rank method on results of perception experiments
 * UI tools to create annotated datasets of pairs of visualizations, look at the recommendations, and to explore large datasets of example visualizations.
-* An online editor to use the Draco model in the browser. For this, we compiled clingo to WebAssembly.
 * Notebooks to analyze the results
 
 ## Installation
