@@ -306,6 +306,12 @@ class Encoding():
         if scale and 'type' in scale.keys():
             log = scale['type'] == 'log'
 
+        # if zero is not specified in ASP, then it means False and 
+        # we need to set it to False in vegalite spec (if we don't set it in vegalite, the default would be true)
+        zero = scale.get('zero') if scale else None
+        if obj.get('type') == 'quantitative':
+            zero = True if zero is None else zero
+
         return Encoding(
             obj.get('channel'),
             remove_if_star(obj.get('field')),
@@ -313,9 +319,8 @@ class Encoding():
             obj.get('aggregate'),
             binning,
             log,
-            scale.get('zero') if scale else None,
-            obj.get('stack'),
-            src="vegalite")
+            zero,
+            obj.get('stack'))
 
     @staticmethod
     def from_cql(obj: Dict[str, Any]) -> 'Encoding':
@@ -345,11 +350,15 @@ class Encoding():
             binning,
             subst_if_hole(scale.get('type')) == 'log' if scale else None,
             subst_if_hole(scale.get('zero')) if scale else None,
-            subst_if_hole(obj.get('stack')),
-            src="cql")
+            subst_if_hole(obj.get('stack')))
 
     @staticmethod
     def parse_from_answer(encoding_id: str, encoding_props: Dict) -> 'Encoding':
+        # if zero is not specified in ASP, then it means False and 
+        # we need to set it to False in vegalite spec (if we don't set it in vegalite, the default would be true)
+        zero = encoding_props.get('zero')
+        if encoding_props['type'] == 'quantitative':
+            zero = False if zero is None else zero
         return Encoding(
             encoding_props['channel'],
             encoding_props.get('field'),
@@ -357,10 +366,9 @@ class Encoding():
             encoding_props.get('aggregate'),
             encoding_props.get('bin'),
             encoding_props.get('log_scale'),
-            encoding_props.get('zero'),
+            zero,
             encoding_props.get('stack'),
-            encoding_id,
-            src="asp")
+            encoding_id)
 
     def __init__(self,
                  channel: Optional[str] = None,
@@ -371,9 +379,7 @@ class Encoding():
                  log_scale: Optional[bool] = None,
                  zero: Optional[bool] = None,
                  stack: Optional[str] = None,
-                 idx: Optional[str] = None,
-                 src: Optional[str] = None # where is this object load from, cql, vegalite or asp
-                 ) -> None:
+                 idx: Optional[str] = None) -> None:
         self.channel = channel
         self.field = field
         self.ty = ty
@@ -383,8 +389,6 @@ class Encoding():
         self.zero = zero
         self.stack = stack  # null will be treated as false
         self.id = idx if idx is not None else Encoding.gen_encoding_id()
-
-        self.src = src
 
     def to_compassql(self):
         # if it is None, we would not ask compassql to suggest
@@ -422,10 +426,11 @@ class Encoding():
             encoding['bin'] = {'maxbins' : self.binning}
         if self.log_scale:
             encoding['scale']['type'] = 'log'
-        if self.ty == 'quantitative':
-            encoding['scale']['zero'] = False if self.zero is None else self.zero
         if self.stack:
             encoding['stack'] = self.stack
+
+        if self.zero:
+            encoding['scale']['zero'] = self.zero
 
         if not encoding['scale']:
             del encoding['scale']
@@ -447,18 +452,13 @@ class Encoding():
             else: #the value is already supplied
                 constraints.append(f'{prop}({self.id},{value}).')
 
-        def collect_boolean_val(prop, value, default=None): # collect a boolean field with value
+        def collect_boolean_val(prop, value): # collect a boolean field with value
             if value == True or (value == HOLE): # the value is set to True
                 constraints.append(f'{prop}({self.id}).')
             elif value == False or (value == NULL): # we want to disable this
                 constraints.append(f':- {prop}({self.id}).')
             elif value is None:
-                if default == None:
-                    pass
-                elif default == False:
-                    constraints.append(f':- {prop}({self.id}).')
-                elif default == True:
-                    constraints.append(f'{prop}({self.id}).')
+                pass
 
         collect_val('channel', 'channel', self.channel)
 
@@ -477,13 +477,7 @@ class Encoding():
             collect_val('bin', 'binning', self.binning)
 
         collect_boolean_val('log', self.log_scale)
-
-        if self.ty == 'quantitative' and self.src == 'vegalite' :
-            zero_default = True if self.zero == None else self.zero
-        else:
-            zero_default = None
-
-        collect_boolean_val('zero', self.zero, zero_default)
+        collect_boolean_val('zero', self.zero)
 
         return  '\n'.join(constraints) + '\n'
 
@@ -708,6 +702,8 @@ import re
 
 if __name__ == '__main__':
 
+    # convert compassql examples from vegalite->asp and asp->vegalite
+
     vl_dir = "../data/compassql_examples/output"
     data_dir = ".."
 
@@ -724,19 +720,34 @@ if __name__ == '__main__':
                 content = "".join(f.readlines())
                 task = Task.from_vegalite(json.loads(content), data_dir)
                 vl_str = json.dumps(task.to_vegalite())
-                vl_specs.append(vl_str.replace("../data/", "data/"))
+                vl_specs.append(json.loads(vl_str.replace("../data/", "data/")))
+
+                field_names = task.data.get_field_names()
 
                 asp_str = task.to_asp()
                 data_decl = re.search('data(.+).', asp_str)
                 if data_decl:
                     data_decl_str = ("data" + data_decl.group(1) + ".\n").replace("../data/", "data/")
-                    asp_str = (data_decl_str + asp_str[asp_str.index("mark("):]).replace("\n", " ")
-                asp_specs.append(asp_str)
+                    # split into list
+                    asp_str = list(filter(lambda x: x != "", 
+                                     map(lambda x: x.strip(),
+                                         (data_decl_str + asp_str[asp_str.index("mark("):]).split("\n"))))
+                
+                def recover_field_name_asp(asp_fact, field_names):
+                    if asp_fact.startswith("field("):
+                        splits = asp_fact.split(",")
+                        return f'{splits[0]},"{recover_field_name(splits[1][:-1], field_names)}")'
+                    return asp_fact
 
-    vl_specs_str = "var vl_specs = [{}];".format(",\n".join([f"'{spec}'" for spec in vl_specs]))
-    asp_specs_str = "var asp_specs = [{}];".format(",\n".join([f"'{spec}'" for spec in asp_specs]))
+                # remove "." from each asp fact
+                asp_specs.append([recover_field_name_asp(x[:-1], field_names) for x in asp_str])
 
+    vl_specs_str = "export const vlSpecs : TopLevelFacetedUnitSpec[] = {};".format(json.dumps(vl_specs))
+    asp_specs_str = "export const aspSpecs = {};".format(json.dumps(asp_specs))
+
+    print("import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';")
     print(vl_specs_str)
+    print("")
     print(asp_specs_str)
 
 
