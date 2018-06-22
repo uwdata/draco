@@ -314,7 +314,8 @@ class Encoding():
             binning,
             log,
             scale.get('zero') if scale else None,
-            obj.get('stack'))
+            obj.get('stack'),
+            src="vegalite")
 
     @staticmethod
     def from_cql(obj: Dict[str, Any]) -> 'Encoding':
@@ -344,7 +345,8 @@ class Encoding():
             binning,
             subst_if_hole(scale.get('type')) == 'log' if scale else None,
             subst_if_hole(scale.get('zero')) if scale else None,
-            subst_if_hole(obj.get('stack')))
+            subst_if_hole(obj.get('stack')),
+            src="cql")
 
     @staticmethod
     def parse_from_answer(encoding_id: str, encoding_props: Dict) -> 'Encoding':
@@ -357,7 +359,8 @@ class Encoding():
             encoding_props.get('log_scale'),
             encoding_props.get('zero'),
             encoding_props.get('stack'),
-            encoding_id)
+            encoding_id,
+            src="asp")
 
     def __init__(self,
                  channel: Optional[str] = None,
@@ -368,7 +371,9 @@ class Encoding():
                  log_scale: Optional[bool] = None,
                  zero: Optional[bool] = None,
                  stack: Optional[str] = None,
-                 idx: Optional[str] = None) -> None:
+                 idx: Optional[str] = None,
+                 src: Optional[str] = None # where is this object load from, cql, vegalite or asp
+                 ) -> None:
         self.channel = channel
         self.field = field
         self.ty = ty
@@ -378,6 +383,8 @@ class Encoding():
         self.zero = zero
         self.stack = stack  # null will be treated as false
         self.id = idx if idx is not None else Encoding.gen_encoding_id()
+
+        self.src = src
 
     def to_compassql(self):
         # if it is None, we would not ask compassql to suggest
@@ -471,8 +478,8 @@ class Encoding():
 
         collect_boolean_val('log', self.log_scale)
 
-        if self.ty == 'quantitative':
-            zero_default = False if self.zero == None else self.zero
+        if self.ty == 'quantitative' and self.src == 'vegalite' :
+            zero_default = True if self.zero == None else self.zero
         else:
             zero_default = None
 
@@ -615,7 +622,10 @@ class Task():
         return Task(data, query)
 
     @staticmethod
-    def parse_from_answer(clyngor_answer: Answers, data: Data, task: Optional[str] = None, cost: Optional[int] = None) -> 'Task':
+    def parse_from_answer(clyngor_answer: Answers, 
+                          data: Data, 
+                          task: Optional[str] = None, 
+                          cost: Optional[int] = None) -> 'Task':
         encodings: List[Encoding] = []
         mark = None
 
@@ -629,6 +639,9 @@ class Task():
                 cost = int(body[0])
             elif head == 'violation':
                 violations[body[0]] += 1
+            elif head == "data":
+                # the asp program includes data information
+                pass
             else:
                 # collect encoding properties
                 raw_encoding_props[body[0]][head] = body[1] if len(body) > 1 else True

@@ -17,8 +17,16 @@ class TestFull():
             schema = json.load(sf)
 
             for fname in json_files:
+                print(">>>>>>>>")
+                print(fname)
+                
                 with open(fname, 'r') as f:
                     query_spec = json.load(f)
-                    input_task = Task.from_obj(query_spec, os.path.dirname(f.name))
+                    print(query_spec)
+                    input_task = Task.from_cql(query_spec, os.path.dirname(f.name))
+                    print(input_task.to_asp())
                     task = run(input_task)
+                    print(query_spec)
+                    print(task)
                     validate(task.to_vegalite(), schema)
+                print("<<<<<<<")

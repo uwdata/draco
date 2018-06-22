@@ -28,7 +28,7 @@ class TestSpecs():
         }).to_vegalite()
 
         assert recommendation == {
-            '$schema': 'https://vega.github.io/schema/vega-lite/v2.0.json',
+            '$schema': 'https://vega.github.io/schema/vega-lite/v2.json',
             'data': {'url': 'data.csv'},
             'mark': 'point',
             'encoding': {
@@ -43,7 +43,7 @@ class TestSpecs():
         }).to_vegalite()
 
         assert recommendation == {
-            '$schema': 'https://vega.github.io/schema/vega-lite/v2.0.json',
+            '$schema': 'https://vega.github.io/schema/vega-lite/v2.json',
             'data': {'url': 'data.csv'},
             'mark': 'bar',
             'encoding': {
@@ -67,7 +67,7 @@ class TestSpecs():
         }).to_vegalite()
 
         assert recommendation == {
-            '$schema': 'https://vega.github.io/schema/vega-lite/v2.0.json',
+            '$schema': 'https://vega.github.io/schema/vega-lite/v2.json',
             'data': {'url': 'data.csv'},
             'mark': 'tick',
             'encoding': {
