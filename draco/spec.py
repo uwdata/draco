@@ -728,8 +728,8 @@ if __name__ == '__main__':
 
                 asp_str = task.to_asp()
                 data_decl = re.search('data(.+).', asp_str)
-                data_decl = ("data" + data_decl.group(1) + ".\n").replace("../data/", "data/")
-                asp_str = (data_decl + asp_str[asp_str.index("mark("):]).replace("\n", " ")
+                data_decl_str = ("data" + data_decl.group(1) + ".\n").replace("../data/", "data/")
+                asp_str = (data_decl_str + asp_str[asp_str.index("mark("):]).replace("\n", " ")
                 asp_specs.append(asp_str)
 
     vl_specs_str = "var vl_specs = [{}];".format(",\n".join([f"'{spec}'" for spec in vl_specs]))
