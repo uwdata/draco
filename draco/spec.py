@@ -309,7 +309,7 @@ class Encoding():
         # if zero is not specified in ASP, then it means False and 
         # we need to set it to False in vegalite spec (if we don't set it in vegalite, the default would be true)
         zero = scale.get('zero') if scale else None
-        if obj.get('type') == 'quantitative':
+        if obj.get('type') == 'quantitative' and not binning:
             zero = True if zero is None else zero
 
         return Encoding(
@@ -729,7 +729,7 @@ if __name__ == '__main__':
                 if data_decl:
                     data_decl_str = ("data" + data_decl.group(1) + ".\n").replace("../data/", "data/")
                     # split into list
-                    asp_str = list(filter(lambda x: x != "", 
+                    asp_list = list(filter(lambda x: x != "", 
                                      map(lambda x: x.strip(),
                                          (data_decl_str + asp_str[asp_str.index("mark("):]).split("\n"))))
                 
@@ -740,7 +740,7 @@ if __name__ == '__main__':
                     return asp_fact
 
                 # remove "." from each asp fact
-                asp_specs.append([recover_field_name_asp(x[:-1], field_names) for x in asp_str])
+                asp_specs.append([recover_field_name_asp(x[:-1], field_names) for x in asp_list])
 
     vl_specs_str = "export const vlSpecs : TopLevelFacetedUnitSpec[] = {};".format(json.dumps(vl_specs))
     asp_specs_str = "export const aspSpecs = {};".format(json.dumps(asp_specs))
