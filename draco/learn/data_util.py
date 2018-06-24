@@ -280,11 +280,11 @@ def get_unlabeled_data() -> Tuple[Dict[str, UnlabeledExample], pd.DataFrame]:
 
 if __name__ == '__main__':
     ''' Generate and store vectors for labeled data in default path. '''
-    neg_pos_specs = load_neg_pos_specs()
-    neg_pos_data = pairs_to_vec(list(neg_pos_specs.values()), ('negative', 'positive'))
-    neg_pos_data.to_pickle(pos_neg_pickle_path)
+    # neg_pos_specs = load_neg_pos_specs()
+    # neg_pos_data = pairs_to_vec(list(neg_pos_specs.values()), ('negative', 'positive'))
+    # neg_pos_data.to_pickle(pos_neg_pickle_path)
 
     # TODO: uncomment when we use this
-    # unlabeled_specs = load_unlabeled_specs()
-    # unlabeled_data = pairs_to_vec(list(unlabeled_specs.values()), ('left', 'right'))
-    # unlabeled_data.to_pickle(unlabeled_pickle_path)
+    unlabeled_specs = load_unlabeled_specs()
+    unlabeled_data = pairs_to_vec(list(unlabeled_specs.values()), ('left', 'right'))
+    unlabeled_data.to_pickle(unlabeled_pickle_path)
