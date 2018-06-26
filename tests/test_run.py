@@ -19,6 +19,6 @@ class TestFull():
             for fname in json_files:
                 with open(fname, 'r') as f:
                     query_spec = json.load(f)
-                    input_task = Task.from_obj(query_spec, os.path.dirname(f.name))
+                    input_task = Task.from_cql(query_spec, os.path.dirname(f.name))
                     task = run(input_task)
                     validate(task.to_vegalite(), schema)

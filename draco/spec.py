@@ -262,6 +262,9 @@ class Data():
     def to_asp(self) -> str:
         asp = ''
 
+        if self.url is not None:
+            asp += f"data(\"{self.url}\").\n\n"
+
         if self.size is not None:
             asp += f'num_rows({self.size}).\n\n'
 
@@ -287,6 +290,7 @@ class Encoding():
             Returns:
                 an encoding object
         '''
+
         def remove_if_star(v):
             return v if v != '*' else None
 
@@ -302,6 +306,12 @@ class Encoding():
         if scale and 'type' in scale.keys():
             log = scale['type'] == 'log'
 
+        # if zero is not specified in ASP, then it means False and 
+        # we need to set it to False in vegalite spec (if we don't set it in vegalite, the default would be true)
+        zero = scale.get('zero') if scale else None
+        if obj.get('type') == 'quantitative' and not binning:
+            zero = True if zero is None else zero
+
         return Encoding(
             obj.get('channel'),
             remove_if_star(obj.get('field')),
@@ -309,7 +319,7 @@ class Encoding():
             obj.get('aggregate'),
             binning,
             log,
-            scale.get('zero') if scale else None,
+            zero,
             obj.get('stack'))
 
     @staticmethod
@@ -344,6 +354,11 @@ class Encoding():
 
     @staticmethod
     def parse_from_answer(encoding_id: str, encoding_props: Dict) -> 'Encoding':
+        # if zero is not specified in ASP, then it means False and 
+        # we need to set it to False in vegalite spec (if we don't set it in vegalite, the default would be true)
+        zero = encoding_props.get('zero')
+        if encoding_props['type'] == 'quantitative':
+            zero = False if zero is None else zero
         return Encoding(
             encoding_props['channel'],
             encoding_props.get('field'),
@@ -351,7 +366,7 @@ class Encoding():
             encoding_props.get('aggregate'),
             encoding_props.get('bin'),
             encoding_props.get('log_scale'),
-            encoding_props.get('zero'),
+            zero,
             encoding_props.get('stack'),
             encoding_id)
 
@@ -411,10 +426,11 @@ class Encoding():
             encoding['bin'] = {'maxbins' : self.binning}
         if self.log_scale:
             encoding['scale']['type'] = 'log'
-        if self.ty == 'quantitative':
-            encoding['scale']['zero'] = False if self.zero == None else self.zero
         if self.stack:
             encoding['stack'] = self.stack
+
+        if self.zero:
+            encoding['scale']['zero'] = self.zero
 
         if not encoding['scale']:
             del encoding['scale']
@@ -600,7 +616,10 @@ class Task():
         return Task(data, query)
 
     @staticmethod
-    def parse_from_answer(clyngor_answer: Answers, data: Data, task: Optional[str] = None, cost: Optional[int] = None) -> 'Task':
+    def parse_from_answer(clyngor_answer: Answers, 
+                          data: Data, 
+                          task: Optional[str] = None, 
+                          cost: Optional[int] = None) -> 'Task':
         encodings: List[Encoding] = []
         mark = None
 
@@ -614,6 +633,9 @@ class Task():
                 cost = int(body[0])
             elif head == 'violation':
                 violations[body[0]] += 1
+            elif head == "data":
+                # the asp program includes data information
+                pass
             else:
                 # collect encoding properties
                 raw_encoding_props[body[0]][head] = body[1] if len(body) > 1 else True
@@ -636,7 +658,7 @@ class Task():
         ''' generate a vegalite spec from the object '''
         result = self.query.to_vegalite(self.data.get_field_names())
         result['data'] = self.data.to_vegalite()
-        result['$schema'] = 'https://vega.github.io/schema/vega-lite/v2.0.json'
+        result['$schema'] = 'https://vega.github.io/schema/vega-lite/v2.json'
         return result
 
     def to_vegalite_json(self) -> str:
@@ -676,12 +698,57 @@ class AspTask(Task):
     def to_compassql(self):
         raise NotImplementedError
 
+import re
 
 if __name__ == '__main__':
-    e = Encoding(channel='x', field='xx', ty='quantitative', binning=True, idx='e1')
-    print(e.to_asp())
-    print(e.to_compassql())
 
-    agate.Table.from_json("../data/compassql_examples/data/cars.json")
-    agate.Table.from_json("../data/compassql_examples/data/driving.json")
-    agate.Table.from_json("../data/compassql_examples/data/movies.json")
+    # convert compassql examples from vegalite->asp and asp->vegalite
+
+    vl_dir = "../data/compassql_examples/output"
+    data_dir = ".."
+
+    vl_specs = []
+    asp_specs = []
+
+    for fname in os.listdir(vl_dir):
+        if fname.endswith(".json"): 
+            full_fname = os.path.join(vl_dir, fname)
+            with open(full_fname, "r") as f:
+
+                Encoding.encoding_cnt = 0
+
+                content = "".join(f.readlines())
+                task = Task.from_vegalite(json.loads(content), data_dir)
+                vl_str = json.dumps(task.to_vegalite())
+                vl_specs.append(json.loads(vl_str.replace("../data/", "data/")))
+
+                field_names = task.data.get_field_names()
+
+                asp_str = task.to_asp()
+                data_decl = re.search('data(.+).', asp_str)
+                if data_decl:
+                    data_decl_str = ("data" + data_decl.group(1) + ".\n").replace("../data/", "data/")
+                    # split into list
+                    asp_list = list(filter(lambda x: x != "", 
+                                     map(lambda x: x.strip(),
+                                         (data_decl_str + asp_str[asp_str.index("mark("):]).split("\n"))))
+                
+                def recover_field_name_asp(asp_fact, field_names):
+                    if asp_fact.startswith("field("):
+                        splits = asp_fact.split(",")
+                        return f'{splits[0]},"{recover_field_name(splits[1][:-1], field_names)}")'
+                    return asp_fact
+
+                # remove "." from each asp fact
+                asp_specs.append([recover_field_name_asp(x[:-1], field_names) for x in asp_list])
+
+    vl_specs_str = "export const vlSpecs : TopLevelFacetedUnitSpec[] = {};".format(json.dumps(vl_specs))
+    asp_specs_str = "export const aspSpecs = {};".format(json.dumps(asp_specs))
+
+    print("import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';")
+    print(vl_specs_str)
+    print("")
+    print(asp_specs_str)
+
+
+
