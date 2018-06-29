@@ -1,6 +1,6 @@
-# Draco ASP
+# Draco Knowwledge Base
 
-This directory contains the answer set programs for Draco. We will make our Python API to call Draco on partial specifications, CompassQL queries, and full Vega-Lite specifications later. We will also publish the learning algorithm and our scripts to harvest data from studies as Open Source.
+This directory contains the Draco knowledge base as [answer set programs](https://en.wikipedia.org/wiki/Answer_set_programming). These files can be used with the Draco Python and JavaScript Libraries.
 
 ## Draco ASP files
 
