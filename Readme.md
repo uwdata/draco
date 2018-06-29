@@ -1,3 +1,3 @@
 # Draco Website
 
-## Icons from https://fontawesome.com/.
+Icons from https://fontawesome.com/.
