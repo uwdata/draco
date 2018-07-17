@@ -1,4 +1,4 @@
-# Draco Knowwledge Base
+# Draco Knowledge Base
 
 This directory contains the Draco knowledge base as [answer set programs](https://en.wikipedia.org/wiki/Answer_set_programming). These files can be used with the Draco Python and JavaScript Libraries.
 
