@@ -12,7 +12,9 @@ Try Draco in the browser at https://uwdata.github.io/draco-editor. The code for 
 
 ## Status
 
-**There Be Dragons!** This project is in active development and we are working hard on cleaning up the repository and making it easier to use the recommendation model in Draco. If you want to use this right now, please talk to us. More documentation is forthcoming
+**There Be Dragons!** This project is in active development and we are working hard on cleaning up the repository and making it easier to use the recommendation model in Draco. If you want to use this right now, please talk to us. More documentation is forthcoming.
+
+For a TypeScript version of Draco with some overlapping functionality see https://github.com/uwdata/draco-vis. 
 
 ## Overview
 
@@ -42,7 +44,7 @@ You might need to activate a Python 2.7 environment to compile the canvas module
 
 `pip install -r requirements.txt` or `conda install --file requirements.txt`
 
-Install Draco in editable mode
+Install Draco in editable mode. We expect Python 3. 
 
 `pip install -e .`
 
@@ -109,6 +111,7 @@ Previous prototypes
 
 Related software
 
+* https://github.com/uwdata/draco-vis
 * https://github.com/vega/compassql
 * https://github.com/potassco/clingo
 
