@@ -20,8 +20,8 @@ This directory contains the Draco knowledge base as [answer set programs](https:
 * `_validate.lp` uses Draco to validate an encoding. Only applies hard constraints (well-formedness and expressiveness).
 * `_violations.lp` uses Draco to find violations of soft constraints. This is essentially Draco without optimization.
 * `_apt.lp` applies Draco-APT
-* `_kim2018.lp` applies Learned-APT to the visualization of the form that Kim et al. evaluated. Uses `weights_learned.lp` and `kim2018.lp`.
-* `_saket2018.lp` applies Learned-APT to the visualization of the form that Saket et al. evaluated. Uses `weights_learned.lp` and `saket2018.lp`.
+* `_kim2018.lp` applies Draco-Learn to the visualization of the form that Kim et al. evaluated. Uses `weights_learned.lp` and `kim2018.lp`.
+* `_saket2018.lp` applies Draco-Learn to the visualization of the form that Saket et al. evaluated. Uses `weights_learned.lp` and `saket2018.lp`.
 
 ## Usage
 
