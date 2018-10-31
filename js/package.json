@@ -4,22 +4,29 @@
   "version": "0.0.1",
   "author": "Dominik Moritz",
   "license": "BSD-3-Clause",
+  "main": "build/index.js",
+  "module": "build/index.js",
+  "typings": "build/index.d.ts",
   "dependencies": {
-    "vega-lite": "^3.0.0-rc8"
+    "vega-lite": "^3.0.0-rc8",
+    "vega-typings": "^0.3.48"
   },
   "devDependencies": {
     "@types/jest": "^23.3.9",
+    "@types/json-stable-stringify": "^1.0.32",
     "jest": "^23.6.0",
     "prettier": "^1.14.3",
     "ts-jest": "^23.10.4",
     "typescript": "^3.1.4"
   },
   "scripts": {
-    "test": "jest",
-    "concat": "bash scripts/concat_lp.sh ../asp build",
-    "build": "rm -rf build && tsc && concat",
+    "build": "npm run concat && rm -rf build && tsc",
+    "concat": "bash concat_lp.sh ../asp src",
     "format": "tslint -p . --fix && prettier --write '{src,test}/**/*.ts'",
-    "lint": "tslint -p . && prettier --list-different '{src,test}/**/*.ts'"
+    "lint": "tslint -p . && prettier --list-different '{src,test}/**/*.ts'",
+    "postinstall": "npm run concat",
+    "prepublish": "npm run test && npm run build",
+    "test": "jest"
   },
   "jest": {
     "transform": {

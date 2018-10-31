@@ -1,3 +1,5 @@
+export * from './constraints';
+
 import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';
 
 const REGEX = /(\w+)\(([\w\.\/]+)(,([\w\.]+))?\)/;

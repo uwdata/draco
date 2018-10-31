@@ -11,8 +11,8 @@ declare -a files=("topk-lua"
 "output"
 )
 
-output=""
 newline=$'\n\n'
+output="// GENERATED WITH concat_lp.sh. DO NOT MODIFY.${newline}"
 
 for file in "${files[@]}"
 do

@@ -3,18 +3,16 @@ python:
   - "3.6"
 cache:
   - pip
-  - directories:
-    - clingo-5.2.2
+  - yarn
+before_install:
+  - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+  - chmod +x miniconda.sh
+  - ./miniconda.sh -b
+  - export PATH=/home/travis/miniconda/bin:$PATH
+  - conda update --yes conda
 install:
-  - wget https://github.com/potassco/clingo/archive/v5.2.2.tar.gz -O /tmp/clingo.tar.gz
-  - tar -xzf /tmp/clingo.tar.gz
-  - export CXX="g++-4.9" CC="gcc-4.9"
-  - g++ --version
-  - cmake -Hclingo-5.2.2 -Bclingo-5.2.2 -DCMAKE_BUILD_TYPE=Release
-  - cmake --build $PWD/clingo-5.2.2
-  - export PATH=$PATH:$PWD/clingo-5.2.2/bin
-
-  - npm install
+  - conda install -c potassco clingo
+  - yarn --cwd js
   - pip install -r requirements.txt
   - pip install coveralls
   - pip install -e .
@@ -22,10 +20,3 @@ script:
   - python setup.py test
 after_success:
   - coveralls
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-4.9
-      - g++-4.9

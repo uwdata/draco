@@ -31,13 +31,17 @@ class RunTests(Command):
 
         errno_ansunit = call(['ansunit', 'asp/tests.yaml', '-v'])
 
+        print('=> Running JS Tests:')
+
+        errno_js = call(['yarn', '--cwd', 'js', 'test'])
+
         print('\n\n=> Running Python Tests:')
         errno_pytest = call(['pytest', 'tests', '--cov=draco', '--cov-report=term-missing'])
 
         print('\n\n=> Running MyPy:')
         errno_mypy = call(['mypy', 'draco', 'tests', '--ignore-missing-imports'])
 
-        raise SystemExit(errno_ansunit + errno_pytest + errno_mypy)
+        raise SystemExit(errno_ansunit + errno_js + errno_pytest + errno_mypy)
 
 
 setup(name='draco',
