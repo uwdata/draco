@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+const asp2vl = require('../build/asp2vl').default;
+
+const stdin = process.stdin;
+const stdout = process.stdout;
+const inputChunks = [];
+
+stdin.on('data', chunk => {
+  inputChunks.push(chunk);
+});
+
+stdin.on('end', () => {
+  const lines = inputChunks.join().split('\n')
+  const result = asp2vl(lines);
+  stdout.write(JSON.stringify(result));
+  stdout.write('\n');
+});

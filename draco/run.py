@@ -7,11 +7,13 @@ import logging
 import os
 import subprocess
 import tempfile
-from typing import Dict, List, Tuple, Optional
+from collections import defaultdict
+from typing import Dict, List, Optional, Tuple
 
 import clyngor
+from clyngor.answers import Answers
 
-from draco.spec import Query, Task
+from draco.js import asp2vl
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -22,6 +24,31 @@ DRACO_LP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../asp')
 
 file_cache: Dict = {}
 
+class Result:
+    props: List[str]
+    cost: Optional[int]
+    violations: Dict[str, int]
+
+    def __init__(self, answers: Answers, cost: Optional[int] = None) -> None:
+        violations: Dict[str, int] = defaultdict(int)
+        props: List[str] = []
+
+        for (head, body), in answers:
+            if head == 'cost':
+                cost = int(body[0])
+            elif head == 'violation':
+                violations[body[0]] += 1
+            else:
+                b = ','.join(map(str, body))
+                props.append(f'{head}({b})')
+
+        self.props = props
+        self.violations = violations
+        self.cost = cost
+
+    def as_vl(self) -> Dict:
+        return asp2vl(self.props)
+
 def load_file(path):
     content =  file_cache.get(path)
     if content is not None:
@@ -31,7 +58,7 @@ def load_file(path):
         file_cache[path] = content
         return content
 
-def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False) -> Tuple[str, str]:
+def run_draco(draco_query: List[str], constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False) -> Tuple[str, str]:
     '''
     Run draco and return stderr and stdout
     '''
@@ -55,13 +82,13 @@ def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = N
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
 
-    task_program = task.to_asp()
+    program = "\n".join(draco_query)
     file_names = [os.path.join(DRACO_LP_DIR, f) for f in files]
-    asp_program = b'\n'.join(map(load_file, file_names)) + task_program.encode('utf8')
+    asp_program = b'\n'.join(map(load_file, file_names)) + program.encode('utf8')
 
     if debug:
         with tempfile.NamedTemporaryFile(mode='w', delete=False) as fd:
-            fd.write(task_program)
+            fd.write(program)
 
             logger.info('Debug ASP with "clingo %s %s"', ' '.join(file_names), fd.name)
 
@@ -69,7 +96,7 @@ def run_draco(task: Task, constants: Dict[str, str] = None, files: List[str] = N
 
     return (stderr, stdout)
 
-def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False, clear_cache=False) -> Optional[Task]:
+def run(draco_query: List[str], constants: Dict[str, str] = None, files: List[str] = None, silence_warnings=False, debug=False, clear_cache=False) -> Optional[Result]:
     ''' Run clingo to compute a completion of a partial spec or violations. '''
 
     # Clear file cache. useful during development in notebooks.
@@ -77,7 +104,7 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
         logger.warning('Cleared file cache')
         file_cache.clear()
 
-    stderr, stdout = run_draco(task, constants, files, silence_warnings, debug)
+    stderr, stdout = run_draco(draco_query, constants, files, silence_warnings, debug)
 
     try:
         json_result = json.loads(stdout)
@@ -100,9 +127,8 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
 
         logger.debug(answers['Value'])
 
-        return Task.parse_from_answer(
+        return Result(
             clyngor.Answers(answers['Value']).sorted,
-            data=task.data,
             cost=json_result['Models']['Costs'][0])
     elif result == 'SATISFIABLE':
         answers = json_result['Call'][0]['Witnesses'][-1]
@@ -111,9 +137,7 @@ def run(task: Task, constants: Dict[str, str] = None, files: List[str] = None, s
 
         logger.debug(answers['Value'])
 
-        return Task.parse_from_answer(
-            clyngor.Answers(answers['Value']).sorted,
-            data=task.data)
+        return Result(clyngor.Answers(answers['Value']).sorted)
     else:
         logger.error('Unsupported result: %s', result)
         return None

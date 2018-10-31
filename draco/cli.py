@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 
-import sys
 import argparse
-import logging
 import io
 import json
+import logging
 import os
-
-from draco.run import run
-from draco.spec import Task, AspTask
-from draco import __version__
+import sys
 from enum import Enum
+
+from draco import __version__
+from draco.js import vl2asp
+from draco.run import run
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -27,8 +27,6 @@ class ArgEnum(Enum):
             raise ValueError()
 
 class QueryType(ArgEnum):
-    draco = 'draco'
-    cql = 'cql'
     vl = 'vl'
     asp = 'asp'
 
@@ -45,8 +43,8 @@ def create_parser():
 
     parser.add_argument('query', nargs='?', type=argparse.FileType('r'), default=sys.stdin,
                         help='The input query.')
-    parser.add_argument('--type', '-t', type=QueryType, choices=list(QueryType), default=QueryType.draco,
-                        help='Type of query. draco (Draco, default), cql (CompassQl), vl (Vega-Lite), asp (Answer Set Program).')
+    parser.add_argument('--type', '-t', type=QueryType, choices=list(QueryType), default=QueryType.asp,
+                        help='Type of query. asp (Answer Set Program, default) or vl (Vega-Lite).')
     parser.add_argument('--mode', '-m', type=Mode, choices=list(Mode), default=Mode.optimize,
                         help='Mode to run draco in.',)
     parser.add_argument('--out', '-o', type=argparse.FileType('w'), default=sys.stdout,
@@ -69,33 +67,28 @@ def main():  # pragma: no cover
         logger.info(f'Processing query: {args.query.name} ...')
 
         if args.type == QueryType.asp:
-            input_task = AspTask(args.query.read())
+            draco_query = args.query.read()
         else:
-            # load a task from a spec provided by the user
             query_spec = json.load(args.query)
             d = args.base or os.path.dirname(args.query.name)
-            if args.type == QueryType.draco:
-                input_task = Task.from_obj(query_spec, d)
-            elif args.type == QueryType.cql:
-                input_task = Task.from_cql(query_spec, d)
-            elif args.type == QueryType.vl:
-                input_task = Task.from_vegalite(query_spec, d)
+            if args.type == QueryType.vl:
+                draco_query = vl2asp(query_spec)
 
         if args.mode == Mode.violations:
-            task = run(input_task, debug=args.debug, files=['define.lp', 'hard.lp', 'soft.lp', 'output.lp'], silence_warnings=True)
+            result = run(draco_query, debug=args.debug, files=['define.lp', 'hard.lp', 'soft.lp', 'output.lp'], silence_warnings=True)
 
-            if task:
-                print(task.violations, file=args.out)
+            if result:
+                print(result.violations, file=args.out)
         elif args.mode == Mode.valid:
-            task = run(input_task, debug=args.debug, files=['define.lp', 'hard.lp', 'output.lp'], silence_warnings=True)
+            result = run(draco_query, debug=args.debug, files=['define.lp', 'hard.lp', 'output.lp'], silence_warnings=True)
 
-            print('valid' if task else 'invalid', file=args.out)
+            print('valid' if result else 'invalid', file=args.out)
         elif args.mode == Mode.optimize:
-            task = run(input_task, debug=args.debug)
+            result = run(draco_query, debug=args.debug)
 
-            if task:
-                print(task.to_vegalite_json(), file=args.out)
-                logger.info(f'Cost: {task.cost}')
+            if result:
+                print(result.as_vl(), file=args.out)
+                logger.info(f'Cost: {result.cost}')
                 outname = 'stringIO' if isinstance(args.out, io.StringIO) else args.out.name
                 logger.info(f'Wrote Vega-Lite spec to {outname}')
 

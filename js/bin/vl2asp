@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+const vl2asp = require('../build/vl2asp').default;
+
+const stdin = process.stdin;
+const stdout = process.stdout;
+const inputChunks = [];
+
+stdin.on('data', chunk => {
+  inputChunks.push(chunk);
+});
+
+stdin.on('end', () => {
+  const inputJSON = JSON.parse(inputChunks.join())
+  const result = vl2asp(inputJSON);
+  for (const res of result) {
+    stdout.write(res + '.');
+    stdout.write('\n');
+  }
+});
