@@ -1,0 +1,43 @@
+{
+  "name": "draco-core",
+  "description": "Visualization Knowledge as Constraints.",
+  "version": "0.0.1",
+  "author": "Dominik Moritz",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "vega-lite": "^3.0.0-rc8"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.9",
+    "jest": "^23.6.0",
+    "prettier": "^1.14.3",
+    "ts-jest": "^23.10.4",
+    "typescript": "^3.1.4"
+  },
+  "scripts": {
+    "test": "jest",
+    "concat": "bash scripts/concat_lp.sh ../asp build",
+    "build": "rm -rf build && tsc && concat",
+    "format": "tslint -p . --fix && prettier --write '{src,test}/**/*.ts'",
+    "lint": "tslint -p . && prettier --list-different '{src,test}/**/*.ts'"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "<rootDir>/build",
+      "src"
+    ]
+  }
+}

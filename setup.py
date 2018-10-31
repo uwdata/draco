@@ -40,14 +40,14 @@ class RunTests(Command):
         raise SystemExit(errno_ansunit + errno_pytest + errno_mypy)
 
 
-setup(name='Draco',
+setup(name='draco',
       version=__version__,
       description='Visualization recommendation using constraints',
       long_description=long_description,
       author='Dominik Moritz, Chenglong Wang',
       author_email='domoritz@cs.washington.edu, clwang@cs.washington.edu',
       license='BSD-3',
-      url='https://github.com/domoritz/draco',
+      url='https://github.com/uwdata/draco',
       packages = ['draco'],
       entry_points = {
         'console_scripts': [
