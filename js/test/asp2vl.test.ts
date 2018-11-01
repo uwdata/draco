@@ -1,4 +1,4 @@
-import { asp2vl } from "../src";
+import { asp2vl } from '../src';
 
 test('parses results correctly', () => {
   expect(

@@ -1,4 +1,3 @@
-
 import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';
 
 /**
@@ -49,7 +48,7 @@ export default function vl2asp(spec: TopLevelFacetedUnitSpec): string[] {
             facts.push(`:-log(${eid}).`);
           }
         }
-      } else if (field === 'bin'){
+      } else if (field === 'bin') {
         if (fieldContent.maxbins) {
           facts.push(`${field}(${eid},${fieldContent.maxbins}).`);
         } else {

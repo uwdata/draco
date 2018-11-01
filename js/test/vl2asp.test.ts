@@ -1,4 +1,4 @@
-import { vl2asp } from "../src";
+import { vl2asp } from '../src';
 
 test('generates correct asp', () => {
   expect(
