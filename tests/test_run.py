@@ -20,6 +20,6 @@ class TestFull():
                 with open(fname, 'r') as f:
                     query_spec = json.load(f)
                     input_task = Task.from_cql(query_spec, os.path.dirname(f.name))
-                    program = [input_task.to_asp()]
+                    program = input_task.to_asp_list()
                     result = run(program)
                     validate(result.as_vl(), schema)

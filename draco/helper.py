@@ -11,7 +11,7 @@ def is_valid(task: Task, debug=False) -> bool:
         Returns:
             whether the task is valid
     '''
-    program = [task.to_asp()]
+    program = task.to_asp_list()
     _, stdout = run_draco(program, files=['define.lp', 'hard.lp'], silence_warnings=True, debug=debug)
 
     return json.loads(stdout)['Result'] != 'UNSATISFIABLE'

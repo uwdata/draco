@@ -665,7 +665,7 @@ class Task():
         ''' generate a vegalite json file form the object '''
         return json.dumps(self.to_vegalite(), sort_keys=True, indent=4)
 
-    def to_asp(self) -> str:
+    def to_asp_str(self) -> str:
         ''' generate asp constraints from the object '''
         asp_str = '% ====== Data definitions ======\n'
         asp_str += self.data.to_asp() + '\n\n'
@@ -675,6 +675,11 @@ class Task():
             asp_str += '% ====== Task constraint ======\n'
             asp_str += f'task({self.task}).\n\n'
         return asp_str
+
+    def to_asp_list(self) -> List[str]:
+        ''' generate asp program as a list of lines from the object '''
+        asp = self.to_asp_str()
+        return list(filter(lambda x : x != '', asp.split('\n')))
 
 
 class AspTask(Task):
@@ -724,7 +729,7 @@ if __name__ == '__main__':
 
                 field_names = task.data.get_field_names()
 
-                asp_str = task.to_asp()
+                asp_str = task.to_asp_str()
                 data_decl = re.search('data(.+).', asp_str)
                 if data_decl:
                     data_decl_str = ("data" + data_decl.group(1) + ".\n").replace("../data/", "data/")

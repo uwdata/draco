@@ -7,13 +7,13 @@ from draco.spec import Data, Field, Query, Task
 def get_rec(data, query):
     query = Query.from_obj(query)
     input_task = Task(data, query)
-    program = [input_task.to_asp()]
+    program = input_task.to_asp_list()
     return run(program)
 
 def run_spec(data, spec):
     query = Query.from_vegalite(spec)
     input_task = Task(data, query)
-    program = [input_task.to_asp()]
+    program = input_task.to_asp_list()
     return run(program)
 
 spec_schema = Data([
