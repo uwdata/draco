@@ -27,8 +27,8 @@ install:
   - pip install -r requirements.txt
   - pip install -e .
 script:
-  - yarn --cwd js build
   - yarn --cwd js lint
+  - yarn --cwd js build
   - python setup.py test
 after_success:
   - coveralls
