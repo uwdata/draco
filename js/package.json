@@ -1,7 +1,7 @@
 {
   "name": "draco-core",
   "description": "Visualization Knowledge as Constraints.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Dominik Moritz",
   "license": "BSD-3-Clause",
   "main": "build/index.js",
@@ -29,7 +29,6 @@
     "concat": "bash concat_lp.sh ../asp src",
     "format": "tslint -p . --fix && prettier --write '{src,test}/**/*.ts'",
     "lint": "tslint -p . && prettier --list-different '{src,test}/**/*.ts'",
-    "postinstall": "npm run concat",
     "prepublishOnly": "npm run test && npm run build",
     "test": "jest"
   },
