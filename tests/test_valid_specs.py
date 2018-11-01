@@ -1,5 +1,5 @@
 from draco.spec import Data, Field, Query, Task
-from draco.generation.helper import is_valid
+from draco.helper import is_valid
 
 data = Data(fields=[
     Field('n1', 'string'),
