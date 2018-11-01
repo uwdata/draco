@@ -50,7 +50,7 @@ export default function asp2vl(facts: string[]): TopLevelFacetedUnitSpec {
       ...(enc.aggregate ? { aggregate: enc.aggregate } : {}),
       ...(enc.field ? { field: enc.field } : {}),
       ...(enc.stack ? { stack: enc.stack } : {}),
-      ...(enc.bin !== undefined ? { bin: { maxbins: +enc.bin } } : {}),
+      ...(enc.bin !== undefined ? +enc.bin === 10 ? { bin: true} : { bin: { maxbins: +enc.bin } } : {}),
       ...(Object.keys(scale).length ? { scale } : {}),
     };
   }
