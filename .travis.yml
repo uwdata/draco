@@ -19,6 +19,7 @@ before_install:
   - conda info -a
 install:
   - yarn --cwd js
+  - yarn --cwd js build
   - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION coveralls
   - source activate test-environment
   # now we are in an environment
