@@ -86,7 +86,7 @@ test('generates correct asp', () => {
       mark: 'bar',
       encodings: [
         { channel: 'x', field: 'foo', type: 'ordinal' },
-        { channel: 'y', aggregate: 'count', type: 'quantitative', scale: { zero: true }, bin: { maxbins: '?' } },
+        { channel: 'y', aggregate: 'count', type: 'quantitative', scale: { zero: true }, bin: true },
       ],
     }).sort()
   ).toEqual(
@@ -101,6 +101,7 @@ test('generates correct asp', () => {
 
       'encoding(e1).',
       'channel(e1,y).',
+      ':- not bin(e1,_)',
       'aggregate(e1,count).',
       'type(e1,quantitative).',
       'zero(e1).',
