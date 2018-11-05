@@ -13,7 +13,6 @@ export default function cql2asp(spec: any) {
     facts.push(`data("${spec.data.url}").`);
   }
 
-
   for (let i = 0; i < spec.encodings.length; i++) {
     const enc = spec.encodings[i];
     const eid = `e${i}`;
@@ -63,7 +62,7 @@ export default function cql2asp(spec: any) {
         } else if (fieldContent) {
           facts.push(`:- not bin(${eid},_)`);
         } else {
-          facts.push(`:- bin(${eid},_)`)
+          facts.push(`:- bin(${eid},_)`);
         }
       } else if (field === 'field') {
         // fields can have spaces and start with capital letters
@@ -81,7 +80,7 @@ export default function cql2asp(spec: any) {
     }
   }
 
-  return facts
+  return facts;
 }
 
 function subst_if_hole(v: any) {
