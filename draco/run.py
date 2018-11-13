@@ -8,11 +8,10 @@ import os
 import subprocess
 import tempfile
 from collections import defaultdict
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 import clyngor
 from clyngor.answers import Answers
-
 from draco.js import asp2vl
 
 logging.basicConfig(level=logging.INFO)
@@ -31,7 +30,7 @@ DRACO_LP = [
 DRACO_LP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../asp"))
 
 
-file_cache: Dict = {}
+file_cache: Dict[str, bytes] = {}
 
 
 class Result:
@@ -60,7 +59,7 @@ class Result:
         return asp2vl(self.props)
 
 
-def load_file(path):
+def load_file(path: str) -> bytes:
     content = file_cache.get(path)
     if content is not None:
         return content
