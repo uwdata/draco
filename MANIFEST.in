@@ -1,12 +1,10 @@
-exclude .gitignore
-exclude .coverage
-exclude .travis.yml
+include asp/*.lp
+include js/bin/*
+include js/build/*
+include LICENSE
 include README.md
-include setup.cfg
-prune .cache
-prune .git
-prune build
-prune dist
-prune __temp__
-recursive-exclude *.egg-info *
-recursive-include tests *
+
+exclude *.json
+exclude *.lp
+exclude *.sh
+exclude yarn.lock
