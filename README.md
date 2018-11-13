@@ -4,7 +4,11 @@
    </a>
 </p>
 
-# Draco: Visualization Constraints Weight Learning for Visualization Recommendations [![Build Status](https://travis-ci.org/uwdata/draco.svg?branch=master)](https://travis-ci.org/uwdata/draco) [![Coverage Status](https://coveralls.io/repos/github/uwdata/draco/badge.svg?branch=master)](https://coveralls.io/github/uwdata/draco?branch=master)
+# Draco: Visualization Constraints Weight Learning for Visualization Recommendations
+
+[![Build Status](https://travis-ci.org/uwdata/draco.svg?branch=master)](https://travis-ci.org/uwdata/draco)
+[![Coverage Status](https://coveralls.io/repos/github/uwdata/draco/badge.svg?branch=master)](https://coveralls.io/github/uwdata/draco?branch=master)
+[![PyPi](https://img.shields.io/pypi/v/draco.svg)](https://pypi.org/project/draco/)
 
 Draco is a formal framework for representing design knowledge about effective visualization design as a collection of constraints. You can use Draco to find effective visualization designs in Vega-Lite. Draco's constraints are implemented in based on Answer Set Programming (ASP) and solved with the Clingo constraint solver. We also implemented a way to learn weights for the recommendation system directly from the results of graphical perception experiment.
 
@@ -14,7 +18,7 @@ Try Draco in the browser at https://uwdata.github.io/draco-editor. The code for 
 
 **There Be Dragons!** This project is in active development and we are working hard on cleaning up the repository and making it easier to use the recommendation model in Draco. If you want to use this right now, please talk to us. More documentation is forthcoming.
 
-For a TypeScript version of Draco with some overlapping functionality see https://github.com/uwdata/draco-vis. 
+For a TypeScript version of Draco with some overlapping functionality see https://github.com/uwdata/draco-vis.
 
 ## Overview
 
@@ -44,7 +48,7 @@ You might need to activate a Python 2.7 environment to compile the canvas module
 
 `pip install -r requirements.txt` or `conda install --file requirements.txt`
 
-Install Draco in editable mode. We expect Python 3. 
+Install Draco in editable mode. We expect Python 3.
 
 `pip install -e .`
 
@@ -99,6 +103,15 @@ Alternatively, you can invoke Draco with `draco -m asp test.lp`.
 `clingo asp/_apt.lp examples/example_apt.lp --opt-mode=optN --quiet=1 --project -c max_extra_encs=0`
 
 This only prints the relevant data and restricts the extra encodings that are being generated.
+
+## Releases
+
+* Make sure everything works!
+* Update `__version__` in `draco/__init__.py` and use the right version below.
+* `git commit -m "bump version to 0.0.1"`
+* Tag the last commit `git tag -a v0.0.1`.
+* `git push` and `git push --tags`
+* Run `python setup.py sdist upload`.
 
 ## Resources
 
