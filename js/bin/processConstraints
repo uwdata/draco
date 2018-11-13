@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+
+const constraints2json = require('../build/constraints2json').default;
+const json2constraints = require('../build/json2constraints').default;
+const constraints = require('../build/constraints');
+
+if (process.argv.length !== 3) {
+  throw Error('usage: processConstraints <outputDir>');
+}
+
+const soft = constraints2json(constraints['SOFT']);
+
+const result = json2constraints(soft);
+
+const outputDir = process.argv[2];
+
+const weightFile = path.resolve(outputDir, 'weights.lp');
+fs.writeFile(weightFile, result.weights, () => { console.log('wrote weights.lp')});
+
+const assignWeightsFile = path.resolve(outputDir, 'assign_weights.lp');
+fs.writeFile(assignWeightsFile, result.assignWeights, () => { console.log('wrote assign_weights.lp')});

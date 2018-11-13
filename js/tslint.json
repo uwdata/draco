@@ -3,6 +3,11 @@
     "project": "tsconfig.json",
     "typeCheck": true
   },
+  "linterOptions": {
+    "exclude": [
+      "bin"
+    ]
+  },
   "defaultSeverity": "error",
   "extends": [
     "tslint:recommended",

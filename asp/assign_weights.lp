@@ -1,8 +1,4 @@
-%% GENERATED FILE. DO NOT EDIT.
-
-violation_weight(type_q,type_q_weight).
-violation_weight(type_o,type_o_weight).
-violation_weight(type_n,type_n_weight).
+% ==== GENERATED FILE // DO NOT MODIFY ====
 violation_weight(aggregate,aggregate_weight).
 violation_weight(bin,bin_weight).
 violation_weight(bin_high,bin_high_weight).
@@ -16,11 +12,11 @@ violation_weight(shape_cardinality,shape_cardinality_weight).
 violation_weight(number_nominal,number_nominal_weight).
 violation_weight(bin_cardinality,bin_cardinality_weight).
 violation_weight(quant_bin,quant_bin_weight).
-violation_weight(agg_dim,agg_dim_weight).
 violation_weight(only_discrete,only_discrete_weight).
 violation_weight(multiple_non_pos,multiple_non_pos_weight).
 violation_weight(non_positional_pref,non_positional_pref_weight).
 violation_weight(aggregate_group_by_raw,aggregate_group_by_raw_weight).
+violation_weight(agg_dim,agg_dim_weight).
 violation_weight(x_y_raw,x_y_raw_weight).
 violation_weight(log,log_weight).
 violation_weight(zero,zero_weight).
@@ -51,6 +47,9 @@ violation_weight(size_entropy_low,size_entropy_low_weight).
 violation_weight(c_d_column,c_d_column_weight).
 violation_weight(temporal_y,temporal_y_weight).
 violation_weight(d_d_overlap,d_d_overlap_weight).
+violation_weight(type_q,type_q_weight).
+violation_weight(type_o,type_o_weight).
+violation_weight(type_n,type_n_weight).
 violation_weight(c_c_point,c_c_point_weight).
 violation_weight(c_c_line,c_c_line_weight).
 violation_weight(c_c_area,c_c_area_weight).
@@ -107,6 +106,8 @@ violation_weight(aggregate_median,aggregate_median_weight).
 violation_weight(aggregate_min,aggregate_min_weight).
 violation_weight(aggregate_max,aggregate_max_weight).
 violation_weight(aggregate_stdev,aggregate_stdev_weight).
+violation_weight(stack_zero,stack_zero_weight).
+violation_weight(stack_normalize,stack_normalize_weight).
 violation_weight(value_point,value_point_weight).
 violation_weight(value_bar,value_bar_weight).
 violation_weight(value_line,value_line_weight).
@@ -147,5 +148,3 @@ violation_weight(summary_discrete_size,summary_discrete_size_weight).
 violation_weight(summary_discrete_text,summary_discrete_text_weight).
 violation_weight(summary_discrete_row,summary_discrete_row_weight).
 violation_weight(summary_discrete_column,summary_discrete_column_weight).
-violation_weight(stack_zero,stack_zero_weight).
-violation_weight(stack_normalize,stack_normalize_weight).
