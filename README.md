@@ -18,7 +18,7 @@ Try Draco in the browser at https://uwdata.github.io/draco-editor. The code for 
 
 **There Be Dragons!** This project is in active development and we are working hard on cleaning up the repository and making it easier to use the recommendation model in Draco. If you want to use this right now, please talk to us. More documentation is forthcoming.
 
-For a TypeScript version of Draco with some overlapping functionality see https://github.com/uwdata/draco-vis. 
+For a TypeScript version of Draco with some overlapping functionality see https://github.com/uwdata/draco-vis.
 
 ## Overview
 
@@ -48,7 +48,7 @@ You might need to activate a Python 2.7 environment to compile the canvas module
 
 `pip install -r requirements.txt` or `conda install --file requirements.txt`
 
-Install Draco in editable mode. We expect Python 3. 
+Install Draco in editable mode. We expect Python 3.
 
 `pip install -e .`
 
@@ -103,6 +103,14 @@ Alternatively, you can invoke Draco with `draco -m asp test.lp`.
 `clingo asp/_apt.lp examples/example_apt.lp --opt-mode=optN --quiet=1 --project -c max_extra_encs=0`
 
 This only prints the relevant data and restricts the extra encodings that are being generated.
+
+## Releases
+
+* Make sure everything works!
+* Update `__version__` in `draco/__init__.py`.
+* Make a new tagged commit. `git tag -a v0.0.1` with the right version number.
+* `git push --tags`
+* Run `python setup.py sdist upload`.
 
 ## Resources
 
