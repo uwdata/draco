@@ -17,6 +17,10 @@
     "@types/node": "^10.12.1",
     "jest": "^23.6.0",
     "prettier": "^1.14.3",
+    "rollup": "^0.66.2",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-resolve": "^3.4.0",
     "ts-jest": "^23.10.4",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
@@ -27,7 +31,7 @@
     "asp2vl": "./bin/asp2vl"
   },
   "scripts": {
-    "build": "npm run concat && rm -rf build && tsc",
+    "build": "npm run concat && rm -rf build && tsc && rollup -c",
     "concat": "bash concat_lp.sh ../asp src",
     "format": "tslint -p . --fix && prettier --write '{src,test}/**/*.ts'",
     "lint": "tslint -p . && prettier --list-different '{src,test}/**/*.ts'",
