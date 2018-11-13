@@ -41,6 +41,7 @@ def asp2vl(asp: List[str]) -> Dict:
 
     return json.loads(stdout)
 
+
 def cql2asp(cql: Dict) -> List[str]:
     proc = subprocess.Popen(
         args=["node", absolute_path("../js/bin/cql2asp")],
@@ -55,6 +56,7 @@ def cql2asp(cql: Dict) -> List[str]:
 
     return stdout.decode("utf-8").split("\n")
 
+
 def data2schema(data: List) -> Dict:
     proc = subprocess.Popen(
         args=["node", absolute_path("../js/bin/data2schema")],
@@ -68,6 +70,7 @@ def data2schema(data: List) -> Dict:
         logger.error("stderr: %s", stderr)
 
     return json.loads(stdout)
+
 
 def schema2asp(schema: Dict) -> List[str]:
     proc = subprocess.Popen(

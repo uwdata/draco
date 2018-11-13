@@ -27,9 +27,13 @@ class TestFull:
                     query_spec = json.load(f)
 
                     data = None
-                    if ("url" in query_spec["data"]):
-                        data = read_data_to_asp(os.path.join(os.path.dirname(f.name), query_spec["data"]["url"]))
-                    elif ("values" in query_spec["data"]):
+                    if "url" in query_spec["data"]:
+                        data = read_data_to_asp(
+                            os.path.join(
+                                os.path.dirname(f.name), query_spec["data"]["url"]
+                            )
+                        )
+                    elif "values" in query_spec["data"]:
                         data = read_data_to_asp(query_spec["data"]["values"])
                     else:
                         raise Exception("no data found in spec")

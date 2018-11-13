@@ -21,6 +21,7 @@ def is_valid(draco_query: List[str], debug=False) -> bool:
 
     return json.loads(stdout)["Result"] != "UNSATISFIABLE"
 
+
 def data_to_asp(data: List) -> List[str]:
     """ Reads the data array and generates the ASP definition.
         Args:
@@ -30,6 +31,7 @@ def data_to_asp(data: List) -> List[str]:
     """
     return schema2asp(data2schema(data))
 
+
 def read_data_to_asp(file: str) -> List[str]:
     """ Reads the given JSON file and generates the ASP definition.
         Args:
@@ -37,11 +39,11 @@ def read_data_to_asp(file: str) -> List[str]:
         Returns:
             the asp definition.
     """
-    if (file.endswith(".json")):
+    if file.endswith(".json"):
         with open(file) as f:
             data = json.load(f)
             return schema2asp(data2schema(data))
-    elif (file.endswith(".csv")):
+    elif file.endswith(".csv"):
         df = pd.read_csv(file)
         df = df.where((pd.notnull(df)), None)
         data = list(df.T.to_dict().values())
