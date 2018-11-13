@@ -107,9 +107,10 @@ This only prints the relevant data and restricts the extra encodings that are be
 ## Releases
 
 * Make sure everything works!
-* Update `__version__` in `draco/__init__.py`.
-* Make a new tagged commit. `git tag -a v0.0.1` with the right version number.
-* `git push --tags`
+* Update `__version__` in `draco/__init__.py` and use the right version below.
+* `git commit -m "bump version to 0.0.1"`
+* Tag the last commit `git tag -a v0.0.1`.
+* `git push` and `git push --tags`
 * Run `python setup.py sdist upload`.
 
 ## Resources
