@@ -3,6 +3,7 @@
 from codecs import open
 from os.path import abspath, dirname, join
 from subprocess import call
+from typing import List
 
 from setuptools import Command, setup
 
@@ -17,7 +18,7 @@ class RunTests(Command):
     """Run all tests."""
 
     description = "run tests"
-    user_options = []
+    user_options: List[str] = []
 
     def initialize_options(self):
         pass
@@ -61,6 +62,8 @@ setup(
     url="https://github.com/uwdata/draco",
     packages=["draco"],
     entry_points={"console_scripts": ["draco=draco.cli:main"]},
-    extras_require={"test": ["coverage", "pytest", "pytest-cov"]},
+    extras_require={
+        "test": ["coverage", "pytest", "pytest-cov", "black", "ansunit", "mypy"]
+    },
     cmdclass={"test": RunTests},
 )
