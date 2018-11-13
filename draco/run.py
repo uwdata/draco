@@ -27,7 +27,7 @@ DRACO_LP = [
     "optimize.lp",
     "output.lp",
 ]
-DRACO_LP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../asp"))
+DRACO_LP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../asp")
 
 
 file_cache: Dict[str, bytes] = {}

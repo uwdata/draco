@@ -1,7 +1,7 @@
 import json
 import logging
-import subprocess
 import os
+import subprocess
 from typing import Dict, List, Optional, Tuple
 
 logging.basicConfig(level=logging.INFO)
@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def absolute_path(p: str) -> str:
-    return os.path.join(os.path.dirname(__file__), p)
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), p)
 
 
 def vl2asp(vl: Dict) -> List[str]:
