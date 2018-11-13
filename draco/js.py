@@ -24,7 +24,7 @@ def vl2asp(vl: Dict) -> List[str]:
     if stderr:
         logger.error("stderr: %s", stderr)
 
-    return stdout.decode("utf-8").split("\n")
+    return list(filter(lambda x: x, stdout.decode("utf-8").split("\n")))
 
 
 def asp2vl(asp: List[str]) -> Dict:
