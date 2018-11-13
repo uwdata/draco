@@ -11,7 +11,7 @@ stdin.on('data', chunk => {
 });
 
 stdin.on('end', () => {
-  const inputJSON = JSON.parse(inputChunks.join())
+  const inputJSON = JSON.parse(inputChunks.join(''))
   const result = vl2asp(inputJSON);
   for (const res of result) {
     stdout.write(res);
