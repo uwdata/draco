@@ -62,13 +62,11 @@ def data2schema(data: List) -> Dict:
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
-    print(len(json.dumps(data)))
     stdout, stderr = proc.communicate(json.dumps(data).encode("utf8"))
 
     if stderr:
         logger.error("stderr: %s", stderr)
 
-    print('Output: {0}'.format(stdout))
     return json.loads(stdout)
 
 def schema2asp(schema: Dict) -> List[str]:
@@ -80,6 +78,7 @@ def schema2asp(schema: Dict) -> List[str]:
     )
     stdout, stderr = proc.communicate(json.dumps(schema).encode("utf8"))
 
+    # print(stdout)
     if stderr:
         logger.error("stderr: %s", stderr)
 

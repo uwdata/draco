@@ -8,17 +8,15 @@ export default function schema2asp(schema: Schema): string[] {
   const stats = schema.stats;
   const decl = [`num_rows(${schema.size}).\n`];
 
-  decl.concat(
-    Object.keys(stats)
-      .map(field => {
-        const fieldName = `\"${field}\"`;
-        const fieldStats = stats[field];
-        const fieldType = `fieldtype(${fieldName},${fieldStats.type}).`;
-        const cardinality = `cardinality(${fieldName}, ${fieldStats.distinct}).`;
+  Object.keys(stats)
+    .forEach((field, i) => {
+      const fieldName = `\"${field}\"`;
+      const fieldStats = stats[field];
+      const fieldType = `fieldtype(${fieldName},${fieldStats.type}).`;
+      const cardinality = `cardinality(${fieldName}, ${fieldStats.distinct}).`;
 
-        return `${fieldType}\n${cardinality}`;
-      })
-  );
+      decl.push(`${fieldType}\n${cardinality}`);
+    });
 
   return decl;
 }

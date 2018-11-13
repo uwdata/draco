@@ -33,6 +33,7 @@ class TestFull:
                         data = read_data_to_asp(query_spec["data"]["values"])
                     else:
                         raise Exception("no data found in spec")
+                    print(data)
                     query = cql2asp(query_spec)
                     program = query + data
                     result = run(program)

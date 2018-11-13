@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const schema2asp = require('../build/schema2asp').default;
+const schema2asp = require('../build/draco').schema2asp;
 
 const stdin = process.stdin;
 const stdout = process.stdout;
@@ -11,8 +11,11 @@ stdin.on('data', chunk => {
 });
 
 stdin.on('end', () => {
-  const inputJSON = JSON.parse(inputChunks.join())
+  const inputJSON = JSON.parse(inputChunks.join(''))
+
   const result = schema2asp(inputJSON);
-  stdout.write(JSON.stringify(result));
-  stdout.write('\n');
+  for (const res of result) {
+    stdout.write(res);
+    stdout.write('\n');
+  }
 });
