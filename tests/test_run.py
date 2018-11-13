@@ -5,6 +5,8 @@ from jsonschema import validate
 
 from draco.run import run
 from draco.spec import Task
+from draco.helper import read_data_to_asp
+from draco.js import cql2asp
 
 EXAMPLES_DIR = os.path.join("examples")
 
@@ -23,7 +25,15 @@ class TestFull:
             for fname in json_files:
                 with open(fname, "r") as f:
                     query_spec = json.load(f)
-                    input_task = Task.from_cql(query_spec, os.path.dirname(f.name))
-                    program = input_task.to_asp_list()
+
+                    data = None
+                    if ("url" in query_spec["data"]):
+                        data = read_data_to_asp(os.path.join(os.path.dirname(f.name), query_spec["data"]["url"]))
+                    elif ("values" in query_spec["data"]):
+                        data = read_data_to_asp(query_spec["data"]["values"])
+                    else:
+                        raise Exception("no data found in spec")
+                    query = cql2asp(query_spec)
+                    program = query + data
                     result = run(program)
                     validate(result.as_vl(), schema)

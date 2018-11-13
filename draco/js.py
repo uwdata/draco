@@ -40,3 +40,47 @@ def asp2vl(asp: List[str]) -> Dict:
         logger.error("stderr: %s", stderr)
 
     return json.loads(stdout)
+
+def cql2asp(cql: Dict) -> List[str]:
+    proc = subprocess.Popen(
+        args=["node", absolute_path("../js/bin/cql2asp")],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    stdout, stderr = proc.communicate(json.dumps(cql).encode("utf8"))
+
+    if stderr:
+        logger.error("stderr: %s", stderr)
+
+    return stdout.decode("utf-8").split("\n")
+
+def data2schema(data: List) -> Dict:
+    proc = subprocess.Popen(
+        args=["node", absolute_path("../js/bin/data2schema")],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    print(len(json.dumps(data)))
+    stdout, stderr = proc.communicate(json.dumps(data).encode("utf8"))
+
+    if stderr:
+        logger.error("stderr: %s", stderr)
+
+    print('Output: {0}'.format(stdout))
+    return json.loads(stdout)
+
+def schema2asp(schema: Dict) -> List[str]:
+    proc = subprocess.Popen(
+        args=["node", absolute_path("../js/bin/schema2asp")],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    stdout, stderr = proc.communicate(json.dumps(schema).encode("utf8"))
+
+    if stderr:
+        logger.error("stderr: %s", stderr)
+
+    return stdout.decode("utf-8").split("\n")

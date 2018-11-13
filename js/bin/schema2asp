@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+const schema2asp = require('../build/schema2asp').default;
+
+const stdin = process.stdin;
+const stdout = process.stdout;
+const inputChunks = [];
+
+stdin.on('data', chunk => {
+  inputChunks.push(chunk);
+});
+
+stdin.on('end', () => {
+  const inputJSON = JSON.parse(inputChunks.join())
+  const result = schema2asp(inputJSON);
+  stdout.write(JSON.stringify(result));
+  stdout.write('\n');
+});
