@@ -1,19 +1,19 @@
 import json
 
-from draco.run import run_draco
+from draco.run import run_clingo
 from draco.spec import Task
+from typing import List
 
 
-def is_valid(task: Task, debug=False) -> bool:
+def is_valid(draco_query: List[str], debug=False) -> bool:
     """ Check a task.
         Args:
-            task: a task spec object
+            draco_query: a list of facts
         Returns:
             whether the task is valid
     """
-    program = task.to_asp_list()
-    _, stdout = run_draco(
-        program, files=["define.lp", "hard.lp"], silence_warnings=True, debug=debug
+    _, stdout = run_clingo(
+        draco_query, files=["define.lp", "hard.lp"], silence_warnings=True, debug=debug
     )
 
     return json.loads(stdout)["Result"] != "UNSATISFIABLE"

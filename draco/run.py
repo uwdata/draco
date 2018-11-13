@@ -69,7 +69,7 @@ def load_file(path: str) -> bytes:
         return content
 
 
-def run_draco(
+def run_clingo(
     draco_query: List[str],
     constants: Dict[str, str] = None,
     files: List[str] = None,
@@ -127,7 +127,7 @@ def run(
         logger.warning("Cleared file cache")
         file_cache.clear()
 
-    stderr, stdout = run_draco(draco_query, constants, files, silence_warnings, debug)
+    stderr, stdout = run_clingo(draco_query, constants, files, silence_warnings, debug)
 
     try:
         json_result = json.loads(stdout)
