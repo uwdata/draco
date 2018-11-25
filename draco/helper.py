@@ -2,7 +2,6 @@ import json
 import pandas as pd
 
 from draco.run import run_clingo
-from draco.spec import Task
 from draco.js import data2schema, schema2asp
 
 from typing import Dict, List

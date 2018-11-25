@@ -1,20 +1,18 @@
-from draco.spec import Data, Field, Query, Task
 from draco.helper import is_valid
+from draco.js import vl2asp
 
-data = Data(
-    fields=[
-        Field("n1", "string"),
-        Field("n2", "string"),
-        Field("q1", "number"),
-        Field("q2", "number"),
-        Field("q3", "number"),
-    ]
-)
+data_schema = [
+    "fieldtype(\"n1\",string).",
+    "fieldtype(\"n2\",string).",
+    "fieldtype(\"q1\",number).",
+    "fieldtype(\"q2\",number).",
+    "fieldtype(\"q3\",number).",
+]
 
 
 class TestValidSpecs:
     def test_hist(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {
                 "mark": "bar",
                 "encoding": {
@@ -24,10 +22,10 @@ class TestValidSpecs:
             }
         )
 
-        assert is_valid(Task(data, query), True) == True
+        assert is_valid(data_schema + query, True) == True
 
     def test_bar(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {
                 "mark": "bar",
                 "encoding": {
@@ -37,17 +35,17 @@ class TestValidSpecs:
             }
         )
 
-        assert is_valid(Task(data, query), True) == True
+        assert is_valid(data_schema + query, True) == True
 
     def test_one_bar(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {"mark": "bar", "encoding": {"y": {"type": "quantitative", "field": "q1"}}}
         )
 
-        assert is_valid(Task(data, query), True) == True
+        assert is_valid(data_schema + query, True) == True
 
     def test_scatter(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {
                 "mark": "point",
                 "encoding": {
@@ -59,10 +57,10 @@ class TestValidSpecs:
             }
         )
 
-        assert is_valid(Task(data, query), True) == True
+        assert is_valid(data_schema + query, True) == True
 
     def test_stack(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {
                 "mark": "bar",
                 "encoding": {
@@ -78,10 +76,10 @@ class TestValidSpecs:
             }
         )
 
-        assert is_valid(Task(data, query), True) == True
+        assert is_valid(data_schema + query, True) == True
 
     def test_stack_agg(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {
                 "mark": "bar",
                 "encoding": {
@@ -102,10 +100,10 @@ class TestValidSpecs:
             }
         )
 
-        assert is_valid(Task(data, query), True) == True
+        assert is_valid(data_schema + query, True) == True
 
     def test_stack_q_q(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {
                 "mark": "area",
                 "encoding": {
@@ -120,10 +118,10 @@ class TestValidSpecs:
             }
         )
 
-        assert is_valid(Task(data, query), True) == True
+        assert is_valid(data_schema + query, True) == True
 
     def test_heatmap(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {
                 "mark": "rect",
                 "encoding": {
@@ -133,19 +131,19 @@ class TestValidSpecs:
             }
         )
 
-        assert is_valid(Task(data, query), True) == True
+        assert is_valid(data_schema + query, True) == True
 
 
 class TestInvalidSpecs:
     def test_row_only(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {"mark": "point", "encoding": {"row": {"type": "nominal", "field": "n1"}}}
         )
 
-        assert is_valid(Task(data, query), True) == False
+        assert is_valid(data_schema + query, True) == False
 
     def test_q_q_bar(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {
                 "mark": "bar",
                 "encoding": {
@@ -155,10 +153,10 @@ class TestInvalidSpecs:
             }
         )
 
-        assert is_valid(Task(data, query), True) == False
+        assert is_valid(data_schema + query, True) == False
 
     def test_only_one_agg(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {
                 "mark": "point",
                 "encoding": {
@@ -168,10 +166,10 @@ class TestInvalidSpecs:
             }
         )
 
-        assert is_valid(Task(data, query), True) == False
+        assert is_valid(data_schema + query, True) == False
 
     def test_stack_multiple(self):
-        query = Query.from_vegalite(
+        query = vl2asp(
             {
                 "mark": "bar",
                 "encoding": {
@@ -192,4 +190,4 @@ class TestInvalidSpecs:
             }
         )
 
-        assert is_valid(Task(data, query), True) == False
+        assert is_valid(data_schema + query, True) == False

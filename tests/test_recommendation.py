@@ -1,7 +1,6 @@
 import unittest
 
 from draco.run import run
-from draco.spec import Data, Field, Query, Task
 from draco.js import cql2asp, vl2asp
 from draco.helper import data_to_asp
 

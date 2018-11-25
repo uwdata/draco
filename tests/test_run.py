@@ -4,7 +4,6 @@ import os
 from jsonschema import validate
 
 from draco.run import run
-from draco.spec import Task
 from draco.helper import read_data_to_asp
 from draco.js import cql2asp
 
