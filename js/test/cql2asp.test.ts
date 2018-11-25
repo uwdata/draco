@@ -101,7 +101,7 @@ test('generates correct asp', () => {
 
       'encoding(e1).',
       'channel(e1,y).',
-      ':- not bin(e1,_)',
+      ':- not bin(e1,_).',
       'aggregate(e1,count).',
       'type(e1,quantitative).',
       'zero(e1).',
