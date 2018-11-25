@@ -49,7 +49,7 @@ class Result:
                 violations[body[0]] += 1
             else:
                 b = ",".join(map(str, body))
-                props.append(f"{head}({b})")
+                props.append(f"{head}({b}).")
 
         self.props = props
         self.violations = violations

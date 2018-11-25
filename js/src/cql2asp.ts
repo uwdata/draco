@@ -60,9 +60,9 @@ export default function cql2asp(spec: any) {
         if (fieldContent.maxbins) {
           facts.push(`${field}(${eid},${fieldContent.maxbins}).`);
         } else if (fieldContent) {
-          facts.push(`:- not bin(${eid},_)`);
+          facts.push(`:- not bin(${eid},_).`);
         } else {
-          facts.push(`:- bin(${eid},_)`);
+          facts.push(`:- bin(${eid},_).`);
         }
       } else if (field === 'field') {
         // fields can have spaces and start with capital letters

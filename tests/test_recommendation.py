@@ -2,39 +2,42 @@ import unittest
 
 from draco.run import run
 from draco.spec import Data, Field, Query, Task
+from draco.js import cql2asp, vl2asp
+from draco.helper import data_to_asp
 
 
-def get_rec(data, query):
-    query = Query.from_obj(query)
-    input_task = Task(data, query)
-    program = input_task.to_asp_list()
-    return run(program)
+def get_rec(data_schema, spec):
+    query = cql2asp(spec)
+    return run(data_schema + query)
 
 
-def run_spec(data, spec):
-    query = Query.from_vegalite(spec)
-    input_task = Task(data, query)
-    program = input_task.to_asp_list()
-    return run(program)
+def run_spec(data_schema, spec):
+    query = vl2asp(spec)
+    return run(data_schema + query)
 
 
-spec_schema = Data(
-    [
-        Field("q1", "number", 100, 1),
-        Field("q2", "number", 100, 1),
-        Field("o1", "number", 6, 1),
-        Field("n1", "string", 5, 1),
-    ],
-    100,
-    url="data.csv",
-)
-
+spec_schema = [
+    "data(\"data.csv\").",
+    "num_rows(100).",
+    "fieldtype(\"q1\",number).",
+    "cardinality(\"q1\",100).",
+    "entropy(\"q1\",1).",
+    "fieldtype(\"q2\",number).",
+    "cardinality(\"q2\",100).",
+    "entropy(\"q2\",1).",
+    "fieldtype(\"o1\",number).",
+    "cardinality(\"o1\",6).",
+    "entropy(\"o1\",1).",
+    "fieldtype(\"n1\",string).",
+    "cardinality(\"n1\",5).",
+    "entropy(\"n1\",1)."
+]
 
 class TestSpecs:
     def test_scatter(self):
         recommendation = get_rec(
             spec_schema,
-            {"encoding": [{"channel": "x", "field": "q1"}, {"field": "q2"}]},
+            {"encodings": [{"channel": "x", "field": "q1"}, {"field": "q2"}]},
         ).as_vl()
 
         assert recommendation == {
@@ -49,9 +52,10 @@ class TestSpecs:
 
     def test_histogram(self):
         recommendation = get_rec(
-            spec_schema, {"encoding": [{"field": "q1", "bin": True, "channel": "x"}]}
+            spec_schema, {"encodings": [{"field": "q1", "bin": True, "channel": "x"}]}
         ).as_vl()
 
+        print(recommendation)
         assert recommendation == {
             "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
             "data": {"url": "data.csv"},
@@ -67,7 +71,7 @@ class TestSpecs:
         }
 
     def test_strip(self):
-        recommendation = get_rec(spec_schema, {"encoding": [{"field": "q1"}]}).as_vl()
+        recommendation = get_rec(spec_schema, {"encodings": [{"field": "q1"}]}).as_vl()
 
         assert recommendation == {
             "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
