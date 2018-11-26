@@ -16,21 +16,22 @@ def run_spec(data_schema, spec):
 
 
 spec_schema = [
-    "data(\"data.csv\").",
+    'data("data.csv").',
     "num_rows(100).",
-    "fieldtype(\"q1\",number).",
-    "cardinality(\"q1\",100).",
-    "entropy(\"q1\",1).",
-    "fieldtype(\"q2\",number).",
-    "cardinality(\"q2\",100).",
-    "entropy(\"q2\",1).",
-    "fieldtype(\"o1\",number).",
-    "cardinality(\"o1\",6).",
-    "entropy(\"o1\",1).",
-    "fieldtype(\"n1\",string).",
-    "cardinality(\"n1\",5).",
-    "entropy(\"n1\",1)."
+    'fieldtype("q1",number).',
+    'cardinality("q1",100).',
+    'entropy("q1",1).',
+    'fieldtype("q2",number).',
+    'cardinality("q2",100).',
+    'entropy("q2",1).',
+    'fieldtype("o1",number).',
+    'cardinality("o1",6).',
+    'entropy("o1",1).',
+    'fieldtype("n1",string).',
+    'cardinality("n1",5).',
+    'entropy("n1",1).',
 ]
+
 
 class TestSpecs:
     def test_scatter(self):

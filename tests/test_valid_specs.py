@@ -2,11 +2,11 @@ from draco.helper import is_valid
 from draco.js import vl2asp
 
 data_schema = [
-    "fieldtype(\"n1\",string).",
-    "fieldtype(\"n2\",string).",
-    "fieldtype(\"q1\",number).",
-    "fieldtype(\"q2\",number).",
-    "fieldtype(\"q3\",number).",
+    'fieldtype("n1",string).',
+    'fieldtype("n2",string).',
+    'fieldtype("q1",number).',
+    'fieldtype("q2",number).',
+    'fieldtype("q3",number).',
 ]
 
 
