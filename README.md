@@ -26,12 +26,23 @@ For a TypeScript version of Draco with some overlapping functionality see https:
 This repository currently contains:
 
 * The ASP programs with soft and hard constraints.
-* A Python API that
-    * translates from Compassql and Vega-Lite to ASP
-    * translates the output from the Clingo ASP solver to Vega-Lite
-    * Runs a learning to rank method on results of perception experiments
-* UI tools to create annotated datasets of pairs of visualizations, look at the recommendations, and to explore large datasets of example visualizations.
-* Notebooks to analyze the results
+* A Python and Typescript API that
+    * translates from Compassql and Vega-Lite to ASP: `cql2asp`, `vl2asp`
+    * translates the output from the Clingo ASP solver to Vega-Lite: `asp2vl`
+    * translates a dataset to schema and ASP declaration: `data2schema`, `schema2asp`.
+
+### Sibling Repositories
+
+Various functionality and extensions are in the following repositories
+
+* ![draco-learn](https://github.com/uwdata/draco-learn)
+   * Runs a learning to rank method on results of perception experiments
+   
+* ![draco-tools](https://github.com/uwdata/draco-tools)
+   * UI tools to create annotated datasets of pairs of visualizations, look at the recommendations, and to explore large datasets of example visualizations.
+   
+* ![draco-analysis](https://github.com/uwdata/draco-analysis)
+   * Notebooks to analyze the results
 
 ## Installation
 
