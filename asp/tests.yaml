@@ -320,7 +320,7 @@ Test soft constraints:
             channel(e,x).
             type(e,quantitative).
 
-            :- not violation(position_entropy, e).
+            :- not soft(position_entropy, e).
         Expect: SAT
 
     Test skew with zero:
@@ -337,7 +337,7 @@ Test soft constraints:
             type(e,quantitative).
             zero(e).
 
-            :- not violation(zero_skew).
+            :- not soft(zero_skew).
         Expect: SAT
 
     Test zero with data that covers it:
@@ -355,6 +355,6 @@ Test soft constraints:
             type(e,quantitative).
             zero(e).
 
-            :- not violation(includes_zero).
+            :- not soft(includes_zero).
 
         Expect: UNSAT

@@ -5,4 +5,4 @@
 #include "asp/hard.lp".
 #include "asp/soft.lp".
 
-#show violation/2.
+#show soft/2.

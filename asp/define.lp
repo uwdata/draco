@@ -56,8 +56,8 @@ enc_extent(E,MIN,MAX) :- field(E,F), extent(F,MIN,MAX).
 discrete_cardinality(E,CE) :- discrete(E), enc_cardinality(E,CE), channel(E,C), not bin(E,_).
 discrete_cardinality(E,CB) :- channel(E,C), bin(E,CB).
 
-% Define a fake violation/2 for all violation/1.
-violation(F,_placeholder) :- violation(F).
+% Define a fake soft/2 for all soft/1.
+soft(F,_placeholder) :- soft(F).
 
 % Silence warnings about properties never appearing in head.
 entropy(0,0) :- #false.
