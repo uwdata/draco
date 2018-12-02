@@ -35,13 +35,13 @@ This repository currently contains:
 
 Various functionality and extensions are in the following repositories
 
-* ![draco-learn](https://github.com/uwdata/draco-learn)
+* [draco-learn](https://github.com/uwdata/draco-learn)
    * Runs a learning to rank method on results of perception experiments
    
-* ![draco-tools](https://github.com/uwdata/draco-tools)
+* [draco-tools](https://github.com/uwdata/draco-tools)
    * UI tools to create annotated datasets of pairs of visualizations, look at the recommendations, and to explore large datasets of example visualizations.
    
-* ![draco-analysis](https://github.com/uwdata/draco-analysis)
+* [draco-analysis](https://github.com/uwdata/draco-analysis)
    * Notebooks to analyze the results
 
 ## Installation
