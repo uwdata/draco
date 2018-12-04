@@ -56,6 +56,10 @@ You can install Clingo with conda: `conda install -c potassco clingo`. On MacOS,
 
 You might need to activate a Python 2.7 environment to compile the canvas module.
 
+### Build JS module
+
+`yarn build`
+
 ### Python setup
 
 `pip install -r requirements.txt` or `conda install --file requirements.txt`
@@ -66,9 +70,6 @@ Install Draco in editable mode. We expect Python 3.
 
 Now you can call the command line tool `draco`. For example `draco --version` or `draco --help`.
 
-#### To run the notebook in a conda environment
-
-`conda install nb_conda_kernels nb_conda`
 
 ### Tests
 
@@ -132,7 +133,7 @@ This only prints the relevant data and restricts the extra encodings that are be
 Previous prototypes
 
 * https://github.com/uwdata/vis-csp
-* https://github.com/uwdata/vis-constraints
+* https://github.com/domoritz/vis-constraints
 
 Related software
 
