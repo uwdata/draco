@@ -6,13 +6,4 @@ import data2schema from './data2schema';
 import schema2asp from './schema2asp';
 import vl2asp from './vl2asp';
 
-export {
-  vl2asp,
-  asp2vl,
-  cql2asp,
-  data2schema,
-  schema2asp,
-  constraints,
-  constraints2json,
-  Constraint
-};
+export { vl2asp, asp2vl, cql2asp, data2schema, schema2asp, constraints, constraints2json, Constraint };
