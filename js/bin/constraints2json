@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+const constraints2json = require('../build/draco').constraints2json;
+
+const stdin = process.stdin;
+const stdout = process.stdout;
+const inputChunks = [];
+
+stdin.on('data', chunk => {
+  inputChunks.push(chunk);
+});
+
+stdin.on('end', () => {
+  const lines = inputChunks.join('')
+  const result = constraints2json(lines);
+  stdout.write(JSON.stringify(result));
+  stdout.write('\n');
+});

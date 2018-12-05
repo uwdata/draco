@@ -47,8 +47,7 @@ hard(aggregate_detail,E) :- channel(E,detail), aggregate(E,_).
 hard(count_q_without_field,E) :- aggregate(E,count), field(E,_).
 hard(count_q_without_field,E) :- aggregate(E,count), not type(E,quantitative).
 
-% @constraint Shape requires discrete and not ordered (nominal).
-%             Using ordinal would't make a difference in Vega-Lite.
+% @constraint Shape requires discrete and not ordered (nominal). Using ordinal would't make a difference in Vega-Lite.
 hard(shape_discrete_non_ordered,E) :- channel(E,shape), not type(E,nominal).
 
 % @constraint Detail requires nominal.
@@ -209,6 +208,5 @@ hard(invalid_extent_non_number,F) :- extent(F,_,_), not fieldtype(F,number).
 % @constraint Order has to be correct.
 hard(invalid_extent_order,MIN,MAX):- extent(_,MIN,MAX), MIN > MAX.
 
-% @constraint The name of a field cannot be the name of an encoding.
-%             This is to prevent errors coming from the shortcuts in define.lp.
+% @constraint The name of a field cannot be the name of an encoding. This is to prevent errors coming from the shortcuts in define.lp.
 hard(encoding_field_same_name,N) :- encoding(N), field(N).
