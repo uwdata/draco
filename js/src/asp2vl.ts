@@ -20,7 +20,7 @@ export default function asp2vl(facts: string[]): TopLevelFacetedUnitSpec {
       mark = first;
     } else if (predicate === 'data') {
       url = first;
-    } else if (predicate !== 'violation') {
+    } else if (predicate !== 'soft') {
       if (!encodings[first]) {
         encodings[first] = {};
       }
