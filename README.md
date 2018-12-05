@@ -30,6 +30,7 @@ This repository currently contains:
     * translates from Compassql and Vega-Lite to ASP: `cql2asp`, `vl2asp`
     * translates the output from the Clingo ASP solver to Vega-Lite: `asp2vl`
     * translates a dataset to schema and ASP declaration: `data2schema`, `schema2asp`.
+    * translates constraints (hard or soft) from asp to json: `constraints2json`.
 
 ### Sibling Repositories
 
