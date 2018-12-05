@@ -85,6 +85,8 @@ function getAsp(s: string): Asp {
       asp,
     };
   }
+
+  return null;
 }
 
 function getWeightMap(weights: string[]): { [s: string]: number } {
