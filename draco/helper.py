@@ -50,4 +50,4 @@ def read_data_to_asp(file: str) -> List[str]:
         asp = schema2asp(schema)
         return asp
     else:
-        raise Exception('invalid file type')
+        raise Exception("invalid file type")

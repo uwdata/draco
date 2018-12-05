@@ -58,7 +58,9 @@ class RunTests(Command):
 
         errno_prettier = call(["yarn", "--cwd", "js", "lint"])
 
-        raise SystemExit(errno_ansunit + errno_js + errno_pytest + errno_mypy + errno_prettier)
+        raise SystemExit(
+            errno_ansunit + errno_js + errno_pytest + errno_mypy + errno_prettier
+        )
 
 
 setup(
