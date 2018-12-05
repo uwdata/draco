@@ -45,7 +45,7 @@ class Result:
         for ((head, body),) in answers:
             if head == "cost":
                 cost = int(body[0])
-            elif head == "violation":
+            elif head == "soft":
                 violations[body[0]] += 1
             else:
                 b = ",".join(map(str, body))
