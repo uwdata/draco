@@ -1,5 +1,3 @@
-import { errorBarSupportedChannels } from 'vega-lite/build/src/compositemark/errorbar';
-
 interface Doc {
   description: string;
 }
@@ -115,7 +113,7 @@ const DOC_MATCH = /(%.*\n)+/g;
 const DESCRIPTION_EXTRACT = /@constraint\s+(.*)/;
 const ASP_MATCH = /^[^%].*/gm;
 const TYPE_EXTRACT = /(\w+)\(/;
-const NAME_EXTRACT = /\((\w+),.*\)/;
+const NAME_EXTRACT = /\((\w+),?.*?\)/;
 
 const WEIGHTS_MATCH = /#const.*/g;
 const WEIGHT_NAME_EXTRACT = /#const\s+(\w+?)_weight/;
