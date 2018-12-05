@@ -19,8 +19,6 @@ Read our introductory [blog post about Draco](https://medium.com/@uwdata/draco-r
 
 **There Be Dragons!** This project is in active development and we are working hard on cleaning up the repository and making it easier to use the recommendation model in Draco. If you want to use this right now, please talk to us. More documentation is forthcoming.
 
-For a TypeScript version of Draco with some overlapping functionality see https://github.com/uwdata/draco-vis.
-
 ## Overview
 
 This repository currently contains:
@@ -36,14 +34,17 @@ This repository currently contains:
 
 Various functionality and extensions are in the following repositories
 
+* [draco-vis](https://github.com/uwdata/draco-vis)
+   * A TypeScript/JavaScript version of Draco for use in web applications.
+
 * [draco-learn](https://github.com/uwdata/draco-learn)
-   * Runs a learning to rank method on results of perception experiments
+   * Runs a learning-to-rank method on results of perception experiments.
    
 * [draco-tools](https://github.com/uwdata/draco-tools)
    * UI tools to create annotated datasets of pairs of visualizations, look at the recommendations, and to explore large datasets of example visualizations.
    
 * [draco-analysis](https://github.com/uwdata/draco-analysis)
-   * Notebooks to analyze the results
+   * Notebooks to analyze the results.
 
 ## Installation
 
