@@ -63,7 +63,7 @@ soft(F,_placeholder) :- soft(F).
 entropy(0,0) :- #false.
 interesting(0) :- #false.
 extent(0,0,0) :- #false.
-violation(0) :- #false.
+soft(0) :- #false.
 task(value) :- #false.
 task(summary) :- #false.
 data(0) :- #false.
