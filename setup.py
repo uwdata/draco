@@ -54,7 +54,11 @@ class RunTests(Command):
         print("\n\n=> Running Black:")
         errno_mypy = call(["black", "--check", "."])
 
-        raise SystemExit(errno_ansunit + errno_js + errno_pytest + errno_mypy)
+        print("=> Running Prettier:")
+
+        errno_prettier = call(["yarn", "--cwd", "js", "lint"])
+
+        raise SystemExit(errno_ansunit + errno_js + errno_pytest + errno_mypy + errno_prettier)
 
 
 setup(
