@@ -19,7 +19,7 @@ do
   path="${1}/${file}.lp"
   lp=$(cat $path | sed -e s/\`/\'/g)
   const=$(echo $file | tr a-z A-Z | tr \- _)
-  output+="export const ${const}: string = \`${lp}\`;${newline}"
+  output+="${newline}export const ${const}: string = \`${lp}\`;"
 done
 
 echo "$output" > $2/constraints.ts
