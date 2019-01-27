@@ -39,7 +39,6 @@ def asp2vl(asp: List[str]) -> Dict:
     if stderr:
         logger.error("stderr: %s", stderr)
 
-    print(stdout)
     return json.loads(stdout)
 
 
@@ -82,7 +81,6 @@ def schema2asp(schema: Dict) -> List[str]:
     )
     stdout, stderr = proc.communicate(json.dumps(schema).encode("utf8"))
 
-    # print(stdout)
     if stderr:
         logger.error("stderr: %s", stderr)
 
