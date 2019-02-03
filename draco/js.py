@@ -39,7 +39,6 @@ def asp2vl(asp: List[str]) -> Dict:
     if stderr:
         logger.error("stderr: %s", stderr)
 
-    print(stdout)
     return json.loads(stdout)
 
 

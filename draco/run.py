@@ -26,6 +26,9 @@ DRACO_LP = [
     "assign_weights.lp",
     "optimize.lp",
     "output.lp",
+    "compare.lp",
+    "assign_compare_weights.lp",
+    "compare_weights.lp"
 ]
 DRACO_LP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../asp")
 
@@ -47,6 +50,8 @@ class Result:
                 cost = int(body[0])
             elif head == "soft":
                 violations[body[0]] += 1
+            elif head == "compare":
+                violations[body[0]] += 1
             else:
                 b = ",".join(map(str, body))
                 props.append(f"{head}({b}).")
@@ -55,8 +60,8 @@ class Result:
         self.violations = violations
         self.cost = cost
 
-    def as_vl(self) -> Dict:
-        return asp2vl(self.props)
+    def as_vl(self,v) -> Dict:
+        return asp2vl(self.props)[v]
 
 
 def load_file(path: str) -> bytes:

@@ -3,10 +3,10 @@ const HOLE = '?';
 export default function cql2asp(spec: any) {
   const mark = subst_if_hole(spec.mark);
 
-  const facts = [];
+  const facts = ['visualization(v1).'];
 
   if (mark) {
-    facts.push(`mark(${spec.mark}).`);
+    facts.push(`mark(v1,${spec.mark}).`);
   }
 
   if ('data' in spec && 'url' in spec.data) {
@@ -16,7 +16,7 @@ export default function cql2asp(spec: any) {
   for (let i = 0; i < spec.encodings.length; i++) {
     const enc = spec.encodings[i];
     const eid = `e${i}`;
-    facts.push(`encoding(${eid}).`);
+    facts.push(`encoding(v1,${eid}).`);
 
     let encFieldType = null;
     let encZero = null;
@@ -44,39 +44,39 @@ export default function cql2asp(spec: any) {
         if ('zero' in fieldContent) {
           encZero = fieldContent.zero;
           if (fieldContent.zero) {
-            facts.push(`zero(${eid}).`);
+            facts.push(`zero(v1,${eid}).`);
           } else {
-            facts.push(`:- zero(${eid}).`);
+            facts.push(`:- zero(v1,${eid}).`);
           }
         }
         if ('log' in fieldContent) {
           if (fieldContent.log) {
-            facts.push(`log(${eid}).`);
+            facts.push(`log(v1,${eid}).`);
           } else {
-            facts.push(`:-log(${eid}).`);
+            facts.push(`:-log(v1,${eid}).`);
           }
         }
       } else if (field === 'bin') {
         if (fieldContent.maxbins) {
           facts.push(`${field}(${eid},${fieldContent.maxbins}).`);
         } else if (fieldContent) {
-          facts.push(`:- not bin(${eid},_).`);
+          facts.push(`:- not bin(v1,${eid},_).`);
         } else {
-          facts.push(`:- bin(${eid},_).`);
+          facts.push(`:- bin(v1,${eid},_).`);
         }
       } else if (field === 'field') {
         // fields can have spaces and start with capital letters
-        facts.push(`${field}(${eid},"${fieldContent}").`);
+        facts.push(`${field}(v1,${eid},"${fieldContent}").`);
       } else {
         // translate normal fields
         if (field !== 'bin') {
-          facts.push(`${field}(${eid},${fieldContent}).`);
+          facts.push(`${field}(v1,${eid},${fieldContent}).`);
         }
       }
     }
 
     if (encFieldType === 'quantitative' && encZero === null && encBinned === null) {
-      facts.push(`zero(${eid}).`);
+      facts.push(`zero(v1,${eid}).`);
     }
   }
 

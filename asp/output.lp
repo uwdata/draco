@@ -2,16 +2,20 @@
 
 #show data/1.
 
-#show mark/1.
+#show mark/2.
 
-#show type/2.
-#show channel/2.
-#show field/2.
-#show aggregate/2.
-#show bin/2.
-#show stack/2.
+#show visualization/1.
+#show encoding/2.
 
-#show log/1.
-#show zero/1.
+#show type/3.
+#show channel/3.
+#show field/3.
+#show aggregate/3.
+#show bin/3.
+#show stack/3.
 
-#show soft/2.
+#show log/2.
+#show zero/2.
+
+#show soft/3.
+#show compare/3.

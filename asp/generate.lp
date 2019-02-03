@@ -7,27 +7,27 @@
 
 obj_id(1..max_extra_encs).
 
-{ encoding(E): obj_id(E) }.
+{ encoding(V,E): obj_id(E) } :- visualization(V).
 
-:- not encoding(ID), encoding(ID-1), obj_id(ID), obj_id(ID-1).
+:- not encoding(V,ID), encoding(V,ID-1), obj_id(ID), obj_id(ID-1).
 
 % properties of encodings
 
 % channel and type have to be present
-{ channel(E,C): channel(C) } = 1 :- encoding(E).
-{ type(E,T): type(T) } = 1 :- encoding(E).
+{ channel(V,E,C) : channel(C) } = 1 :- encoding(V,E).
+{ type(V,E,T): type(T) } = 1 :- encoding(V,E).
 
 % other properties that are not required
-0 { field(E,F): field(F) } 1 :- encoding(E).
-0 { aggregate(E,A): aggregate_op(A) } 1 :- encoding(E).
-0 { bin(E,B): binning(B) } 1 :- encoding(E).
-0 { zero(E) } 1 :- encoding(E).
-0 { log(E) } 1 :- encoding(E).
+0 { field(V,E,F): field(F) } 1 :- encoding(V,E).
+0 { aggregate(V,E,A): aggregate_op(A) } 1 :- encoding(V,E).
+0 { bin(V,E,B): binning(B) } 1 :- encoding(V,E).
+0 { zero(V,E) } 1 :- encoding(V,E). 
+0 { log(V,E) } 1 :- encoding(V,E).
 
 % pick one mark type
 
-{ mark(M) : marktype(M) } = 1.
+{ mark(V,M) : marktype(M) } = 1 :- visualization(V).
 
 % stacking
 
-0 { stack(S): stacking(S) } 1.
+0 { stack(V,S): stacking(S) } 1 :- visualization(V).

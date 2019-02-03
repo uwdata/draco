@@ -1,11 +1,29 @@
 import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';
 
-const REGEX = /(\w+)\(([\w\.\/]+)(,([\w\.]+))?\)/;
+const REGEX = /(\w+)\(([\w\.\/]+)(,([\w\.]+))?(,([\w\.]+))?\)/;
 
+const V_REGEX = /visualization\((.*)\)./;
 /**
  * Convert from ASP to Vega-Lite.
  */
-export default function asp2vl(facts: string[]): TopLevelFacetedUnitSpec {
+export default function asp2vl(facts: string[]): TopLevelFacetedUnitSpec[] {
+  const visualizations = facts.filter(fact => {
+    const extract = V_REGEX.exec(fact);
+    return extract !== null;
+  }).map(fact => {
+    const extract = V_REGEX.exec(fact);
+    return extract[1];
+  });
+
+
+  const result = visualizations.map(v => {
+    return asp2vl_single(facts, v);
+  });
+
+  return result;
+}
+
+function asp2vl_single(facts: string[], v: string) {
   let mark = '';
   let url = 'data/cars.json'; // default dataset
   const encodings: { [enc: string]: any } = {};
@@ -14,7 +32,11 @@ export default function asp2vl(facts: string[]): TopLevelFacetedUnitSpec {
     // TODO: Better handle quoted fields. We currently simply remove all ".
     const cleanedValue = value.replace(/\"/g, '');
     const negSymbol = value.trim().startsWith(':-'); // TODO: remove this
-    const [_, predicate, first, __, second] = REGEX.exec(cleanedValue) as any;
+    const [_, predicate, viz, __, first, ___, second] = REGEX.exec(cleanedValue) as any;
+
+    if (viz !== v || predicate === 'visualization') {
+      continue;
+    }
 
     if (predicate === 'mark') {
       mark = first;
