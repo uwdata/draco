@@ -24,8 +24,8 @@ Read our introductory [blog post about Draco](https://medium.com/@uwdata/draco-r
 
 This repository currently contains:
 
-* The ASP programs with soft and hard constraints.
-* A Python and Typescript API that
+* [**draco**](https://pypi.org/project/draco/) (pypi) The ASP programs with soft and hard constraints.
+* [**draco-core**](https://www.npmjs.com/package/draco-core) (npm) A Python and Typescript API that
     * translates from Compassql and Vega-Lite to ASP: `cql2asp`, `vl2asp`
     * translates the output from the Clingo ASP solver to Vega-Lite: `asp2vl`
     * translates a dataset to schema and ASP declaration: `data2schema`, `schema2asp`.
