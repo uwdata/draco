@@ -74,9 +74,7 @@ setup(
     url="https://github.com/uwdata/draco",
     packages=["draco"],
     entry_points={"console_scripts": ["draco=draco.cli:main"]},
-    install_requires=[
-        "clyngor",
-    ],
+    install_requires=["clyngor"],
     extras_require={
         "test": ["coverage", "pytest", "pytest-cov", "black", "ansunit", "mypy"]
     },
