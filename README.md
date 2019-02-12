@@ -47,8 +47,6 @@ Various functionality and extensions are in the following repositories
 
 In addition to a wrapper of the Draco-Core API describe below, the python API contains the following functions.
 
-### Run Draco (Python)
-
 **Result** [<>](https://github.com/uwdata/draco/blob/2de31e3eeb6eab29577b1b09a92ab3c0fd7bd2e0/draco/run.py#L36)
 
 >The result of a Draco run, a solution to a draco_query. User `result.as_vl()` to convert this solution into a Vega-Lite specification.
