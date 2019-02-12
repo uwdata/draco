@@ -24,12 +24,34 @@ Read our introductory [blog post about Draco](https://medium.com/@uwdata/draco-r
 
 This repository currently contains:
 
-* [**draco**](https://pypi.org/project/draco/) (pypi) The ASP programs with soft and hard constraints.
-* [**draco-core**](https://www.npmjs.com/package/draco-core) (npm) A Python and Typescript API that
-    * translates from Compassql and Vega-Lite to ASP: `cql2asp`, `vl2asp`
-    * translates the output from the Clingo ASP solver to Vega-Lite: `asp2vl`
-    * translates a dataset to schema and ASP declaration: `data2schema`, `schema2asp`.
-    * translates constraints (hard or soft) from asp to json: `constraints2json`.
+* [**draco**](https://pypi.org/project/draco/) (pypi) The ASP programs with soft and hard constraints, a python API for [running Draco](https://github.com/uwdata/draco/blob/master/draco/run.py), the [CLI](https://github.com/uwdata/draco/blob/master/draco/cli.py), and the [python wrapper](https://github.com/uwdata/draco/blob/master/draco/js.py) for the **draco-core** API. Additionally includes some [helper functions](https://github.com/uwdata/draco/blob/master/draco/helper.py) that may prove useful.
+* [**draco-core**](https://www.npmjs.com/package/draco-core) (npm) Holds a Typescript friendly copy of the ASP programs, and additionally, a Typescript API for all the translation logic of Draco, as described below.
+    
+### Draco-Core API
+    
+**vl2asp** *(spec: TopLevelFacetedUnitSpec): string[]* [<>](https://github.com/uwdata/draco/blob/master/js/src/vl2asp.ts)
+
+>Translates a Vega-Lite specification into a list of ASP Draco facts.
+
+**cql2asp** *(spec: any): string[]* [<>](https://github.com/uwdata/draco/blob/master/js/src/cql2asp.ts)
+
+>Translates a CompassQL specification into a list of ASP Draco constraints.
+
+**asp2vl** *(facts: string[]): TopLevelFacetedUnitSpec* [<>](https://github.com/uwdata/draco/blob/master/js/src/asp2vl.ts)
+
+>Interprets a list of ASP Draco facts as a Vega-Lite specification.
+
+**data2schema** *(data: any[]): Schema* [<>](https://github.com/uwdata/draco/blob/master/js/src/data2schema.ts)
+
+>Reads a list of rows and generates a schema for the dataset. `data` should be given as a list of dictionaries.
+
+**schema2asp** *(schema: Schema): string[]* [<>](https://github.com/uwdata/draco/blob/master/js/src/schema2asp.ts)
+
+>Translates a schema into an ASP declaration of the data it describes.
+
+**constraints2json** *(constraintsAsp: string, weightsAsp?: string): Constraint[]* [<>](https://github.com/uwdata/draco/blob/master/js/src/constraints2json.ts)
+
+>Translates the given ASP constraints and matching weights (i.e. for soft constraints) into JSON format.
 
 ### Sibling Repositories
 
