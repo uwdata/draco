@@ -32,7 +32,7 @@ This repository currently contains:
 Various functionality and extensions are in the following repositories
 
 * [draco-vis](https://github.com/uwdata/draco-vis)
-   * A TypeScript/JavaScript version of Draco for use in web applications.
+   * A web-friendly Draco! Including a bundled Webassembly module of Draco's solver, Clingo.
 
 * [draco-learn](https://github.com/uwdata/draco-learn)
    * Runs a learning-to-rank method on results of perception experiments.
