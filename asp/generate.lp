@@ -3,7 +3,7 @@
 % encodings
 
 % maximum number for each multi channel encoding
-#const max_extra_encs = 5.
+#const max_extra_encs = 1.
 
 obj_id(1..max_extra_encs).
 
@@ -21,7 +21,7 @@ obj_id(1..max_extra_encs).
 0 { field(V,E,F): field(F) } 1 :- encoding(V,E).
 0 { aggregate(V,E,A): aggregate_op(A) } 1 :- encoding(V,E).
 0 { bin(V,E,B): binning(B) } 1 :- encoding(V,E).
-0 { zero(V,E) } 1 :- encoding(V,E). 
+0 { zero(V,E) } 1 :- encoding(V,E).
 0 { log(V,E) } 1 :- encoding(V,E).
 
 % pick one mark type

@@ -6,7 +6,7 @@ const V_REGEX = /visualization\((.*)\)./;
 /**
  * Convert from ASP to Vega-Lite.
  */
-export default function asp2vl(facts: string[]): TopLevelFacetedUnitSpec[] {
+export default function asp2vl(facts: string[]): {[name: string]: TopLevelFacetedUnitSpec} {
   const visualizations = facts.filter(fact => {
     const extract = V_REGEX.exec(fact);
     return extract !== null;
@@ -16,9 +16,10 @@ export default function asp2vl(facts: string[]): TopLevelFacetedUnitSpec[] {
   });
 
 
-  const result = visualizations.map(v => {
-    return asp2vl_single(facts, v);
-  });
+  const result = visualizations.reduce((dict, v) => {
+    dict[v] = asp2vl_single(facts, v);
+    return dict;
+  }, {});
 
   return result;
 }
@@ -34,7 +35,7 @@ function asp2vl_single(facts: string[], v: string) {
     const negSymbol = value.trim().startsWith(':-'); // TODO: remove this
     const [_, predicate, viz, __, first, ___, second] = REGEX.exec(cleanedValue) as any;
 
-    if (viz !== v || predicate === 'visualization') {
+    if (viz !== v.replace(/\"/g, '') || predicate === 'visualization') {
       continue;
     }
 

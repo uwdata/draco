@@ -61,7 +61,8 @@ class Result:
         self.cost = cost
 
     def as_vl(self,v) -> Dict:
-        return asp2vl(self.props)[v]
+        specs = asp2vl(self.props)
+        return specs[v]
 
 
 def load_file(path: str) -> bytes:

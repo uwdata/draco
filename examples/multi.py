@@ -57,46 +57,83 @@ from draco.run import run
 
 
 
-program = """% ====== Data definitions ======
-data("cars.json").
-num_rows(142).
+program = """visualization("view").
+num_rows(406).
 
-fieldtype(horsepower,number).
-cardinality(horsepower,94).
+fieldtype("Acceleration",number).
+cardinality("Acceleration", 96).
+fieldtype("Cylinders",number).
+cardinality("Cylinders", 5).
+fieldtype("Displacement",number).
+cardinality("Displacement", 83).
+fieldtype("Horsepower",number).
+cardinality("Horsepower", 94).
+fieldtype("Miles_per_Gallon",number).
+cardinality("Miles_per_Gallon", 130).
+fieldtype("Name",string).
+cardinality("Name", 311).
+fieldtype("Origin",string).
+cardinality("Origin", 3).
+fieldtype("Weight_in_lbs",number).
+cardinality("Weight_in_lbs", 356).
+fieldtype("Year",number).
+cardinality("Year", 12).
 
-fieldtype(acceleration,number).
-cardinality(acceleration,96).
+mark("view",point).
+encoding("view",e0).
+:- not field("view",e0,"Horsepower").
+aggregate("view",e0,mean).
+channel("view",e0,x).
+encoding("view",e1).
+:- not field("view",e1,"Miles_per_Gallon").
+visualization("first").
+num_rows(406).
 
-% ====== Query constraints ======
-visualization(v1).
-% base(v1).
-data("cars.json").
-encoding(v1,e0).
-encoding(v1,e1).
-type(v1,e0,quantitative).
-type(v1,e1,quantitative).
-field(v1,e0,acceleration).
-field(v1,e1,horsepower).
-channel(v1,e0,x).
-channel(v1,e1,y).
-zero(v1,e0).
-zero(v1,e1).
-:- log(v1,_).
-:- bin(v1,_,_).
-:- aggregate(v1,_,_).
-:- stack(v1,_).
-:- not { encoding(v1,_) } = 2.
-mark(v1,point).
+fieldtype("Acceleration",number).
+cardinality("Acceleration", 96).
+fieldtype("Cylinders",number).
+cardinality("Cylinders", 5).
+fieldtype("Displacement",number).
+cardinality("Displacement", 83).
+fieldtype("Horsepower",number).
+cardinality("Horsepower", 94).
+fieldtype("Miles_per_Gallon",number).
+cardinality("Miles_per_Gallon", 130).
+fieldtype("Name",string).
+cardinality("Name", 311).
+fieldtype("Origin",string).
+cardinality("Origin", 3).
+fieldtype("Weight_in_lbs",number).
+cardinality("Weight_in_lbs", 356).
+fieldtype("Year",number).
+cardinality("Year", 12).
 
-visualization(v2).
-
-mark(v2,bar).
-
-encoding(v2,e0).
-:- not field(v2,e0,acceleration).
-
-encoding(v2,e1).
-:- not field(v2,e1,horsepower)."""
+encoding("first",e0).
+base("first").
+:- not field("first",e0,"Horsepower").
+aggregate("first",e0,mean).
+channel("first",e0,x).
+encoding("first",e1).
+:- not field("first",e1,"Miles_per_Gallon").
+visualization("first").
+encoding("first",e0).
+encoding("first",e1).
+aggregate("first",e0,mean).
+channel("first",e0,x).
+bin("first",e1,10).
+type("first",e0,quantitative).
+type("first",e1,quantitative).
+field("first",e0,"Horsepower").
+field("first",e1,"Miles_per_Gallon").
+channel("first",e1,y).
+zero("first",e0).
+mark("first",bar).
+:- not { encoding("first",_) } = 2.
+:- not { channel("first",_,_) } = 2.
+:- not { bin("first",_,_) } = 1.
+:- not { type("first",_,_) } = 2.
+:- not { field("first",_,_) } = 2.
+:- not { zero("first",_) } = 1."""
 
 asp = program.split('\n')
 result = run(asp)
