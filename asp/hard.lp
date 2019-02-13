@@ -148,7 +148,7 @@ hard(rect_overlap,V) :- mark(V,rect), overlap(V).
 hard(stack_without_bar_area,V) :- stack(V,_), not mark(V,bar), not mark(V,area).
 
 % @constraint Don't stack if aggregation is not summative (summative are count, sum, distinct, valid, missing).
-hard(stack_without_summative_agg,V,E,A) :- aggregate(V,E,A), stack(E,_), not summative_aggregate_op(A).
+hard(stack_without_summative_agg,V,E,A) :- aggregate(V,E,A), stack(V,E,_), not summative_aggregate_op(A).
 
 % @constraint Need to stack if we use bar, area with discrete color.
 hard(no_stack_with_bar_area_discrete_color,V,E) :- mark(V,(bar;area)), encoding(V,E), channel(V,E,color), discrete(V,E), not stack(V,_).

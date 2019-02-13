@@ -32,6 +32,11 @@ soft(count_twice,V) :- visualization(V), { aggregate(V,_,count) } = 2.
 % @constraint Shape channel should not have too high cardinality.
 soft(shape_cardinality,V,E) :- channel(V,E,shape), discrete_cardinality(V,E,C), C > 5.
 
+% @constraint Prefer nominal string fields
+soft(string_non_nominal,V,E) :- type(V,E,ordinal), field(V,E,F), fieldtype(F,string).
+soft(string_non_nominal,V,E) :- type(V,E,temporal), field(V,E,F), fieldtype(F,string).
+soft(string_non_nominal,V,E) :- type(V,E,quantitative), field(V,E,F), fieldtype(F,string).
+
 % @constraint Numbers should not be nominal.
 soft(number_nominal,V,E) :- type(V,E,nominal), field(V,E,F), fieldtype(F,number).
 

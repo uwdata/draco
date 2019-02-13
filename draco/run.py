@@ -37,13 +37,13 @@ file_cache: Dict[str, bytes] = {}
 
 
 class Result:
-    props: List[str]
+    props: Dict[str,List[str]]
     cost: Optional[int]
     violations: Dict[str, int]
 
     def __init__(self, answers: Answers, cost: Optional[int] = None) -> None:
         violations: Dict[str, int] = defaultdict(int)
-        props: List[str] = []
+        props: Dict[str,List[str]] = {}
 
         for ((head, body),) in answers:
             if head == "cost":
@@ -53,17 +53,20 @@ class Result:
             elif head == "compare":
                 violations[body[0]] += 1
             else:
+                name = body[0]
                 b = ",".join(map(str, body))
-                props.append(f"{head}({b}).")
+                if (name not in props):
+                    props[name] = []
+
+                props[name].append(f"{head}({b}).")
 
         self.props = props
         self.violations = violations
         self.cost = cost
 
     def as_vl(self,v) -> Dict:
-        specs = asp2vl(self.props)
+        specs = asp2vl(self.props[v])
         return specs[v]
-
 
 def load_file(path: str) -> bytes:
     content = file_cache.get(path)

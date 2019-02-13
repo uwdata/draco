@@ -5,6 +5,7 @@
 #show mark/2.
 
 #show visualization/1.
+#show base/1.
 #show encoding/2.
 
 #show type/3.
@@ -18,4 +19,5 @@
 #show zero/2.
 
 #show soft/3.
+#show compare/5.
 #show compare/3.
