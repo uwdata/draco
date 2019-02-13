@@ -20,4 +20,3 @@
 
 #show soft/3.
 #show compare/5.
-#show compare/3.
