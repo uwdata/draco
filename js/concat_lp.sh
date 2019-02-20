@@ -24,7 +24,7 @@ do
   then
     output+="${newline}"
   fi
-  output+="export const ${const}: string = \`${lp}\`;"
+  output+="export const ${const}: string = \`${lp}${newline}\`;"
   let "i++"
 done
 

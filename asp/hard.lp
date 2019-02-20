@@ -1,7 +1,3 @@
-:- hard(_).
-:- hard(_,_).
-:- hard(_,_,_).
-
 % ====== Expressiveness and Well-Formedness Constraints ======
 
 % === Within Encodings ===
