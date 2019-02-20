@@ -31,7 +31,3 @@ obj_id(1..max_extra_encs).
 % stacking
 
 0 { stack(S): stacking(S) } 1.
-
-:- hard(_).
-:- hard(_,_).
-:- hard(_,_,_).
