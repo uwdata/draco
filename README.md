@@ -93,6 +93,10 @@ In addition to a wrapper of the Draco-Core API describe below, the python API co
 
 >Translates the given ASP constraints and matching weights (i.e. for soft constraints) into JSON format.
 
+**json2constraints** *(constraints: Constraint[]): ConstraintAsp* [<>](https://github.com/uwdata/draco/blob/master/js/src/json2constraints.ts)
+
+>Translates the given JSON format ASP constraints into ASP strings for definitions and weights (if applicable, i.e. for soft constraints).
+
 ## User Info
 
 ### Installation
