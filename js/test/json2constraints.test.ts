@@ -3,7 +3,6 @@ import { Constraint, json2constraints } from '../src';
 import { ConstraintAsp } from '../src/json2constraints';
 
 test('generates constraint asp from json', () => {
-  
   let input: Constraint[] = [
     {
       name: 'enc_type_valid',
@@ -18,11 +17,9 @@ test('generates constraint asp from json', () => {
 hard(enc_type_valid,E,F) :- type(E,quantitative), field(E,F), fieldtype(F,(string;boolean)).
 hard(enc_type_valid,E,F) :- type(E,temporal), field(E,F), not fieldtype(F,datetime).
 
-`
+`,
   };
-  expect(
-    json2constraints(input)
-  ).toEqual(output);
+  expect(json2constraints(input)).toEqual(output);
 
   input = [
     {
@@ -48,11 +45,9 @@ hard(enc_type_valid,E,F) :- type(E,temporal), field(E,F), not fieldtype(F,dateti
 % @constraint Can only bin quantitative or ordinal.
 hard(bin_q_o,E,T) :- type(E,T), bin(E,_), T != quantitative, T != ordinal.
 
-`
+`,
   };
-  expect(
-    json2constraints(input)
-  ).toEqual(output);
+  expect(json2constraints(input)).toEqual(output);
 
   input = [
     {
@@ -71,11 +66,9 @@ soft(aggregate,E) :- aggregate(E,_).
 `,
     weights: `#const aggregate_weight = 1.
 `,
-  }
-  expect(
-    json2constraints(input)
-  ).toEqual(output);
- 
+  };
+  expect(json2constraints(input)).toEqual(output);
+
   input = [
     {
       name: 'aggregate',
@@ -103,10 +96,8 @@ soft(bin,E) :- bin(E,_).
 `,
     weights: `#const aggregate_weight = 1.
 #const bin_weight = 2.
-`
+`,
   };
 
-  expect(
-    json2constraints(input)
-  ).toEqual(output);
+  expect(json2constraints(input)).toEqual(output);
 });
