@@ -119,3 +119,7 @@ orientation(vertical) :- mark(bar;tick;area;line), channel_discrete(x).
 orientation(vertical) :- mark(area;line), channel_continuous(x), channel_continuous(y).
 
 orientation(horizontal) :- mark(bar;tick;area;line), channel_discrete(y).
+
+:- hard(_).
+:- hard(_,_).
+:- hard(_,_,_).
