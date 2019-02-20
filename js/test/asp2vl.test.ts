@@ -1,3 +1,4 @@
+import 'jest';
 import { asp2vl } from '../src';
 
 test('parses results correctly', () => {
