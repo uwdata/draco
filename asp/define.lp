@@ -16,7 +16,7 @@ binning(10;25;200).
 single_channel(x;y;color;size;shape;text;row;column).
 multi_channel(detail).
 channel(C) :- single_channel(C).
-channel(C) :- multi_channel(C).
+% channel(C) :- multi_channel(C).
 non_positional(color;size;shape;text;detail).
 
 % Possible tasks.
