@@ -19,4 +19,7 @@
 #show zero/2.
 
 #show soft/3.
-#show compare/5.
+#show compare/7.
+
+#show soft_weight(N,W) : soft(N,_,_), soft_weight(N,W).
+#show compare_weight(N,W) : compare(N,_,_,_,_,_,_), compare_weight(N,W).

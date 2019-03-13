@@ -156,9 +156,11 @@ compare(edit_scale,V1,V2,E1,E2) :- comparable(V1,V2), field(V1,E1,F), field(V2,E
 compare(edit_scale,V1,V2,E1,E2) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), zero(V1,E1), not zero(V2,E2).
 compare(edit_scale,V1,V2,E1,E2) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), not zero(V1,E1), zero(V2,E2).
 
-compare(edit_bin,V1,V2,E1,E2) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), bin(V1,E1,_), not bin(V2,E2,_).
-compare(edit_bin,V1,V2,E1,E2) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), not bin(V1,E1,_), bin(V2,E2,_).
+compare(edit_bin,V1,V2,E1,E2,B1,none) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), bin(V1,E1,B1), not bin(V2,E2,_).
+compare(edit_bin,V1,V2,E1,E2,none,B2) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), not bin(V1,E1,_), bin(V2,E2,B2).
 
-compare(edit_aggregate,V1,V2,E1,E2) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), aggregate(V1,E1,A1), aggregate(V2,E2,A2), A1 != A2.
-compare(edit_aggregate,V1,V2,E1,E2) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), aggregate(V1,E1,_), not aggregate(V2,E2,_).
-compare(edit_aggregate,V1,V2,E1,E2) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), not aggregate(V1,E1,_), aggregate(V2,E2,_).
+compare(edit_aggregate,V1,V2,E1,E2,A1,A2) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), aggregate(V1,E1,A1), aggregate(V2,E2,A2), A1 != A2.
+compare(edit_aggregate,V1,V2,E1,E2,A1,none) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), aggregate(V1,E1,A1), not aggregate(V2,E2,_).
+compare(edit_aggregate,V1,V2,E1,E2,none,A2) :- comparable(V1,V2), field(V1,E1,F), field(V2,E2,F), not aggregate(V1,E1,_), aggregate(V2,E2,A2).
+
+compare(N,V1,V2,A,B,_placeholder,_placeholder) :- compare(N,V1,V2,A,B).

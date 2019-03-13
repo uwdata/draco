@@ -12,6 +12,7 @@ from typing import Dict, List, Optional, Tuple, Union
 
 import clyngor
 from clyngor.answers import Answers
+
 from draco.js import asp2vl
 
 logging.basicConfig(level=logging.INFO)
@@ -43,6 +44,13 @@ class Result:
 
     def __init__(self, answers: Answers, cost: Optional[int] = None) -> None:
         violations: Dict[str, int] = defaultdict(int)
+        draco: Dict[str, int] = defaultdict(int)
+        draco_list = []
+        graphscape: Dict[str, int] = defaultdict(int)
+        graphscape_list = []
+        draco_weights: Dict[str, int] = defaultdict(int)
+        graphscape_weights: Dict[str, int] = defaultdict(int)
+
         props: Dict[str,List[str]] = {}
 
         for ((head, body),) in answers:
@@ -50,8 +58,16 @@ class Result:
                 cost = int(body[0])
             elif head == "soft":
                 violations[body[0]] += 1
+                draco[body[0]] += 1
+                draco_list.append(body)
             elif head == "compare":
                 violations[body[0]] += 1
+                graphscape[body[0]] += 1
+                graphscape_list.append(body)
+            elif head == "soft_weight":
+                draco_weights[body[0]] = body[1]
+            elif head == "compare_weight":
+                graphscape_weights[body[0]] = body[1]
             else:
                 name = body[0]
                 b = ",".join(map(str, body))
@@ -60,9 +76,29 @@ class Result:
 
                 props[name].append(f"{head}({b}).")
 
+        # print(draco_weights)
+        # print(draco)
+        draco_weight = sum([v * draco_weights[k] for k,v in draco.items()])
+        graphscape_weight = sum([v * graphscape_weights[k] for k,v in graphscape.items()])
+        cost = draco_weight + graphscape_weight
+
+
+        # print(graphscape_list)
+        # if ('\"view\"' in props):
+        #     print('\n'.join(props["\"view\""]))
+        #     print()
+
         self.props = props
         self.violations = violations
+        self.draco = draco
+        self.graphscape = graphscape
+        self.draco_weights = draco_weights
+        self.graphscape_weights = graphscape_weights
+        self.draco_list = draco_list
+        self.graphscape_list = graphscape_list
         self.cost = cost
+        self.d = draco_weight
+        self.g = graphscape_weight
 
     def as_vl(self,v) -> Dict:
         specs = asp2vl(self.props[v])
@@ -84,16 +120,23 @@ def run_clingo(
     files: List[str] = None,
     silence_warnings=False,
     debug=False,
+    topk=False,
+    k=1,
 ) -> Tuple[str, str]:
     """
     Run draco and return stderr and stdout
     """
-
     # default args
     files = files or DRACO_LP
     constants = constants or {}
 
-    options = ["--outf=2", "--quiet=1,2,2"]
+    options = ["--outf=2", "--quiet=1,2,2", "--parallel-mode=4"]
+
+    if (topk):
+        files.append('topk-py.lp')
+        options.append('--opt-mode=OptN')
+        options.append("--models={0}".format(k))
+
     if silence_warnings:
         options.append("--warn=no-atom-undefined")
     for name, value in constants.items():
@@ -108,6 +151,7 @@ def run_clingo(
 
     program = "\n".join(draco_query)
     file_names = [os.path.join(DRACO_LP_DIR, f) for f in files]
+
     asp_program = b"\n".join(map(load_file, file_names)) + program.encode("utf8")
 
     if debug:
@@ -115,9 +159,8 @@ def run_clingo(
             fd.write(program)
 
             logger.info('Debug ASP with "clingo %s %s"', " ".join(file_names), fd.name)
-
+    
     stdout, stderr = proc.communicate(asp_program)
-
     return (stderr, stdout)
 
 
@@ -128,6 +171,8 @@ def run(
     silence_warnings=False,
     debug=False,
     clear_cache=False,
+    topk=False,
+    k=1,
 ) -> Optional[Result]:
     """ Run clingo to compute a completion of a partial spec or violations. """
 
@@ -136,7 +181,7 @@ def run(
         logger.warning("Cleared file cache")
         file_cache.clear()
 
-    stderr, stdout = run_clingo(draco_query, constants, files, silence_warnings, debug)
+    stderr, stdout = run_clingo(draco_query, constants, files, silence_warnings, debug, topk, k)
 
     try:
         json_result = json.loads(stdout)
@@ -154,15 +199,27 @@ def run(
         logger.info("Constraints are unsatisfiable.")
         return None
     elif result == "OPTIMUM FOUND":
-        # get the last witness, which is the best result
-        answers = json_result["Call"][0]["Witnesses"][-1]
+        if (not topk):
+            # get the last witness, which is the best result
+            answers = json_result["Call"][0]["Witnesses"][-1]
 
-        logger.debug(answers["Value"])
+            logger.debug(answers["Value"])
 
-        return Result(
-            clyngor.Answers(answers["Value"]).sorted,
-            cost=json_result["Models"]["Costs"][0],
-        )
+            result = Result(
+                clyngor.Answers(answers["Value"]).sorted
+            )
+
+            return result
+        else:
+            results = []
+
+            for call in json_result["Call"]:
+                for answers in call["Witnesses"]:
+                    result = Result(
+                        clyngor.Answers(answers["Value"]).sorted
+                    )
+                    results.append(result)
+            return results
     elif result == "SATISFIABLE":
         answers = json_result["Call"][0]["Witnesses"][-1]
 
