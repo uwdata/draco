@@ -130,7 +130,7 @@ def run_clingo(
     files = files or DRACO_LP
     constants = constants or {}
 
-    options = ["--outf=2", "--quiet=1,2,2", "--parallel-mode=4"]
+    options = ["--outf=2", "--quiet=1,2,2", "--parallel-mode=4", "--seed=20"]
 
     if (topk):
         files.append('topk-py.lp')

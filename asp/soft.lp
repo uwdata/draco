@@ -470,3 +470,5 @@ soft(summary_discrete_row,E) :- task(V,summary), channel(V,E,row), discrete(V,E)
 
 % @constraint Discrete column for summary tasks.
 soft(summary_discrete_column,E) :- task(V,summary), channel(V,E,column), discrete(V,E), enc_interesting(V,E).
+
+:~ field(V,E1,"Horsepower"), channel(V,E1,y), field(V,E2,"Miles_per_Gallon"), channel(V,E2,x). [1]
