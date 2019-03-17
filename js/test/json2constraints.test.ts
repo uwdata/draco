@@ -67,7 +67,7 @@ soft(aggregate,E) :- aggregate(E,_).
     weights: `#const aggregate_weight = 1.
 `,
     assigns: `soft_weight(aggregate, aggregate_weight).
-`
+`,
   };
   expect(json2constraints(input)).toEqual(output);
 
@@ -101,7 +101,7 @@ soft(bin,E) :- bin(E,_).
 `,
     assigns: `soft_weight(aggregate, aggregate_weight).
 soft_weight(bin, bin_weight).
-`
+`,
   };
 
   expect(json2constraints(input)).toEqual(output);

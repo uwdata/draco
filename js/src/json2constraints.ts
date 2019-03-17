@@ -45,7 +45,7 @@ ${constraint.asp}`;
     return {
       definitions,
       weights,
-      assigns
+      assigns,
     };
   }
 }
