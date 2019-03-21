@@ -59,13 +59,13 @@ function asp2vl_single(facts: string[], v: string) {
     const enc = encodings[e];
 
     // if quantitative encoding and zero is not set, set zero to false
-    if (enc.type === 'quantitative' && enc.zero === undefined && enc.bin === undefined) {
+    if (enc.type === 'quantitative' && typeof enc.zero === 'undefined' && typeof enc.bin === 'undefined') {
       enc.zero = false;
     }
 
     const scale = {
       ...(enc.log ? { type: 'log' } : {}),
-      ...(enc.zero === undefined ? {} : enc.zero ? { zero: true } : { zero: false }),
+      ...(typeof enc.zero === 'undefined' ? {} : enc.zero ? { zero: true } : { zero: false }),
     };
 
     encoding[enc.channel] = {
@@ -73,7 +73,7 @@ function asp2vl_single(facts: string[], v: string) {
       ...(enc.aggregate ? { aggregate: enc.aggregate } : {}),
       ...(enc.field ? { field: enc.field } : {}),
       ...(enc.stack ? { stack: enc.stack } : {}),
-      ...(enc.bin !== undefined ? (+enc.bin === 10 ? { bin: true } : { bin: { maxbins: +enc.bin } }) : {}),
+      ...(typeof enc.bin !== 'undefined' ? (+enc.bin === 10 ? { bin: true } : { bin: { maxbins: +enc.bin } }) : {}),
       ...(Object.keys(scale).length ? { scale } : {}),
     };
   }
