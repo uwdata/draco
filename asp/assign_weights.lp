@@ -25,6 +25,7 @@ soft_weight(aggregate_group_by_raw,aggregate_group_by_raw_weight).
 soft_weight(x_y_raw,x_y_raw_weight).
 soft_weight(log,log_weight).
 soft_weight(zero,zero_weight).
+soft_weight(zero_bin,zero_bin_weight).
 soft_weight(zero_size,zero_size_weight).
 soft_weight(zero_positional,zero_positional_weight).
 soft_weight(zero_skew,zero_skew_weight).

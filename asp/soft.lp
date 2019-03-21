@@ -70,6 +70,9 @@ soft(log,V,E) :- log(V,E).
 % @constraint Prefer to include zero for continuous (binned doesn't need zero).
 soft(zero,V,E) :- continuous(V,E), not zero(V,E).
 
+% @constraint Prefer to exclude zero for binned.
+soft(zero_bin,V,E) :- bin(V,E,_), zero(V,E).
+
 % @constraint Prefer zero size (even when binned).
 soft(zero_size,V) :- channel(V,E,size), not zero(V,E).
 
