@@ -1,11 +1,11 @@
-import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';
+import { TopLevelUnitSpec } from 'vega-lite/build/src/spec/unit';
 
 const REGEX = /(\w+)\(([\w\.\/]+)(,([\w\.]+))?\)/;
 
 /**
  * Convert from ASP to Vega-Lite.
  */
-export default function asp2vl(facts: string[]): TopLevelFacetedUnitSpec {
+export default function asp2vl(facts: string[]): TopLevelUnitSpec {
   let mark = '';
   let url = 'data/cars.json'; // default dataset
   const encodings: { [enc: string]: any } = {};
@@ -60,5 +60,5 @@ export default function asp2vl(facts: string[]): TopLevelFacetedUnitSpec {
     data: { url: `${url}` },
     mark,
     encoding,
-  } as TopLevelFacetedUnitSpec;
+  } as TopLevelUnitSpec;
 }

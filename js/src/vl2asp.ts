@@ -1,9 +1,9 @@
-import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';
+import { TopLevelUnitSpec } from 'vega-lite/build/src/spec/unit';
 
 /**
  * Convert from Vega-Lite to ASP.
  */
-export default function vl2asp(spec: TopLevelFacetedUnitSpec): string[] {
+export default function vl2asp(spec: TopLevelUnitSpec): string[] {
   const facts = [`mark(${spec.mark}).`];
 
   if ('data' in spec && 'url' in spec.data) {

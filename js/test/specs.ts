@@ -1,5 +1,5 @@
-import { TopLevelFacetedUnitSpec } from 'vega-lite/build/src/spec';
-export const vlSpecs: TopLevelFacetedUnitSpec[] = [
+import { TopLevelUnitSpec } from 'vega-lite/build/src/spec/unit';
+export const vlSpecs: TopLevelUnitSpec[] = [
   {
     mark: 'bar',
     encoding: {
