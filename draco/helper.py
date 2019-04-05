@@ -1,10 +1,10 @@
 import json
+from typing import Dict, List
+
 import pandas as pd
 
-from draco.run import run_clingo
 from draco.js import data2schema, schema2asp
-
-from typing import Dict, List
+from draco.run import run_clingo
 
 
 def is_valid(draco_query: List[str], debug=False) -> bool:
@@ -15,7 +15,10 @@ def is_valid(draco_query: List[str], debug=False) -> bool:
             whether the task is valid
     """
     _, stdout = run_clingo(
-        draco_query, files=["define.lp", "hard.lp"], silence_warnings=True, debug=debug
+        draco_query,
+        files=["define.lp", "hard.lp", "hard-integrity.lp"],
+        silence_warnings=True,
+        debug=debug,
     )
 
     return json.loads(stdout)["Result"] != "UNSATISFIABLE"

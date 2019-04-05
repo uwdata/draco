@@ -51,9 +51,9 @@ In addition to a wrapper of the Draco-Core API describe below, the python API co
 
 >The result of a Draco run, a solution to a draco_query. User `result.as_vl()` to convert this solution into a Vega-Lite specification.
 
-**run** *(draco_query: List[str] [,constants, files, silence_warnings, debug, clear_cache]) -> Result:* [<>](https://github.com/uwdata/draco/blob/2de31e3eeb6eab29577b1b09a92ab3c0fd7bd2e0/draco/run.py#L115)
+**run** *(draco_query: List[str] [,constants, files, relax_hard, silence_warnings, debug, clear_cache]) -> Result:* [<>](https://github.com/uwdata/draco/blob/2de31e3eeb6eab29577b1b09a92ab3c0fd7bd2e0/draco/run.py#L115)
 
->Runs a `draco_query`, defined as a list of Draco ASP facts (strings), against given `file` asp programs (defaults to base Draco set). Returns a `Result` if the query is satisfiable.
+>Runs a `draco_query`, defined as a list of Draco ASP facts (strings), against given `file` asp programs (defaults to base Draco set). Returns a `Result` if the query is satisfiable. If `relax_hard` is set to `True`, hard constraints (`hard.lp`) will not be strictly enforced, and instead will incur an infinite cost when violated.
 
 **is_valid** *(draco_query: List[str] [,debug]) -> bool:* [<>](https://github.com/uwdata/draco/blob/2de31e3eeb6eab29577b1b09a92ab3c0fd7bd2e0/draco/helper.py#L10)
 

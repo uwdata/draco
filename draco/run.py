@@ -12,6 +12,7 @@ from typing import Dict, List, Optional, Tuple, Union
 
 import clyngor
 from clyngor.answers import Answers
+
 from draco.js import asp2vl
 
 logging.basicConfig(level=logging.INFO)
@@ -21,6 +22,7 @@ DRACO_LP = [
     "define.lp",
     "generate.lp",
     "hard.lp",
+    "hard-integrity.lp",
     "soft.lp",
     "weights.lp",
     "assign_weights.lp",
@@ -73,6 +75,7 @@ def run_clingo(
     draco_query: List[str],
     constants: Dict[str, str] = None,
     files: List[str] = None,
+    relax_hard=False,
     silence_warnings=False,
     debug=False,
 ) -> Tuple[str, str]:
@@ -82,6 +85,9 @@ def run_clingo(
 
     # default args
     files = files or DRACO_LP
+    if relax_hard and "hard-integrity.lp" in files:
+        files.remove("hard-integrity.lp")
+
     constants = constants or {}
 
     options = ["--outf=2", "--quiet=1,2,2"]
@@ -116,6 +122,7 @@ def run(
     draco_query: List[str],
     constants: Dict[str, str] = None,
     files: List[str] = None,
+    relax_hard=False,
     silence_warnings=False,
     debug=False,
     clear_cache=False,
@@ -127,7 +134,9 @@ def run(
         logger.warning("Cleared file cache")
         file_cache.clear()
 
-    stderr, stdout = run_clingo(draco_query, constants, files, silence_warnings, debug)
+    stderr, stdout = run_clingo(
+        draco_query, constants, files, relax_hard, silence_warnings, debug
+    )
 
     try:
         json_result = json.loads(stdout)
