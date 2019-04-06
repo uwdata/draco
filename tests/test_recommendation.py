@@ -1,18 +1,18 @@
 import unittest
 
-from draco.run import run
-from draco.js import cql2asp, vl2asp
 from draco.helper import data_to_asp
+from draco.js import cql2asp, vl2asp
+from draco.run import run
 
 
-def get_rec(data_schema, spec):
+def get_rec(data_schema, spec, relax_hard=False):
     query = cql2asp(spec)
-    return run(data_schema + query)
+    return run(data_schema + query, relax_hard=relax_hard)
 
 
-def run_spec(data_schema, spec):
+def run_spec(data_schema, spec, relax_hard=False):
     query = vl2asp(spec)
-    return run(data_schema + query)
+    return run(data_schema + query, relax_hard=relax_hard)
 
 
 spec_schema = [
@@ -81,6 +81,14 @@ class TestSpecs:
                 "x": {"field": "q1", "type": "quantitative", "scale": {"zero": True}}
             },
         }
+
+    def test_disable_hard_integrity(self):
+        recommendation = get_rec(
+            spec_schema,
+            {"encodings": [{"field": "n1", "scale": {"log": True}}]},
+            relax_hard=True,
+        )
+        assert recommendation is not None
 
 
 class TestTypeChannel:

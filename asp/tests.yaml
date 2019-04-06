@@ -4,14 +4,15 @@ Definitions:
 
     define: {filename: asp/define.lp}
     generate: {filename: asp/generate.lp}
-    test: {filename: asp/hard.lp}
+    hard: {filename: asp/hard.lp}
+    hard-integrity: {filename: asp/hard-integrity.lp}
     features: {filename: asp/soft.lp}
     optimize: {filename: asp/optimize.lp}
 
     # program to test constraints
-    no_opt: {group: [data, define, generate, test, features]}
-    no_gen: {group: [data, define, test, features]}
-    draco: {group: [data, define, generate, test, features, optimize]}
+    no_opt: {group: [data, define, generate, hard, hard-integrity, features]}
+    no_gen: {group: [data, define, hard, hard-integrity, features]}
+    draco: {group: [data, define, generate, hard, hard-integrity, features, optimize]}
 
 Test a implies b:
     Program: |
