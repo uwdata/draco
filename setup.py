@@ -3,12 +3,11 @@
 from codecs import open
 from os.path import abspath, dirname, join
 from subprocess import call
-from typing import List
 from time import time
-
-from setuptools import Command, setup
+from typing import List
 
 from draco import __version__
+from setuptools import Command, setup
 
 this_dir = abspath(dirname(__file__))
 with open(join(this_dir, "README.md"), encoding="utf-8") as file:
@@ -77,6 +76,15 @@ setup(
     install_requires=["clyngor"],
     extras_require={
         "test": ["coverage", "pytest", "pytest-cov", "black", "ansunit", "mypy"]
+    },
+    package_data={
+        "draco": [
+            "../asp/*.lp",
+            "../js/bin/*",
+            "../js/build/draco.js*",
+            "../LICENSE",
+            "../README.md",
+        ]
     },
     cmdclass={"test": RunTests},
 )
