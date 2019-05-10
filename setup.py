@@ -74,6 +74,7 @@ setup(
     packages=["draco"],
     entry_points={"console_scripts": ["draco=draco.cli:main"]},
     install_requires=["clyngor"],
+    include_package_data=True,
     extras_require={
         "test": ["coverage", "pytest", "pytest-cov", "black", "ansunit", "mypy"]
     },
