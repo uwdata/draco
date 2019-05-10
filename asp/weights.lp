@@ -14,7 +14,6 @@
 #const count_twice_weight = 50.
 #const shape_cardinality_weight = 5.
 #const number_nominal_weight = 10.
-#const string_non_nominal_weight = 2.
 #const bin_cardinality_weight = 5.
 #const quant_bin_weight = 1.
 #const agg_dim_weight = 2.

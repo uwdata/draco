@@ -37,11 +37,6 @@ soft(shape_cardinality,E) :- channel(E,shape), discrete_cardinality(E,C), C > 5.
 % @constraint Numbers should not be nominal.
 soft(number_nominal,E) :- type(E,nominal), field(E,F), fieldtype(F,number).
 
-% @constraint Prefer nominal string fields
-soft(string_non_nominal,E) :- type(E,ordinal), field(E,F), fieldtype(F,string).
-soft(string_non_nominal,E) :- type(E,temporal), field(E,F), fieldtype(F,string).
-soft(string_non_nominal,E) :- type(E,quantitative), field(E,F), fieldtype(F,string).
-
 % @constraint Binned quantitative field should not have too low cardinality.
 soft(bin_cardinality,E) :- type(E,quantitative), bin(E,_), enc_cardinality(E,C), C < 15.
 

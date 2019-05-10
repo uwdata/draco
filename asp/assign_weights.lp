@@ -14,7 +14,6 @@ soft_weight(same_field_gte3,same_field_gte3_weight).
 soft_weight(count_twice,count_twice_weight).
 soft_weight(shape_cardinality,shape_cardinality_weight).
 soft_weight(number_nominal,number_nominal_weight).
-soft_weight(string_non_nominal,string_non_nominal_weight).
 soft_weight(bin_cardinality,bin_cardinality_weight).
 soft_weight(quant_bin,quant_bin_weight).
 soft_weight(agg_dim,agg_dim_weight).
