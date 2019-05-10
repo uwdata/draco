@@ -94,9 +94,8 @@ def main():  # pragma: no cover
         print("Validation only works with full specs.", sys.stderr)
     else:
         logger.info(f"Processing query: {args.query.name} ...")
-
         if args.type == QueryType.asp:
-            draco_query = args.query.read()
+            draco_query = args.query.read().split('\n')
         else:
             query_spec = json.load(args.query)
             d = args.base or os.path.dirname(args.query.name)
