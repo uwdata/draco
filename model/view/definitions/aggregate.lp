@@ -1,0 +1,1 @@
+aggregate_definition(summative,(count;sum)).
