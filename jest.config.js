@@ -5,5 +5,6 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest"
   },
   moduleFileExtensions: [...defaults.moduleFileExtensions, "ts", "tsx", "lp"],
+  setupFiles: ["jest-canvas-mock"],
   setupFilesAfterEnv: ["jest-extended"]
 };

@@ -21,3 +21,5 @@ soft_weight(mark_type,c_d_no_overlap_tick,25).
 soft_weight(mark_type,d_d_point,0).
 soft_weight(mark_type,d_d_text,1).
 soft_weight(mark_type,d_d_rect,0).
+
+soft_weight(mark_type,c_d_temporal_not_line,11).

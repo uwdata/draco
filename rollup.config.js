@@ -1,4 +1,5 @@
 import commonjs from "rollup-plugin-commonjs";
+import json from "rollup-plugin-json";
 import builtins from "rollup-plugin-node-builtins";
 import nodeResolve from "rollup-plugin-node-resolve";
 
@@ -9,5 +10,5 @@ export default {
     format: "cjs",
     sourcemap: true
   },
-  plugins: [nodeResolve(), commonjs(), builtins()]
+  plugins: [nodeResolve(), commonjs(), builtins(), json()]
 };

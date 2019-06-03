@@ -1,12 +1,12 @@
+import "jest-extended";
 import path from "path";
-import { Draco, Result, Witness } from "../../src";
+import { Draco, Result } from "../../src";
 
 describe("Draco Node Runner", () => {
   describe("Options", () => {
     test("default options", () => {
       const result = Draco.run(null, null, [EXAMPLE_PATH]);
-      const witnesses = Result.toWitnesses(result);
-      const specs = Witness.toVegaLiteSpecDictionary(witnesses[0]);
+      const specs = Result.getBestVegaLiteSpecDictionary(result);
 
       expect(specs).toBeOneOf(EXAMPLE_OUTPUT_DEFAULT);
     });

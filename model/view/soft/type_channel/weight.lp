@@ -2,15 +2,15 @@ soft_weight(type_channel,continuous_x,0).
 soft_weight(type_channel,continuous_y,0).
 soft_weight(type_channel,continuous_color,10).
 soft_weight(type_channel,continuous_size,1).
-soft_weight(type_channel,continuous_text,20).
+soft_weight(type_channel,continuous_text,40).
 
 soft_weight(type_channel,ordered_x,1).
 soft_weight(type_channel,ordered_y,0).
 soft_weight(type_channel,ordered_color,8).
-soft_weight(type_channel,ordered_size,10).
-soft_weight(type_channel,ordered_text,32).
-soft_weight(type_channel,ordered_row,10).
-soft_weight(type_channel,ordered_column,10).
+soft_weight(type_channel,ordered_size,15).
+soft_weight(type_channel,ordered_text,40).
+soft_weight(type_channel,ordered_row,15).
+soft_weight(type_channel,ordered_column,15).
 
 soft_weight(type_channel,nominal_x,3).
 soft_weight(type_channel,nominal_y,0).

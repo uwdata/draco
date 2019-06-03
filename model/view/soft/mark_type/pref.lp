@@ -63,3 +63,6 @@ soft(mark_type,d_d_text,V,true) :- chart_fact(discrete_discrete,V), mark(V,text)
 
 % @constraint Discrete by discrete for point mark.
 soft(mark_type,d_d_rect,V,true) :- chart_fact(discrete_discrete,V), mark(V,rect).
+
+% @constraint Prefer to use line chart for c_d temporal.
+soft(mark_type,c_d_temporal_not_line,V,true) :- chart_fact(continuous_discrete,V), not mark(V,line), encoding_fact(discrete,V,E), type(V,E,temporal).

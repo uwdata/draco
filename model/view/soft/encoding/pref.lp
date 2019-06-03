@@ -22,11 +22,14 @@ soft(encoding,count_twice,V,true) :- view(V), { aggregate(V,_,count) } >= 2.
 % @constraint Prefer quantitative for bin.
 soft(encoding,quant_bin,V,E) :- bin(V,E,_), not type(V,E,quantitative).
 
+% @constraint Prefer not to use non-positional channels until all positional channels are used.
+soft(encoding,non_positional_pref,V,true) :- channel(V,_,C), channel_definition(non_positional,C), not channel(V,_,(x;y)).
+
 % @constraint Prefer not to use multiple non-positional encoding channels.
 soft(encoding,multiple_non_pos,V,true) :- view(V), { channel(V,_,C): channel_definition(non_positional,C) } > 1.
 
 % @constraint Aggregate plots should not use raw continuous as group by.
-soft(encoding,aggregate_group_by_raw,V,E) :- aggregate(V,_,_), encoding_fact(continuous,V,E), not aggregate(V,E,_).
+soft(encoding,aggregate_group_by_raw_non_temporal,V,E) :- aggregate(V,_,_), encoding_fact(continuous,V,E), not aggregate(V,E,_), not type(V,E,temporal).
 
 % @constraint Aggregate should also have a discrete encoding to group by.
 soft(encoding,agg_dim,V,true) :- aggregate(V,_,_), not encoding_fact(discrete,V,_).

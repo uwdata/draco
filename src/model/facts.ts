@@ -9,24 +9,15 @@ export class Facts {
   static toVegaLiteSpecDictionary(
     facts: FactsObject
   ): VegaLiteSpecDictionaryObject {
-    return facts2vl(facts);
+    const cleanedFacts = facts.map(fact => {
+      const cleaned = fact.replace(/\"/g, "");
+      return cleaned;
+    });
+    return facts2vl(cleanedFacts);
   }
 
   static toViews(facts: FactsObject): string[] {
-    const views = facts
-      .filter(fact => {
-        return doesMatchRegex(fact, VIEW_REGEX_CAPTURE);
-      })
-      .map(fact => {
-        const extract = VIEW_REGEX_CAPTURE.exec(fact);
-        if (extract) {
-          const [_, name] = extract;
-          return name;
-        }
-        throw new Error(`Invalid view statement: ${fact}.`);
-      });
-
-    return views;
+    return facts2views(facts);
   }
 }
 

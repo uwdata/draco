@@ -1,4 +1,5 @@
-import { WitnessObject } from "./witness";
+import { VegaLiteSpecDictionaryObject } from "./facts";
+import { Witness, WitnessObject } from "./witness";
 
 export type ResultObject = any;
 
@@ -17,6 +18,13 @@ export class Result {
 
       return arr;
     }, []);
+  }
+
+  static getBestVegaLiteSpecDictionary(
+    result: ResultObject
+  ): VegaLiteSpecDictionaryObject {
+    const witnesses = Result.toWitnesses(result);
+    return Witness.toVegaLiteSpecDictionary(witnesses[0]);
   }
 
   static isSat(result: ResultObject): boolean {

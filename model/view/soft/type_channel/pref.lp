@@ -17,22 +17,22 @@ soft(type_channel,continuous_text,V,true) :- channel_fact(continuous,V,text).
 soft(type_channel,ordered_x,V,true) :- channel_fact(discrete,V,x), channel_fact(ordered,V,x).
 
 % @constraint Ordered on y channel.
-soft(type_channel,ordered_y,V,true) :- channel_fact(discrete,V,x), channel_fact(ordered,V,y).
+soft(type_channel,ordered_y,V,true) :- channel_fact(discrete,V,y), channel_fact(ordered,V,y).
 
 % @constraint Ordered on color channel.
-soft(type_channel,ordered_color,V,true) :- channel_fact(discrete,V,x), channel_fact(ordered,V,color).
+soft(type_channel,ordered_color,V,true) :- channel_fact(discrete,V,color), channel_fact(ordered,V,color).
 
 % @constraint Ordered on size channel.
-soft(type_channel,ordered_size,V,true) :- channel_fact(discrete,V,x), channel_fact(ordered,V,size).
+soft(type_channel,ordered_size,V,true) :- channel_fact(discrete,V,size), channel_fact(ordered,V,size).
 
 % @constraint Ordered on text channel.
-soft(type_channel,ordered_text,V,true) :- channel_fact(discrete,V,x), channel_fact(ordered,V,text).
+soft(type_channel,ordered_text,V,true) :- channel_fact(discrete,V,text), channel_fact(ordered,V,text).
 
 % @constraint Ordered on row channel.
-soft(type_channel,ordered_row,V,true) :- channel_fact(discrete,V,x), channel_fact(ordered,V,row).
+soft(type_channel,ordered_row,V,true) :- channel_fact(discrete,V,row), channel_fact(ordered,V,row).
 
 % @constraint Ordered on column channel.
-soft(type_channel,ordered_column,V,true) :- channel_fact(discrete,V,x), channel_fact(ordered,V,column).
+soft(type_channel,ordered_column,V,true) :- channel_fact(discrete,V,column), channel_fact(ordered,V,column).
 
 % @constraint Nominal on x channel.
 soft(type_channel,nominal_x,V,true) :- channel_fact(nominal,V,x).

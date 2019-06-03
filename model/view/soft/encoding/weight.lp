@@ -1,11 +1,12 @@
-soft_weight(encoding,encoding_field,6).
+soft_weight(encoding,encoding_field,7).
 soft_weight(encoding,aggregate,4).
 soft_weight(encoding,bin,2).
 soft_weight(encoding,same_field_2,8).
 soft_weight(encoding,count_twice,50).
 soft_weight(encoding,quant_bin_weight,1).
 soft_weight(encoding,non_positional_pref,10).
-soft_weight(encoding,aggregate_group_by_raw,10).
+soft_weight(encoding,multiple_non_pos,3).
+soft_weight(encoding,aggregate_group_by_raw_non_temporal,10).
 soft_weight(encoding,agg_dim,2).
 soft_weight(encoding,x_y_raw,1).
 soft_weight(encoding,stack_zero_weight,0).

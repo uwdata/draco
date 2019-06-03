@@ -52,3 +52,9 @@ view_check(count_on_x_and_y,V):- channel(V,EX,x), channel(V,EY,y), aggregate(V,E
 
 % @constraint If we use aggregation, then all continuous fields need to be aggeragted.
 view_check(aggregate_not_all_continuous,V):- aggregate(V,E,_), encoding_fact(continuous,V,E), not aggregate(V,E,_).
+
+% @constraint Don't use row without y. Just using y is simpler.
+view_check(row_no_y,V) :- channel(V,_,row), not channel(V,_,y).
+
+% @constraint Don't use column without x. Just using x is simpler.
+view_check(column_no_x,V) :- channel(V,_,column), not channel(V,_,x).

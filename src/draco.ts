@@ -1,3 +1,4 @@
+import { DataObject } from "./data";
 import { ConstraintDictionary } from "./model/constraint-dictionary";
 import { ResultObject } from "./model/result";
 
@@ -8,8 +9,8 @@ const { spawnSync } = require("child_process");
 tmp.setGracefulCleanup();
 
 export interface DracoOptions {
-  strictHard: boolean;
-  generate: boolean;
+  strictHard?: boolean;
+  generate?: boolean;
 }
 
 export const DEFAULT_OPTIONS = {
@@ -56,6 +57,11 @@ export class Draco {
     );
 
     return JSON.parse(result.output[1]);
+  }
+
+  static getProgram(data: DataObject, query: string): string {
+    return `${data.asp}
+${query}`;
   }
 
   static getSoftConstraints(): ConstraintDictionary {

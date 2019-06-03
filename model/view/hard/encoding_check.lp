@@ -1,6 +1,6 @@
 % @constraint Primitive type has to support data type.
 encoding_check(fieldtype_valid,V,E) :- type(V,E,quantitative), field(V,E,F), fieldtype(F,(string;boolean)).
-encoding_check(fieldtype_valid,V,E) :- type(V,E,temporal), field(V,E,F), not fieldtype(F,datetime).
+encoding_check(fieldtype_valid,V,E) :- type(V,E,temporal), field(V,E,F), not fieldtype(F,date).
 
 % @constraint Can only bin quantitative or ordinal.
 encoding_check(bin_quant_or_ord,V,E) :- type(V,E,T), bin(V,E,true), T != quantitative, T != ordinal.
@@ -24,10 +24,10 @@ encoding_check(log_non_positive,V,E) :- scale(V,E,log), field(V,E,F), data_fact(
 encoding_check(bin_and_aggregate,V,E) :- aggregate(V,E,_), bin(V,E,true).
 
 % @constraint Oridnal only supports min, max, and median.
-encoding_check(aggregate_o_valid,V,E,A) :- aggregate(V,E,A), type(V,E,ordinal), A != min, A != max, A != median.
+encoding_check(aggregate_o_valid,V,E) :- aggregate(V,E,A), type(V,E,ordinal), A != min, A != max, A != median.
 
 % @constraint Temporal only supports min and max.
-encoding_check(aggregate_t_valid,V,E,A) :- aggregate(V,E,A), type(V,E,temporal), A != min, A != max.
+encoding_check(aggregate_t_valid,V,E) :- aggregate(V,E,A), type(V,E,temporal), A != min, A != max.
 
 % @constraint Cannot aggregate nominal.
 encoding_check(aggregate_nominal,V,E) :- aggregate(V,E,_), type(V,E,nominal).
