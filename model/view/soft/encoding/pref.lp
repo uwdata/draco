@@ -39,3 +39,12 @@ soft(encoding,stack_zero,V,true) :- stack(V,zero).
 
 % @constraint Normalize between groupbys as stack op.
 soft(encoding,stack_normalize,V,true) :- stack(V,normalize).
+
+% @constraint Prefer quantitative > ordinal > nominal.
+soft(encoding,type_quantitative,V,E) :- type(V,E,quantitative).
+
+% @constraint Prefer quantitative > ordinal > nominal.
+soft(encoding,type_ordinal,V,E) :- type(V,E,ordinal).
+
+% @constraint Prefer quantitative > ordinal > nominal.
+soft(encoding,type_nominal,V,E) :- type(V,E,nominal).

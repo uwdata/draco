@@ -8,3 +8,4 @@
 #show type/3.
 #show bin/3.
 #show aggregate/3.
+#show soft/4.

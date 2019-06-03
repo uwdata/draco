@@ -1,9 +1,9 @@
-import { ModelObject } from './model';
+import { WitnessObject } from "./witness";
 
 export type ResultObject = any;
 
 export class Result {
-  static toModels(result: ResultObject): ModelObject[] {
+  static toWitnesses(result: ResultObject): WitnessObject[] {
     return (result.Call || []).reduce((arr: any[], el: any) => {
       el.Witnesses.forEach((d: any, i: number) => {
         const facts = d.Value; // add line terminator period.
@@ -11,7 +11,7 @@ export class Result {
 
         arr.push({
           costs,
-          facts,
+          facts
         });
       });
 
@@ -20,6 +20,6 @@ export class Result {
   }
 
   static isSat(result: ResultObject): boolean {
-    return result.Result === 'OPTIMUM FOUND' || result.Result === 'SATISFIABLE';
+    return result.Result === "OPTIMUM FOUND" || result.Result === "SATISFIABLE";
   }
 }

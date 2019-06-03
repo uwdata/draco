@@ -4,5 +4,6 @@ module.exports = {
   transform: {
     "^.+\\.tsx?$": "ts-jest"
   },
-  moduleFileExtensions: [...defaults.moduleFileExtensions, "ts", "tsx", "lp"]
+  moduleFileExtensions: [...defaults.moduleFileExtensions, "ts", "tsx", "lp"],
+  setupFilesAfterEnv: ["jest-extended"]
 };

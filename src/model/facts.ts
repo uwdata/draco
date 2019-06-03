@@ -1,12 +1,14 @@
-import { TopLevelUnitSpec } from 'vega-lite/src/spec/unit';
-import { doesMatchRegex } from './util';
+import { TopLevelUnitSpec } from "vega-lite/src/spec/unit";
+import { doesMatchRegex } from "./util";
 
 export type VegaLiteSpecDictionaryObject = { [name: string]: TopLevelUnitSpec };
 
 export type FactsObject = string[];
 
 export class Facts {
-  static toVegaLiteSpecDictionary(facts: FactsObject): VegaLiteSpecDictionaryObject {
+  static toVegaLiteSpecDictionary(
+    facts: FactsObject
+  ): VegaLiteSpecDictionaryObject {
     return facts2vl(facts);
   }
 
@@ -78,21 +80,21 @@ function facts2vl_single(facts: string[], view: string): TopLevelUnitSpec {
       continue;
     }
 
-    if (predicate === 'view') {
+    if (predicate === "view") {
       continue;
     }
 
     switch (predicate) {
-      case 'mark':
+      case "mark":
         mark = first;
         break;
-      case 'field':
-      case 'type':
-      case 'channel':
-      case 'scale':
-      case 'bin':
-      case 'aggregate':
-      case 'stack':
+      case "field":
+      case "type":
+      case "channel":
+      case "scale":
+      case "bin":
+      case "aggregate":
+      case "stack":
         if (!encodings[first]) {
           encodings[first] = {};
         }
@@ -107,8 +109,8 @@ function facts2vl_single(facts: string[], view: string): TopLevelUnitSpec {
     const enc = encodings[e];
 
     const scale = {
-      ...(enc.scale === 'log' ? { type: 'log' } : {}),
-      ...(enc.scale === 'zero' ? { zero: true } : {}),
+      ...(enc.scale === "log" ? { type: "log" } : {}),
+      ...(enc.scale === "zero" ? { zero: true } : {})
     };
 
     const insert = {
@@ -117,7 +119,7 @@ function facts2vl_single(facts: string[], view: string): TopLevelUnitSpec {
       ...(enc.field ? { field: enc.field } : {}),
       ...(enc.stack ? { stack: enc.stack } : {}),
       ...(enc.bin ? { bin: true } : {}),
-      ...scale,
+      ...(enc.scale ? { scale } : {})
     };
 
     if (enc.aggregate) {
@@ -129,7 +131,7 @@ function facts2vl_single(facts: string[], view: string): TopLevelUnitSpec {
 
   const spec = {
     mark,
-    encoding,
+    encoding
   } as TopLevelUnitSpec;
 
   return spec;

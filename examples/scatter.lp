@@ -15,3 +15,4 @@ encoding(view1,e0).
 
 encoding(view1,e1).
 :- not field(view1,e1,horsepower).
+
