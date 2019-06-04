@@ -25,9 +25,7 @@ obj_id(1..max_extra_encs).
 % pick one mark type
 { mark(V,M): mark_type(M) } = 1 :- view(V).
 
+stack
+0 { stack(V,S): stack_type(S) } 1 :- view(V).
 
 
-% stack
-% 0 { stack(V,S): stack_type(S) } 1 :- view(V).
-
-:- field(V,E1,F1), field(V,E2,F2), E1 > E2, F1 <= F2.
