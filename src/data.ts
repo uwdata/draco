@@ -21,8 +21,8 @@ export class Data {
       };
 
       if (
-        descriptor.type !== DataType.STRING &&
-        descriptor.type !== DataType.BOOLEAN
+        descriptor.type !== FieldType.STRING &&
+        descriptor.type !== FieldType.BOOLEAN
       ) {
         descriptor["extent"] = extent(arr, d => d[f]);
       }
@@ -34,17 +34,16 @@ export class Data {
 
     const numRows = arr.length;
 
-    let asp = [`num_rows(${numRows}).`];
+    let asp = [Data.getNumRowsDeclaration(numRows)];
 
     asp = fields.reduce((asp, f) => {
-      const field = `"${f}"`;
-      asp.push(`fieldtype(${field},${schema[f].type}).`);
-      asp.push(`cardinality(${field},${schema[f].cardinality}).`);
+      asp.push(Data.getFieldDeclaration(f, schema[f].type));
+      asp.push(Data.getCardinalityDeclaration(f, schema[f].cardinality));
 
       // TODO: figure out how to handle non ints
-      if (schema[f].extent && schema[f].type === DataType.INTEGER) {
+      if (schema[f].extent && schema[f].type === FieldType.INTEGER) {
         asp.push(
-          `extent(${field},${schema[f].extent[0]},${schema[f].extent[1]}).`
+          Data.getExtentDeclaration(f, schema[f].extent[0], schema[f].extent[1])
         );
       }
 
@@ -59,6 +58,40 @@ export class Data {
       data: arr
     };
   }
+
+  static getNumRowsDeclaration(numRows: number): string {
+    return `num_rows(${numRows}).`;
+  }
+
+  static getFieldDeclaration(
+    fieldName: string,
+    fieldType: FieldTypeType
+  ): string {
+    return `fieldtype(${cleanFieldName(fieldName)},${fieldType}).`;
+  }
+
+  static getCardinalityDeclaration(
+    fieldName: string,
+    cardinality: number
+  ): string {
+    return `cardinality(${cleanFieldName(fieldName)},${cardinality}).`;
+  }
+
+  static getExtentDeclaration(
+    fieldName: string,
+    min: number,
+    max: number
+  ): string {
+    if (!Number.isInteger(min) || !Number.isInteger(max)) {
+      throw new Error(`Extent is yet supported for floats: ${min} ${max}`);
+    }
+
+    return `extent(${cleanFieldName(fieldName)},${min},${max}).`;
+  }
+}
+
+function cleanFieldName(fieldName: string) {
+  return `"${fieldName}"`;
 }
 
 function getFieldsFromArr(arr: any): string[] {
@@ -83,12 +116,12 @@ export interface SchemaObject {
 }
 
 export interface FieldDescriptorObject {
-  type: DataTypeType;
+  type: FieldTypeType;
   cardinality: number;
   extent?: [number, number];
 }
 
-export class DataType {
+export class FieldType {
   static STRING: "string" = "string";
   static BOOLEAN: "boolean" = "boolean";
   static INTEGER: "integer" = "integer";
@@ -96,9 +129,9 @@ export class DataType {
   static DATE: "date" = "date";
 }
 
-export type DataTypeType =
-  | typeof DataType.STRING
-  | typeof DataType.BOOLEAN
-  | typeof DataType.INTEGER
-  | typeof DataType.NUMBER
-  | typeof DataType.DATE;
+export type FieldTypeType =
+  | typeof FieldType.STRING
+  | typeof FieldType.BOOLEAN
+  | typeof FieldType.INTEGER
+  | typeof FieldType.NUMBER
+  | typeof FieldType.DATE;

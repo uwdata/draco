@@ -28,6 +28,7 @@ export class Result {
   }
 
   static isSat(result: ResultObject): boolean {
+    console.log(result);
     return result.Result === "OPTIMUM FOUND" || result.Result === "SATISFIABLE";
   }
 }

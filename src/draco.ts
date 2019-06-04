@@ -48,7 +48,7 @@ export class Draco {
       resolvedFiles = resolvedFiles.concat([tmpObj.name]);
     }
 
-    const result = spawnSync(
+    const out = spawnSync(
       "clingo",
       ["--outf=2", "--quiet=1,2,2", ...resolvedFiles],
       {
@@ -56,7 +56,9 @@ export class Draco {
       }
     );
 
-    return JSON.parse(result.output[1]);
+    const result = JSON.parse(out.output[1]);
+
+    return result;
   }
 
   static getProgram(data: DataObject, query: string): string {

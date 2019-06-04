@@ -8,6 +8,9 @@ encoding_fact(discrete,V,E) :- bin(V,E,true).
 % @fact continuous encoding
 encoding_fact(continuous,V,E) :- encoding(V,E), not encoding_fact(discrete,V,E).
 
+% @fact raw encoding
+encoding_fact(raw,V,E) :- encoding(V,E), not aggregate(V,E,_), not bin(V,E,_).
+
 % @fact ordered encoding
 encoding_fact(ordered,V,E) :- type(V,E,(ordinal;quantitative;temporal)).
 
