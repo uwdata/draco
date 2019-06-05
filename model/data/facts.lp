@@ -20,6 +20,10 @@ data_fact(cardinality_gt_8,F) :- cardinality(F,C), C > 8.
 
 data_fact(cardinality_gt_20,F) :- cardinality(F,C), C > 20.
 
+data_fact(cardinality_gt_30,F) :- cardinality(F,C), C > 30.
+
+data_fact(cardinality_gt_100,F) :- cardinality(F,C), C > 100.
+
 data_fact(min_minus_max_gt_min_or_max_minus_zero,F) :- extent(F,MIN,MAX), EX = MAX - MIN, |MAX| > EX, |MIN| > EX.
 
 data_fact(extent_includes_zero,F) :- extent(F,MIN,MAX), MIN < 0, MAX > 0.

@@ -18,4 +18,7 @@ soft_weight(datatype,date_quantitative,10).
 soft_weight(datatype,date_ordinal,15).
 soft_weight(datatype,date_nominal,20).
 soft_weight(datatype,date_temporal,0).
-
+soft_weight(datatype,high_cardinality_ordinal,10).
+soft_weight(datatype,high_cardinality_nominal,10).
+soft_weight(datatype,high_cardinality_nominal_color,10).
+soft_weight(datatype,high_cardinality_size,1).
