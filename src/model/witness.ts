@@ -1,12 +1,14 @@
-import { Facts, FactsObject, VegaLiteSpecDictionaryObject } from './facts';
+import { Facts, FactsObject, VegaLiteSpecDictionaryObject } from "./facts";
 
 export interface WitnessObject {
-  costs: number[];
+  costs?: number[];
   facts: FactsObject;
 }
 
 export class Witness {
-  static toVegaLiteSpecDictionary(witness: WitnessObject): VegaLiteSpecDictionaryObject {
+  static toVegaLiteSpecDictionary(
+    witness: WitnessObject
+  ): VegaLiteSpecDictionaryObject {
     return Facts.toVegaLiteSpecDictionary(witness.facts);
   }
 }

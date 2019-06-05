@@ -11,7 +11,12 @@ describe("Draco Node Runner", () => {
       expect(specs).toBeOneOf(EXAMPLE_OUTPUT_DEFAULT);
     });
 
-    test("weak hard", () => {});
+    test("weak hard", () => {
+      const result = Draco.run(null, { strictHard: false }, [EXAMPLE_PATH]);
+      const specs = Result.getBestVegaLiteSpecDictionary(result);
+
+      expect(specs).toBeOneOf(EXAMPLE_OUTPUT_DEFAULT);
+    });
   });
 });
 

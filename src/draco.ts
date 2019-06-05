@@ -1,5 +1,5 @@
 import { DataObject } from "./data";
-import { Facts } from "./model";
+import { Facts, FactsObject } from "./model";
 import { ConstraintDictionary } from "./model/constraint-dictionary";
 import { Result, ResultObject } from "./model/result";
 
@@ -12,11 +12,13 @@ tmp.setGracefulCleanup();
 export interface DracoOptions {
   strictHard?: boolean;
   generate?: boolean;
+  optimize?: boolean;
 }
 
 export const DEFAULT_OPTIONS = {
   strictHard: true,
-  generate: true
+  generate: true,
+  optimize: true
 };
 
 export class Draco {
@@ -26,28 +28,13 @@ export class Draco {
     files?: string[]
   ): ResultObject {
     let resolvedFiles = files ? files : [];
-    const resolvedOptions = options
-      ? Object.assign(Object.assign({}, DEFAULT_OPTIONS), options)
-      : DEFAULT_OPTIONS;
 
-    if (resolvedOptions.generate && resolvedOptions.strictHard) {
-      resolvedFiles.push(resolvePathToModelProgram("default.lp"));
-    } else if (!resolvedOptions.generate && !resolvedOptions.strictHard) {
-      resolvedFiles.push(
-        resolvePathToModelProgram("no_generation_weak_hard.lp")
-      );
-    } else if (resolvedOptions.generate && !resolvedOptions.strictHard) {
-      resolvedFiles.push(resolvePathToModelProgram("weak_hard.lp"));
-    } else if (!resolvedOptions.generate && resolvedOptions.strictHard) {
-      resolvedFiles.push(resolvePathToModelProgram("no_generation.lp"));
-    }
+    resolvedFiles = resolvedFiles.concat(getFilesFromOptions(options));
 
     const tmpObj = tmp.fileSync({ postfix: ".lp" });
 
-    let programFile;
     if (program) {
       fs.writeFileSync(tmpObj.name, program);
-      programFile = tmpObj.name;
       resolvedFiles = resolvedFiles.concat([tmpObj.name]);
     }
 
@@ -55,32 +42,21 @@ export class Draco {
 
     const result = JSON.parse(out.output[1]);
 
-    if (Result.isSat(result)) {
-      return result;
+    return result;
+  }
+
+  static runDebug(
+    program?: string,
+    options?: DracoOptions,
+    files?: string[]
+  ): FactsObject {
+    const result = Draco.run(program, { strictHard: false }, files);
+    if (!Result.isSat(result)) {
+      return [];
     }
 
-    const debugFiles = [programFile];
-
-    if (resolvedOptions.generate && resolvedOptions.strictHard) {
-      debugFiles.push(resolvePathToModelProgram("weak_hard.lp"));
-    } else if (!resolvedOptions.generate && !resolvedOptions.strictHard) {
-      debugFiles.push(resolvePathToModelProgram("no_generation_weak_hard.lp"));
-    } else if (resolvedOptions.generate && !resolvedOptions.strictHard) {
-      debugFiles.push(resolvePathToModelProgram("weak_hard.lp"));
-    } else if (!resolvedOptions.generate && resolvedOptions.strictHard) {
-      debugFiles.push(resolvePathToModelProgram("no_generation_weak_hard.lp"));
-    }
-
-    const debugOut = runClingoSync(debugFiles);
-    const debugResult = JSON.parse(debugOut.output[1]);
-
-    const debugWitness = Result.toWitnesses(debugResult)[0];
-    const hardViolations = Facts.getHardViolations(debugWitness.facts);
-
-    throw new Error(
-      `Spec violates the following hard constraints
-${JSON.stringify(hardViolations, null, 2)}`
-    );
+    const witness = Result.toWitnesses(result)[0];
+    return Facts.getHardViolations(witness.facts);
   }
 
   static getProgram(data: DataObject, query: string): string {
@@ -124,4 +100,39 @@ function runClingoSync(files: string[]): any {
 
 function resolvePathToModelProgram(file: string): string {
   return path.resolve(__dirname, "../model/program", file);
+}
+
+function resolvePathToModelView(file: string): string {
+  return path.resolve(__dirname, "../model/view", file);
+}
+
+function getFilesFromOptions(options: DracoOptions): string[] {
+  const result = [];
+
+  const resolvedOptions = options
+    ? Object.assign(Object.assign({}, DEFAULT_OPTIONS), options)
+    : DEFAULT_OPTIONS;
+
+  const { generate, strictHard, optimize } = resolvedOptions;
+
+  if (generate && strictHard && optimize) {
+    result.push(resolvePathToModelProgram("default.lp"));
+  } else {
+    result.push(resolvePathToModelProgram("../data/index.lp"));
+    result.push(resolvePathToModelView("program/base.lp"));
+
+    if (generate) {
+      result.push(resolvePathToModelView("generate.lp"));
+    }
+
+    if (strictHard) {
+      result.push(resolvePathToModelView("hard_integrity.lp"));
+    }
+
+    if (optimize) {
+      result.push(resolvePathToModelView("optimize.lp"));
+    }
+  }
+
+  return result;
 }
