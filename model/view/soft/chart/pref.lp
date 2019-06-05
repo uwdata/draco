@@ -11,4 +11,4 @@ soft(chart,binned_one_dimensional,V,true) :- #count { E: encoding(V,E) } = 1, bi
 soft(chart,orientation_horizontal_binned,V,true) :- bin(V,E,_), type(V,E,quantitative), not channel(V,E,x).
 
 % @constraint Prefer 1D raw continuous tick for over 1D point (or any other).
-soft(chart,one_dim_raw_continuous_tick_over_rest,V,true) :- #count { E: encoding(V,E) } = 1, encoding_fact(continuous,V,_), enconding_fact(raw,V,_), not mark(V,tick).
+soft(chart,one_dim_raw_continuous_tick_over_rest,V,true) :- #count { E: encoding(V,E) } = 1, encoding_fact(continuous,V,_), encoding_fact(raw,V,_), not mark(V,tick).
