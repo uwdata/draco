@@ -1,6 +1,6 @@
 [
   {
-    "view1": {
+    "view0": {
       "mark": "point",
       "encoding": {
         "x": {
@@ -13,6 +13,24 @@
           "scale": {
             "zero": true
           }
+        }
+      }
+    }
+  },
+  {
+    "view0": {
+      "mark": "point",
+      "encoding": {
+        "x": {
+          "type": "quantitative",
+          "field": "IMDB_Rating",
+          "scale": {
+            "zero": true
+          }
+        },
+        "y": {
+          "type": "temporal",
+          "field": "Release_Date"
         }
       }
     }

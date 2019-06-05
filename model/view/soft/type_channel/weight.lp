@@ -22,7 +22,7 @@ soft_weight(type_channel,nominal_column,9).
 soft_weight(type_channel,nominal_detail,30).
 
 soft_weight(type_channel,temporal_x,0).
-soft_weight(type_channel,temporal_y,2).
+soft_weight(type_channel,temporal_y,100).
 soft_weight(type_channel,temporal_color,10).
 soft_weight(type_channel,temporal_shape,11).
 soft_weight(type_channel,temporal_text,12).

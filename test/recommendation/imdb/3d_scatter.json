@@ -1,0 +1,38 @@
+[
+  {
+    "v0": {
+      "encoding": {
+        "size": {
+          "field": "US_Gross",
+          "scale": { "zero": true },
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "Worldwide_Gross",
+          "scale": { "zero": true },
+          "type": "quantitative"
+        },
+        "x": { "field": "Release_Date", "type": "temporal" }
+      },
+      "mark": "point"
+    }
+  },
+  {
+    "v0": {
+      "encoding": {
+        "y": {
+          "field": "US_Gross",
+          "scale": { "zero": true },
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "Worldwide_Gross",
+          "scale": { "zero": true },
+          "type": "quantitative"
+        },
+        "x": { "field": "Release_Date", "type": "temporal" }
+      },
+      "mark": "point"
+    }
+  }
+]

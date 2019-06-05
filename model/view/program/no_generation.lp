@@ -1,5 +1,5 @@
 #include "../definitions/index.lp".
-#include "../facts/index.lp".
+#include "../view_facts/index.lp".
 #include "../hard/index.lp".
 #include "../soft/index.lp".
 #include "../const.lp".

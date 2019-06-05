@@ -9,4 +9,4 @@
 #show bin/3.
 #show aggregate/3.
 #show soft/4.
-#show fact/4.
+#show view_fact/4.

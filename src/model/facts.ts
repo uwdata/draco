@@ -19,6 +19,18 @@ export class Facts {
   static toViews(facts: FactsObject): string[] {
     return facts2views(facts);
   }
+
+  static getHardViolations(facts: FactsObject): FactsObject {
+    return facts.filter(f => doesMatchRegex(f, /hard\(.*/));
+  }
+
+  static getSoftViolations(facts: FactsObject): FactsObject {
+    return facts.filter(f => doesMatchRegex(f, /soft\(.*/));
+  }
+
+  static getViewFacts(facts: FactsObject): FactsObject {
+    return facts.filter(f => doesMatchRegex(f, /view_fact\(.*/));
+  }
 }
 
 const VIEW_REGEX_CAPTURE = /view\((.*)\)/;
