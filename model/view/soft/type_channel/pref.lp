@@ -54,3 +54,24 @@ soft(type_channel,nominal_row,V,true) :- channel_fact(nominal,V,row).
 
 % @constraint Nominal on column channel.
 soft(type_channel,nominal_column,V,true) :- channel_fact(nominal,V,column).
+
+% @constraint Temporal on x channel.
+soft(type_channel,temporal_x,V,true) :- channel_fact(temporal,V,x).
+
+% @constraint Temporal on y channel.
+soft(type_channel,temporal_y,V,true) :- channel_fact(temporal,V,y).
+
+% @constraint Temporal on color channel.
+soft(type_channel,temporal_color,V,true) :- channel_fact(temporal,V,color).
+
+% @constraint Temporal on shape channel.
+soft(type_channel,temporal_shape,V,true) :- channel_fact(temporal,V,shape).
+
+% @constraint Temporal on text channel.
+soft(type_channel,temporal_text,V,true) :- channel_fact(temporal,V,text).
+
+% @constraint Temporal on row channel.
+soft(type_channel,temporal_row,V,true) :- channel_fact(temporal,V,row).
+
+% @constraint Temporal on column channel.
+soft(type_channel,temporal_column,V,true) :- channel_fact(temporal,V,column).

@@ -9,3 +9,6 @@ channel_fact(ordered,V,C) :- channel(V,E,C), encoding_fact(ordered,V,E).
 
 % @fact nominal channel
 channel_fact(nominal,V,C) :- channel(V,E,C), type(V,E,nominal).
+
+% @fact temporal channel
+channel_fact(temporal,V,E) :- channel(V,E,C), type(V,E,temporal).

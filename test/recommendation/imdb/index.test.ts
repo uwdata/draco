@@ -3,8 +3,10 @@ import "jest-extended";
 import path from "path";
 import { Data, Draco, Result } from "../../../src";
 
+const INPUTS = readdirSync(path.resolve(__dirname, "./"));
+
 describe("IMDB", () => {
-  readdirSync(path.resolve(__dirname, "./")).forEach(file => {
+  INPUTS.forEach(file => {
     const [name, ext] = file.split(".");
     if (ext === "lp") {
       test(name, () => {

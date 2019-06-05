@@ -1,18 +1,18 @@
 [
   {
     "view1": {
-      "mark": "bar",
+      "mark": "point",
       "encoding": {
         "x": {
+          "type": "temporal",
+          "field": "Release_Date"
+        },
+        "y": {
           "type": "quantitative",
-          "aggregate": "count",
+          "field": "IMDB_Rating",
           "scale": {
             "zero": true
           }
-        },
-        "y": {
-          "type": "temporal",
-          "field": "Release_Date"
         }
       }
     }

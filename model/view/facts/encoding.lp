@@ -2,7 +2,7 @@
 encoding_fact(binned,V,E) :- bin(V,E,true).
 
 % @fact discrete encoding
-encoding_fact(discrete,V,E) :- type(V,E,(nominal;ordinal;temporal)).
+encoding_fact(discrete,V,E) :- type(V,E,(nominal;ordinal)).
 encoding_fact(discrete,V,E) :- bin(V,E,true).
 
 % @fact continuous encoding
