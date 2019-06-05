@@ -1,17 +1,17 @@
-% % @constraint Continuous on x channel.
-% soft(type_channel,continuous_x,V,true) :- channel_fact(continuous,V,x).
+% @constraint Continuous on x channel.
+soft(type_channel,continuous_x,V,true) :- channel_fact(continuous,V,x).
 
-% % @constraint Continuous on y channel.
-% soft(type_channel,continuous_y,V,true) :- channel_fact(continuous,V,y).
+% @constraint Continuous on y channel.
+soft(type_channel,continuous_y,V,true) :- channel_fact(continuous,V,y).
 
-% % @constraint Continuous on color channel.
-% soft(type_channel,continuous_color,V,true) :- channel_fact(continuous,V,color).
+% @constraint Continuous on color channel.
+soft(type_channel,continuous_color,V,true) :- channel_fact(continuous,V,color).
 
-% % @constraint Continuous on size channel.
-% soft(type_channel,continuous_size,V,true) :- channel_fact(continuous,V,size).
+% @constraint Continuous on size channel.
+soft(type_channel,continuous_size,V,true) :- channel_fact(continuous,V,size).
 
-% % @constraint Continuous on text channel.
-% soft(type_channel,continuous_text,V,true) :- channel_fact(continuous,V,text).
+% @constraint Continuous on text channel.
+soft(type_channel,continuous_text,V,true) :- channel_fact(continuous,V,text).
 
 % @constraint Ordered on x channel.
 soft(type_channel,ordered_x,V,true) :- channel_fact(discrete,V,x), channel_fact(ordered,V,x).
