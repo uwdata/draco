@@ -18,7 +18,7 @@ encoding_check(log_discrete,V,E) :- scale(V,E,zero), encoding_fact(discrete,V,E)
 encoding_check(log_zero,V,E) :- scale(V,E,log), scale(V,E,zero).
 
 % @constraint Cannot use log if the data is negative or zero.
-encoding_check(log_non_positive,V,E) :- scale(V,E,log), field(V,E,F), data_fact(negative_or_zero_min,F).
+encoding_check(log_non_positive,V,E) :- scale(V,E,log), field(V,E,F), data_fact(field,min_sign,(negative;zero),F).
 
 % @constraint Cannot bin and aggregate.
 encoding_check(bin_and_aggregate,V,E) :- aggregate(V,E,_), bin(V,E,true).
@@ -49,7 +49,7 @@ encoding_check(detail_non_ordered,V,E) :- channel(V,E,detail), not type(V,E,nomi
 encoding_check(size_nominal,V,E) :- channel(V,E,size), type(V,E,nominal).
 
 % % @constraint Do not use size when data is negative as size implies that data is positive.
-encoding_check(size_negative,V,E) :- channel(V,E,size), field(V,E,F), data_fact(negative_min,F).
+encoding_check(size_negative,V,E) :- channel(V,E,size), field(V,E,F), data_fact(field,min_sign,negative,F).
 
 % === Across encodings and between encodings and marks ===
 

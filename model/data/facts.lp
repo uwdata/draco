@@ -1,47 +1,35 @@
-% from input
-fieldtype(F,T) :- fieldtype(F,T).
-field(F) :- fieldtype(F,_).
+
 
 % rows
-data_fact(rows_high,true) :- num_rows(S), S >= 1000.
+data_fact(rows,size,high) :- num_rows(S), S >= 1000.
 
-data_fact(rows_medium,true) :- num_rows(S), S >= 100, not data_fact(rows_high,true).
+data_fact(rows,size,medium) :- num_rows(S), S >= 100, not data_fact(rows,size,high).
 
-data_fact(rows_low,true) :- num_rows(S), S >= 50, not data_fact(rows_medium,true).
+data_fact(rows,size,low) :- num_rows(S), S >= 50, not data_fact(rows,size,medium).
 
-data_fact(rows_very_low,true) :- num_rows(S), S >= 10, not data_fact(rows_low,true).
+data_fact(rows,size,very_low) :- num_rows(S), S >= 10, not data_fact(rows,size,low).
+
+data_fact(rows,size,very_very_low) :- num_rows(S), not data_fact(rows,size,very_low).
 
 % fields
-data_fact(negative_min,F) :- extent(F,MIN,_), MIN < 0.
+data_fact(field,min_sign,negative,F) :- extent(F,MIN,_), MIN < 0.
 
-data_fact(negative_or_zero_min,F) :- extent(F,MIN,_), MIN <= 0, not data_fact(negative_min,F).
+data_fact(field,min_sign,zero,F) :- extent(F,MIN,_), MIN = 0.
 
-data_fact(cardinality_gt_8,F) :- cardinality(F,C), C > 8.
+data_fact(field,min_sign,positive,F) :- extent(F,MIN,_), MIN > 0.
 
-data_fact(cardinality_gt_20,F) :- cardinality(F,C), C > 20.
+data_fact(field,max_sign,negative,F) :- extent(F,_,MAX), MAX < 0.
 
-data_fact(cardinality_gt_30,F) :- cardinality(F,C), C > 30.
+data_fact(field,max_sign,zero,F) :- extent(F,_,MAX), MAX = 0.
 
-data_fact(cardinality_gt_100,F) :- cardinality(F,C), C > 100.
+data_fact(field,max_sign,positive,F) :- extent(F,_,MAX), MAX > 0.
 
-data_fact(min_minus_max_gt_min_or_max_minus_zero,F) :- extent(F,MIN,MAX), EX = MAX - MIN, |MAX| > EX, |MIN| > EX.
+data_fact(field,min_minus_max_gt_min_or_max_minus_zero,F) :- extent(F,MIN,MAX), EX = MAX - MIN, |MAX| > EX, |MIN| > EX.
 
-data_fact(extent_includes_zero,F) :- extent(F,MIN,MAX), MIN < 0, MAX > 0.
-
-data_fact(cardinality_very_high,F) :- cardinality(F,C), C >= 1000.
-
-data_fact(cardinality_high,F) :- cardinality(F,C), C >= 100, not data_fact(cardinality_very_high,F).
-
-data_fact(cardinality_medium,F) :- cardinality(F,C), C >= 20, not data_fact(cardinality_high,F).
-
-data_fact(cardinality_low,F) :- cardinality(F,C), C >= 10, not data_fact(cardinality_medium, F).
-
-data_fact(cardinality_very_low,F) :- cardinality(F,C), C >= 5, not data_fact(cardinality_low,F).
-
-data_fact(cardinality_very_very_low,F) :- cardinality(F,C), not data_fact(cardinality_very_low,F).
+data_fact(field,extent_includes_zero,F) :- data_fact(field,min_sign,(negative;zero),F), data_fact(field,max_sign,(zero;positive),F).
 
 % overlap
-data_fact(definitely_overlap_fields,(F1,F2)) :- cardinality(F1,C1), cardinality(F2,C2), num_rows(S), S > C1 * C2.
+data_fact(overlap,definitely,(F1,F2)) :- cardinality(F1,C1), cardinality(F2,C2), num_rows(S), S > C1 * C2.
 
-data_fact(definitely_not_overlap_fields,(F1,F2)) :- cardinality(F1,C1), cardinality(F2,C2), num_rows(S), C1 = S, C2 = S.
+data_fact(overlap,definitely_not,(F1,F2)) :- cardinality(F1,C1), cardinality(F2,C2), num_rows(S), C1 = S, C2 = S.
 

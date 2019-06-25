@@ -59,13 +59,13 @@ soft(datatype,date_nominal,V,E) :- type(V,E,nominal), field(V,E,F), fieldtype(F,
 soft(datatype,date_temporal,V,E) :- type(V,E,temporal), field(V,E,F), fieldtype(F,date).
 
 % @constraint Prefer not to use ordinal for fields with high cardinality.
-soft(datatype,high_cardinality_ordinal,V,E) :- type(V,E,ordinal), field(V,E,F), data_fact(cardinality_gt_30,F).
+soft(datatype,high_cardinality_ordinal,V,E) :- type(V,E,ordinal), field(V,E,F), cardinality(F,C), C > 30.
 
 % @constraint Prefer not to use nominal for fields with high cardinality.
-soft(datatype,high_cardinality_nominal,V,E) :- type(V,E,nominal), field(V,E,F), data_fact(cardinality_gt_8,F).
+soft(datatype,high_cardinality_nominal,V,E) :- type(V,E,nominal), field(V,E,F), cardinality(F,C), C > 8.
 
 % @constraint Prefer not to use high cardinality nominal for color.
-soft(datatype,high_cardinality_nominal_color,V,E) :- type(V,E,nominal), channel(V,E,color), field(V,E,F), data_fact(cardinality_gt_20,F).
+soft(datatype,high_cardinality_nominal_color,V,E) :- type(V,E,nominal), channel(V,E,color), field(V,E,F), cardinality(F,C), C > 20.
 
 % @constraint Prefer not to use high cardinality nominal for color.
-soft(datatype,high_cardinality_size,V,E) :- type(V,E,nominal), channel(V,E,size), field(V,E,F), data_fact(cardinality_gt_100,F).
+soft(datatype,high_cardinality_size,V,E) :- type(V,E,nominal), channel(V,E,size), field(V,E,F), cardinality(F,C), C > 20.

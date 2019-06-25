@@ -14,7 +14,7 @@ soft(scale,zero_size,V,true) :- channel(V,E,size), not scale(V,E,zero).
 soft(scale,zero_positional,V,true) :- encoding_fact(continuous,V,E), channel(V,E,(x;y)), not scale(V,E,zero).
 
 % @constraint Prefer not to use zero when the difference between min and max is larger than distance to 0.
-soft(scale,zero_skew,V,true) :- scale(V,E,zero), field(V,E,F), data_fact(min_minus_max_gt_min_or_max_minus_zero,F).
+soft(scale,zero_skew,V,true) :- scale(V,E,zero), field(V,E,F), data_fact(field,min_minus_max_gt_min_or_max_minus_zero,F).
 
 % @constraint Do not include zero when the range of data includes zero.
-soft(scale,includes_zero,V,E) :- scale(V,E,zero), field(V,E,F), data_fact(extent_includes_zero,F).
+soft(scale,includes_zero,V,E) :- scale(V,E,zero), field(V,E,F), data_fact(field,extent_includes_zero,F).

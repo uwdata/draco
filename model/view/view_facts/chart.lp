@@ -12,8 +12,8 @@ chart_fact(discrete_discrete,V) :- channel_fact(discrete,V,x), channel_fact(disc
 chart_fact(non_position_unaggregated,V) :- channel(V,E,C), channel_definition(non_positional,C).
 
 % @fact overlap
-chart_fact(overlap_x_y,V) :- data_fact(definitely_overlap_fields,(F1,F2)), field(V,E1,F1), field(V,E2,F2), channel(V,E1,(x;y)), channel(V,E2,(x;y)).
-chart_fact(no_overlap_x_y,V) :-  data_fact(definitely_not_overlap_fields,(F1,F2)), field(V,E1,F1), field(V,E2,F2), channel(V,E1,(x;y)), channel(V,E2,(x;y)).
+chart_fact(overlap_x_y,V) :- data_fact(overlap,definitely,(F1,F2)), field(V,E1,F1), field(V,E2,F2), channel(V,E1,(x;y)), channel(V,E2,(x;y)).
+chart_fact(no_overlap_x_y,V) :-  data_fact(overlap,definitely_not,(F1,F2)), field(V,E1,F1), field(V,E2,F2), channel(V,E1,(x;y)), channel(V,E2,(x;y)).
 
 % @fact overlap
 chart_fact(no_overlap,V) :- chart_fact(continuous_discrete,V), encoding_fact(continuous,V,E), channel(V,E,(x;y)), aggregate(V,E,_), not chart_fact(non_position_unaggregated,V).
