@@ -13,12 +13,14 @@ export interface DracoOptions {
   strictHard?: boolean;
   generate?: boolean;
   optimize?: boolean;
+  generateData?: boolean;
 }
 
 export const DEFAULT_OPTIONS = {
   strictHard: true,
   generate: true,
-  optimize: true
+  optimize: true,
+  generateData: false
 };
 
 export class Draco {
@@ -113,7 +115,7 @@ function getFilesFromOptions(options: DracoOptions): string[] {
     ? Object.assign(Object.assign({}, DEFAULT_OPTIONS), options)
     : DEFAULT_OPTIONS;
 
-  const { generate, strictHard, optimize } = resolvedOptions;
+  const { generate, strictHard, optimize, generateData } = resolvedOptions;
 
   if (generate && strictHard && optimize) {
     result.push(resolvePathToModelProgram("default.lp"));
@@ -132,6 +134,11 @@ function getFilesFromOptions(options: DracoOptions): string[] {
     if (optimize) {
       result.push(resolvePathToModelView("optimize.lp"));
     }
+  }
+
+  if (generateData) {
+    result.push(resolvePathToModelProgram("../data/generate.lp"));
+    result.push(resolvePathToModelProgram("../data/grammar.lp"));
   }
 
   return result;
