@@ -1,7 +1,7 @@
 % encodings
 
 % maximum number for each multi channel encoding
-#const max_extra_encs = 5.
+#const max_extra_encs = 3.
 
 obj_id(1..max_extra_encs).
 

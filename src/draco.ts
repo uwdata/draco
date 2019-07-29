@@ -14,6 +14,9 @@ export interface DracoOptions {
   generate?: boolean;
   optimize?: boolean;
   generateData?: boolean;
+  models?: number;
+  randomFreq?: number;
+  randomSeed?: number;
 }
 
 export const DEFAULT_OPTIONS = {
@@ -40,7 +43,23 @@ export class Draco {
       resolvedFiles = resolvedFiles.concat([tmpObj.name]);
     }
 
-    const out = runClingoSync(resolvedFiles);
+    const opt = [];
+    if (options) {
+      if (options.models !== undefined) {
+        opt.push(`--models=${options.models}`);
+      }
+
+      if (options.randomFreq !== undefined) {
+        // opt.push(`--sign-def=3`);
+        opt.push(`--rand-freq=${options.randomFreq}`);
+      }
+
+      if (options.randomSeed !== undefined) {
+        opt.push(`--seed=${options.randomSeed}`);
+      }
+    }
+
+    const out = runClingoSync(resolvedFiles, opt);
 
     const result = JSON.parse(out.output[1]);
 
@@ -94,10 +113,14 @@ ${query}`;
   }
 }
 
-function runClingoSync(files: string[]): any {
-  return spawnSync("clingo", ["--outf=2", "--quiet=1,2,2", ...files], {
-    encoding: "utf-8"
-  });
+function runClingoSync(files: string[], options: string[]): any {
+  return spawnSync(
+    "clingo",
+    ["--outf=2", "--quiet=1,2,2", ...options, ...files],
+    {
+      encoding: "utf-8"
+    }
+  );
 }
 
 function resolvePathToModelProgram(file: string): string {
