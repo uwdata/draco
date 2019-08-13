@@ -2,7 +2,6 @@
 #show mark/2.
 #show encoding/2.
 #show type/3.
-#show scale/3.
 #show channel/3.
 #show field/3.
 #show type/3.

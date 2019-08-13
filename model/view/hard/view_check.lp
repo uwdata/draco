@@ -25,10 +25,6 @@ view_check(bar_tick_rule_continuous_x_y,V) :- mark(V,(bar;tick;rule)), channel_f
 % @constraint Bar, tick, line, area require some continuous variable on x or y.
 view_check(bar_tick_area_line_without_continuous_x_y,V) :- mark(V,(bar;tick;area;line)), not channel_fact(continuous,V,x), not channel_fact(continuous,V,y).
 
-% @constraint Bar and area mark requires scale of continuous to start at zero.
-view_check(bar_area_without_zero,V) :- mark(V,(bar;area)), channel(V,E,x), chart_fact(orientation_horizontal,V), not scale(V,E,zero).
-view_check(bar_area_without_zero,V) :- mark(V,(bar;area)), channel(V,E,y), chart_fact(orientation_vertical,V), not scale(V,E,zero).
-
 % @constraint Shape channel requires point mark.
 view_check(shape_without_point,V) :- channel(V,_,shape), not mark(V,point).
 
@@ -37,9 +33,6 @@ view_check(size_without_point_text,V) :-  channel(V,_,size), not mark(V,point), 
 
 % @constraint Detail requires aggregation. Detail adds a field to the group by. Detail could also be used to add information to tooltips. We may remove this later.
 view_check(detail_without_agg,V) :- channel(V,_,detail), not aggregate(V,_,_).
-
-% @constraint Do not use log for bar or area mark as they are often misleading. We may remove this rule in the future.
-view_check(area_bar_with_log,V) :- mark(V,(bar;area)), channel(V,E,(x;y)), scale(V,E,log).
 
 % @constraint Rect mark needs discrete x and y.
 view_check(rect_without_d_d,V) :- mark(V,rect), not chart_fact(discrete_discrete,V).
@@ -58,3 +51,6 @@ view_check(row_no_y,V) :- channel(V,_,row), not channel(V,_,y).
 
 % @constraint Don't use column without x. Just using x is simpler.
 view_check(column_no_x,V) :- channel(V,_,column), not channel(V,_,x).
+
+% @constraint Don't use size for temporal
+view_check(temporal_size,V) :- channel(V,E,size), type(V,E,temporal).

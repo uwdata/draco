@@ -5,21 +5,6 @@ encoding_check(fieldtype_valid,V,E) :- type(V,E,temporal), field(V,E,F), not fie
 % @constraint Can only bin quantitative or ordinal.
 encoding_check(bin_quant_or_ord,V,E) :- type(V,E,T), bin(V,E,true), T != quantitative, T != ordinal.
 
-% @constraint Can only use log with quantitative.
-encoding_check(log_quant,V,E) :- scale(V,E,log), not type(V,E,quantitative).
-
-% @constraint Can only use zero with quantitative.
-encoding_check(zero_quant,V,E) :- scale(V,E,zero), not type(V,E,quantitative).
-
-% @constraint Cannot use log scale with discrete (which includes binned).
-encoding_check(log_discrete,V,E) :- scale(V,E,zero), encoding_fact(discrete,V,E).
-
-% @constraint Cannot use log and zero together.
-encoding_check(log_zero,V,E) :- scale(V,E,log), scale(V,E,zero).
-
-% @constraint Cannot use log if the data is negative or zero.
-encoding_check(log_non_positive,V,E) :- scale(V,E,log), field(V,E,F), data_fact(field,min_sign,(negative;zero),F).
-
 % @constraint Cannot bin and aggregate.
 encoding_check(bin_and_aggregate,V,E) :- aggregate(V,E,_), bin(V,E,true).
 

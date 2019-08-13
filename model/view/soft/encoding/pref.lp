@@ -37,12 +37,6 @@ soft(encoding,agg_dim,V,true) :- aggregate(V,_,_), not encoding_fact(discrete,V,
 % @constraint Prefer not to use plot with both x and y discrete and no aggregate as it leads to occlusion.
 soft(encoding,x_y_raw,V,E) :- channel(V,EX,x), encoding_fact(discrete,V,EX), channel(V,EY,y), encoding_fact(discrete,V,EY), encoding(V,E), not aggregate(V,E,_), encoding_fact(continuous,V,E).
 
-% @constraint Zero base for stack op.
-soft(encoding,stack_zero,V,true) :- stack(V,zero).
-
-% @constraint Normalize between groupbys as stack op.
-soft(encoding,stack_normalize,V,true) :- stack(V,normalize).
-
 % @constraint Prefer quantitative > ordinal > nominal.
 soft(encoding,type_quantitative,V,E) :- type(V,E,quantitative).
 

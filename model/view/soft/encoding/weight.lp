@@ -9,8 +9,6 @@ soft_weight(encoding,multiple_non_pos,3).
 soft_weight(encoding,aggregate_group_by_raw_non_temporal,10).
 soft_weight(encoding,agg_dim,2).
 soft_weight(encoding,x_y_raw,1).
-soft_weight(encoding,stack_zero_weight,0).
-soft_weight(encoding,stack_normalize_weight,1).
 soft_weight(encoding,type_quantitative,0).
 soft_weight(encoding,type_ordinal,1).
 soft_weight(encoding,type_nominal,2).

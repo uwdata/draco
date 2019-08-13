@@ -54,10 +54,6 @@ const SCATTER = {
     "channel(v2,e2,y)",
     "mark(v1,point)",
     "mark(v2,square)",
-    "scale(v1,e1,zero)",
-    "scale(v1,e2,zero)",
-    "scale(v2,e1,zero)",
-    "scale(v2,e2,zero)",
     "soft(subtype,name,v1,param)",
     "soft(subtype,name,v2,param)"
   ],
@@ -67,17 +63,11 @@ const SCATTER = {
       encoding: {
         x: {
           field: "f1",
-          type: "quantitative",
-          scale: {
-            zero: true
-          }
+          type: "quantitative"
         },
         y: {
           field: "f2",
-          type: "quantitative",
-          scale: {
-            zero: true
-          }
+          type: "quantitative"
         }
       }
     },
@@ -86,17 +76,11 @@ const SCATTER = {
       encoding: {
         x: {
           field: "f1",
-          type: "quantitative",
-          scale: {
-            zero: true
-          }
+          type: "quantitative"
         },
         y: {
           field: "f2",
-          type: "quantitative",
-          scale: {
-            zero: true
-          }
+          type: "quantitative"
         }
       }
     }

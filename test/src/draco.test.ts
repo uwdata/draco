@@ -29,13 +29,11 @@ const EXAMPLE_OUTPUT_DEFAULT = [
       encoding: {
         x: {
           field: "horsepower",
-          type: "quantitative",
-          scale: { zero: true }
+          type: "quantitative"
         },
         y: {
           field: "acceleration",
-          type: "quantitative",
-          scale: { zero: true }
+          type: "quantitative"
         }
       }
     }
@@ -46,13 +44,11 @@ const EXAMPLE_OUTPUT_DEFAULT = [
       encoding: {
         x: {
           field: "acceleration",
-          type: "quantitative",
-          scale: { zero: true }
+          type: "quantitative"
         },
         y: {
           field: "horsepower",
-          type: "quantitative",
-          scale: { zero: true }
+          type: "quantitative"
         }
       }
     }
