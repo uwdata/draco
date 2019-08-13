@@ -98,15 +98,21 @@ ${query}`;
       const weightFile = path.resolve(softDir, dir, "weight.lp");
       const weightContents = fs.readFileSync(weightFile, "utf8");
 
-      const constraints = ConstraintDictionary.fromAsp(
-        prefContents,
-        weightContents
-      );
+      try {
+        const constraints = ConstraintDictionary.fromAsp(
+          prefContents,
+          weightContents
+        );
 
-      return {
-        ...dict,
-        ...constraints
-      };
+        return {
+          ...dict,
+          ...constraints
+        };
+      } catch (e) {
+        console.error(prefFile);
+        console.error(weightFile);
+        throw e;
+      }
     }, {});
 
     return result;
