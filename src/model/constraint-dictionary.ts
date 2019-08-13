@@ -2,13 +2,17 @@ import {
   Constraint,
   ConstraintObject,
   HardConstraintObject,
-  SoftConstraintObject,
-} from './constraint';
-import { doesMatchRegex } from './util';
+  SoftConstraintObject
+} from "./constraint";
+import { doesMatchRegex } from "./util";
 
 export type ConstraintDictionaryObject = { [name: string]: ConstraintObject };
-export type SoftConstraintDictionaryObject = { [name: string]: SoftConstraintObject };
-export type HardConstraintDictionaryObject = { [name: string]: HardConstraintObject };
+export type SoftConstraintDictionaryObject = {
+  [name: string]: SoftConstraintObject;
+};
+export type HardConstraintDictionaryObject = {
+  [name: string]: HardConstraintObject;
+};
 
 export class ConstraintDictionary {
   static isSoftConstraintDictionary(
@@ -33,14 +37,19 @@ export class ConstraintDictionary {
     return Constraint.isHardConstraint(firstConstraint);
   }
 
-  static fromAsp(prefAsp: string, weightAsp?: string): ConstraintDictionaryObject {
+  static fromAsp(
+    prefAsp: string,
+    weightAsp?: string
+  ): ConstraintDictionaryObject {
     const prefMatches = doesMatchRegex(prefAsp, PREF_REGEX);
 
     let weightDictionary;
     if (!!weightAsp) {
       const weightMatches = doesMatchRegex(weightAsp, WEIGHT_REGEX);
       if (!weightMatches) {
-        throw new Error(`Weight ASP: ${weightAsp} does not match weight regex.`);
+        throw new Error(
+          `Weight ASP: ${weightAsp} does not match weight regex.`
+        );
       }
 
       const singleWeightAsps = weightAsp.match(WEIGHT_REGEX);
@@ -59,7 +68,7 @@ export class ConstraintDictionary {
     }
 
     if (!prefMatches) {
-      throw new Error(`Pref ASP: ${prefMatches} does not match pref regex.`);
+      throw new Error(`Pref ASP: ${prefAsp} does not match pref regex.`);
     }
 
     const singlePrefAsps = prefAsp.match(PREF_REGEX);
@@ -69,7 +78,8 @@ export class ConstraintDictionary {
         const uniqueName = Constraint.getUniqueName(constraint);
 
         if (!!weightDictionary) {
-          (constraint as SoftConstraintObject).weight = weightDictionary[uniqueName];
+          (constraint as SoftConstraintObject).weight =
+            weightDictionary[uniqueName];
         }
 
         dict[uniqueName] = constraint;
