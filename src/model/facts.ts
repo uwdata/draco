@@ -121,7 +121,7 @@ function facts2vl_single(facts: string[], view: string): TopLevelUnitSpec {
       ...(enc.aggregate ? { aggregate: enc.aggregate } : {}),
       ...(enc.field ? { field: enc.field } : {}),
       ...(enc.stack ? { stack: enc.stack } : {}),
-      ...(enc.bin ? { bin: enc.bin } : {}),
+      ...(enc.bin ? { bin: JSON.parse(enc.bin) } : {}),
       ...(enc.scale ? { scale } : {})
     };
 
