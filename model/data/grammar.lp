@@ -2,9 +2,9 @@ fieldtype_type(number;string;integer;boolean;date).
 
 data_fact_type(rows,size,(very_low;low;medium;high)).
 
-data_fact_type(field,min_sign,(zero;positive)).
+data_fact_type(field,min_sign,(negative;zero;positive)).
 
-data_fact_type(field,max_sign,(zero;positive)).
+data_fact_type(field,max_sign,(negative;zero;positive)).
 
 data_fact_type(field,cardinality_greater_than,(8;20;30;100)).
 

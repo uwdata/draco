@@ -6,7 +6,7 @@
 1 = { fieldtype(F,T): fieldtype_type(T) } :- field_id(F).
 
 1 = { cardinality(F,C): C = (1;2;5;9;21;31;101;100;1000) } :- field(F).
-1 = { extent(F,MIN,MAX): MIN = (-100;-1;0;1;100), MAX = (-100;-1;0;1;100)} :- field(F).
+1 = { extent(F,MIN,MAX): MIN = (0;1;100), MAX = (0;1;100)} :- field(F).
 
 :- extent(F,MIN,MAX), MIN > MAX.
 :- fieldtype(F,integer), cardinality(F,C), extent(F,MIN,MAX), C > MAX - MIN + 1.
