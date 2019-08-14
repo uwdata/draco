@@ -8,7 +8,7 @@ soft(encoding,encoding_field,V,E) :- field(V,E,_).
 soft(encoding,aggregate,V,E) :- aggregate(V,E,_).
 
 % @constraint Prefer to not bin.
-soft(encoding,bin,V,E) :- bin(V,E,_).
+soft(encoding,bin,V,E) :- bin(V,E,true).
 
 % @constraint Prefer not to use the same field twice.
 soft(encoding,same_field_2,V,F) :- view(V), field(F), { field(V,_,F) } = 2.
@@ -20,7 +20,7 @@ soft(encoding,same_field_gte3,V,F) :- view(V), field(F), { field(V,_,F) } >= 3.
 soft(encoding,count_twice,V,true) :- view(V), { aggregate(V,_,count) } >= 2.
 
 % @constraint Prefer quantitative for bin.
-soft(encoding,quant_bin,V,E) :- bin(V,E,_), not type(V,E,quantitative).
+soft(encoding,quant_bin,V,E) :- bin(V,E,true), not type(V,E,quantitative).
 
 % @constraint Prefer not to use non-positional channels until all positional channels are used.
 soft(encoding,non_positional_pref,V,true) :- channel(V,_,C), channel_definition(non_positional,C), not channel(V,_,(x;y)).

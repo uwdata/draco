@@ -5,7 +5,7 @@ soft(scale,log,V,E) :- scale(V,E,log).
 soft(scale,zero,V,E) :- encoding_fact(continuous,V,E), not scale(V,E,zero).
 
 % @constraint Prefer to exclude zero for binned.
-soft(scale,zero_bin,V,E) :- bin(V,E,_), scale(V,E,zero).
+soft(scale,zero_bin,V,E) :- bin(V,E,true), scale(V,E,zero).
 
 % @constraint Prefer zero size (even when binned).
 soft(scale,zero_size,V,true) :- channel(V,E,size), not scale(V,E,zero).
