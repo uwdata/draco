@@ -1,5 +1,5 @@
 % marks
-mark_type(bar;line;point).
+mark_type(bar;point).
 
 % data types
 type_type(quantitative;nominal).
