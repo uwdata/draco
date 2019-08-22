@@ -1,8 +1,8 @@
-#const max_fields = 4.
+#const max_fields = 3.
 0 { field_id(1..max_fields) } max_fields.
 
 
-1 = { num_rows(S): S = (10; 50; 100; 1000) }.
+1 = { num_rows(S): S = (10; 50; 100) }.
 1 = { fieldtype(F,T): fieldtype_type(T) } :- field_id(F).
 
 1 = { cardinality(F,C): C = (2;5;9;21;31;101;100;1000) } :- field(F).
@@ -13,6 +13,9 @@
 :- fieldtype(F,boolean), cardinality(F,C), C > 2.
 :- cardinality(F, C), C > 1, extent(F,MIN,MAX), MAX - MIN = 0.
 :- fieldtype(F,string), cardinality(F,C), C > 100.
+
+% for small study
+:- cardinality(F,C), fieldtype(F,T), T != number, C > 31.
 
 #show num_rows/1.
 #show fieldtype/2.
