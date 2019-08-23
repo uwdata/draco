@@ -61,6 +61,3 @@ encoding_check(count_with_field,V,E) :- aggregate(V,E,count), field(V,E,_).
 
 % @constraint Don't use count twice.
 encoding_check(count_twice,V,true) :- view(V), { aggregate(V,_,count) } = 2.
-
-% @constraint (stripped) Don't use nominal for high cardinality numbers.
-encoding_check(high_cardinality_nominal,V,E) :- field(V,E,F), cardinality(F,C), fieldtype(F,T), T != (number;integer), C > 30.
