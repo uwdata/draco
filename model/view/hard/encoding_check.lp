@@ -54,19 +54,19 @@ encoding_check(size_negative,V,E) :- channel(V,E,size), field(V,E,F), data_fact(
 % === Across encodings and between encodings and marks ===
 
 % @constraint Cannot use single channels twice.
-encoding_check(repeat_channel,V) :- view(V), channel_definition(single,C), 2 { channel(V,_,C) }.
+encoding_check(repeat_channel,V,true) :- view(V), channel_definition(single,C), 2 { channel(V,_,C) }.
 
 % @constraint There has to be at least one encoding. Otherwise, the view doesn't show anything.
-encoding_check(no_encodings,V) :- view(V), not encoding(V,_).
+encoding_check(no_encodings,V,true) :- view(V), not encoding(V,_).
 
 % @constraint Row and column require discrete.
-encoding_check(row_or_column_c,V) :- channel_fact(continuous,V,(row;column)).
+encoding_check(row_or_column_c,V,true) :- channel_fact(continuous,V,(row;column)).
 
 % @constraint Don't use row without y. Just using y is simpler.
-encoding_check(row_no_y,V) :- channel(V,_,row), not channel(V,_,y).
+encoding_check(row_no_y,V,true) :- channel(V,_,row), not channel(V,_,y).
 
 % @constraint Don't use column without x. Just using x is simpler.
-encoding_check(column_no_x,V) :- channel(V,_,column), not channel(V,_,x).
+encoding_check(column_no_x,V,true) :- channel(V,_,column), not channel(V,_,x).
 
 % @constraint All encodings (if they have a channel) require field except if we have a count aggregate.
 encoding_check(encoding_no_field_and_not_count,V,E) :- not field(V,E,_), not aggregate(V,E,count), encoding(V,E).
@@ -75,5 +75,4 @@ encoding_check(encoding_no_field_and_not_count,V,E) :- not field(V,E,_), not agg
 encoding_check(count_with_field,V,E) :- aggregate(V,E,count), field(V,E,_).
 
 % @constraint Don't use count twice.
-encoding_check(count_twice) :- view(V), { aggregate(V,_,count) } = 2.
-
+encoding_check(count_twice,V,true) :- view(V), { aggregate(V,_,count) } = 2.
