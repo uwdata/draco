@@ -2,6 +2,8 @@
 
 JavaScript module with the Draco knowledge base and helper functions to convert from Draco ASP to Vega-Lite and vice-versa as well as a function to convert from CompassQL to Draco ASP.
 
+If you wish to run Draco in a web browser, consider using draco-vis, which bundles the Clingo solver as a WebAssembly module. The Draco-Core API does not include this functionality by itself. It merely handles the logic of translating between the various interface languages.
+
 ## Draco-Core API (Typescript / Javascript)
     
 **vl2asp** *(spec: TopLevelUnitSpec): string[]* [<>](https://github.com/uwdata/draco/blob/master/js/src/vl2asp.ts)
