@@ -31,6 +31,68 @@ export class Facts {
   static getViewFacts(facts: FactsObject): FactsObject {
     return facts.filter(f => doesMatchRegex(f, /view_fact\(.*/));
   }
+
+  static fromYH(yh: any): { negative: FactsObject; positive: FactsObject } {
+    let facts = [];
+
+    const fields = yhFields(yh.fields);
+    facts = facts.concat(fields);
+
+    const rows = `num_rows(${yh.num_rows})`;
+    facts.push(rows);
+
+    const task = `task(${yh.task})`;
+    facts.push(task);
+
+    const neg = yhSpec(yh.negative, "v1");
+    const negative = facts.concat(neg);
+
+    const pos = yhSpec(yh.positive, "v2");
+    const positive = facts.concat(pos);
+
+    return { negative, positive };
+  }
+}
+
+function yhSpec(spec: any, name: string) {
+  const facts = [];
+
+  facts.push(`view(${name})`);
+  facts.push(`mark(${name},point)`);
+
+  const encoding = spec.encoding;
+
+  let i = 0;
+  for (const channel of Object.keys(encoding)) {
+    const enc = encoding[channel];
+
+    const e = `e${i}`;
+    facts.push(`encoding(${name},${e})`);
+    facts.push(`channel(${name},${e},${channel})`);
+    facts.push(`field(${name},${e},${enc.field})`);
+    facts.push(`type(${name},${e},${enc.type})`);
+    if (enc.scale) {
+      facts.push(`scale(${name},${e},zero)`);
+    }
+    i += 1;
+  }
+
+  return facts;
+}
+
+function yhFields(fields: any[]) {
+  const facts = [];
+
+  for (const field of fields) {
+    facts.push(`fieldtype(${field.name},${field.type})`);
+
+    const entropy = field.entropy > 1 ? "high" : "low";
+    facts.push(`entropy(${field.name},${entropy})`);
+
+    facts.push(`cardinality(${field.name},${field.cardinality})`);
+    facts.push(`interesting(${field.name},${field.interesting})`);
+  }
+  return facts;
 }
 
 const VIEW_REGEX_CAPTURE = /view\((.*)\)/;

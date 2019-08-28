@@ -17,3 +17,5 @@ encoding_fact(ordered,V,E) :- type(V,E,(ordinal;quantitative;temporal)).
 encoding_fact(extent,V,(E,MIN,MAX)) :- field(V,E,F), extent(F,MIN,MAX).
 
 encoding_fact(stacked,V,E) :- channel(V,E,(x;y)), channel(V,ED,(x;y)), encoding_fact(continuous,V,E), encoding_fact(discrete,V,ED), stack(V,S).
+
+encoding_fact(interesting,V,E) :- interesting(F,true), field(V,E,F).

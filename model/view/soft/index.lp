@@ -5,3 +5,4 @@
 #include "scale/index.lp".
 #include "datatype/index.lp".
 #include "chart/index.lp".
+#include "task/index.lp".

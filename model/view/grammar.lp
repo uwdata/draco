@@ -1,20 +1,14 @@
 % marks
-mark_type(area;bar;line;point;rect;text;tick).
+mark_type(point).
 
 % data types
-type_type(quantitative;ordinal;nominal;temporal).
+type_type(quantitative;nominal).
 
 % channels
-channel_type(x;y;color;size;shape;text;row;column;detail).
+channel_type(x;y;color;size;row).
 
-% aggregations
-aggregate_type(count;mean;median;min;max;stdev;sum).
+% task
+task_type(summary;value).
 
-% bin (boolean)
-bin_type(true;false).
-
-% scale types
-scaletype_type(zero;log).
-
-% stack types
-stack_type(zero;normalize).
+% scale
+scaletype_type(zero).
