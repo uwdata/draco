@@ -133,7 +133,7 @@ You might need to activate a Python 2.7 environment to compile the canvas module
 
 #### Build JS module
 
-`yarn build`
+`yarn build`. We are currently using typescript version 3.2.1 and greater.
 
 #### Python setup
 
