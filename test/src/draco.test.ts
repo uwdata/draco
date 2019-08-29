@@ -17,6 +17,19 @@ describe("Draco Node Runner", () => {
 
       expect(specs).toBeOneOf(EXAMPLE_OUTPUT_DEFAULT);
     });
+
+    test("no extra encoding generation", () => {
+      const result = Draco.run(null, { generateExtraEncodings: false }, [
+        EXAMPLE_PATH
+      ]);
+
+      const witness = Result.toWitnesses(result)[0];
+      const facts = witness.facts.filter(f => f.includes("encoding("));
+
+      console.log(facts);
+
+      expect(facts.length).toBe(2);
+    });
   });
 });
 

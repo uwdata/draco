@@ -4,6 +4,7 @@
 #include "../soft/index.lp".
 #include "../const.lp".
 #include "../generate.lp".
+#include "../generate_extra_encodings.lp".
 #include "../grammar.lp".
 #include "../show.lp".
 #include "../define.lp".

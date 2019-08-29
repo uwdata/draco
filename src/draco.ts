@@ -12,6 +12,7 @@ tmp.setGracefulCleanup();
 export interface DracoOptions {
   strictHard?: boolean;
   generate?: boolean;
+  generateExtraEncodings?: boolean;
   optimize?: boolean;
   generateData?: boolean;
   models?: number;
@@ -22,6 +23,7 @@ export interface DracoOptions {
 export const DEFAULT_OPTIONS = {
   strictHard: true,
   generate: true,
+  generateExtraEncodings: true,
   optimize: true,
   generateData: false
 };
@@ -138,9 +140,15 @@ function getFilesFromOptions(options: DracoOptions): string[] {
     ? Object.assign(Object.assign({}, DEFAULT_OPTIONS), options)
     : DEFAULT_OPTIONS;
 
-  const { generate, strictHard, optimize, generateData } = resolvedOptions;
+  const {
+    generate,
+    generateExtraEncodings,
+    strictHard,
+    optimize,
+    generateData
+  } = resolvedOptions;
 
-  if (generate && strictHard && optimize) {
+  if (generate && generateExtraEncodings && strictHard && optimize) {
     result.push(resolvePathToModelProgram("default.lp"));
   } else {
     result.push(resolvePathToModelProgram("../data/index.lp"));
@@ -148,6 +156,10 @@ function getFilesFromOptions(options: DracoOptions): string[] {
 
     if (generate) {
       result.push(resolvePathToModelView("generate.lp"));
+    }
+
+    if (generateExtraEncodings) {
+      result.push(resolvePathToModelView("generate_extra_encodings.lp"));
     }
 
     if (strictHard) {
