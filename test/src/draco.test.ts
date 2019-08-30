@@ -26,8 +26,6 @@ describe("Draco Node Runner", () => {
       const witness = Result.toWitnesses(result)[0];
       const facts = witness.facts.filter(f => f.includes("encoding("));
 
-      console.log(facts);
-
       expect(facts.length).toBe(2);
     });
   });
