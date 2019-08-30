@@ -210,3 +210,6 @@ hard(invalid_extent_order,V,MIN,MAX):- visualization(V), extent(_,MIN,MAX), MIN 
 
 % @constraint The name of a field cannot be the name of an encoding. This is to prevent errors coming from the shortcuts in define.lp.
 hard(encoding_field_same_name,V,N) :- visualization(V), encoding(V,N), field(N).
+
+% @constraint Cannot bin strings.
+hard(bin_string,V,E) :- field(V,E,F), fieldtype(F,string), bin(V,E,_).

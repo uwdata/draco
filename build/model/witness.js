@@ -1,0 +1,7 @@
+import { Facts } from "./facts";
+export class Witness {
+    static toVegaLiteSpecDictionary(witness) {
+        return Facts.toVegaLiteSpecDictionary(witness.facts);
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoid2l0bmVzcy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9tb2RlbC93aXRuZXNzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxLQUFLLEVBQTZDLE1BQU0sU0FBUyxDQUFDO0FBTzNFLE1BQU0sT0FBTyxPQUFPO0lBQ2xCLE1BQU0sQ0FBQyx3QkFBd0IsQ0FDN0IsT0FBc0I7UUFFdEIsT0FBTyxLQUFLLENBQUMsd0JBQXdCLENBQUMsT0FBTyxDQUFDLEtBQUssQ0FBQyxDQUFDO0lBQ3ZELENBQUM7Q0FDRiJ9
