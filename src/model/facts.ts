@@ -31,6 +31,89 @@ export class Facts {
   static getViewFacts(facts: FactsObject): FactsObject {
     return facts.filter(f => doesMatchRegex(f, /view_fact\(.*/));
   }
+
+  static fromVl(spec: TopLevelUnitSpec, name: string): FactsObject {
+    return vl2facts(spec, name);
+  }
+
+  static toProgram(facts: FactsObject): string {
+    return `${facts.join(".\n")}${".\n"}`;
+  }
+}
+
+function vl2facts(spec: TopLevelUnitSpec, name: string): FactsObject {
+  const facts = [`view(${name})`, `mark(${name},${spec.mark})`];
+
+  const encoding = spec.encoding || {};
+
+  let i = 1;
+  for (const channel of Object.keys(encoding)) {
+    const eid = `e${i}`;
+    i += 1;
+    facts.push(`encoding(${name},${eid})`);
+    facts.push(`channel(${name},${eid},${channel})`);
+
+    let encFieldType = null;
+    let encZero = null;
+    let encBinned = null;
+
+    // translate encodings
+    for (const field of Object.keys(encoding[channel])) {
+      const fieldContent = encoding[channel][field];
+      if (field === "type") {
+        encFieldType = fieldContent;
+        facts.push(`type(${name},${eid},${fieldContent})`);
+      }
+      if (field === "scale") {
+        // translate two boolean fields
+        let scale = null;
+        if ("zero" in fieldContent) {
+          scale = "zero";
+        } else if ("log" in fieldContent) {
+          scale = "log";
+        }
+
+        if (scale) {
+          if (fieldContent[scale]) {
+            facts.push(`scale(${name},${eid},${scale})`);
+            encZero = fieldContent;
+          } else {
+            facts.push(`:- scale(${name},${eid},${scale})`);
+          }
+        }
+      } else if (field === "bin") {
+        encBinned = fieldContent;
+        if (fieldContent) {
+          facts.push(`bin(${name},${eid},true)`);
+        } else {
+          facts.push(`:- bin(${name},${eid},false)`);
+        }
+      } else if (field === "field") {
+        // * is old vl for count
+        if (fieldContent !== "*") {
+          // fields can have spaces and start with capital letters
+          facts.push(`field(${name},${eid},"${fieldContent}")`);
+        }
+      } else if (field === "aggregate") {
+        facts.push(`aggregate(${name},${eid},${fieldContent})`);
+      } else if (field === "stack") {
+        facts.push(`stack(${name},${eid},${fieldContent})`);
+        // translate normal fields
+        // facts.push(`${field}(${name},${eid},${fieldContent})`);
+      } else {
+      }
+    }
+
+    if (
+      encFieldType === "quantitative" &&
+      encZero === null &&
+      encBinned === null
+    ) {
+      facts.push(`scale(${name},${eid},zero)`);
+    }
+  }
+
+  return facts;
 }
 
 const VIEW_REGEX_CAPTURE = /view\((.*)\)/;

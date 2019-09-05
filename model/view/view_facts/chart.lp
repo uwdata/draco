@@ -25,5 +25,7 @@ chart_fact(overlap,V) :- chart_fact(discrete_discrete,V), channel(V,E,C), not ch
 
 % @fact orientation
 chart_fact(orientation_vertical,V) :- mark(V,(bar;tick;area;line)), channel_fact(discrete,V,x).
-chart_fact(orientation_vertical,V) :- mark(V,(area;line)), channel_fact(continuous,V,x), channel_fact(continuous,V,y).
+% chart_fact(orientation_vertical,V) :- mark(V,(area;line)), channel_fact(continuous,V,x), channel_fact(continuous,V,y).
+% chart_fact(orientation_vertical,V) :- mark(V,(area;line)), channel(V,E,x), type(V,E,temporal), channel_fact(continuous,V,y).
 chart_fact(orientation_horizontal,V) :- mark(V,(bar;tick;area;line)), channel_fact(discrete,V,y).
+% chart_fact(orientation_horizontal,V) :- mark(V,(area;line)), channel(V,E,y), type(V,E,temporal), channel_fact(continuous,V,x).

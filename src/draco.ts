@@ -73,7 +73,7 @@ export class Draco {
     options?: DracoOptions,
     files?: string[]
   ): FactsObject {
-    const result = Draco.run(program, { strictHard: false }, files);
+    const result = Draco.run(program, { ...options, strictHard: false }, files);
     if (!Result.isSat(result)) {
       return [];
     }

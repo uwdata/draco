@@ -1,8 +1,8 @@
 % @constraint Bars and area cannot overlap.
-view_check(bar_area_overlap,V) :- mark(V,(bar;area)), not chart_fact(no_overlap,V).
+view_check(bar_area_overlap,V) :- mark(V,(bar;area)), chart_fact(overlap,V).
 
 % @constraint Rects shouldn't overlap. They are used for discrete heatmaps.
-view_check(rect_overlap,V) :- mark(V,rect), not chart_fact(no_overlap,V).
+view_check(rect_overlap,V) :- mark(V,rect), chart_fact(overlap,V).
 
 % @constraint Text mark requires text channel.
 view_check(text_mark_without_text_channel,V) :- mark(V,text), not channel(V,_,text).

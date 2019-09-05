@@ -23,11 +23,11 @@ encoding_check(log_non_positive,V,E) :- scale(V,E,log), field(V,E,F), data_fact(
 % @constraint Cannot bin and aggregate.
 encoding_check(bin_and_aggregate,V,E) :- aggregate(V,E,_), bin(V,E,true).
 
-% @constraint Oridnal only supports min, max, and median.
-encoding_check(aggregate_o_valid,V,E) :- aggregate(V,E,A), type(V,E,ordinal), A != min, A != max, A != median.
+% @constraint Oridnal only supports min, max, median, and count.
+encoding_check(aggregate_o_valid,V,E) :- aggregate(V,E,A), type(V,E,ordinal), A != min, A != max, A != median, A != count.
 
-% @constraint Temporal only supports min and max.
-encoding_check(aggregate_t_valid,V,E) :- aggregate(V,E,A), type(V,E,temporal), A != min, A != max.
+% @constraint Temporal only supports min, max, and count.
+encoding_check(aggregate_t_valid,V,E) :- aggregate(V,E,A), type(V,E,temporal), A != min, A != max, A != count.
 
 % @constraint Cannot aggregate nominal.
 encoding_check(aggregate_nominal,V,E) :- aggregate(V,E,_), type(V,E,nominal).

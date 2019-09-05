@@ -24,7 +24,7 @@ stack_check(stack_without_x_y,V) :- encoding(V,E), encoding_fact(stacked,V,E), n
 stack_check(stack_with_non_positional_non_agg,V) :- stack(V,_), encoding(V,E), channel_definition(non_positional,C), channel(V,E,C), not aggregate(V,E,_), encoding_fact(continuous,V,E).
 
 % @constraint Vega-Lite currently supports 8 shapes.
-stack_check(shape_with_cardinality_gt_eight,V) :- channel(V,E,shape), field(V,E,F), cardinality(F,C), C > 8.
+stack_check(shape_with_cardinality_gt_eight,V) :- channel(V,E,shape), field(V,E,F), not bin(V,E,true), cardinality(F,C), C > 8.
 
 % @constraint At most 20 categorical colors.
-stack_check(color_with_cardinality_gt_twenty,V) :- channel(V,E,color), encoding_fact(discrete,V,E), field(V,E,F), cardinality(F,C), C > 20.
+stack_check(color_with_cardinality_gt_twenty,V) :- channel(V,E,color), encoding_fact(discrete,V,E), field(V,E,F), not bin(V,E,true), cardinality(F,C), C > 20.
