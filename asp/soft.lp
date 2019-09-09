@@ -40,6 +40,9 @@ soft(string_non_nominal,V,E) :- type(V,E,quantitative), field(V,E,F), fieldtype(
 % @constraint Numbers should not be nominal.
 soft(number_nominal,V,E) :- type(V,E,nominal), field(V,E,F), fieldtype(F,number).
 
+% @constraint Numbers should not be ordinal with high cardinality.
+soft(number_high_cardinality_ordinal,V,E) :- type(V,E,ordinal), field(V,E,F), fieldtype(F,number), enc_cardinality(V,E,C), C > 20.
+
 % @constraint Binned quantitative field should not have too low cardinality.
 soft(bin_cardinality,V,E) :- type(V,E,quantitative), bin(V,E,_), enc_cardinality(V,E,C), C < 15.
 

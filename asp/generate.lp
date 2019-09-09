@@ -11,6 +11,9 @@ obj_id(1..max_extra_encs).
 
 :- not encoding(V,ID), encoding(V,ID-1), obj_id(ID), obj_id(ID-1).
 
+% don't add extra field
+:- encoding(V,ID), obj_id(ID), field(V,ID,F).
+
 % properties of encodings
 
 % channel and type have to be present
