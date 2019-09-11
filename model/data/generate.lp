@@ -1,6 +1,5 @@
 #const max_fields = 4.
-0 { field_id(1..max_fields) } max_fields.
-:- field_id(ID), not field_id(ID-1).
+{ field_id(1..max_fields) }.
 
 % a field type
 1 = { fieldtype(F,T): fieldtype_type(T) } :- field_id(F).
