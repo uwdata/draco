@@ -13,3 +13,6 @@
 
 % pick one mark type
 { mark(V,M): mark_type(M) } = 1 :- view(V).
+
+% pick one task type
+{ task(V,T): task_type(T) } = 1 :- view(V).

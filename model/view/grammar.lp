@@ -18,3 +18,6 @@ scaletype_type(zero;log).
 
 % stack types
 stack_type(zero;normalize).
+
+% task types
+task_type(read_value;compare_value;find_maximum;compare_average).

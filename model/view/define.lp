@@ -25,6 +25,12 @@ bin(V,E,B) :- bin(V,E,B).
 % @primitive aggregate
 aggregate(V,E,A) :- aggregate(V,E,A).
 
+% @primitive stack
+stack(V,S) :- stack(V,S).
+
+% @primitive task
+task(V,T) :- task(V,T).
+
 spec(mark,V,M) :- mark(V,M).
 spec(encoding,V,E) :- encoding(V,E).
 spec(channel,V,(E,C)) :- channel(V,E,C).
