@@ -1,5 +1,3 @@
-
-
 % rows
 data_fact(rows,size,high) :- num_rows(S), S >= 1000.
 
