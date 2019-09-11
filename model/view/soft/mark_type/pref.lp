@@ -1,12 +1,6 @@
 % @constraint Continuous by continuous for point mark.
 soft(mark_type,c_c_point,V,true) :- chart_fact(continuous_continuous,V), mark(V,point).
 
-% @constraint Continuous by continuous for circle mark.
-soft(mark_type,c_c_circle,V,true) :- chart_fact(continuous_continuous,V), mark(V,circle).
-
-% @constraint Continuous by continuous for square mark.
-soft(mark_type,c_c_square,V,true) :- chart_fact(continuous_continuous,V), mark(V,square).
-
 % @constraint Continuous by continuous for line mark.
 soft(mark_type,c_c_line,V,true) :- chart_fact(continuous_continuous,V), mark(V,line).
 
