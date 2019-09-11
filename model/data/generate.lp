@@ -1,5 +1,6 @@
 #const max_fields = 4.
 0 { field_id(1..max_fields) } max_fields.
+:- field_id(ID), not field_id(ID-1).
 
 % a field type
 1 = { fieldtype(F,T): fieldtype_type(T) } :- field_id(F).
@@ -14,6 +15,7 @@
 % boolean cardinality must be 2.
 :- fieldtype(F,boolean), cardinality(F,C), C > 2.
 
+num_rows_up_to_field_id(S,1) :- field_id(1), cardinality(1,S).
 num_rows_up_to_field_id(S,ID) :- field_id(ID), num_rows_up_to_field_id(PREV,ID - 1), cardinality(N,C), S = PREV * C.
 num_rows(S) :- N = #max { ID: field_id(ID) }, num_rows_up_to_field_id(S,N).
 
