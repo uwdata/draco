@@ -19,6 +19,7 @@ num_rows_up_to_field_id(S,ID) :- field_id(ID), num_rows_up_to_field_id(PREV,ID -
 num_rows(S) :- N = #max { ID: field_id(ID) }, num_rows_up_to_field_id(S,N).
 
 #show num_rows/1.
+#show num_rows_up_to_field_id/2.
 #show fieldtype/2.
 #show cardinality/2.
 #show extent/3.
