@@ -10,3 +10,4 @@
 #show aggregate/3.
 #show soft/4.
 #show view_fact/4.
+#show task/2.
