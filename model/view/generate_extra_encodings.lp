@@ -5,6 +5,6 @@
 
 obj_id(1..max_extra_encs).
 
-{ encoding(V,E): view(V), obj_id(E) }.
+0 { encoding(V,E): view(V), obj_id(E) } max_extra_encs.
 
 :- view(V), not encoding(V,ID), encoding(V,ID-1), obj_id(ID), obj_id(ID-1).
