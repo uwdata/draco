@@ -1,11 +1,11 @@
-#const max_fields = 4.
+#const max_fields = 3.
 field_id(1..max_fields).
 
 % a field type
 1 = { fieldtype(F,T): fieldtype_type(T) } :- field_id(F).
 
 % cardinality of fields
-1 = { cardinality(F,C): C = (2;3;10;20;50) } :- field(F).
+1 = { cardinality(F,C): C = (2;3;10;20) } :- field(F).
 
 % extent for numeric fields
 1 = { extent(F,MIN,MAX): MIN = (-100;-1;0;1), MAX = (-1;0;1;100), MIN < MAX } :- field(F), fieldtype(F,(number;integer)).
