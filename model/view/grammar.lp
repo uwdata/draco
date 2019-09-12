@@ -2,10 +2,10 @@
 mark_type(area;bar;line;point;rect;tick).
 
 % data types
-type_type(quantitative;ordinal;nominal;temporal).
+type_type(quantitative;ordinal;nominal).
 
 % channels
-channel_type(x;y;color;size;shape;row;column).
+channel_type(x;y;color;size;row;column).
 
 % aggregations
 aggregate_type(count;mean;sum).
