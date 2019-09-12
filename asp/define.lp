@@ -10,7 +10,7 @@ primitive_type(string;number;boolean;datetime).
 aggregate_op(count;mean;median;min;max;stdev;sum).
 summative_aggregate_op(count;sum).
 % Numbers of bins that can be recommended; any natural number is allowed.
-binning(10;25;200).
+binning(10;25).
 
 % Encoding channels.
 single_channel(x;y;color;size;shape;text;row;column).
