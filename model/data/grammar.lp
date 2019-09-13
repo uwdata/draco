@@ -1,4 +1,4 @@
-fieldtype_type(number;string;integer;boolean).
+fieldtype_type(number;string;boolean).
 
 data_fact_type(rows,size,(very_low;low;medium;high)).
 
