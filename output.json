@@ -1,0 +1,36 @@
+{
+  "Solver": "clingo version 5.3.0",
+  "Input": [
+    "test.lp"
+  ],
+  "Call": [
+    {
+      "Witnesses": [
+        {
+          "Value": [
+            "base(\"anchor0\")", "visualization(\"view\")", "visualization(\"anchor0\")", "encoding(\"view\",e0)", "encoding(\"anchor0\",e0)", "mark(\"view\",line)", "mark(\"anchor0\",tick)", "zero(\"anchor0\",e0)", "channel(\"anchor0\",e0,x)", "field(\"anchor0\",e0,\"IMDB_Rating\")", "soft(encoding,\"view\",e0)", "soft(encoding,\"anchor0\",e0)", "soft(encoding_field,\"anchor0\",e0)", "soft(type_q,\"anchor0\",e0)", "soft(continuous_x,\"anchor0\",e0)", "type(\"anchor0\",e0,quantitative)", "compare(edit_line_tick,\"anchor0\",\"view\",tick,line)", "soft(c_d_tick,\"anchor0\",_placeholder)", "soft_weight(c_d_tick,0)", "compare_weight(edit_line_tick,3)", "soft_weight(encoding,0)", "soft_weight(encoding_field,6)", "soft_weight(type_q,0)", "soft_weight(continuous_x,0)", "encoding(\"view\",1)", "channel(\"view\",e0,x)", "channel(\"view\",1,y)", "compare(edit_add_y_count,\"anchor0\",\"view\",1,count)", "aggregate(\"view\",1,count)", "field(\"view\",e0,\"IMDB_Rating\")", "zero(\"view\",e0)", "zero(\"view\",1)", "compare_weight(edit_add_y_count,458)", "type(\"view\",e0,quantitative)", "type(\"view\",1,quantitative)", "soft(aggregate_group_by_raw,e0,_placeholder)", "soft(agg_dim,\"view\",_placeholder)", "soft(c_c_line,\"view\",_placeholder)", "soft(aggregate,\"view\",1)", "soft(encoding,\"view\",1)", "soft(encoding_field,\"view\",e0)", "soft(type_q,\"view\",e0)", "soft(type_q,\"view\",1)", "soft(continuous_x,\"view\",e0)", "soft(continuous_y,\"view\",1)", "soft(aggregate_count,\"view\",1)", "soft_weight(aggregate_group_by_raw,10)", "soft_weight(agg_dim,2)", "soft_weight(c_c_line,20)", "soft_weight(aggregate,4)", "soft_weight(continuous_y,0)", "soft_weight(aggregate_count,0)"
+          ]
+        }
+      ]
+oops!
+    }
+  ],
+  "Result": "OPTIMUM FOUND",
+  "Models": {
+    "Number": 4,
+    "More": "yes",
+    "Optimum": "yes",
+    "Optimal": 1,
+    "Costs": [
+      461, 48
+    ]
+  },
+  "Calls": 1,
+  "Time": {
+    "Total": 0.098,
+    "Solve": 0.000,
+    "Model": 0.000,
+    "Unsat": 0.000,
+    "CPU": 0.097
+  }
+}

@@ -34,14 +34,14 @@ compare(edit_text_tick,V1,V2,tick,text) :- comparable(V1,V2), mark(V1,tick), mar
 
 
 % ENCODING EDITS
-compare(edit_add_x,V1,V2,E2,F2) :- not compare(edit_add_x_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,x), field(V2,E2,F2), not channel(V1,_,x), not field(V1,_,F2).
-compare(edit_add_y,V1,V2,E2,F2) :- not compare(edit_add_y_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,y), field(V2,E2,F2), not channel(V1,_,y), not field(V1,_,F2).
-compare(edit_add_color,V1,V2,E2,F2) :- not compare(edit_add_color_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,color), field(V2,E2,F2), not channel(V1,_,color), not field(V1,_,F2).
-compare(edit_add_shape,V1,V2,E2,F2) :- not compare(edit_add_shape_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,shape), field(V2,E2,F2), not channel(V1,_,shape), not field(V1,_,F2).
-compare(edit_add_size,V1,V2,E2,F2) :- not compare(edit_add_size_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,size), field(V2,E2,F2), not channel(V1,_,size), not field(V1,_,F2).
-compare(edit_add_row,V1,V2,E2,F2) :- not compare(edit_add_row_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,row), field(V2,E2,F2), not channel(V1,_,row), not field(V1,_,F2).
-compare(edit_add_column,V1,V2,E2,F2) :- not compare(edit_add_column_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,column), field(V2,E2,F2), not channel(V1,_,column), not field(V1,_,F2).
-compare(edit_add_text,V1,V2,E2,F2) :- not compare(edit_add_text_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,text), field(V2,E2,F2), not channel(V1,_,text), not field(V1,_,F2).
+compare(edit_add_x,V1,V2,E2,F2) :- not compare(edit_add_x_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,x), field(V2,E2,F2), not channel(V1,_,x).
+compare(edit_add_y,V1,V2,E2,F2) :- not compare(edit_add_y_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,y), field(V2,E2,F2), not channel(V1,_,y).
+compare(edit_add_color,V1,V2,E2,F2) :- not compare(edit_add_color_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,color), field(V2,E2,F2), not channel(V1,_,color).
+compare(edit_add_shape,V1,V2,E2,F2) :- not compare(edit_add_shape_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,shape), field(V2,E2,F2), not channel(V1,_,shape).
+compare(edit_add_size,V1,V2,E2,F2) :- not compare(edit_add_size_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,size), field(V2,E2,F2), not channel(V1,_,size).
+compare(edit_add_row,V1,V2,E2,F2) :- not compare(edit_add_row_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,row), field(V2,E2,F2), not channel(V1,_,row).
+compare(edit_add_column,V1,V2,E2,F2) :- not compare(edit_add_column_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,column), field(V2,E2,F2), not channel(V1,_,column).
+compare(edit_add_text,V1,V2,E2,F2) :- not compare(edit_add_text_count,V1,V2,E2,count), comparable(V1,V2), channel(V2,E2,text), field(V2,E2,F2), not channel(V1,_,text).
 compare(edit_add_x_count,V1,V2,E2,count) :- comparable(V1,V2), channel(V2,E2,x), aggregate(V2,E2,count), not channel(V1,_,x).
 compare(edit_add_y_count,V1,V2,E2,count) :- comparable(V1,V2), channel(V2,E2,y), aggregate(V2,E2,count), not channel(V1,_,y).
 compare(edit_add_color_count,V1,V2,E2,count) :- comparable(V1,V2), channel(V2,E2,color), aggregate(V2,E2,count), not channel(V1,_,color).
@@ -50,22 +50,22 @@ compare(edit_add_size_count,V1,V2,E2,count) :- comparable(V1,V2), channel(V2,E2,
 compare(edit_add_row_count,V1,V2,E2,count) :- comparable(V1,V2), channel(V2,E2,row), aggregate(V2,E2,count), not channel(V1,_,row).
 compare(edit_add_column_count,V1,V2,E2,count) :- comparable(V1,V2), channel(V2,E2,column), aggregate(V2,E2,count), not channel(V1,_,column).
 compare(edit_add_text_count,V1,V2,E2,count) :- comparable(V1,V2), channel(V2,E2,text), aggregate(V2,E2,count), not channel(V1,_,text).
-compare(edit_remove_x_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,x), field(V1,E1,F1), not channel(V2,_,x), not field(V2,_,F1), aggregate(V1,E1,count).
-compare(edit_remove_y_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,y), field(V1,E1,F1), not channel(V2,_,y), not field(V2,_,F1), aggregate(V1,E1,count).
-compare(edit_remove_color_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,color), field(V1,E1,F1), not channel(V2,_,color), not field(V2,_,F1), aggregate(V1,E1,count).
-compare(edit_remove_shape_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,shape), field(V1,E1,F1), not channel(V2,_,shape), not field(V2,_,F1), aggregate(V1,E1,count).
-compare(edit_remove_size_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,size), field(V1,E1,F1), not channel(V2,_,size), not field(V2,_,F1), aggregate(V1,E1,count).
-compare(edit_remove_row_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,row), field(V1,E1,F1), not channel(V2,_,row), not field(V2,_,F1), aggregate(V1,E1,count).
-compare(edit_remove_column_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,column), field(V1,E1,F1), not channel(V2,_,column), not field(V2,_,F1), aggregate(V1,E1,count).
-compare(edit_remove_text_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,text), field(V1,E1,F1), not channel(V2,_,text), not field(V2,_,F1), aggregate(V1,E1,count).
-compare(edit_remove_x,V1,V2,E1,F1) :- not compare(edit_remove_x_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,x), field(V1,E1,F1), not channel(V2,_,x), not field(V2,_,F1).
-compare(edit_remove_y,V1,V2,E1,F1) :- not compare(edit_remove_y_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,y), field(V1,E1,F1), not channel(V2,_,y), not field(V2,_,F1).
-compare(edit_remove_color,V1,V2,E1,F1) :- not compare(edit_remove_color_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,color), field(V1,E1,F1), not channel(V2,_,color), not field(V2,_,F1).
-compare(edit_remove_shape,V1,V2,E1,F1) :- not compare(edit_remove_shape_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,shape), field(V1,E1,F1), not channel(V2,_,shape), not field(V2,_,F1).
-compare(edit_remove_size,V1,V2,E1,F1) :- not compare(edit_remove_size_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,size), field(V1,E1,F1), not channel(V2,_,size), not field(V2,_,F1).
-compare(edit_remove_row,V1,V2,E1,F1) :- not compare(edit_remove_row_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,row), field(V1,E1,F1), not channel(V2,_,row), not field(V2,_,F1).
-compare(edit_remove_column,V1,V2,E1,F1) :- not compare(edit_remove_column_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,column), field(V1,E1,F1), not channel(V2,_,column), not field(V2,_,F1).
-compare(edit_remove_text,V1,V2,E1,F1) :- not compare(edit_remove_text_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,text), field(V1,E1,F1), not channel(V2,_,text), not field(V2,_,F1).
+compare(edit_remove_x_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,x), field(V1,E1,F1), not channel(V2,_,x), aggregate(V1,E1,count).
+compare(edit_remove_y_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,y), field(V1,E1,F1), not channel(V2,_,y), aggregate(V1,E1,count).
+compare(edit_remove_color_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,color), field(V1,E1,F1), not channel(V2,_,color), aggregate(V1,E1,count).
+compare(edit_remove_shape_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,shape), field(V1,E1,F1), not channel(V2,_,shape), aggregate(V1,E1,count).
+compare(edit_remove_size_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,size), field(V1,E1,F1), not channel(V2,_,size), aggregate(V1,E1,count).
+compare(edit_remove_row_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,row), field(V1,E1,F1), not channel(V2,_,row), aggregate(V1,E1,count).
+compare(edit_remove_column_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,column), field(V1,E1,F1), not channel(V2,_,column), aggregate(V1,E1,count).
+compare(edit_remove_text_count,V1,V2,E1,F1) :- comparable(V1,V2), channel(V1,E1,text), field(V1,E1,F1), not channel(V2,_,text), aggregate(V1,E1,count).
+compare(edit_remove_x,V1,V2,E1,F1) :- not compare(edit_remove_x_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,x), field(V1,E1,F1), not channel(V2,_,x).
+compare(edit_remove_y,V1,V2,E1,F1) :- not compare(edit_remove_y_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,y), field(V1,E1,F1), not channel(V2,_,y).
+compare(edit_remove_color,V1,V2,E1,F1) :- not compare(edit_remove_color_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,color), field(V1,E1,F1), not channel(V2,_,color).
+compare(edit_remove_shape,V1,V2,E1,F1) :- not compare(edit_remove_shape_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,shape), field(V1,E1,F1), not channel(V2,_,shape).
+compare(edit_remove_size,V1,V2,E1,F1) :- not compare(edit_remove_size_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,size), field(V1,E1,F1), not channel(V2,_,size).
+compare(edit_remove_row,V1,V2,E1,F1) :- not compare(edit_remove_row_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,row), field(V1,E1,F1), not channel(V2,_,row).
+compare(edit_remove_column,V1,V2,E1,F1) :- not compare(edit_remove_column_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,column), field(V1,E1,F1), not channel(V2,_,column).
+compare(edit_remove_text,V1,V2,E1,F1) :- not compare(edit_remove_text_count,V1,V2,E1,count), comparable(V1,V2), channel(V1,E1,text), field(V1,E1,F1), not channel(V2,_,text).
 compare(edit_modify_x,V1,V2,E1,F2) :- not compare(edit_modify_x_add_count,V1,V2,E1,E2), not compare(edit_modify_x_remove_count,V1,V2,E1,E2), comparable(V1,V2), channel(V1,E1,x), channel(V2,E2,x), field(V2,E2,F2), not field(V1,_,F2).
 compare(edit_modify_y,V1,V2,E1,F2) :- not compare(edit_modify_y_add_count,V1,V2,E1,E2), not compare(edit_modify_y_remove_count,V1,V2,E1,E2), comparable(V1,V2), channel(V1,E1,y), channel(V2,E2,y), field(V2,E2,F2), not field(V1,_,F2).
 compare(edit_modify_color,V1,V2,E1,F2) :- not compare(edit_modify_color_add_count,V1,V2,E1,E2), not compare(edit_modify_color_remove_count,V1,V2,E1,E2), comparable(V1,V2), channel(V1,E1,color), channel(V2,E2,color), field(V2,E2,F2), not field(V1,_,F2).

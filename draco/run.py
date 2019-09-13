@@ -130,7 +130,7 @@ def run_clingo(
     files = files or DRACO_LP
     constants = constants or {}
 
-    options = ["--outf=2", "--quiet=1,2,2", "--parallel-mode=4", "--seed=20"]
+    options = ["--outf=2", "--quiet=1,2,2"]
 
     if (topk):
         files.append('topk-py.lp')
@@ -154,6 +154,7 @@ def run_clingo(
 
     asp_program = b"\n".join(map(load_file, file_names)) + program.encode("utf8")
 
+    # print(asp_program.decode("utf8"))
     if debug:
         with tempfile.NamedTemporaryFile(mode="w", delete=False) as fd:
             fd.write(program)
@@ -196,7 +197,9 @@ def run(
     result = json_result["Result"]
 
     if result == "UNSATISFIABLE":
-        logger.info("Constraints are unsatisfiable.")
+        # logger.info("Constraints are unsatisfiable.")
+        if topk and json_result["Calls"] > 1:
+            return run(draco_query, constants, files, silence_warnings, debug, clear_cache, topk, json_result["Calls"])
         return None
     elif result == "OPTIMUM FOUND":
         if (not topk):
