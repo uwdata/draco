@@ -22,4 +22,3 @@
 #include "compare.lp".
 #include "assign_compare_weights.lp".
 #include "compare_weights.lp".
-#include "topk-py.lp".

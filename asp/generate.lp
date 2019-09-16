@@ -35,5 +35,5 @@ obj_id(1..max_extra_encs).
 
 0 { stack(V,S): stacking(S) } 1 :- visualization(V), not base(V).
 
-% :- field(V,E1,F1), field(V,E2,F2), E1 > E2, F1 <= F2.
+:- field(V,E1,F1), field(V,E2,F2), E1 > E2, F1 <= F2.
 % :- channel(V,E1,C1), channel(V,E2,C2), E1 > E2, C1 <= C2.

@@ -29,6 +29,7 @@ DRACO_LP = [
     "output.lp",
     "compare.lp",
     "assign_compare_weights.lp",
+    "compare_hard.lp",
     "compare_weights.lp"
 ]
 DRACO_LP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../asp")
@@ -130,7 +131,7 @@ def run_clingo(
     files = files or DRACO_LP
     constants = constants or {}
 
-    options = ["--outf=2", "--quiet=1,2,2"]
+    options = ["--outf=2", "--quiet=1,2,2", "--parallel-mode=4"]
 
     if (topk):
         files.append('topk-py.lp')
@@ -199,7 +200,7 @@ def run(
     if result == "UNSATISFIABLE":
         # logger.info("Constraints are unsatisfiable.")
         if topk and json_result["Calls"] > 1:
-            return run(draco_query, constants, files, silence_warnings, debug, clear_cache, topk, json_result["Calls"])
+            return run(draco_query, constants, files, silence_warnings, debug, clear_cache, topk, json_result["Calls"] - 1)
         return None
     elif result == "OPTIMUM FOUND":
         if (not topk):

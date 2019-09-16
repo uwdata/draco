@@ -22,7 +22,7 @@
 #const only_discrete_weight = 30.
 #const multiple_non_pos_weight = 3.
 #const non_positional_pref_weight = 20.
-#const aggregate_group_by_raw_weight = 10.
+#const aggregate_group_by_raw_weight = 20.
 #const x_y_raw_weight = 1.
 #const log_weight = 1.
 #const zero_weight = 1.
@@ -97,10 +97,10 @@
 
 #const nominal_x_weight = 3.
 #const nominal_y_weight = 0.
-#const nominal_color_weight = 10.
-#const nominal_shape_weight = 11.
-#const nominal_text_weight = 12.
-#const nominal_row_weight = 7.
+#const nominal_color_weight = 6.
+#const nominal_shape_weight = 10.
+#const nominal_text_weight = 15.
+#const nominal_row_weight = 8.
 #const nominal_column_weight = 9.
 #const nominal_detail_weight = 30.
 
