@@ -13,7 +13,7 @@
 #show field/3.
 #show aggregate/3.
 #show bin/3.
-#show stack/3.
+#show stack/2.
 
 #show log/2.
 #show zero/2.
