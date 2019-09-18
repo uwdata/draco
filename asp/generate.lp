@@ -7,7 +7,7 @@
 
 obj_id(1..max_extra_encs).
 
-{ encoding(V,E): obj_id(E) } :- visualization(V), not base(V).
+{ encoding(V,E): obj_id(E) } :- view(V), not base(V).
 
 :- not encoding(V,ID), not base(V), encoding(V,ID-1), obj_id(ID), obj_id(ID-1).
 
@@ -29,10 +29,10 @@ obj_id(1..max_extra_encs).
 
 % pick one mark type
 
-{ mark(V,M) : marktype(M) } = 1 :- visualization(V), not base(V).
+{ mark(V,M) : marktype(M) } = 1 :- view(V), not base(V).
 
 % stacking
 
-0 { stack(V,S): stacking(S) } 1 :- visualization(V), not base(V).
+0 { stack(V,S): stacking(S) } 1 :- view(V), not base(V).
 
 :- field(V,E1,F1), field(V,E2,F2), E1 > E2, F1 <= F2.

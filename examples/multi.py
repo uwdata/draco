@@ -11,7 +11,7 @@ from draco.run import run
 # cardinality(acceleration,96).
 
 # % ====== Query constraints ======
-# visualization(v1).
+# view(v1).
 
 # encoding(v1,e0).
 # :- not field(v1,e0,acceleration).
@@ -38,7 +38,7 @@ from draco.run import run
 # cardinality(acceleration,96).
 
 # % ====== Query constraints ======
-# visualization(v1).
+# view(v1).
 # data("cars.json").
 # type(v1,e0,quantitative).
 # type(v1,e1,quantitative).
@@ -57,7 +57,7 @@ from draco.run import run
 
 
 
-program = """visualization("view").
+program = """view("view").
 num_rows(406).
 
 fieldtype("Acceleration",number).
@@ -86,7 +86,7 @@ aggregate("view",e0,mean).
 channel("view",e0,x).
 encoding("view",e1).
 :- not field("view",e1,"Miles_per_Gallon").
-visualization("first").
+view("first").
 num_rows(406).
 
 fieldtype("Acceleration",number).
@@ -115,7 +115,7 @@ aggregate("first",e0,mean).
 channel("first",e0,x).
 encoding("first",e1).
 :- not field("first",e1,"Miles_per_Gallon").
-visualization("first").
+view("first").
 encoding("first",e0).
 encoding("first",e1).
 aggregate("first",e0,mean).

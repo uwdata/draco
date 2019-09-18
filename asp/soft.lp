@@ -21,13 +21,13 @@ soft(encoding,V,E) :- encoding(V,E).
 soft(encoding_field,V,E) :- field(V,E,_).
 
 % @constraint Prefer not to use the same field twice.
-soft(same_field_2,V,F) :- visualization(V), field(F), { field(V,_,F) } = 2.
+soft(same_field_2,V,F) :- view(V), field(F), { field(V,_,F) } = 2.
 
 % @constraint Prefer not to use the same field three or more times.
-soft(same_field_gte3,V,F) :- visualization(V), field(F), { field(V,_,F) } >= 3.
+soft(same_field_gte3,V,F) :- view(V), field(F), { field(V,_,F) } >= 3.
 
 % @constraint Prefer not to use count more than once.
-soft(count_twice,V) :- visualization(V), { aggregate(V,_,count) } = 2.
+soft(count_twice,V) :- view(V), { aggregate(V,_,count) } = 2.
 
 % @constraint Shape channel should not have too high cardinality.
 soft(shape_cardinality,V,E) :- channel(V,E,shape), discrete_cardinality(V,E,C), C > 5.
@@ -50,10 +50,10 @@ soft(bin_cardinality,V,E) :- type(V,E,quantitative), bin(V,E,_), enc_cardinality
 soft(quant_bin,V,E) :- bin(V,E,_), not type(V,E,quantitative).
 
 % @constraint Plots with only nominal, ordinal, binned q, or t with time unit should add either an aggregation (e.g. count) or a quantitative field.
-soft(only_discrete,V) :- visualization(V), not continuous(V,_).
+soft(only_discrete,V) :- view(V), not continuous(V,_).
 
 % @constraint Prefer not to use multiple non-positional encoding channels.
-soft(multiple_non_pos,V) :- visualization(V), { channel(V,_,C): non_positional(C) } > 1.
+soft(multiple_non_pos,V) :- view(V), { channel(V,_,C): non_positional(C) } > 1.
 
 % @constraint Prefer not to use non-positional channels until all positional channels are used.
 soft(non_positional_pref,V) :- channel(V,_,C), non_positional(C), not channel(V,_,(x;y)).

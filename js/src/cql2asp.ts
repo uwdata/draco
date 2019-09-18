@@ -3,7 +3,7 @@ const HOLE = '?';
 export default function cql2asp(spec: any) {
   const mark = subst_if_hole(spec.mark);
 
-  const facts = ['visualization(v1).'];
+  const facts = ['view(v1).'];
 
   if (mark) {
     facts.push(`mark(v1,${spec.mark}).`);

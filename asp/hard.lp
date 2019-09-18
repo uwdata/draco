@@ -1,6 +1,6 @@
-:- visualization(V), hard(_,V).
-:- visualization(V), hard(_,V,_).
-:- visualization(V), hard(_,V,_,_).
+:- view(V), hard(_,V).
+:- view(V), hard(_,V,_).
+:- view(V), hard(_,V,_,_).
 
 % ====== Expressiveness and Well-Formedness Constraints ======
 
@@ -62,10 +62,10 @@ hard(size_negative,V,E) :- channel(V,E,size), enc_extent(V,E,MIN,MAX), MIN < 0, 
 % === Across encodings and between encodings and marks ===
 
 % @constraint Cannot use single channels twice.
-hard(repeat_channel,V,C) :- visualization(V), single_channel(C), 2 { channel(V,_,C) }.
+hard(repeat_channel,V,C) :- view(V), single_channel(C), 2 { channel(V,_,C) }.
 
 % @constraint There has to be at least one encoding. Otherwise, the visualization doesn't show anything.
-hard(no_encodings,V) :- visualization(V), not encoding(V,_).
+hard(no_encodings,V) :- view(V), not encoding(V,_).
 
 % @constraint Row and column require discrete.
 hard(row_or_column_c,V) :- channel_continuous(V,(row;column)).
@@ -123,7 +123,7 @@ hard(area_bar_with_log,V) :- mark(V,(bar;area)), channel(V,E,(x;y)), log(V,E).
 hard(rect_without_d_d,V) :- mark(V,rect), not is_d_d(V).
 
 % @constraint Don't use the same field on x and y.
-hard(same_field_x_and_y,V) :- visualization(V), { field(V,E,F) : channel(V,E,x); field(V,E,F) : channel(V,E,y) } >= 2, field(F).
+hard(same_field_x_and_y,V) :- view(V), { field(V,E,F) : channel(V,E,x); field(V,E,F) : channel(V,E,y) } >= 2, field(F).
 
 % @constraint Don't use count on x and y.
 hard(count_on_x_and_y,V):- channel(V,EX,x), channel(V,EY,y), aggregate(V,EX,count), aggregate(V,EY,count).
@@ -132,7 +132,7 @@ hard(count_on_x_and_y,V):- channel(V,EX,x), channel(V,EY,y), aggregate(V,EX,coun
 hard(aggregate_not_all_continuous,V):- aggregate(V,E,_), continuous(V,E), not aggregate(V,E,_).
 
 % @constraint Don't use count twice.
-hard(count_twice) :- visualization(V), { aggregate(V,_,count) } = 2.
+hard(count_twice) :- view(V), { aggregate(V,_,count) } = 2.
 
 % === Global properties ===
 
@@ -188,28 +188,28 @@ hard(invalid_agg,V,A) :- aggregate(V,_,A), not aggregate_op(A).
 hard(invalid_bin,V,B) :- bin(V,_,B), not B >= 0.  % @constraint Bin has to be a natural number.
 
 % @constraint Fieldtype has to be primitive type.
-hard(invalid_fieldtype,V,T) :- visualization(V), fieldtype(_,T), not primitive_type(T).
+hard(invalid_fieldtype,V,T) :- view(V), fieldtype(_,T), not primitive_type(T).
 
 % @constraint Task has to be one of the tasks.
-hard(invalid_task,V,T) :- visualization(V), task(V,T), not tasks(T).
+hard(invalid_task,V,T) :- view(V), task(V,T), not tasks(T).
 
 % @constraint Num_rows has to be larger than 0.
-hard(invalid_num_rows,V,S) :- visualization(V), num_rows(S), S < 0.
+hard(invalid_num_rows,V,S) :- view(V), num_rows(S), S < 0.
 
 % @constraint Cardinality has to be larger than 0.
-hard(invalid_cardinality,V,C) :- visualization(V), cardinality(_,C), C < 0.
+hard(invalid_cardinality,V,C) :- view(V), cardinality(_,C), C < 0.
 
 % @constraint Entropy has to be positive.
-hard(invalid_entropy,V,E) :- visualization(V), entropy(_,E), E < 0.
+hard(invalid_entropy,V,E) :- view(V), entropy(_,E), E < 0.
 
 % @constraint Extent only allowed for numbers (for now).
-hard(invalid_extent_non_number,V,F) :- visualization(V), extent(F,_,_), not fieldtype(F,number).
+hard(invalid_extent_non_number,V,F) :- view(V), extent(F,_,_), not fieldtype(F,number).
 
 % @constraint Order has to be correct.
-hard(invalid_extent_order,V,MIN,MAX):- visualization(V), extent(_,MIN,MAX), MIN > MAX.
+hard(invalid_extent_order,V,MIN,MAX):- view(V), extent(_,MIN,MAX), MIN > MAX.
 
 % @constraint The name of a field cannot be the name of an encoding. This is to prevent errors coming from the shortcuts in define.lp.
-hard(encoding_field_same_name,V,N) :- visualization(V), encoding(V,N), field(N).
+hard(encoding_field_same_name,V,N) :- view(V), encoding(V,N), field(N).
 
 % @constraint Cannot bin strings.
 hard(bin_string,V,E) :- field(V,E,F), fieldtype(F,string), bin(V,E,_).

@@ -4,7 +4,7 @@
 
 #show mark/2.
 
-#show visualization/1.
+#show view/1.
 #show base/1.
 #show encoding/2.
 
