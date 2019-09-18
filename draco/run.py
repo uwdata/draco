@@ -129,9 +129,10 @@ def run_clingo(
     """
     # default args
     files = files or DRACO_LP
+    files = files.copy()
     constants = constants or {}
 
-    options = ["--outf=2", "--quiet=1,2,2", "--parallel-mode=4"]
+    options = ["--outf=2", "--quiet=1,2,2", "--seed=0"]
 
     if (topk):
         files.append('topk-py.lp')
@@ -155,7 +156,6 @@ def run_clingo(
 
     asp_program = b"\n".join(map(load_file, file_names)) + program.encode("utf8")
 
-    # print(asp_program.decode("utf8"))
     if debug:
         with tempfile.NamedTemporaryFile(mode="w", delete=False) as fd:
             fd.write(program)
