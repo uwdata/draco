@@ -166,3 +166,5 @@
 
 #const stack_zero_weight = 0.
 #const stack_normalize_weight = 1.
+#const x_y_fields_order_weight = 1.
+#const rect_no_agg_weight = 40.

@@ -92,7 +92,7 @@ soft(includes_zero,V,E) :- zero(V,E), field(V,E,F), extent(F,MIN,MAX), MIN < 0, 
 soft(only_x,V) :- channel(V,_,y), not channel(V,_,x).
 
 % @constraint Chart orientation for bar and tick (with and without bin). Binned fields have short labels if they are quantitative while otherwise labels can be long.
-soft(orientation_binned,V) :- bin(V,E,_), type(V,E,quantitative), not channel(V,E,x).
+soft(orientation_binned,V) :- mark(V,(bar;tick)), bin(V,E,_), type(V,E,quantitative), not channel(V,E,x).
 
 % @constraint Prefer not to use ordinal for fields with high cardinality.
 soft(high_cardinality_ordinal,V,E) :- type(V,E,ordinal), discrete_cardinality(V,E,C), C > 30.
@@ -477,3 +477,8 @@ soft(summary_discrete_row,E) :- task(V,summary), channel(V,E,row), discrete(V,E)
 % @constraint Discrete column for summary tasks.
 soft(summary_discrete_column,E) :- task(V,summary), channel(V,E,column), discrete(V,E), enc_interesting(V,E).
 
+% @constraint Tiebreaker to keep fields on x and y consistent.
+soft(x_y_fields_order,V) :- field(V,EX,F1), field(V,EY,F2), channel(V,EX,x), channel(V,EY,y), F1 > F2.
+
+% @constraint Rect without aggregate
+% soft(d_d_rect_point_no_agg,V,none) :- mark(V,(point;rect)), is_d_d(V), not aggregate(V,_,_).
