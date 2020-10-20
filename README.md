@@ -207,7 +207,7 @@ This only prints the relevant data and restricts the extra encodings that are be
 
 Previous prototypes
 
-* https://github.com/uwdata/vis-csp
+* https://github.com/domoritz/vis-csp
 * https://github.com/domoritz/vis-constraints
 
 Related software
