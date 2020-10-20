@@ -210,6 +210,8 @@ Previous prototypes
 * https://github.com/domoritz/vis-csp
 * https://github.com/domoritz/vis-constraints
 
+For a bit of historical perspective, after building [Compass](https://github.com/vega/compass) and [CompassQL](https://github.com/vega/compassql) with @kanitw, @domoritz worked with colleagues at UW on a first constraint-based prototype [vis-csp](https://github.com/domoritz/vis-csp) in ASP, then tried Z3 in [vis-constraints](https://github.com/domoritz/vis-constraints) before going back to ASP for Draco.
+
 Related software
 
 * https://github.com/uwdata/draco-vis
