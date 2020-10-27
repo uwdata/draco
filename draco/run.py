@@ -78,7 +78,7 @@ def run_clingo(
     relax_hard=False,
     silence_warnings=False,
     debug=False,
-) -> Tuple[str, str]:
+) -> Tuple[bytes, bytes]:
     """
     Run draco and return stderr and stdout
     """
