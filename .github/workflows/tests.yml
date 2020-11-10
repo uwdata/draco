@@ -14,11 +14,11 @@ jobs:
     - uses: actions/checkout@v2
       name: setup python
     - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: install # will run `yarn install` command
+      with:
+        cmd: install # will run `yarn install` command
     - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: build # will run `yarn install` command
+      with:
+        cmd: build # will run `yarn install` command
     - name: Set up Python 3.6.7
       uses: actions/setup-python@v2
       with:
