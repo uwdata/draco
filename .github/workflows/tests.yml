@@ -8,14 +8,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6]
+        python-version: [3.6.7]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
+      name: setup python
+    - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install # will run `yarn install` command
+    - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: build # will run `yarn install` command
+    - name: Set up Python 3.6.7
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.6.7
     - name: Install dependencies
       run: |
         # install conda
@@ -30,7 +37,7 @@ jobs:
         export PATH="$HOME/.yarn/bin:$PATH"
         # Useful for debugging any issues with conda
         conda info -a
-    - name: Lint with flake8
+    - name: install
       run: |
           yarn
           yarn --cwd js
