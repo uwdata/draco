@@ -6,29 +6,30 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.6.7]
 
     steps:
     - uses: actions/checkout@v2
       name: setup python
-    - uses: borales/actions-yarn@v2.0.0
+    - name: Setup Node
+      uses: actions/setup-node@v1
+    - name: Setup conda
+      uses: conda-incubator/setup-miniconda@v2
       with:
-        cmd: install # will run `yarn install` command
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: build # will run `yarn install` command
-    - name: Set up Python 3.6.7
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.6.7
+        mamba-version: "*"
+        channels: conda-forge,defaults
+        channel-priority: true
+        use-only-tar-bz2: true
+    # - name: Set up Python 3.6.7
+    #   uses: actions/setup-python@v2
+    #   with:
+    #     python-version: '3.6.7'
+    #     architecture: 'x64' 
     - name: Install dependencies
       run: |
         # install conda
-        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-        bash miniconda.sh -b -p $HOME/miniconda
-        export PATH="$HOME/miniconda/bin:$PATH"
+        # wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+        # bash miniconda.sh -b -p $HOME/miniconda
+        # export PATH="$HOME/miniconda/bin:$PATH"
         hash -r
         conda config --set always_yes yes --set changeps1 no
         conda update -q conda
