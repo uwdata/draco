@@ -21,12 +21,14 @@ jobs:
         channels: conda-forge,defaults
         channel-priority: true
         use-only-tar-bz2: true
+        activate-environment: anaconda-client-env
+        python-version: 3.6.7
     # - name: Set up Python 3.6.7
     #   uses: actions/setup-python@v2
     #   with:
     #     python-version: '3.6.7'
     #     architecture: 'x64' 
-    
+
     - name: Install dependencies
       run: |
         # install conda
@@ -45,16 +47,13 @@ jobs:
     - name: install
       run: |
           yarn --cwd js
-          conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION coveralls
+          # conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION coveralls
+          # source activate test-environment
           # now we are in an environment
-          # conda install -c potassco clingo
-          # pip install -r requirements.txt
-          # pip install -e .
+          conda install -c potassco clingo
+          pip install -r requirements.txt
+          pip install -e .
 
-    - name: activate environment
-      run: |
-          source activate test-environment
-    
     - name: Test with pytest
       run: |
         yarn --cwd js build
