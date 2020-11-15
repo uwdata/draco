@@ -21,7 +21,7 @@ jobs:
         channels: conda-forge,defaults
         channel-priority: true
         use-only-tar-bz2: true
-        activate-environment: anaconda-client-env
+        activate-environment: test-environment
         python-version: 3.6.7
     # - name: Set up Python 3.6.7
     #   uses: actions/setup-python@v2
@@ -51,7 +51,7 @@ jobs:
           # ls -alrt
           # pwd
           # hash -r
-          cd (path-to-anaconda3)/bin
+
           source activate test-environment
           # now we are in an environment
           conda install -c potassco clingo
