@@ -9,9 +9,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      name: setup python
+      name: Setup python
+    
     - name: Setup Node
       uses: actions/setup-node@v1
+    
     - name: Setup conda
       uses: conda-incubator/setup-miniconda@v2
       with:
@@ -40,14 +42,13 @@ jobs:
         conda info -a
     - name: install
       run: |
-          yarn
           yarn --cwd js
-          conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION coveralls
-          source activate test-environment
-          #now we are in an environment
-          conda install -c potassco clingo
-          pip install -r requirements.txt
-          pip install -e .
+          # conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION coveralls
+          # source activate test-environment
+          # #now we are in an environment
+          # conda install -c potassco clingo
+          # pip install -r requirements.txt
+          # pip install -e .
     - name: Test with pytest
       run: |
         yarn --cwd js build
