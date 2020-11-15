@@ -48,12 +48,14 @@ jobs:
       run: |
           yarn --cwd js
           conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION coveralls
-          ls -alrt
-          pwd
-          hash -r
+          # ls -alrt
+          # pwd
+          # hash -r
+          cd (path-to-anaconda3)/bin
           source activate test-environment
           # now we are in an environment
           conda install -c potassco clingo
+          cd /home/runner/work/draco/draco
           pip install -r requirements.txt
           pip install -e .
 
