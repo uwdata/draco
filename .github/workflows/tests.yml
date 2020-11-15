@@ -50,6 +50,7 @@ jobs:
           conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION coveralls
           ls -alrt
           pwd
+          hash -r
           source activate test-environment
           # now we are in an environment
           conda install -c potassco clingo
