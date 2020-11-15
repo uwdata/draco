@@ -45,9 +45,9 @@ jobs:
           yarn --cwd js
           conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION coveralls
           source activate test-environment
-          # #now we are in an environment
+          # now we are in an environment
           conda install -c potassco clingo
-          pip install -r requirements.txt
+          # pip install -r requirements.txt
           # pip install -e .
     - name: Test with pytest
       run: |
