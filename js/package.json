@@ -8,32 +8,32 @@
   "module": "build/index.js",
   "typings": "build/index.d.ts",
   "dependencies": {
-    "datalib": "^1.9.2",
-    "vega": "^5.3.4",
-    "vega-lite": "^3.0.3",
-    "vega-typings": "^0.3.51"
+    "datalib": "^1.9.3",
+    "vega": "^5.17.0",
+    "vega-lite": "^4.17.0",
+    "vega-typings": "^0.19.1"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.10",
+    "@types/jest": "^26.0.15",
     "@types/json-stable-stringify": "^1.0.32",
-    "@types/node": "^10.12.12",
-    "jest": "^23.6.0",
-    "prettier": "^1.15.3",
-    "rollup": "^0.67.4",
+    "@types/node": "^14.14.7",
+    "jest": "^26.6.3",
+    "prettier": "^2.1.2",
+    "rollup": "^2.33.2",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.4.0",
-    "ts-jest": "^23.10.5",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.17.0",
-    "typescript": "^3.2.1"
+    "ts-jest": "^26.4.4",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.0.5"
   },
   "bin": {
     "vl2asp": "./bin/vl2asp",
     "asp2vl": "./bin/asp2vl"
   },
   "scripts": {
-    "build": "npm run concat && rm -rf build && tsc && rollup -c",
+    "build": "npm run concat && rm -rf build && yarn tsc && rollup -c",
     "concat": "bash concat_lp.sh ../asp src",
     "format": "tslint -p . --fix && prettier --write '{src,test}/**/*.ts'",
     "lint": "tslint -p . && prettier --list-different '{src,test}/**/*.ts'",

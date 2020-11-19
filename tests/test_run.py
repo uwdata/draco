@@ -18,7 +18,7 @@ class TestFull:
             if fname.endswith(".json") and not fname.endswith(".vl.json")
         ]
 
-        with open("node_modules/vega-lite/build/vega-lite-schema.json") as sf:
+        with open("js/node_modules/vega-lite/build/vega-lite-schema.json") as sf:
             schema = json.load(sf)
 
             for fname in json_files:

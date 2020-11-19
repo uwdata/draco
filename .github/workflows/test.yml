@@ -1,0 +1,47 @@
+name: Test
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: 3.8
+
+      - shell: bash -l {0}
+        run: |
+          which pip
+          pip --version
+          which python
+          python --version
+          which conda
+          conda --version
+
+      - name: Install
+        shell: bash -l {0}
+        run: |
+          conda install -c potassco clingo
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+
+      - name: Install Node dependencies
+        run: yarn --cwd js --frozen-lockfile
+
+      - name: Node Build
+        run: yarn --cwd js build
+
+      - name: Tests
+        shell: bash -l {0}
+        run: python setup.py test
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1

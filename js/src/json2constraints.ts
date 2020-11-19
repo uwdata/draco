@@ -8,7 +8,8 @@ export interface ConstraintAsp {
 
 export default function json2constraints(json: Constraint[]): ConstraintAsp {
   const type = json[0].type;
-  json.forEach(constraint => {
+  // tslint:disable-next-line
+  json.forEach((constraint) => {
     if (constraint.type !== type) {
       throw new Error(`constraints not all of type ${type}`);
     }
