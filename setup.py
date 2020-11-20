@@ -50,9 +50,8 @@ class RunTests(Command):
         print("\n\n=> Running MyPy:")
         errno_mypy = call(["mypy", "draco", "tests", "--ignore-missing-imports"])
 
-        # FIXME: activate black test
-        # print("\n\n=> Running Black:")
-        # errno_mypy = call(["black", "--check", "."])
+        print("\n\n=> Running Black:")
+        errno_mypy = call(["black", "--check", "."])
 
         print("=> Running Prettier:")
 
