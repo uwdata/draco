@@ -31,6 +31,7 @@ jobs:
         run: |
           conda install -c potassco clingo
           pip install -r requirements.txt
+          pip install coveralls
           pip install -e .
 
       - name: Setup Node
@@ -47,6 +48,7 @@ jobs:
         run: python setup.py test
 
       - name: Coveralls
-        uses: AndreMiras/coveralls-python-action@develop
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash -l {0}
+        run: coveralls
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
