@@ -1,10 +1,13 @@
 name: Test
 
-on: [push]
+on: ["push", "pull_request"]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    # We want to run on external PRs, but not on our own internal PRs as they'll be run by the push to the branch.
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
 
     steps:
       - uses: actions/checkout@v2
@@ -28,6 +31,7 @@ jobs:
         run: |
           conda install -c potassco clingo
           pip install -r requirements.txt
+          pip install coveralls
           pip install -e .
 
       - name: Setup Node
@@ -43,5 +47,8 @@ jobs:
         shell: bash -l {0}
         run: python setup.py test
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+      - name: Coveralls
+        shell: bash -l {0}
+        run: coveralls
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
