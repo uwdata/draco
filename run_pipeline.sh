@@ -6,7 +6,7 @@ set -e
 mkdir -p __tmp__
 
 output_dir="__tmp__"
-input_file="examples/scatter.json"
+input_file="examples/scatter.lp"
 
 if [ $# -ge 1 ]
     then
@@ -25,7 +25,7 @@ draco $input_file --out $output_spec
 
 echo "🌟 [OK] Output spec: $output_spec"
 
-./js/node_modules/.bin/vl2png --silent -- $output_spec > $output_png
+./node_modules/.bin/vl2png --silent -b examples -- $output_spec > $output_png
 
 echo "🌟 [OK] Output png: $output_png"
 

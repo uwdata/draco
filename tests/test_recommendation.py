@@ -41,7 +41,7 @@ class TestSpecs:
         ).as_vl()
 
         assert recommendation == {
-            "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+            "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
             "data": {"url": "data.csv"},
             "mark": "point",
             "encoding": {
@@ -57,7 +57,7 @@ class TestSpecs:
 
         print(recommendation)
         assert recommendation == {
-            "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+            "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
             "data": {"url": "data.csv"},
             "mark": "bar",
             "encoding": {
@@ -74,7 +74,7 @@ class TestSpecs:
         recommendation = get_rec(spec_schema, {"encodings": [{"field": "q1"}]}).as_vl()
 
         assert recommendation == {
-            "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+            "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
             "data": {"url": "data.csv"},
             "mark": "tick",
             "encoding": {

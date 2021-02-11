@@ -9,7 +9,7 @@ import sys
 from enum import Enum
 
 from draco import __version__
-from draco.js import vl2asp
+from draco.js import cql2asp, vl2asp
 from draco.run import run
 
 logging.basicConfig(level=logging.INFO)
@@ -31,6 +31,7 @@ class ArgEnum(Enum):
 class QueryType(ArgEnum):
     vl = "vl"
     asp = "asp"
+    cql = "cql"
 
 
 class Mode(ArgEnum):
@@ -58,7 +59,7 @@ def create_parser():
         type=QueryType,
         choices=list(QueryType),
         default=QueryType.asp,
-        help="Type of query. asp (Answer Set Program, default) or vl (Vega-Lite).",
+        help="Type of query. asp (Answer Set Program, default), cql (CompassQL) or vl (Vega-Lite).",
     )
     parser.add_argument(
         "--mode",
@@ -75,7 +76,6 @@ def create_parser():
         default=sys.stdout,
         help="specify the Vega-Lite output file",
     )
-    parser.add_argument("--base", "-b", default=None, help="Base directory.")
     parser.add_argument(
         "--debug", "-d", help="Create debugging information.", action="store_true"
     )
@@ -98,9 +98,12 @@ def main():  # pragma: no cover
             draco_query = args.query.read().split("\n")
         else:
             query_spec = json.load(args.query)
-            d = args.base or os.path.dirname(args.query.name)
             if args.type == QueryType.vl:
                 draco_query = vl2asp(query_spec)
+            elif args.type == QueryType.cql:
+                draco_query = cql2asp(query_spec)
+
+            print(draco_query)
 
         if args.mode == Mode.violations:
             result = run(
@@ -125,7 +128,7 @@ def main():  # pragma: no cover
             result = run(draco_query, debug=args.debug)
 
             if result:
-                print(result.as_vl(), file=args.out)
+                print(json.dumps(result.as_vl()), file=args.out)
                 logger.info(f"Cost: {result.cost}")
                 outname = (
                     "stringIO" if isinstance(args.out, io.StringIO) else args.out.name
