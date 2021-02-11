@@ -40,7 +40,13 @@ class RunTests(Command):
         start = int(round(time() * 1000))
 
         errno_pytest = call(
-            ["pytest", "tests", "--cov=draco", "--cov-report=term-missing"]
+            [
+                "pytest",
+                "tests",
+                "--cov=draco",
+                "--cov-report=xml",
+                "--cov-report=term-missing",
+            ]
         )
 
         end = int(round(time() * 1000))
