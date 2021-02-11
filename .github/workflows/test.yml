@@ -31,7 +31,6 @@ jobs:
         run: |
           conda install -c potassco clingo
           pip install -r requirements.txt
-          pip install coveralls
           pip install -e .
 
       - name: Setup Node
@@ -47,8 +46,7 @@ jobs:
         shell: bash -l {0}
         run: python setup.py test
 
-      - name: Coveralls
-        shell: bash -l {0}
-        run: coveralls
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
