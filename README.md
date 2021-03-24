@@ -16,6 +16,8 @@ Draco is a formal framework for representing design knowledge about effective vi
 
 Read our introductory [blog post about Draco](https://medium.com/@uwdata/draco-representing-applying-learning-visualization-design-guidelines-64ce20287e9d) and our [research paper](https://idl.cs.washington.edu/papers/draco/) for more details. Try Draco in the browser at https://uwdata.github.io/draco-editor.
 
+**We are working on an improved version of Draco at https://github.com/cmudig/draco2.**
+
 ## Status
 
 **There Be Dragons!** This project is in active development and we are working hard on cleaning up the repository and making it easier to use the recommendation model in Draco. If you want to use this right now, please talk to us. More documentation is forthcoming.
