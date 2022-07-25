@@ -19,8 +19,8 @@ i=0
 for file in "${files[@]}"
 do
   path="${1}/${file}.lp"
-  lp=$(cat $path | sed -e s/\`/\'/g)
-  const=$(echo $file | tr a-z A-Z | tr \- _)
+  lp=$(cat "$path" | sed -e s/\`/\'/g)
+  const=$(echo "$file" | tr a-z A-Z | tr \- _)
   if [ "$i" -ne 0 ]
   then
     output+="${newline}"
@@ -29,4 +29,4 @@ do
   let "i++"
 done
 
-echo "$output" > $2/constraints.ts
+echo "$output" > "$2"/constraints.ts
