@@ -1,13 +1,14 @@
 import { TopLevelUnitSpec } from 'vega-lite/build/src/spec/unit';
+import { Field } from 'vega-lite/build/src/channeldef';
 
 const REGEX = /(\w+)\(([\w\.\/]+)(,([\w\.]+))?\)/;
+const DEFAULT_DATASET = 'data/cars.json';
 
 /**
  * Convert from ASP to Vega-Lite.
  */
-export default function asp2vl(facts: string[]): TopLevelUnitSpec {
+export default function asp2vl(facts: string[], url: string = DEFAULT_DATASET): TopLevelUnitSpec<Field> {
   let mark = '';
-  let url = 'data/cars.json'; // default dataset
   const encodings: { [enc: string]: any } = {};
 
   for (const value of facts) {
@@ -56,9 +57,9 @@ export default function asp2vl(facts: string[]): TopLevelUnitSpec {
   }
 
   return {
-    $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+    $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
     data: { url: `${url}` },
     mark,
     encoding,
-  } as TopLevelUnitSpec;
+  } as TopLevelUnitSpec<Field>;
 }

@@ -12,8 +12,7 @@ hard(enc_type_valid,E,F) :- type(E,temporal), field(E,F), not fieldtype(F,dateti
       name: 'enc_type_valid',
       description: 'Primitive type has to support data type.',
       type: 'hard',
-      asp:
-        'hard(enc_type_valid,E,F) :- type(E,quantitative), field(E,F), fieldtype(F,(string;boolean)).\nhard(enc_type_valid,E,F) :- type(E,temporal), field(E,F), not fieldtype(F,datetime).',
+      asp: 'hard(enc_type_valid,E,F) :- type(E,quantitative), field(E,F), fieldtype(F,(string;boolean)).\nhard(enc_type_valid,E,F) :- type(E,temporal), field(E,F), not fieldtype(F,datetime).',
     },
   ]);
   expect(
@@ -29,8 +28,7 @@ hard(bin_q_o,E,T) :- type(E,T), bin(E,_), T != quantitative, T != ordinal.
       name: 'enc_type_valid',
       description: 'Primitive type has to support data type.',
       type: 'hard',
-      asp:
-        'hard(enc_type_valid,E,F) :- type(E,quantitative), field(E,F), fieldtype(F,(string;boolean)).\nhard(enc_type_valid,E,F) :- type(E,temporal), field(E,F), not fieldtype(F,datetime).',
+      asp: 'hard(enc_type_valid,E,F) :- type(E,quantitative), field(E,F), fieldtype(F,(string;boolean)).\nhard(enc_type_valid,E,F) :- type(E,temporal), field(E,F), not fieldtype(F,datetime).',
     },
     {
       name: 'bin_q_o',

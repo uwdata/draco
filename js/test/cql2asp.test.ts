@@ -3,7 +3,7 @@ import { cql2asp } from '../src';
 test('generates correct asp', () => {
   expect(
     cql2asp({
-      $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+      $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
       data: { url: 'data/cars.json' },
       mark: 'bar',
       encodings: [
@@ -30,7 +30,7 @@ test('generates correct asp', () => {
   );
   expect(
     cql2asp({
-      $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+      $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
       data: { url: 'data/cars.json' },
       mark: 'bar',
       encodings: [
@@ -55,7 +55,7 @@ test('generates correct asp', () => {
   );
   expect(
     cql2asp({
-      $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+      $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
       data: { url: 'data/cars.json' },
       mark: '?',
       encodings: [
@@ -81,7 +81,7 @@ test('generates correct asp', () => {
   );
   expect(
     cql2asp({
-      $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+      $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
       data: { url: 'data/cars.json' },
       mark: 'bar',
       encodings: [

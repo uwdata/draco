@@ -18,16 +18,14 @@ export default function constraints2json(constraintsAsp: string, weightsAsp?: st
     throw Error('invalid constraints');
   }
 
-  const result = constraints.map(
-    (s: string): Constraint => {
-      const doc = getDoc(s);
-      const asp = getAsp(s);
-      return {
-        ...doc,
-        ...asp,
-      };
-    }
-  );
+  const result = constraints.map((s: string): Constraint => {
+    const doc = getDoc(s);
+    const asp = getAsp(s);
+    return {
+      ...doc,
+      ...asp,
+    };
+  });
 
   if (weightsAsp) {
     const weights = weightsAsp.match(WEIGHTS_MATCH);
