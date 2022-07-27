@@ -127,7 +127,7 @@ def run(
     debug=False,
     clear_cache=False,
 ) -> Optional[Result]:
-    """ Run clingo to compute a completion of a partial spec or violations. """
+    """Run clingo to compute a completion of a partial spec or violations."""
 
     # Clear file cache. useful during development in notebooks.
     if clear_cache and file_cache:
