@@ -46,7 +46,7 @@ def read_data_to_asp(file: str) -> List[str]:
             data = json.load(f)
             return schema2asp(data2schema(data))
     elif file.endswith(".csv"):
-        df = pd.read_csv(file)
+        df = pd.read_csv(file, keep_default_na=False, na_values=None)
         df = df.where((pd.notnull(df)), None)
         data = list(df.T.to_dict().values())
         schema = data2schema(data)
