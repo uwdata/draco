@@ -6,17 +6,16 @@
 
 # Formalizing Visualization Design Knowledge as Constraints
 
+**This reporsitory contains the source for the original Draco project. We develop a much improved Draco 2 at https://github.com/cmudig/draco2.**
+
 ![Test](https://github.com/uwdata/draco/workflows/Test/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/uwdata/draco/badge.svg?branch=master)](https://coveralls.io/github/uwdata/draco?branch=master)
-[![PyPi](https://img.shields.io/pypi/v/draco.svg)](https://pypi.org/project/draco/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=rounded)](https://github.com/prettier/prettier)
 
 Draco is a formal framework for representing design knowledge about effective visualization design as a collection of constraints. You can use Draco to find effective visualization visual designs in Vega-Lite. Draco's constraints are implemented in based on Answer Set Programming (ASP) and solved with the Clingo constraint solver. We also implemented a way to learn weights for the recommendation system directly from the results of graphical perception experiment.
 
 Read our introductory [blog post about Draco](https://medium.com/@uwdata/draco-representing-applying-learning-visualization-design-guidelines-64ce20287e9d) and our [research paper](https://idl.cs.washington.edu/papers/draco/) for more details. Try Draco in the browser at https://uwdata.github.io/draco-editor.
-
-**We are working on an improved version of Draco at https://github.com/cmudig/draco2.**
 
 ## Status
 
