@@ -3,57 +3,76 @@
 % === Within Encodings ===
 
 % @constraint Primitive type has to support data type.
-hard(enc_type_valid,E,F) :- type(E,quantitative), field(E,F), fieldtype(F,(string;boolean)).
-hard(enc_type_valid,E,F) :- type(E,temporal), field(E,F), not fieldtype(F,datetime).
+%hard(enc_type_valid,E,F) :- type(E,quantitative), field(E,F), fieldtype(F,(string;boolean)).
+:- prop(encodingType, E, quantitative), prop(encodingField, E, F), prop(fieldType, F, string), prop(fieldType, F, boolean).
+%hard(enc_type_valid,E,F) :- type(E,temporal), field(E,F), not fieldtype(F,datetime).
+:- prop(encodingType, E, temporal), prop(encodingField, E, F), not prop(fieldType, F ,datetime).
 
 % @constraint Can only bin quantitative or ordinal.
-hard(bin_q_o,E,T) :- type(E,T), bin(E,_), T != quantitative, T != ordinal.
+%hard(bin_q_o,E,T) :- type(E,T), bin(E,_), T != quantitative, T != ordinal.
+:- prop(encodingType, E, T), prop(encodingBinning, E, _), T != quantitative, T != ordinal.
 
 % @constraint Can only use log with quantitative.
-hard(log_q,E) :- log(E), not type(E,quantitative).
+%hard(log_q,E) :- log(E), not type(E,quantitative).
+:- prop(encodingLog, E, not prop(encodingType, quantitative).
 
 % @constraint Can only use zero with quantitative.
-hard(zero_q,E) :- zero(E), not type(E,quantitative).
+%hard(zero_q,E) :- zero(E), not type(E,quantitative).
+:- prop(enxodingZero, E), not prop(encodingType, E, quantitative).
 
 % @constraint Cannot use log scale with discrete (which includes binned).
-hard(log_discrete,E) :- log(E), discrete(E).
+%hard(log_discrete,E) :- log(E), discrete(E).
+:- prop(encodingLog, E), prop(encodingDiscrete, E).
 
 % @constraint Cannot use log and zero together.
-hard(log_zero,E) :- log(E), zero(E).
+%hard(log_zero,E) :- log(E), zero(E).
+:- prop(encodingLog, E), prop(encodginZero, E).
 
 % @constraint Cannot use log if the data is negative or zero.
-hard(log_non_positive,E,F) :- log(E), field(E,F), extent(F,MIN,_), MIN <= 0.
+%hard(log_non_positive,E,F) :- log(E), field(E,F), extent(F,MIN,_), MIN <= 0.
+:- prop(encodingLog, E), prop(encodingField, E, F), prop(encodingExtent, F, MIN, _), MIN <= 0.
 
 % @constraint Cannot bin and aggregate.
-hard(bin_and_aggregate,E) :- bin(E,_), aggregate(E,_).
+%hard(bin_and_aggregate,E) :- bin(E,_), aggregate(E,_).
+:- prop(encodingBinning,E, _), prop(encodingAggregate, E, _).
 
 % @constraint Oridnal only supports min, max, and median.
-hard(aggregate_o_valid,E,A) :- type(E,ordinal), aggregate(E,A), A != min, A != max, A != median.
+%hard(aggregate_o_valid,E,A) :- type(E,ordinal), aggregate(E,A), A != min, A != max, A != median.
+:- prop(encodingType, E, ordinal), prop(encodginAggregate, E, A),  != min, A != max, A != median.
 
 % @constraint Temporal only supports min and max.
-hard(aggregate_t_valid,E,A) :- type(E,temporal), aggregate(E,A), A != min, A != max.
+%hard(aggregate_t_valid,E,A) :- type(E,temporal), aggregate(E,A), A != min, A != max.
+:- prop(encodingType, E, temporal), prop(encodingAggregate, E, A), A != min, A != max.
 
 % @constraint Cannot aggregate nominal.
-hard(aggregate_nominal,E) :- aggregate(E,_), type(E,nominal).
+%hard(aggregate_nominal,E) :- aggregate(E,_), type(E,nominal).
+:- prop(encodingAggregate, E, _), prop(encodingType, E, nominal).
 
 % @constraint Detail cannot be aggregated.
-hard(aggregate_detail,E) :- channel(E,detail), aggregate(E,_).
+%hard(aggregate_detail,E) :- channel(E,detail), aggregate(E,_).
+:- prop(encodingChannel, E, detail), prop(encodingAggregate, E, _).
 
 % @constraint Count has to be quantitative and not use a field.
-hard(count_q_without_field,E) :- aggregate(E,count), field(E,_).
-hard(count_q_without_field,E) :- aggregate(E,count), not type(E,quantitative).
+%hard(count_q_without_field,E) :- aggregate(E,count), field(E,_).
+:- prop(encodingAggregate, E, count), prop(encodingField, E, _).
+%hard(count_q_without_field,E) :- aggregate(E,count), not type(E,quantitative).
+:- prop(encodingAggregate, E, count), not prop(encodingType, E, quantitative).
 
 % @constraint Shape requires discrete and not ordered (nominal). Using ordinal would't make a difference in Vega-Lite.
-hard(shape_discrete_non_ordered,E) :- channel(E,shape), not type(E,nominal).
+%hard(shape_discrete_non_ordered,E) :- channel(E,shape), not type(E,nominal).
+:- prop(encodingChannel, E, shape), not prop(encodingType, E, nominal).
 
 % @constraint Detail requires nominal.
-hard(detail_non_ordered,E) :- channel(E,detail), not type(E,nominal).
+%hard(detail_non_ordered,E) :- channel(E,detail), not type(E,nominal).
+:- prop(encodingChannel, E, detail), not prop(encodingType, E, nominal).
 
 % @constraint Size implies order so nominal is misleading.
-hard(size_nominal) :- channel(E,size), type(E,nominal).
+%hard(size_nominal) :- channel(E,size), type(E,nominal).
+:- prop(encodingChannel, E, size), prop(encodingType, E, nominal).
 
 % @constraint Do not use size when data is negative as size implies that data is positive.
-hard(size_negative,E) :- channel(E,size), enc_extent(E,MIN,MAX), MIN < 0, MAX > 0.
+%hard(size_negative,E) :- channel(E,size), enc_extent(E,MIN,MAX), MIN < 0, MAX > 0.
+:- prop(encodingChannel, E, size), prop(encodingExtent, E, MIN, MAX), MIN < 0, MAX > 0.
 
 % === Across encodings and between encodings and marks ===
 
@@ -61,28 +80,35 @@ hard(size_negative,E) :- channel(E,size), enc_extent(E,MIN,MAX), MIN < 0, MAX > 
 hard(repeat_channel,C):- single_channel(C), 2 { channel(_,C) }.
 
 % @constraint There has to be at least one encoding. Otherwise, the visualization doesn't show anything.
-hard(no_encodings) :- not encoding(_).
+%hard(no_encodings) :- not encoding(_).
+:- not prop(encoding, _).
 
 % @constraint Row and column require discrete.
 hard(row_or_column_c) :- channel_continuous(row;column).
 
 % @constraint Don't use row without y. Just using y is simpler.
-hard(row_no_y) :- channel(_,row), not channel(_,y).
+%hard(row_no_y) :- channel(_,row), not channel(_,y).
+:- prop(encodingChannel, _, row), not prop(encodingChannel, _, y).
 
 % @constraint Don't use column without x. Just using x is simpler.
-hard(column_no_x) :- channel(_,column), not channel(_,x).
+%hard(column_no_x) :- channel(_,column), not channel(_,x).
+:- prop(encodingChannel, _, column), not prop(encodingChannel, _, x).
 
 % @constraint All encodings (if they have a channel) require field except if we have a count aggregate.
-hard(encoding_no_field_and_not_count,E) :- not field(E,_), not aggregate(E,count), encoding(E).
+%hard(encoding_no_field_and_not_count,E) :- not field(E,_), not aggregate(E,count), encoding(E).
+:- not prop(encodingField, E, _), not prop(encodingAggregate, E, count), prop(encoding, E).
 
 % @constraint Count should not have a field. Having a field doesn't make a difference.
-hard(count_with_field,E) :- aggregate(E,count), field(E,_).
+%hard(count_with_field,E) :- aggregate(E,count), field(E,_).
+:- prop(encodingAggregate, E, count), prop(encdoingField, E, _).
 
 % @constraint Text mark requires text channel.
-hard(text_mark_without_text_channel) :- mark(text), not channel(_,text).
+%hard(text_mark_without_text_channel) :- mark(text), not channel(_,text).
+:- prop(encosingMark, text), not prop(encodingChannel, _, text).
 
 % @constraint Text channel requires text mark.
-hard(text_channel_without_text_mark) :- channel(_,text), not mark(text).
+%hard(text_channel_without_text_mark) :- channel(_,text), not mark(text).
+:- prop(encoingChannel, _, text), not prop(encodingMark, text).
 
 % @constraint Point, tick, and bar require x or y channel.
 hard(point_tick_bar_without_x_or_y) :- mark(point;tick;bar), not channel(_,x), not channel(_,y).
@@ -110,7 +136,8 @@ hard(shape_without_point) :- channel(_,shape), not mark(point).
 hard(size_without_point_text) :- channel(_,size), not mark(point), not mark(text).
 
 % @constraint Detail requires aggregation. Detail adds a field to the group by. Detail could also be used to add information to tooltips. We may remove this later.
-hard(detail_without_agg) :- channel(_,detail), not aggregate(_,_).
+%hard(detail_without_agg) :- channel(_,detail), not aggregate(_,_).
+:- prop(encodingChannel, _, detail), not prop(encodingAggregate, _, _).
 
 % @constraint Do not use log for bar or area mark as they are often misleading. We may remove this rule in the future.
 hard(area_bar_with_log) :- mark(bar;area), log(E), channel(E,(x;y)).
